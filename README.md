@@ -18,6 +18,8 @@ server, the form-card builder, the card and avatar UI, the brand and knowledge b
 | Telegram channel | [telegram.demo.busymate.ai](https://telegram.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/telegram) | [`telegram/`](https://github.com/serebano/busymate-ai-demos/tree/main/telegram) |
 | Slack channel | [slack.demo.busymate.ai](https://slack.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/slack) | [`slack/`](https://github.com/serebano/busymate-ai-demos/tree/main/slack) |
 | WooCommerce store | [woo.demo.busymate.ai](https://woo.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/woocommerce) | [`woo/`](https://github.com/serebano/busymate-ai-demos/tree/main/woo) |
+| Discord channel | [discord.demo.busymate.ai](https://discord.demo.busymate.ai) | [guide](https://busymate.ai/integrations/discord) | [`discord/`](https://github.com/serebano/busymate-ai-demos/tree/main/discord) |
+| Microsoft Teams channel | [teams.demo.busymate.ai](https://teams.demo.busymate.ai) | [guide](https://busymate.ai/integrations/teams) | [`teams/`](https://github.com/serebano/busymate-ai-demos/tree/main/teams) |
 
 Mirrored automatically from the private playground repo on every deploy; open issues on
 [busymate-devtools](https://github.com/serebano/busymate-devtools/issues). These are sandbox
