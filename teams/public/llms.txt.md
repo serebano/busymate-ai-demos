@@ -1,3 +1,9 @@
+---
+title: "Bramble & Co."
+description: "An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances."
+last_updated: 2026-09-14
+---
+
 # Bramble & Co.
 
 > An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.
@@ -46,7 +52,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://teams.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://teams.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://teams.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://teams.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://teams.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://teams.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://teams.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://teams.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://teams.demo.busymate.ai/sitemap.md)

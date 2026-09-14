@@ -8,8 +8,6 @@ COPY sites/_shared/backend/actor.mjs ./_shared/actor.mjs
 COPY sites/scan/backend/index.mjs ./index.mjs
 COPY sites/scan/backend/tools.mjs ./tools.mjs
 COPY sites/scan/backend/store.mjs ./store.mjs
-# Published into the docroot's /.well-known at boot (the static rsync skips it).
-COPY sites/scan/public/agents.json ./agents.json
 ENV NODE_ENV=production
 EXPOSE 8104
 CMD ["node", "index.mjs"]

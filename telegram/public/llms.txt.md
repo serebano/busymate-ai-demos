@@ -1,3 +1,9 @@
+---
+title: "Nomad Circuits"
+description: "A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup."
+last_updated: 2026-09-14
+---
+
 # Nomad Circuits
 
 > A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup.
@@ -44,7 +50,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://telegram.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://telegram.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://telegram.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://telegram.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://telegram.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://telegram.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://telegram.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://telegram.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://telegram.demo.busymate.ai/sitemap.md)

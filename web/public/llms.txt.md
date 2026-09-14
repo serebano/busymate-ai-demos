@@ -1,3 +1,9 @@
+---
+title: "Northwind Coffee Co."
+description: "A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person."
+last_updated: 2026-09-14
+---
+
 # Northwind Coffee Co.
 
 > A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person.
@@ -50,7 +56,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://web.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://web.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://web.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://web.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://web.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://web.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://web.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://web.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

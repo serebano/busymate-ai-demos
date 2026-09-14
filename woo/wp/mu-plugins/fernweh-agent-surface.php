@@ -46,7 +46,17 @@ function fernweh_static_routes() {
 		'/llms.txt.md'              => array( 'llms.txt.md', 'text/markdown; charset=utf-8' ),
 		'/llms-full.txt'            => array( 'llms-full.txt', 'text/plain; charset=utf-8' ),
 		'/agents.json'              => array( 'agents.json', 'application/json; charset=utf-8' ),
-		'/.well-known/agents.json'  => array( 'agents.json', 'application/json; charset=utf-8' ),
+		'/.well-known/agents.json'  => array( '.well-known/agents.json', 'application/json; charset=utf-8' ),
+		'/AGENTS.md'                => array( 'AGENTS.md', 'text/markdown; charset=utf-8' ),
+		'/sitemap.md'               => array( 'sitemap.md', 'text/markdown; charset=utf-8' ),
+		'/glossary'                 => array( 'glossary.html', 'text/html; charset=utf-8' ),
+		'/glossary.md'              => array( 'glossary.md', 'text/markdown; charset=utf-8' ),
+		'/openapi.json'             => array( 'openapi.json', 'application/json; charset=utf-8' ),
+		'/.well-known/mcp.json'     => array( '.well-known/mcp.json', 'application/json; charset=utf-8' ),
+		'/agent-permissions.json'  => array( 'agent-permissions.json', 'application/json; charset=utf-8' ),
+		'/.well-known/agent-permissions.json' => array( '.well-known/agent-permissions.json', 'application/json; charset=utf-8' ),
+		// RFC 9727 §4: a linkset response is application/linkset+json, not plain JSON.
+		'/.well-known/api-catalog'  => array( '.well-known/api-catalog', 'application/linkset+json; charset=utf-8' ),
 		'/webmcp-catalog.json'      => array( 'webmcp-catalog.json', 'application/json; charset=utf-8' ),
 		'/index.md'                 => array( 'index.md', 'text/markdown; charset=utf-8' ),
 		'/shipping.md'              => array( 'shipping.md', 'text/markdown; charset=utf-8' ),
@@ -240,7 +250,12 @@ function fernweh_head_links() {
 	);
 	echo "\n<!-- This store is agent-readable on purpose. -->\n";
 	echo '<link rel="webmcp-catalog" href="/webmcp-catalog.json">' . "\n";
+	// #2905/C6 (corrected 2026-09-14 against a live agent-ready.dev rescan):
+	// the bespoke discovery card lives at the WELL-KNOWN path — the bare
+	// /agents.json path is what the real external checker reads as the
+	// agentsJson v0.1.0 tool-actions manifest.
 	echo '<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent card">' . "\n";
+	echo '<link rel="describedby" href="/llms.txt">' . "\n";
 	echo '<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">' . "\n";
 	echo '<link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">' . "\n";
 	$path = untrailingslashit( fernweh_request_path() );

@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "schema_version": "1.0.0",
+    "last_updated": "2026-09-14T00:00:00Z"
+  },
+  "strict": true,
+  "resource_rules": [
+    {
+      "verb": "read_content",
+      "selector": "*",
+      "allowed": true
+    },
+    {
+      "verb": "read_metadata",
+      "selector": "*",
+      "allowed": true
+    },
+    {
+      "verb": "follow_link",
+      "selector": "*",
+      "allowed": true
+    }
+  ],
+  "api": [
+    {
+      "type": "mcp",
+      "endpoint": "https://discord.demo.busymate.ai/mcp",
+      "docs": "https://discord.demo.busymate.ai/.well-known/mcp.json",
+      "description": "This site's MCP server — prefer calling its tools over simulating page interactions."
+    },
+    {
+      "type": "openapi",
+      "endpoint": "https://discord.demo.busymate.ai/openapi.json",
+      "description": "The same tools, documented as a REST-style OpenAPI spec."
+    }
+  ],
+  "action_guidelines": [
+    {
+      "directive": "SHOULD",
+      "description": "Prefer this site's MCP/WebMCP tools over simulating clicks or form fills on the page."
+    },
+    {
+      "directive": "MUST NOT",
+      "description": "Treat any action on this demo as touching a real order, payment or person — this is a sandbox."
+    },
+    {
+      "directive": "MUST",
+      "description": "Confirm with the visitor before calling a mutating tool (report_bug, request_refund) — each one changes something."
+    },
+    {
+      "directive": "SHOULD",
+      "description": "Expect an identified-visitor tool (get_my_purchases, request_refund) to require a signed launch proof and answer for that visitor alone."
+    }
+  ]
+}

@@ -21,5 +21,10 @@ start({
   // (the tenant travels in the HOST) and the apex covers busymate.ai/chat/<id>
   // (#2865). This tenant's slug is "demo-scan" (sites/scan/demo.json `assistant`).
   hostedOrigins: ["https://demo-scan.busymate.ai", "https://busymate.ai"],
-  wellKnownFiles: { "agents.json": new URL("./agents.json", import.meta.url).pathname },
+  // NOTE (#2905/C6): a stale `wellKnownFiles: { "agents.json": ... }` here
+  // used to copy this backend's baked-in bare card OVER the real, freshly
+  // rsynced /.well-known/agents.json (now a DIFFERENT document — the
+  // agentsJson v0.1.0 manifest, not the bare card) on every container boot.
+  // Removed: the well-known file is static content now, never something a
+  // backend needs to publish itself.
 });

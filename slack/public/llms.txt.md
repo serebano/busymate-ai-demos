@@ -1,3 +1,9 @@
+---
+title: "Patchwell"
+description: "An IT-helpdesk-for-small-teams demo showing 'your mate' inside Slack: a live Slack-style view of the assistant, grounded chat over the service catalogue and plans, an MCP server over tickets, access requests, help articles and live system status, WebMCP in-page helpdesk actions, and identified-customer ticket lookup."
+last_updated: 2026-09-14
+---
+
 # Patchwell
 
 > An IT-helpdesk-for-small-teams demo showing 'your mate' inside Slack: a live Slack-style view of the assistant, grounded chat over the service catalogue and plans, an MCP server over tickets, access requests, help articles and live system status, WebMCP in-page helpdesk actions, and identified-customer ticket lookup.
@@ -45,7 +51,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://slack.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://slack.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://slack.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://slack.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://slack.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://slack.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://slack.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://slack.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://slack.demo.busymate.ai/sitemap.md)

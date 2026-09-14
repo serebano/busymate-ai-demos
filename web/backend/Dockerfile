@@ -13,8 +13,6 @@ COPY sites/web/backend/tools.mjs ./tools.mjs
 COPY sites/web/backend/routes.mjs ./routes.mjs
 COPY sites/web/backend/store.mjs ./store.mjs
 COPY sites/web/backend/data ./data
-# Published into the docroot's /.well-known at boot (the static rsync skips it).
-COPY sites/web/public/agents.json ./agents.json
 ENV NODE_ENV=production
 EXPOSE 8781
 CMD ["node", "index.mjs"]

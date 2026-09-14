@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2026-06-18/server-card.schema.json",
+  "name": "Bramble & Co. MCP server",
+  "version": "1.0.0",
+  "title": "Bramble & Co.",
+  "description": "An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.",
+  "websiteUrl": "https://teams.demo.busymate.ai",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://teams.demo.busymate.ai/mcp"
+    }
+  ]
+}

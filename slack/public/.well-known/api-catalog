@@ -1,0 +1,12 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://slack.demo.busymate.ai/",
+      "service-desc": [
+        {
+          "href": "https://slack.demo.busymate.ai/openapi.json"
+        }
+      ]
+    }
+  ]
+}

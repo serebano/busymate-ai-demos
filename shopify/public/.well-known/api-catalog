@@ -1,0 +1,12 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://shopify.demo.busymate.ai/",
+      "service-desc": [
+        {
+          "href": "https://shopify.demo.busymate.ai/openapi.json"
+        }
+      ]
+    }
+  ]
+}

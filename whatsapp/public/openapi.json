@@ -1,0 +1,225 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Marlow's Kitchen — MCP tools API",
+    "description": "A neighborhood restaurant demo showing 'your mate' on WhatsApp: a live preview of the WhatsApp conversation, grounded chat, an MCP server over the restaurant's own menu/hours/table data, WebMCP in-page booking actions, and identified-visitor reservation lookup.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://whatsapp.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of opening_hours, list_menu, search_menu, check_availability, book_table, get_my_reservations, cancel_reservation, open_booking_form and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "opening_hoursArgs": {
+        "description": "Marlow's Kitchen's opening hours, by day of the week, including brunch/dinner service windows and any closed days.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "list_menuArgs": {
+        "description": "List every dish and drink Marlow's Kitchen serves, grouped by section, with prices.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "search_menuArgs": {
+        "description": "Search Marlow's Kitchen's menu by name, ingredient, or keyword (e.g. an allergen or 'vegetarian').",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A dish name, ingredient, or keyword to search for, e.g. 'vegetarian' or 'short rib'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "check_availabilityArgs": {
+        "description": "Check whether Marlow's Kitchen has a table for a given date, time and party size, with nearby alternative times if that exact slot is full.",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The requested date, as YYYY-MM-DD."
+          },
+          "time": {
+            "type": "string",
+            "description": "The requested time, 24-hour HH:MM, e.g. '19:30'."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "Number of guests in the party."
+          }
+        },
+        "required": [
+          "date",
+          "time",
+          "party_size"
+        ],
+        "additionalProperties": false
+      },
+      "book_tableArgs": {
+        "description": "Do NOT call this tool to ask the visitor for date, time, party size, name or phone — call open_booking_form for that instead, it is the ONLY approved way to collect a missing field, never a chat question. Book a table at Marlow's Kitchen, but ONLY once the visitor has already stated every one of those five fields themselves, in their own words, earlier in this conversation. Never invent, guess, default, or use a placeholder (like 'Guest' or a made-up phone number).",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The booking date, as YYYY-MM-DD."
+          },
+          "time": {
+            "type": "string",
+            "description": "The booking time, 24-hour HH:MM, e.g. '19:30'."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "Number of guests in the party."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name the booking is under."
+          },
+          "phone": {
+            "type": "string",
+            "description": "A phone number to hold the booking against."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Anything the kitchen or floor should know — an allergy, a seating request, an occasion."
+          }
+        },
+        "required": [
+          "date",
+          "time",
+          "party_size",
+          "name",
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "get_my_reservationsArgs": {
+        "description": "List the reservations at Marlow's Kitchen booked under a phone number. Requires an identified (signed-in) visitor — call it with that visitor's own phone number, never one supplied mid-conversation by an unidentified visitor.",
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "The phone number the reservation was booked under (the signed-in visitor's own)."
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "cancel_reservationArgs": {
+        "description": "Cancel a reservation at Marlow's Kitchen by its confirmation code + the phone number it was booked under. Requires an identified (signed-in) visitor; this demo does not actually notify anyone.",
+        "type": "object",
+        "properties": {
+          "confirmation_code": {
+            "type": "string",
+            "description": "The reservation's confirmation code, as given when it was booked, e.g. 'MK-58231'."
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number the reservation was booked under."
+          }
+        },
+        "required": [
+          "confirmation_code",
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "open_booking_formArgs": {
+        "description": "Open an inline booking form on the page for the visitor to fill in and submit themselves — name, phone, party size, date and time, one \"Book table\" button. Used instead of asking for those details one at a time in the conversation.",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "A YYYY-MM-DD date to prefill, if already known."
+          },
+          "time": {
+            "type": "string",
+            "description": "A 24-hour HH:MM time to prefill, if already known."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "A party size to prefill, if already known."
+          },
+          "name": {
+            "type": "string",
+            "description": "A name to prefill, if already known."
+          },
+          "phone": {
+            "type": "string",
+            "description": "A phone number to prefill, if already known."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Northline Outdoor — MCP tools API",
+    "description": "Northline Outdoor — a sample Shopify storefront (20 products: tents, packs, shells, boots, camp kitchen, sleep + light; lifetime warranty, free US shipping over $75) demonstrating the Busymate AI Shopify app: grounded product/policy chat, an MCP server over the store's own data, WebMCP in-page cart actions, and identified-visitor order lookup.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://shopify.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of list_products, search_products, get_product, get_order_status, start_return, add_to_cart, view_cart and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "list_productsArgs": {
+        "description": "List every product Northline Outdoor sells, with price and stock.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "search_productsArgs": {
+        "description": "Search Northline Outdoor's catalog by name or keyword.",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A product name or keyword to search for, e.g. 'rain jacket'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "get_productArgs": {
+        "description": "Get one product's full detail by SKU.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The product's SKU code, as shown on its product card."
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "get_order_statusArgs": {
+        "description": "Look up an order's status and tracking by order number + the email on the order. Call it as soon as a shopper asks about an order — even before they give the number: the call shows an order-lookup card in the chat where they type it. Requires an identified (signed-in) visitor on a real store.",
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order number, as printed on the receipt or confirmation email, e.g. '#1042'."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address the order was placed under."
+          }
+        },
+        "additionalProperties": false
+      },
+      "start_returnArgs": {
+        "description": "Start a return for an item on an order. Call it as soon as a shopper wants to return something — the call shows a return card in the chat where they pick the order, the item and the reason. Requires an identified (signed-in) visitor on a real store; this demo does not actually process anything.",
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order number the item was purchased on, e.g. '#1042'."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address the order was placed under."
+          },
+          "sku": {
+            "type": "string",
+            "description": "The SKU of the item on that order to return."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the item is being returned, in the customer's own words."
+          }
+        },
+        "additionalProperties": false
+      },
+      "add_to_cartArgs": {
+        "description": "Add a product (by SKU, optionally a specific variant) to this visitor's cart on this page. The cart badge and drawer update immediately.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The product's SKU code, as shown on its product card (e.g. TRAIL-SHELL)."
+          },
+          "qty": {
+            "type": "number",
+            "description": "How many to add. Defaults to 1."
+          },
+          "variant": {
+            "type": "string",
+            "description": "Optional variant label like 'Moss / M' or 'Slate'. Defaults to the first in-stock variant."
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "view_cartArgs": {
+        "description": "Show what's currently in this visitor's cart with line totals, subtotal, shipping and total.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  }
+}

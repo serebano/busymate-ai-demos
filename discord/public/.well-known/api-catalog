@@ -1,0 +1,12 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://discord.demo.busymate.ai/",
+      "service-desc": [
+        {
+          "href": "https://discord.demo.busymate.ai/openapi.json"
+        }
+      ]
+    }
+  ]
+}

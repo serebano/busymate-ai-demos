@@ -1,3 +1,9 @@
+---
+title: "Beacon"
+description: "A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session."
+last_updated: 2026-09-14
+---
+
 # Beacon
 
 > A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.
@@ -42,7 +48,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://scan.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://scan.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://scan.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://scan.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://scan.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://scan.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://scan.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://scan.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://scan.demo.busymate.ai/sitemap.md)

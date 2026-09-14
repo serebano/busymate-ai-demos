@@ -1,0 +1,209 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Nomad Circuits — MCP tools API",
+    "description": "A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://telegram.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of opening_hours, list_catalog, search_catalog, place_order, book_repair, track_order, get_my_account, contact_us and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "opening_hoursArgs": {
+        "description": "Nomad Circuits's opening hours for walk-in orders and repair drop-off, by day of the week, including any closed days.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "list_catalogArgs": {
+        "description": "List everything Nomad Circuits sells and repairs, grouped by category, with prices and SKUs.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "search_catalogArgs": {
+        "description": "Search Nomad Circuits's catalogue and repair services by name, category or keyword (e.g. 'charging', 'earbuds', 'screen repair').",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A product name, category, or keyword to search for, e.g. 'power bank' or 'screen repair'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "place_orderArgs": {
+        "description": "Do NOT call this to ask the visitor for the item, quantity, name, email or shipping country — calling it with whatever is already known IS how the order form opens, never a chat question for a missing field. Places an order at Nomad Circuits for one catalogue item and reports the order number and status.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU of the item to order, e.g. 'NC-PWR-20K'. Leave blank if not yet known — the form lets the visitor pick."
+          },
+          "quantity": {
+            "type": "number",
+            "description": "How many of that item, default 1."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name the order ships to."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address for the order confirmation."
+          },
+          "country": {
+            "type": "string",
+            "description": "Shipping country."
+          }
+        },
+        "additionalProperties": false
+      },
+      "book_repairArgs": {
+        "description": "Do NOT call this to ask the visitor for the device, issue, name, contact email or preferred slot — calling it with whatever is already known IS how the repair form opens, never a chat question for a missing field. Books a repair drop-off slot at Nomad Circuits and reports the ticket number.",
+        "type": "object",
+        "properties": {
+          "device": {
+            "type": "string",
+            "description": "The device coming in, e.g. 'iPhone-style phone, cracked screen'."
+          },
+          "issue": {
+            "type": "string",
+            "description": "What is wrong with it."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name the repair ticket is under."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address to notify when it's ready."
+          },
+          "preferred_date": {
+            "type": "string",
+            "description": "Preferred drop-off date, YYYY-MM-DD."
+          },
+          "preferred_time": {
+            "type": "string",
+            "description": "Preferred drop-off time, 24-hour HH:MM."
+          }
+        },
+        "additionalProperties": false
+      },
+      "track_orderArgs": {
+        "description": "Look up the status of an order OR a repair ticket at Nomad Circuits by its number and the email it was placed under. Do NOT ask for these in prose — calling this tool is how the lookup form opens.",
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "The order number (e.g. 'NC-48213') or repair ticket number (e.g. 'NC-R-1042')."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email it was placed under."
+          }
+        },
+        "additionalProperties": false
+      },
+      "get_my_accountArgs": {
+        "description": "Every order and repair ticket belonging to the signed-in customer. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The signed-in visitor's own email."
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "contact_usArgs": {
+        "description": "Leave a message for a person at Nomad Circuits — a question the assistant cannot answer, a warranty dispute, or a bulk order. Collects a name, an email address and the message itself.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Who is writing."
+          },
+          "email": {
+            "type": "string",
+            "description": "Where the shop should reply."
+          },
+          "message": {
+            "type": "string",
+            "description": "What they want to say."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -10,8 +10,6 @@ COPY sites/_shared/backend/ ./_shared/
 COPY sites/_shared/ui/form-card.mjs ./ui/form-card.mjs
 COPY sites/shopify/backend/index.mjs ./index.mjs
 COPY sites/shopify/backend/catalog.mjs ./catalog.mjs
-# Published into the docroot's /.well-known at boot (the static rsync skips it).
-COPY sites/shopify/public/agents.json ./agents.json
 ENV NODE_ENV=production
 EXPOSE 8101
 CMD ["node", "index.mjs"]

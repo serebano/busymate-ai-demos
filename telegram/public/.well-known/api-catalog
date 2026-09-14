@@ -1,0 +1,12 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://telegram.demo.busymate.ai/",
+      "service-desc": [
+        {
+          "href": "https://telegram.demo.busymate.ai/openapi.json"
+        }
+      ]
+    }
+  ]
+}

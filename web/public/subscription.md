@@ -1,3 +1,9 @@
+---
+title: "Coffee subscription"
+description: "How the Northwind subscription works — cadence, discount, and how to pause, swap or cancel."
+last_updated: 2026-09-14
+---
+
 # Coffee subscription
 
 Source: https://web.demo.busymate.ai/subscription
@@ -24,3 +30,8 @@ Cancel any time, from the account page or by asking. There is no minimum term, n
 ## Gifting
 
 A subscription can be sent to a different address with a note. It renews to the giver's card until they cancel it.
+
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

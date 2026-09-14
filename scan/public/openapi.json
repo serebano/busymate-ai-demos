@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Beacon — MCP tools API",
+    "description": "A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://scan.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of scan_site, list_examples, show_example, get_readiness, my_recent_scans and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "scan_siteArgs": {
+        "description": "Open the real Busymate AI quick start for a website address, at busymate.ai/try/<host> — the same one-click scan and grounded assistant preview this page demonstrates.",
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "list_examplesArgs": {
+        "description": "List the three pre-scanned example sites this demo links to, with their live busymate.ai/try/<host> result URL.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "show_exampleArgs": {
+        "description": "Detail on one of the three pre-scanned example sites (its label and live quick-start result URL).",
+        "type": "object",
+        "properties": {
+          "site": {
+            "type": "string",
+            "enum": [
+              "busydrivers.com",
+              "web.demo.busymate.ai",
+              "shopify.demo.busymate.ai"
+            ]
+          }
+        },
+        "required": [
+          "site"
+        ],
+        "additionalProperties": false
+      },
+      "get_readinessArgs": {
+        "description": "Score ANY website's AI-readiness live — the same six-layer checker (llms.txt, agents.json, MCP, WebMCP, structured data, robots/sitemap) the quick start runs, so an agent can grade a site without leaving this conversation.",
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "my_recent_scansArgs": {
+        "description": "The signed-in demo visitor's own scan history from this session — which hosts they have already looked up with get_readiness or scan_site. Answers only for the customer signed in on this page.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  }
+}

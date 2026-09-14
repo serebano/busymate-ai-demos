@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Patchwell — MCP tools API",
+    "description": "An IT-helpdesk-for-small-teams demo showing 'your mate' inside Slack: a live Slack-style view of the assistant, grounded chat over the service catalogue and plans, an MCP server over tickets, access requests, help articles and live system status, WebMCP in-page helpdesk actions, and identified-customer ticket lookup.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://slack.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of service_hours, list_services, search_help, system_status, open_ticket, request_access, ticket_status, get_my_tickets and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "service_hoursArgs": {
+        "description": "Patchwell's helpdesk hours, the on-call cover outside them, and the response-time targets for each priority (P1/P2/P3).",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "list_servicesArgs": {
+        "description": "The full Patchwell service catalogue — every kind of IT request a team can raise (onboarding, access, devices, network, security, licences) with its code, plan availability and turnaround.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "search_helpArgs": {
+        "description": "Search Patchwell's help articles by keyword — how to reset MFA, join the VPN, get a loaner laptop, add a SaaS seat, and so on. Returns the matching articles with their steps.",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A keyword or short phrase, e.g. 'vpn', 'mfa reset' or 'loaner laptop'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "system_statusArgs": {
+        "description": "Live status of the systems Patchwell manages for its customers — SSO, Wi-Fi, VPN, email, device management and the Slack helpdesk itself — plus any open incident.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "open_ticketArgs": {
+        "description": "Do NOT call this to ask the person for the category, summary, urgency, name or email — calling it with whatever is already known IS how the ticket form opens, never a chat question for a missing field. Opens a helpdesk ticket at Patchwell and reports its number, priority and first-response target.",
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "The service code or category, e.g. 'device', 'access', 'network', 'email', 'other'. Leave blank if not yet known — the form lets the person pick."
+          },
+          "summary": {
+            "type": "string",
+            "description": "One line describing the problem."
+          },
+          "urgency": {
+            "type": "string",
+            "description": "'blocked' (cannot work), 'degraded' (working around it) or 'whenever' (no rush)."
+          },
+          "name": {
+            "type": "string",
+            "description": "Who the ticket is for."
+          },
+          "email": {
+            "type": "string",
+            "description": "Work email the updates go to."
+          }
+        },
+        "additionalProperties": false
+      },
+      "request_accessArgs": {
+        "description": "Do NOT call this to ask the person which app, which role, their name, email or reason — calling it with whatever is already known IS how the access-request form opens. Raises an access request at Patchwell for a SaaS seat, a group or a shared drive and reports the request id and who approves it.",
+        "type": "object",
+        "properties": {
+          "app": {
+            "type": "string",
+            "description": "The app, group or drive, e.g. 'Notion', 'GitHub', 'Finance shared drive'. Leave blank if not yet known — the form lets the person pick."
+          },
+          "role": {
+            "type": "string",
+            "description": "The level wanted: 'member', 'admin' or 'viewer'."
+          },
+          "name": {
+            "type": "string",
+            "description": "Who needs the access."
+          },
+          "email": {
+            "type": "string",
+            "description": "Their work email."
+          },
+          "reason": {
+            "type": "string",
+            "description": "One line on why — the approver reads it."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ticket_statusArgs": {
+        "description": "Look up one helpdesk ticket or access request at Patchwell by its number and the email it was raised under. Do NOT ask for these in prose — calling this tool is how the lookup form opens.",
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "The ticket number (e.g. 'PW-2041') or access request id (e.g. 'AR-118')."
+          },
+          "email": {
+            "type": "string",
+            "description": "The work email it was raised under."
+          }
+        },
+        "additionalProperties": false
+      },
+      "get_my_ticketsArgs": {
+        "description": "Every open and recent ticket and access request belonging to the signed-in customer, with their team's plan and seat count. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The signed-in visitor's own work email."
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

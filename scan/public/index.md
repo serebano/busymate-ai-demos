@@ -1,8 +1,18 @@
+---
+title: "Beacon"
+description: "A Busymate AI demo of the site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card."
+last_updated: 2026-09-14
+---
+
 # Beacon
 
 Source: https://scan.demo.busymate.ai/
 
 > A Busymate AI demo of the site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://scan.demo.busymate.ai/sitemap.md)
 
 ## What happens when you press the button
 

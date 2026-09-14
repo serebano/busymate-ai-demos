@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2026-06-18/server-card.schema.json",
+  "name": "Pixelforge Games MCP server",
+  "version": "1.0.0",
+  "title": "Pixelforge Games",
+  "description": "An indie game studio demo showing 'your mate' as a player-support desk in a Discord #support channel: a live preview of the channel conversation, grounded chat over three games and their public patch notes, an MCP server the studio owns, WebMCP page actions, a bug-report action card, and identified-player library and refund lookups.",
+  "websiteUrl": "https://discord.demo.busymate.ai",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://discord.demo.busymate.ai/mcp"
+    }
+  ]
+}

@@ -1,178 +1,206 @@
 {
-  "name": "Pixelforge Games",
-  "url": "https://discord.demo.busymate.ai",
-  "description": "An indie game studio demo showing 'your mate' as a player-support desk in a Discord #support channel: a live preview of the channel conversation, grounded chat over three games and their public patch notes, an MCP server the studio owns, WebMCP page actions, a bug-report action card, and identified-player library and refund lookups.",
-  "mcp": {
-    "url": "https://discord.demo.busymate.ai/mcp",
-    "transport": "http",
-    "auth": "none"
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Pixelforge Games",
+    "description": "An indie game studio demo showing 'your mate' as a player-support desk in a Discord #support channel: a live preview of the channel conversation, grounded chat over three games and their public patch notes, an MCP server the studio owns, WebMCP page actions, a bug-report action card, and identified-player library and refund lookups.",
+    "version": "1.0.0"
   },
-  "webmcp": {
-    "transport": "in-page",
-    "registers": "document.modelContext"
-  },
-  "tools": [
+  "sources": [
     {
-      "name": "list_games",
-      "description": "Every game Pixelforge Games has released — name, genre, price, the platforms it runs on, its current patch version and whether it is finished or still in early access.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "search_patch_notes",
-      "description": "Search the public patch notes Pixelforge Games publishes, by keyword — a bug that was fixed, a feature that landed, a platform, a build number. Returns the matching entries with their version, date and the lines that mention it.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "query": {
-            "type": "string",
-            "description": "A keyword or short phrase, e.g. 'save corruption', 'controller', 'ultrawide' or '1.8.1'."
-          },
-          "game": {
-            "type": "string",
-            "description": "Optional game id or name to search within, e.g. 'lumen-drift' or 'Ironroot Tactics'. Leave blank to search every game."
-          }
-        },
-        "required": [
-          "query"
-        ],
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "get_server_status",
-      "description": "Live status of the services Pixelforge Games runs for its players — cloud saves, the leaderboards, the key redemption service, the store and the studio's community server — plus any open incident.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "report_bug",
-      "description": "Do NOT call this to ask the player which game, which platform, what happened or their email — calling it with whatever is already known IS how the bug form opens, never a chat question for a missing field. Files a bug report with Pixelforge Games and reports its id, the queue it landed in and what happens next.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "game": {
-            "type": "string",
-            "description": "The game id, e.g. 'lumen-drift', 'ironroot-tactics' or 'sundog-rally'. Leave blank if not yet known — the form lets the player pick."
-          },
-          "platform": {
-            "type": "string",
-            "description": "Where it happened: 'windows', 'macos', 'linux' or 'handheld'."
-          },
-          "what_happened": {
-            "type": "string",
-            "description": "What the player did and what went wrong, in their own words."
-          },
-          "email": {
-            "type": "string",
-            "description": "The email the studio replies to."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": false,
-      "access": "public",
-      "transport": "mcp",
-      "confirmationRequired": true
-    },
-    {
-      "name": "get_my_purchases",
-      "description": "The games the signed-in player owns at Pixelforge Games, with the receipt, the purchase date, the price paid and the build they last played. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "The signed-in player's own email address."
-          }
-        },
-        "required": [
-          "email"
-        ],
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "identified",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "request_refund",
-      "description": "Start a refund on one of the signed-in player's own purchases at Pixelforge Games, by its receipt number. Requires an identified (signed-in) visitor and the player's explicit go-ahead first — say what will happen, then call it. This demo files the request but no money moves.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "receipt": {
-            "type": "string",
-            "description": "The receipt number of the purchase to refund, e.g. 'PF-40271'."
-          },
-          "email": {
-            "type": "string",
-            "description": "The signed-in player's own email address, the one the purchase is under."
-          },
-          "reason": {
-            "type": "string",
-            "description": "One line on why — the studio reads every one."
-          }
-        },
-        "required": [
-          "receipt",
-          "email"
-        ],
-        "additionalProperties": false
-      },
-      "readOnlyHint": false,
-      "access": "identified",
-      "transport": "mcp",
-      "confirmationRequired": true
-    },
-    {
-      "name": "open_bug_report_form",
-      "description": "Open the bug-report form on the page itself for the player to fill in and send — game, platform, what happened and an email, with one \"Send report\" button. Use this when the player is looking at the page; pass anything already known (the game they named, the platform, what they described, a signed-in player's own email) as prefill so they only fill in what is missing.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "game": {
-            "type": "string",
-            "description": "A game id to prefill, if already known: 'lumen-drift', 'ironroot-tactics' or 'sundog-rally'."
-          },
-          "platform": {
-            "type": "string",
-            "description": "A platform to prefill, if already known: 'windows', 'macos', 'linux' or 'handheld'."
-          },
-          "what_happened": {
-            "type": "string",
-            "description": "What the player already described, to prefill the description."
-          },
-          "email": {
-            "type": "string",
-            "description": "An email to prefill, if already known (e.g. the signed-in player's own)."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "webmcp"
+      "id": "mcp",
+      "path": "https://discord.demo.busymate.ai/openapi.json"
     }
   ],
-  "identity": {
-    "supported": true,
-    "docs": "https://busymate.ai/docs/guides/identified-visitors"
-  },
-  "humanHandoff": true
+  "flows": [
+    {
+      "id": "list_games",
+      "title": "list games",
+      "description": "Every game Pixelforge Games has released — name, genre, price, the platforms it runs on, its current patch version and whether it is finished or still in early access.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "search_patch_notes",
+      "title": "search patch notes",
+      "description": "Search the public patch notes Pixelforge Games publishes, by keyword — a bug that was fixed, a feature that landed, a platform, a build number. Returns the matching entries with their version, date and the lines that mention it.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A keyword or short phrase, e.g. 'save corruption', 'controller', 'ultrawide' or '1.8.1'.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "game",
+            "description": "Optional game id or name to search within, e.g. 'lumen-drift' or 'Ironroot Tactics'. Leave blank to search every game.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_server_status",
+      "title": "get server status",
+      "description": "Live status of the services Pixelforge Games runs for its players — cloud saves, the leaderboards, the key redemption service, the store and the studio's community server — plus any open incident.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "report_bug",
+      "title": "report bug",
+      "description": "Do NOT call this to ask the player which game, which platform, what happened or their email — calling it with whatever is already known IS how the bug form opens, never a chat question for a missing field. Files a bug report with Pixelforge Games and reports its id, the queue it landed in and what happens next.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "game",
+            "description": "The game id, e.g. 'lumen-drift', 'ironroot-tactics' or 'sundog-rally'. Leave blank if not yet known — the form lets the player pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "description": "Where it happened: 'windows', 'macos', 'linux' or 'handheld'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "what_happened",
+            "description": "What the player did and what went wrong, in their own words.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email the studio replies to.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_my_purchases",
+      "title": "get my purchases",
+      "description": "The games the signed-in player owns at Pixelforge Games, with the receipt, the purchase date, the price paid and the build they last played. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "email",
+            "description": "The signed-in player's own email address.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "request_refund",
+      "title": "request refund",
+      "description": "Start a refund on one of the signed-in player's own purchases at Pixelforge Games, by its receipt number. Requires an identified (signed-in) visitor and the player's explicit go-ahead first — say what will happen, then call it. This demo files the request but no money moves.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "receipt",
+            "description": "The receipt number of the purchase to refund, e.g. 'PF-40271'.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The signed-in player's own email address, the one the purchase is under.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "One line on why — the studio reads every one.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ]
 }

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Northwind Coffee Co.</title>
+<meta name="description" content="What MCP, WebMCP, llms.txt, agents.json, A2A and the rest of this site's agent-discovery layer actually mean.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://web.demo.busymate.ai/glossary">
+<link rel="alternate" type="text/markdown" href="/glossary.md" title="This page as Markdown">
+<link rel="describedby" href="/llms.txt">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"DefinedTermSet","@id":"https://web.demo.busymate.ai/glossary#glossary","name":"Northwind Coffee Co. — Glossary","description":"What this site's agent-discovery terms mean.","url":"https://web.demo.busymate.ai/glossary","dateModified":"2026-09-14","hasDefinedTerm":[{"@type":"DefinedTerm","name":"MCP (Model Context Protocol)","description":"The open protocol an AI assistant uses to call a site's own tools and read its own data over a standard JSON-RPC interface, instead of scraping HTML. This site's MCP server answers at `/mcp`; its card is at `/.well-known/mcp.json`."},{"@type":"DefinedTerm","name":"WebMCP","description":"The in-page twin of MCP: the page itself registers tools on `document.modelContext`, so a browser-based agent can act on exactly what a visitor sees, without leaving the page. See `/webmcp-catalog.json`."},{"@type":"DefinedTerm","name":"llms.txt","description":"A short, curated Markdown index of a site's key pages and what an assistant can do with it — the first file an agent should read. See `/llms.txt`."},{"@type":"DefinedTerm","name":"agents.json","description":"This site's bespoke discovery card (name, description, MCP/WebMCP endpoints, tools, identity, human hand-off) — see `/agents.json`. The DIFFERENT `/.well-known/agents.json` document below follows a separate community schema."},{"@type":"DefinedTerm","name":"agents.json (v0.1.0 tool-actions schema)","description":"A community schema (agentsjson.org) describing a site's callable operations as \"flows\" over an OpenAPI source, referenced by `operationId`. Served at `/.well-known/agents.json` — a different document from the bare `/agents.json` card above."},{"@type":"DefinedTerm","name":"AGENTS.md","description":"The agents.md convention's free-form contextual guide for a coding/AI agent working with this project — what it is, how to read it, what it may do. See `/AGENTS.md`."},{"@type":"DefinedTerm","name":"OpenAPI","description":"A machine-readable, industry-standard description of an HTTP API's operations and schemas. See `/openapi.json`."},{"@type":"DefinedTerm","name":"A2A (Agent-to-Agent protocol)","description":"A protocol for one AI agent to discover and call another agent as a peer, via an Agent Card. This demo does not implement A2A: `/.well-known/agent-card.json` answers an honest 404 rather than a fabricated card."},{"@type":"DefinedTerm","name":"MCP Server Card","description":"A small, standard document describing an MCP server's identity and how to reach it (never its live tool list, which stays behind the protocol itself). See `/.well-known/mcp.json`."},{"@type":"DefinedTerm","name":"Content negotiation","description":"Asking the SAME URL for a different representation via the `Accept` header — `Accept: text/markdown` on any page here returns its Markdown twin at the same address, no redirect."},{"@type":"DefinedTerm","name":"Structured data (JSON-LD)","description":"Machine-readable facts embedded in a page's own HTML (`<script type=\"application/ld+json\">`) describing what the page IS, so a reader never has to guess from prose."}]}</script>
+<style>
+  .doc{max-width:720px;margin:0 auto;padding:44px 20px 70px}
+  .doc h1{font-size:clamp(28px,4vw,40px);margin:0 0 10px}
+  .doc dl{display:grid;gap:22px;margin:28px 0}
+  .doc dt{font-weight:600;font-size:16px}
+  .doc dd{margin:4px 0 0;color:var(--muted)}
+  .backlink{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;text-decoration:none;
+            font-family:ui-serif,Georgia,serif;font-size:17px;font-weight:600}
+</style>
+</head>
+<body>
+<article class="doc">
+  <a class="backlink" href="/"><span>← Northwind Coffee Co.</span></a>
+  <h1>Glossary</h1>
+  <p>What the terms on this site's agent-discovery layer actually mean — the same layer <a href="/llms.txt">llms.txt</a>, <a href="/agents.json">agents.json</a> and <a href="/openapi.json">openapi.json</a> publish.</p>
+  <dl><dt>MCP (Model Context Protocol)</dt><dd>The open protocol an AI assistant uses to call a site's own tools and read its own data over a standard JSON-RPC interface, instead of scraping HTML. This site's MCP server answers at `/mcp`; its card is at `/.well-known/mcp.json`.</dd>
+<dt>WebMCP</dt><dd>The in-page twin of MCP: the page itself registers tools on `document.modelContext`, so a browser-based agent can act on exactly what a visitor sees, without leaving the page. See `/webmcp-catalog.json`.</dd>
+<dt>llms.txt</dt><dd>A short, curated Markdown index of a site's key pages and what an assistant can do with it — the first file an agent should read. See `/llms.txt`.</dd>
+<dt>agents.json</dt><dd>This site's bespoke discovery card (name, description, MCP/WebMCP endpoints, tools, identity, human hand-off) — see `/agents.json`. The DIFFERENT `/.well-known/agents.json` document below follows a separate community schema.</dd>
+<dt>agents.json (v0.1.0 tool-actions schema)</dt><dd>A community schema (agentsjson.org) describing a site's callable operations as "flows" over an OpenAPI source, referenced by `operationId`. Served at `/.well-known/agents.json` — a different document from the bare `/agents.json` card above.</dd>
+<dt>AGENTS.md</dt><dd>The agents.md convention's free-form contextual guide for a coding/AI agent working with this project — what it is, how to read it, what it may do. See `/AGENTS.md`.</dd>
+<dt>OpenAPI</dt><dd>A machine-readable, industry-standard description of an HTTP API's operations and schemas. See `/openapi.json`.</dd>
+<dt>A2A (Agent-to-Agent protocol)</dt><dd>A protocol for one AI agent to discover and call another agent as a peer, via an Agent Card. This demo does not implement A2A: `/.well-known/agent-card.json` answers an honest 404 rather than a fabricated card.</dd>
+<dt>MCP Server Card</dt><dd>A small, standard document describing an MCP server's identity and how to reach it (never its live tool list, which stays behind the protocol itself). See `/.well-known/mcp.json`.</dd>
+<dt>Content negotiation</dt><dd>Asking the SAME URL for a different representation via the `Accept` header — `Accept: text/markdown` on any page here returns its Markdown twin at the same address, no redirect.</dd>
+<dt>Structured data (JSON-LD)</dt><dd>Machine-readable facts embedded in a page's own HTML (`<script type="application/ld+json">`) describing what the page IS, so a reader never has to guess from prose.</dd></dl>
+</article>
+</body>
+</html>

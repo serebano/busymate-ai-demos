@@ -1,3 +1,9 @@
+---
+title: "Marlow's Kitchen"
+description: "A neighborhood restaurant demo showing 'your mate' on WhatsApp: a live preview of the WhatsApp conversation, grounded chat, an MCP server over the restaurant's own menu/hours/table data, WebMCP in-page booking actions, and identified-visitor reservation lookup."
+last_updated: 2026-09-14
+---
+
 # Marlow's Kitchen
 
 > A neighborhood restaurant demo showing 'your mate' on WhatsApp: a live preview of the WhatsApp conversation, grounded chat, an MCP server over the restaurant's own menu/hours/table data, WebMCP in-page booking actions, and identified-visitor reservation lookup.
@@ -44,7 +50,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://whatsapp.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://whatsapp.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://whatsapp.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://whatsapp.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://whatsapp.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://whatsapp.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://whatsapp.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://whatsapp.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://whatsapp.demo.busymate.ai/sitemap.md)

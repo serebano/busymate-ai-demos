@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2026-06-18/server-card.schema.json",
+  "name": "Beacon MCP server",
+  "version": "1.0.0",
+  "title": "Beacon",
+  "description": "A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.",
+  "websiteUrl": "https://scan.demo.busymate.ai",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://scan.demo.busymate.ai/mcp"
+    }
+  ]
+}

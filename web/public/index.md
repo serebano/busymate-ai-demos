@@ -1,3 +1,9 @@
+---
+title: "Northwind Coffee Co."
+description: "A specialty coffee roaster in Portland, Oregon, roasting in 5kg batches to order since 2016. This is a Busymate AI demonstration store — a working storefront you can shop, sign in to and put an assistant through its paces on. No order is fulfilled, no payment is taken, and the customer behind the sign-in button is not a real person."
+last_updated: 2026-09-14
+---
+
 # Northwind Coffee Co.
 
 Source: https://web.demo.busymate.ai/
@@ -40,3 +46,8 @@ The customer is Alex Rivera, a customer since March 2025, with three orders — 
 - Discover: [/llms.txt](https://web.demo.busymate.ai/llms.txt), [/agents.json](https://web.demo.busymate.ai/agents.json), [/webmcp-catalog.json](https://web.demo.busymate.ai/webmcp-catalog.json).
 - Act in the page: five WebMCP tools — search the range, add to the cart, read the cart, check an order, start a return.
 - Act over the network: the MCP server at `https://web.demo.busymate.ai/mcp` carries the catalogue and the policies, open to anyone.
+
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

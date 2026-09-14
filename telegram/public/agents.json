@@ -1,203 +1,298 @@
 {
-  "name": "Nomad Circuits",
-  "url": "https://telegram.demo.busymate.ai",
-  "description": "A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup.",
-  "mcp": {
-    "url": "https://telegram.demo.busymate.ai/mcp",
-    "transport": "http",
-    "auth": "none"
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Nomad Circuits",
+    "description": "A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup.",
+    "version": "1.0.0"
   },
-  "webmcp": {
-    "transport": "in-page",
-    "registers": "document.modelContext"
-  },
-  "tools": [
+  "sources": [
     {
-      "name": "opening_hours",
-      "description": "Nomad Circuits's opening hours for walk-in orders and repair drop-off, by day of the week, including any closed days.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "list_catalog",
-      "description": "List everything Nomad Circuits sells and repairs, grouped by category, with prices and SKUs.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "search_catalog",
-      "description": "Search Nomad Circuits's catalogue and repair services by name, category or keyword (e.g. 'charging', 'earbuds', 'screen repair').",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "query": {
-            "type": "string",
-            "description": "A product name, category, or keyword to search for, e.g. 'power bank' or 'screen repair'."
-          }
-        },
-        "required": [
-          "query"
-        ],
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "place_order",
-      "description": "Do NOT call this to ask the visitor for the item, quantity, name, email or shipping country — calling it with whatever is already known IS how the order form opens, never a chat question for a missing field. Places an order at Nomad Circuits for one catalogue item and reports the order number and status.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "sku": {
-            "type": "string",
-            "description": "The SKU of the item to order, e.g. 'NC-PWR-20K'. Leave blank if not yet known — the form lets the visitor pick."
-          },
-          "quantity": {
-            "type": "number",
-            "description": "How many of that item, default 1."
-          },
-          "name": {
-            "type": "string",
-            "description": "Name the order ships to."
-          },
-          "email": {
-            "type": "string",
-            "description": "Email address for the order confirmation."
-          },
-          "country": {
-            "type": "string",
-            "description": "Shipping country."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": false,
-      "access": "public",
-      "transport": "mcp+webmcp",
-      "confirmationRequired": true
-    },
-    {
-      "name": "book_repair",
-      "description": "Do NOT call this to ask the visitor for the device, issue, name, contact email or preferred slot — calling it with whatever is already known IS how the repair form opens, never a chat question for a missing field. Books a repair drop-off slot at Nomad Circuits and reports the ticket number.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "type": "string",
-            "description": "The device coming in, e.g. 'iPhone-style phone, cracked screen'."
-          },
-          "issue": {
-            "type": "string",
-            "description": "What is wrong with it."
-          },
-          "name": {
-            "type": "string",
-            "description": "Name the repair ticket is under."
-          },
-          "email": {
-            "type": "string",
-            "description": "Email address to notify when it's ready."
-          },
-          "preferred_date": {
-            "type": "string",
-            "description": "Preferred drop-off date, YYYY-MM-DD."
-          },
-          "preferred_time": {
-            "type": "string",
-            "description": "Preferred drop-off time, 24-hour HH:MM."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": false,
-      "access": "public",
-      "transport": "mcp+webmcp",
-      "confirmationRequired": true
-    },
-    {
-      "name": "track_order",
-      "description": "Look up the status of an order OR a repair ticket at Nomad Circuits by its number and the email it was placed under. Do NOT ask for these in prose — calling this tool is how the lookup form opens.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "reference": {
-            "type": "string",
-            "description": "The order number (e.g. 'NC-48213') or repair ticket number (e.g. 'NC-R-1042')."
-          },
-          "email": {
-            "type": "string",
-            "description": "The email it was placed under."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "public",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "get_my_account",
-      "description": "Every order and repair ticket belonging to the signed-in customer. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "The signed-in visitor's own email."
-          }
-        },
-        "required": [
-          "email"
-        ],
-        "additionalProperties": false
-      },
-      "readOnlyHint": true,
-      "access": "identified",
-      "transport": "mcp+webmcp"
-    },
-    {
-      "name": "contact_us",
-      "description": "Leave a message for a person at Nomad Circuits — a question the assistant cannot answer, a warranty dispute, or a bulk order. Collects a name, an email address and the message itself.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Who is writing."
-          },
-          "email": {
-            "type": "string",
-            "description": "Where the shop should reply."
-          },
-          "message": {
-            "type": "string",
-            "description": "What they want to say."
-          }
-        },
-        "additionalProperties": false
-      },
-      "readOnlyHint": false,
-      "access": "public",
-      "transport": "mcp+webmcp"
+      "id": "mcp",
+      "path": "https://telegram.demo.busymate.ai/openapi.json"
     }
   ],
-  "identity": {
-    "supported": true,
-    "docs": "https://busymate.ai/docs/guides/identified-visitors"
-  },
-  "humanHandoff": true
+  "flows": [
+    {
+      "id": "opening_hours",
+      "title": "opening hours",
+      "description": "Nomad Circuits's opening hours for walk-in orders and repair drop-off, by day of the week, including any closed days.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "list_catalog",
+      "title": "list catalog",
+      "description": "List everything Nomad Circuits sells and repairs, grouped by category, with prices and SKUs.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "search_catalog",
+      "title": "search catalog",
+      "description": "Search Nomad Circuits's catalogue and repair services by name, category or keyword (e.g. 'charging', 'earbuds', 'screen repair').",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A product name, category, or keyword to search for, e.g. 'power bank' or 'screen repair'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "place_order",
+      "title": "place order",
+      "description": "Do NOT call this to ask the visitor for the item, quantity, name, email or shipping country — calling it with whatever is already known IS how the order form opens, never a chat question for a missing field. Places an order at Nomad Circuits for one catalogue item and reports the order number and status.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "The SKU of the item to order, e.g. 'NC-PWR-20K'. Leave blank if not yet known — the form lets the visitor pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "quantity",
+            "description": "How many of that item, default 1.",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "name",
+            "description": "Name the order ships to.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Email address for the order confirmation.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "description": "Shipping country.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "book_repair",
+      "title": "book repair",
+      "description": "Do NOT call this to ask the visitor for the device, issue, name, contact email or preferred slot — calling it with whatever is already known IS how the repair form opens, never a chat question for a missing field. Books a repair drop-off slot at Nomad Circuits and reports the ticket number.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "device",
+            "description": "The device coming in, e.g. 'iPhone-style phone, cracked screen'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "issue",
+            "description": "What is wrong with it.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Name the repair ticket is under.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Email address to notify when it's ready.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "preferred_date",
+            "description": "Preferred drop-off date, YYYY-MM-DD.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "preferred_time",
+            "description": "Preferred drop-off time, 24-hour HH:MM.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "track_order",
+      "title": "track order",
+      "description": "Look up the status of an order OR a repair ticket at Nomad Circuits by its number and the email it was placed under. Do NOT ask for these in prose — calling this tool is how the lookup form opens.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "reference",
+            "description": "The order number (e.g. 'NC-48213') or repair ticket number (e.g. 'NC-R-1042').",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email it was placed under.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_my_account",
+      "title": "get my account",
+      "description": "Every order and repair ticket belonging to the signed-in customer. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "email",
+            "description": "The signed-in visitor's own email.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "contact_us",
+      "title": "contact us",
+      "description": "Leave a message for a person at Nomad Circuits — a question the assistant cannot answer, a warranty dispute, or a bulk order. Collects a name, an email address and the message itself.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Who is writing.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Where the shop should reply.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "description": "What they want to say.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ]
 }

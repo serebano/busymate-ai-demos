@@ -1,3 +1,9 @@
+---
+title: "Returns and refunds"
+description: "How to send coffee back to Northwind, the two windows that apply, and what happens to your money."
+last_updated: 2026-09-14
+---
+
 # Returns and refunds
 
 Source: https://web.demo.busymate.ai/returns
@@ -25,3 +31,8 @@ Ask the assistant to start a return for an order and it will confirm the item an
 ## What is not covered
 
 Coffee bought more than 30 days ago, and subscription shipments that were already delivered before a pause took effect — pause before the next roast date and that one never ships.
+
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

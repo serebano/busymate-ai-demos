@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Northwind Coffee Co. — MCP tools API",
+    "description": "A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://web.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of search_coffee, get_coffee, store_policy, contact_northwind, get_order_status, start_return, add_to_cart, view_cart and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "search_coffeeArgs": {
+        "description": "Search Northwind Coffee's range by name, origin, roast, tasting note or use (espresso, filter, decaf, gift). Returns price, size and what is in stock.",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "What the customer is after, e.g. 'fruity filter coffee' or 'decaf'"
+          },
+          "decafOnly": {
+            "type": "boolean",
+            "description": "Limit the results to decaffeinated coffee"
+          }
+        },
+        "additionalProperties": false
+      },
+      "get_coffeeArgs": {
+        "description": "Full detail for one of Northwind's coffees, by SKU or by name.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU or the product name"
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "store_policyArgs": {
+        "description": "Northwind's own wording for one of its policies: shipping, returns, subscription, brewing.",
+        "type": "object",
+        "properties": {
+          "policy": {
+            "type": "string",
+            "enum": [
+              "shipping",
+              "returns",
+              "subscription",
+              "brewing"
+            ]
+          }
+        },
+        "required": [
+          "policy"
+        ],
+        "additionalProperties": false
+      },
+      "contact_northwindArgs": {
+        "description": "Leave a message for a person at Northwind — a question the assistant cannot answer, a problem with an order, or anything that needs a human. Collects a name, an email address and the message itself. This is NOT the tool for 'where is my order' — call get_order_status for that, even signed out (it is what shows the sign-in card). The email is the VISITOR'S OWN real address: it must come from something they typed in this conversation. Never invent one, and never fill it with a placeholder (example.com, test@…, noreply@…, user@…) just to satisfy this schema — if the visitor has not given an email, ask them for it (the form card does this) instead of calling this tool with a guess. The server refuses placeholder-looking addresses.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Who is writing — the visitor's own name, never invented"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "minLength": 6,
+            "description": "The visitor's own real email, exactly as they gave it — never a placeholder or invented address"
+          },
+          "message": {
+            "type": "string",
+            "description": "What they want to say"
+          },
+          "orderNumber": {
+            "type": "string",
+            "description": "The order this is about, if any"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "message"
+        ],
+        "additionalProperties": false
+      },
+      "get_order_statusArgs": {
+        "description": "THE tool for any order or delivery question — 'where is my order', tracking, ETA. Call this FIRST for that ask, even when the visitor is signed out: a not-signed-in refusal is the expected, correct outcome and is what shows the sign-in card. Never substitute contact_northwind for this just because it is signed out. Once signed in, returns where one of the customer's orders is, with carrier, tracking number and expected delivery date. Answers only for the customer signed in on this page.",
+        "type": "object",
+        "properties": {
+          "orderNumber": {
+            "type": "string",
+            "description": "The order number, e.g. NW-10432"
+          }
+        },
+        "required": [
+          "orderNumber"
+        ],
+        "additionalProperties": false
+      },
+      "start_returnArgs": {
+        "description": "Open a return for one item on one of the signed-in customer's orders and report the refund and what happens next.",
+        "type": "object",
+        "properties": {
+          "orderNumber": {
+            "type": "string",
+            "description": "The order the item came in"
+          },
+          "sku": {
+            "type": "string",
+            "description": "The SKU or name of the item going back"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why it is going back, in the customer's words"
+          }
+        },
+        "required": [
+          "orderNumber",
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "add_to_cartArgs": {
+        "description": "Put a bag of one of Northwind's coffees in this visitor's cart, by SKU or by name.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "view_cartArgs": {
+        "description": "What is in the cart right now, with the subtotal, the delivery charge and the total.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  }
+}

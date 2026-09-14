@@ -1,3 +1,9 @@
+---
+title: "Delivery"
+description: "What Northwind Coffee charges for delivery, how long it takes, and where we ship."
+last_updated: 2026-09-14
+---
+
 # Delivery
 
 Source: https://web.demo.busymate.ai/shipping
@@ -26,3 +32,8 @@ Every order gets a tracking number by email the moment it is handed to the carri
 ## If it goes missing
 
 If tracking has not moved for three business days, tell us and we re-roast and re-send the order the same day — there is nothing to prove and nothing to fill in.
+
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

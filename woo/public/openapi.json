@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Fernweh Supply Co. — MCP tools API",
+    "description": "A working demonstration WooCommerce store: a live Busymate AI assistant grounded in this shop's own catalogue and policy pages, six of the page's own actions published over WebMCP, an MCP server over the shop's real product and order data, a provided demo customer with five orders for testing the identified experience, and hand-off to a person.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://woo.demo.busymate.ai"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpcCall",
+        "summary": "Invoke this demo's MCP tools over JSON-RPC 2.0",
+        "description": "Every tool below is called the same way: POST a JSON-RPC 2.0 envelope with `method: \"tools/call\"` and `params: {name, arguments}`, where `name` is one of search_products, get_product, get_delivery_and_returns, list_my_orders, get_order_status, start_return, search_the_shop, view_cart, add_to_cart, remove_from_cart, open_product, who_is_signed_in and `arguments` matches that tool's `<name>Args` schema under `components.schemas`. `method: \"tools/list\"` returns the live catalogue; `method: \"initialize\"` starts the session.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jsonrpc",
+                  "method"
+                ],
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "Request id, echoed on the response."
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "initialize",
+                      "tools/list",
+                      "tools/call",
+                      "resources/list",
+                      "resources/read"
+                    ]
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "For tools/call: { name: <tool name>, arguments: <that tool's Args schema> }."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response: {jsonrpc, id, result} or {jsonrpc, id, error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "search_productsArgs": {
+        "description": "Search the Fernweh Supply Co. range — packs and bags, merino layers, bottles and flasks, notebooks and paper — by words, category, price ceiling or availability, and return each match with its SKU, price, whether it is in stock and a link to its page. Reads the shop's own public catalogue, so it needs no sign-in.",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "What the shopper is after, e.g. 'waxed canvas pack' or 'merino socks'"
+          },
+          "category": {
+            "type": "string",
+            "description": "Narrow to one category: packs-and-bags, merino-layers, bottles-and-flasks, notebooks-and-paper"
+          },
+          "inStockOnly": {
+            "type": "boolean",
+            "description": "Leave out anything that is out of stock"
+          },
+          "maxPrice": {
+            "type": "number",
+            "description": "Highest price to include, in euros"
+          }
+        },
+        "additionalProperties": false
+      },
+      "get_productArgs": {
+        "description": "Everything the shop publishes about one product — full description, materials, weight, dimensions, price, whether it is in stock, and the link — found by SKU or by name.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU (e.g. FW-PK-W28) or the product's name"
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "get_delivery_and_returnsArgs": {
+        "description": "What delivery costs and how long it takes to each of the four zones the shop ships to, the free-delivery thresholds, and where the full shipping and returns policies are.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "list_my_ordersArgs": {
+        "description": "Every order on the signed-in customer's account — number, status, what was in it and the total. Answers only for the customer the caller's signed proof identifies; it cannot be pointed at anybody else.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "get_order_statusArgs": {
+        "description": "Where one of the signed-in customer's orders has got to, what it contains and what the status actually means. With no order number it answers about the most recent one. Call this the moment an order is asked about — never ask for the order number in prose first: call it with whatever you already have and the action card in the chat collects the rest as a field the customer fills in.",
+        "type": "object",
+        "properties": {
+          "orderNumber": {
+            "type": "string",
+            "description": "The order number as it appears on the account, e.g. 52"
+          }
+        },
+        "additionalProperties": false
+      },
+      "start_returnArgs": {
+        "description": "Open a return for one item on one of the signed-in customer's orders. Writes the return reference onto the real order as a customer-visible note and reports it back. Only a paid or completed order can be returned. Call this as soon as a return is mentioned — never ask for the order number, the item or the reason in prose first: call it with whatever you already have and the action card in the chat collects the rest as fields the customer fills in and submits.",
+        "type": "object",
+        "properties": {
+          "orderNumber": {
+            "type": "string",
+            "description": "The order the item came in"
+          },
+          "item": {
+            "type": "string",
+            "description": "The SKU or name of the item going back"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why it is going back, in the customer's own words"
+          }
+        },
+        "additionalProperties": false
+      },
+      "search_the_shopArgs": {
+        "description": "Search the Fernweh range from the page itself and return each match with its SKU, price, whether it is in stock and its link — the same catalogue the shop pages show.",
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "What the shopper is after, e.g. 'waxed canvas' or 'merino'"
+          },
+          "inStockOnly": {
+            "type": "boolean",
+            "description": "Leave out anything that is out of stock"
+          }
+        },
+        "additionalProperties": false
+      },
+      "view_cartArgs": {
+        "description": "What is in this visitor's cart right now, with each line, the item count, the delivery line and the total.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "add_to_cartArgs": {
+        "description": "Put one of Fernweh's products in this visitor's cart by SKU or by name, and report the cart back. Changes the page, so it is confirmed before it runs.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU (e.g. FW-PK-W28) or the product's name"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "How many (default 1)"
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "remove_from_cartArgs": {
+        "description": "Remove one line from this visitor's cart by SKU or by name, and report what is left. Changes the page, so it is confirmed before it runs.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU or name of the line to remove"
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "open_productArgs": {
+        "description": "Take this browser to one product's own page, by SKU or by name — the same thing clicking the product in the shop does.",
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The SKU or the product's name"
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "who_is_signed_inArgs": {
+        "description": "Whether a customer is signed in to this store in this browser, and their display name if they are. Reports no personal detail beyond the name the store already shows them.",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  }
+}

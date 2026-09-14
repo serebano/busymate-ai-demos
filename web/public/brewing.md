@@ -1,3 +1,9 @@
+---
+title: "Brew guide"
+description: "Northwind's ratios, temperatures and timings for pour-over, French press, espresso and Aeropress."
+last_updated: 2026-09-14
+---
+
 # Brew guide
 
 Source: https://web.demo.busymate.ai/brewing
@@ -28,3 +34,8 @@ Coarse grind, four minutes steeped, press slowly and decant straight away so it 
 ## Aeropress
 
 15g, medium grind, 200g of water, stir once, steep 90 seconds, press for 30. Forgiving and hard to ruin.
+
+
+## Sitemap
+
+Every page on this site: [sitemap.md](https://web.demo.busymate.ai/sitemap.md)

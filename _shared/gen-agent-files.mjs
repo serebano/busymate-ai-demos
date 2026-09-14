@@ -72,9 +72,32 @@ export function llmsFullFromKnowledge(config, knowledge) {
     + sections.join("\n\n---\n\n") + "\n";
 }
 
+/**
+ * The resolved tool table a demo actually advertises — the SAME computation
+ * `generate()` below uses to write llms.txt/agents.json, pulled out so
+ * sites/_shared/gen-protocol-files.mjs (openapi.json, the MCP server card,
+ * the agents.json v0.1.0 tool-actions manifest, agent-permissions.json) can
+ * never drift from what this file publishes: one source of truth, several
+ * consumers, never a second hand-rolled merge of mcpTools + webmcpOnlyTools.
+ * @param {AgentFilesConfig} config
+ */
+export function resolveTools(config) {
+  const hasMcp = Boolean(config.mcpUrl);
+  const mcpTools = config.mcpTools || (hasMcp ? toolsFor(config.name) : {});
+  const webOnly = config.webmcpOnlyTools || {};
+  const alsoWebmcp = config.alsoWebmcp ? new Set(config.alsoWebmcp) : null;
+  const allTools = {
+    ...Object.fromEntries(Object.entries(mcpTools).map(([n, t]) => [
+      n,
+      { ...t, transport: !alsoWebmcp || alsoWebmcp.has(n) ? "mcp+webmcp" : "mcp" },
+    ])),
+    ...Object.fromEntries(Object.entries(webOnly).map(([n, t]) => [n, { ...t, transport: "webmcp" }])),
+  };
+  return { hasMcp, allTools };
+}
+
 /** @param {AgentFilesConfig} config */
 export function generate(config) {
-  const hasMcp = Boolean(config.mcpUrl);
   // llms-full.txt: gen-content-pages.mjs writes it for a demo with content/*.md
   // (it runs before this in build-demo.sh). A KNOWLEDGE-ONLY demo — its pages live
   // in knowledge.json, the SAME sources the assistant is grounded in — gets one
@@ -89,16 +112,25 @@ export function generate(config) {
     }
   }
   const hasLlmsFull = fs.existsSync(fullPath);
-  const mcpTools = config.mcpTools || (hasMcp ? toolsFor(config.name) : {});
-  const webOnly = config.webmcpOnlyTools || {};
-  const alsoWebmcp = config.alsoWebmcp ? new Set(config.alsoWebmcp) : null;
-  const allTools = {
-    ...Object.fromEntries(Object.entries(mcpTools).map(([n, t]) => [
-      n,
-      { ...t, transport: !alsoWebmcp || alsoWebmcp.has(n) ? "mcp+webmcp" : "mcp" },
-    ])),
-    ...Object.fromEntries(Object.entries(webOnly).map(([n, t]) => [n, { ...t, transport: "webmcp" }])),
-  };
+  // sitemap.md (S10/S11): gen-content-pages.mjs writes a fuller one for a
+  // demo with content/*.md (it runs before this in build-demo.sh). A
+  // knowledge-only demo (no content/ dir) gets a minimal one here from the
+  // SAME `pages` list llms.txt already publishes — headings + links, never
+  // a bare list of bare URLs — so no demo ships without one.
+  const sitemapMdPath = path.join(config.outDir, "sitemap.md");
+  if (!fs.existsSync(sitemapMdPath)) {
+    const today = new Date().toISOString().slice(0, 10);
+    fs.writeFileSync(
+      sitemapMdPath,
+      `---\ntitle: "${config.name} — Sitemap"\ndescription: "Every page on ${config.name}."\nlast_updated: ${today}\n---\n\n`
+      + `# Sitemap\n\nSource: ${config.siteUrl}/sitemap.md\n\n## Pages\n\n`
+      + config.pages.map((p) => `- [${p.title}](${p.url})${p.md ? ` — Markdown: ${p.md}` : ""}`).join("\n")
+      + `\n\n## Discovery\n\n- [llms.txt](${config.siteUrl}/llms.txt)\n- [agents.json](${config.siteUrl}/agents.json)\n`
+      + `- [openapi.json](${config.siteUrl}/openapi.json)\n- [webmcp-catalog.json](${config.siteUrl}/webmcp-catalog.json)\n`
+      + `- [sitemap.xml](${config.siteUrl}/sitemap.xml)\n`,
+    );
+  }
+  const { hasMcp, allTools } = resolveTools(config);
   const toolLines = Object.entries(allTools)
     .map(([n, t]) => `- \`${n}\` — ${t.description}${t.accessHint === "identified" || t.accessHint === "delegated" ? " (identified visitors only)" : ""}${t.transport === "webmcp" ? " (WebMCP page tool only, not on the MCP server)" : ""}${t.transport === "mcp" ? " (MCP server only, not registered on the page)" : ""}`)
     .join("\n");
@@ -144,10 +176,26 @@ proof this site mints itself — see ${config.identityDocsUrl}.${config.identity
 ${config.docs.map((d) => `- [${d.title}](${d.url})${d.note ? `: ${d.note}` : ""}`).join("\n")}
 
 ## Optional
-${hasLlmsFull ? `- [llms-full.txt](${config.siteUrl}/llms-full.txt): every page above, in full, in one request\n` : ""}- [agents.json](${config.siteUrl}/agents.json): the machine-readable card for this site
+${hasLlmsFull ? `- [llms-full.txt](${config.siteUrl}/llms-full.txt): every page above, in full, in one request\n` : ""}- [agents.json](${config.siteUrl}/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](${config.siteUrl}/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](${config.siteUrl}/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](${config.siteUrl}/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](${config.siteUrl}/sitemap.xml): every page with an honest last-modified date
-${hasMcp ? `- [MCP endpoint](${config.mcpUrl}): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone\n` : ""}`;
+${hasMcp ? `- [MCP endpoint](${config.mcpUrl}): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone\n` : ""}
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](${config.siteUrl}/sitemap.md)`;
+
+  // YAML frontmatter for the .md twins (P16): values are double-quoted so a
+  // colon or apostrophe in a name/description can never break the parse.
+  const yamlStr = (s) => `"${String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, " ")}"`;
+  const today = new Date().toISOString().slice(0, 10);
+  const frontMatter = (title, description) => `---
+title: ${yamlStr(title)}
+description: ${yamlStr(description)}
+last_updated: ${today}
+---
+
+`;
 
   const agentsJson = {
     name: config.name,
@@ -171,16 +219,69 @@ ${hasMcp ? `- [MCP endpoint](${config.mcpUrl}): JSON-RPC 2.0 over HTTPS, the cat
     humanHandoff: config.humanHandoff !== false,
   };
 
+  // AGENTS.md (S12/S13): the agents.md convention's contextual guide for a
+  // coding/AI agent — free-form Markdown, any headings (agents.md has no
+  // required schema), but this one always covers what this site is, how to
+  // read it without a browser, what it will let an agent DO, and what it
+  // will never do (this is a sandbox, nothing here is real). Same facts as
+  // llms.txt, restated for the convention that looks for this exact path.
+  const agentsMd = `# AGENTS.md
+
+## Project overview
+${config.name} — ${config.description}
+
+## How an agent should read this site
+Start at [llms.txt](${config.siteUrl}/llms.txt) for the indexed page list, or
+[llms-full.txt](${config.siteUrl}/llms-full.txt) for the whole site in one
+request. Every page also has a Markdown twin at its own path plus \`.md\`
+(content negotiation: send \`Accept: text/markdown\` and the same URL returns
+it). [sitemap.md](${config.siteUrl}/sitemap.md) lists every page as headings
+and links; [openapi.json](${config.siteUrl}/openapi.json) and
+[/.well-known/agents.json](${config.siteUrl}/.well-known/agents.json)
+describe the tools below as a machine-readable API.
+
+## Installation
+Nothing to install to READ this site — every layer above is a plain HTTPS
+GET, no credential, no SDK. To add this SAME pattern to your own site:
+embed the widget with one script tag (\`<script src="https://busymate.ai/embed/v1.js" data-assistant="<tenant-slug>" async>\`), or connect your
+own MCP server as assistant tools — see the guides under "Learn more" in
+[llms.txt](${config.siteUrl}/llms.txt).
+
+## Configuration
+${hasMcp ? `This demo's own MCP server is configured at \`${config.mcpUrl}\` (JSON-RPC 2.0, transport: streamable-http, no auth to connect). ` : ""}What this page will let an agent do — and what it MUST confirm with the
+visitor first — is declared in [agent-permissions.json](${config.siteUrl}/agent-permissions.json).
+
+## Usage & examples
+${hasMcp ? `Call this site's MCP server at \`${config.mcpUrl}\` (JSON-RPC 2.0, no credential needed to connect):\n${toolLines}` : `Every action below is a WebMCP page tool only (registered on the page, not a separate server):\n${toolLines}`}
+
+${config.identityDocsUrl ? `A tool marked "identified visitors only" needs a signed launch proof — see ${config.identityDocsUrl}.${config.identityDemoNote ? ` ${config.identityDemoNote}` : ""}\n\n` : ""}## Security considerations
+This is a Busymate AI integration demo, not a real business: no real order is
+fulfilled, no real payment is taken, and the customer or visitor behind any
+sign-in button is not a real person. Nothing served here should be treated as
+production data, and no action taken here has a real-world consequence — it
+is safe for an agent to exercise every tool above.
+
+## Human hand-off
+${config.humanHandoff !== false ? "Ask the assistant for a person and a human joins the same conversation from the team Inbox." : "This demo does not exercise human hand-off."}
+`;
+
   fs.mkdirSync(config.outDir, { recursive: true });
   fs.writeFileSync(path.join(config.outDir, "llms.txt"), llms);
-  fs.writeFileSync(path.join(config.outDir, "llms.txt.md"), llms);
+  fs.writeFileSync(path.join(config.outDir, "llms.txt.md"), frontMatter(config.name, config.description) + llms);
+  fs.writeFileSync(path.join(config.outDir, "AGENTS.md"), agentsMd);
   const agentsJsonText = JSON.stringify(agentsJson, null, 2) + "\n";
-  fs.writeFileSync(path.join(config.outDir, "agents.json"), agentsJsonText);
-  // Every demo's <link rel="alternate" ... href="/.well-known/agents.json"> pointed at a file
-  // that was never written (a repo-wide gap the AI-readiness checker's "agents.json" check
-  // catches — it looks at the well-known path, not the bare one). Same content, both paths.
   fs.mkdirSync(path.join(config.outDir, ".well-known"), { recursive: true });
+  // NOTE (#2905/C6, corrected against a live agent-ready.dev rescan on
+  // 2026-09-14): the "agents.json v0.1.0" wildcard/tool-actions checker
+  // reads the BARE `/agents.json` path, not `.well-known/agents.json` — the
+  // opposite of what the original ticket assumed. This bespoke discovery
+  // card (name/url/description/mcp/webmcp/tools/identity/humanHandoff) —
+  // Busymate's own convention, not checked by any known external scanner —
+  // therefore moves to `.well-known/agents.json`; sites/_shared/
+  // gen-protocol-files.mjs now writes the REAL agentsJson v0.1.0 document to
+  // the bare path.
   fs.writeFileSync(path.join(config.outDir, ".well-known", "agents.json"), agentsJsonText);
+  // with the actual agents.json v0.1.0 tool-actions schema (#2905/C6).
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -191,5 +292,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }
   const mod = await import(path.resolve(configPath));
   generate(mod.default);
-  console.log(`wrote llms.txt, llms.txt.md, agents.json -> ${mod.default.outDir}`);
+  console.log(`wrote llms.txt, llms.txt.md, AGENTS.md, agents.json -> ${mod.default.outDir}`);
 }

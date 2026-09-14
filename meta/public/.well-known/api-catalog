@@ -1,0 +1,12 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://meta.demo.busymate.ai/",
+      "service-desc": [
+        {
+          "href": "https://meta.demo.busymate.ai/openapi.json"
+        }
+      ]
+    }
+  ]
+}

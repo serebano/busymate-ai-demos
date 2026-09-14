@@ -1,3 +1,9 @@
+---
+title: "Sol & Salt Swimwear"
+description: "A swim and resort-wear demo showing one assistant answering both Meta inboxes: faithful previews of a Messenger thread and an Instagram DM around the live assistant, grounded chat over the collection, size chart and policy, an MCP server over the catalogue, sizing, orders and returns, WebMCP in-page actions, and identified-customer order lookup."
+last_updated: 2026-09-14
+---
+
 # Sol & Salt Swimwear
 
 > A swim and resort-wear demo showing one assistant answering both Meta inboxes: faithful previews of a Messenger thread and an Instagram DM around the live assistant, grounded chat over the collection, size chart and policy, an MCP server over the catalogue, sizing, orders and returns, WebMCP in-page actions, and identified-customer order lookup.
@@ -48,7 +54,12 @@ proof this site mints itself — see https://busymate.ai/docs/guides/identified-
 
 ## Optional
 - [llms-full.txt](https://meta.demo.busymate.ai/llms-full.txt): every page above, in full, in one request
-- [agents.json](https://meta.demo.busymate.ai/agents.json): the machine-readable card for this site
+- [agents.json](https://meta.demo.busymate.ai/agents.json): the agents.json v0.1.0 tool-actions manifest (agentsjson.org)
+- [.well-known/agents.json](https://meta.demo.busymate.ai/.well-known/agents.json): this site's own machine-readable card (name/url/tools/identity/human hand-off)
 - [webmcp-catalog.json](https://meta.demo.busymate.ai/webmcp-catalog.json): the page tools, readable without running the page
+- [openapi.json](https://meta.demo.busymate.ai/openapi.json): the same tools as a real OpenAPI document
 - [sitemap.xml](https://meta.demo.busymate.ai/sitemap.xml): every page with an honest last-modified date
 - [MCP endpoint](https://meta.demo.busymate.ai/mcp): JSON-RPC 2.0 over HTTPS, the catalogue and policies open to anyone
+
+## Sitemap
+Every page on this site, as Markdown headings and links, no HTML required: [sitemap.md](https://meta.demo.busymate.ai/sitemap.md)
