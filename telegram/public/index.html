@@ -118,6 +118,8 @@ section{padding:56px 0;border-top:1px solid var(--line)}
 .tg-badge svg{width:12px;height:12px;fill:#fff}
 .tg-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:center}
 .phone{width:min(360px,100%);margin:0 auto;background:#0b0b0b;border-radius:38px;padding:12px;box-shadow:0 30px 70px #0007}
+.phone.tg-attn{animation:tgAttn 900ms ease}
+@keyframes tgAttn{0%{box-shadow:0 30px 70px #0007,0 0 0 0 rgba(52,157,231,.6)}100%{box-shadow:0 30px 70px #0007,0 0 0 22px rgba(52,157,231,0)}}
 .phone-status{display:flex;justify-content:space-between;align-items:center;padding:6px 16px 2px;color:#fff;font-size:12px;font-weight:600}
 .phone-screen{border-radius:26px;overflow:hidden;background:var(--tg-bg);display:flex;flex-direction:column;height:560px}
 .tg-header{background:linear-gradient(135deg,var(--tg-1),var(--tg-2));color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;flex:0 0 auto}
@@ -421,11 +423,11 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
 <section id="telegram" class="tg-band">
   <div class="wrap">
     <div class="eyebrow" style="color:#7ecbf0">A faithful preview</div>
-    <h2>See the Telegram thread, before the bot exists.</h2>
-    <p class="sub">Nomad Circuits' Telegram bot is still being connected — the section below is not a mock-up or a recording. It's the exact live assistant, dressed the way the conversation will look inside Telegram the moment that bot goes live.</p>
+    <h2 id="tgHeadline">See the Telegram thread, before the bot exists.</h2>
+    <p class="sub" id="tgSub">Nomad Circuits' Telegram bot is still being connected — the section below is not a mock-up or a recording. It's the exact live assistant, dressed the way the conversation will look inside Telegram the moment that bot goes live.</p>
     <div class="tg-layout">
       <div class="tg-copy">
-        <div class="tg-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>Preview — real assistant, no live bot yet</div>
+        <div class="tg-badge" id="tgBadge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span id="tgBadgeText">Preview — real assistant, no live bot yet</span></div>
         <p>This IS Watt, running on the same brain, the same catalogue, and the same order/repair tools as the widget on this page — only the wrapper around it changes once Telegram is live. Ask it about a gadget, or try booking a repair right in the thread.</p>
         <a class="btn tg" id="tgCtaMain" href="#telegram">This becomes a real Telegram chat soon</a>
         <p class="tg-note" id="tgCtaNote">The "Chat on Telegram" button above does the same thing until the bot is live — it scrolls here.</p>
@@ -662,6 +664,26 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
     flash("Signed out");
   });
+  // The "Chat on Telegram" CTAs (#telegram anchors, preview state only — the
+  // live t.me link swap below leaves these alone): the target section can
+  // already BE the current viewport (it's the hero), so the native anchor
+  // jump is a real no-op a person correctly reads as "the button did
+  // nothing." Always give visible confirmation: recentre the phone mock AND
+  // pulse it, regardless of whether a scroll actually happened.
+  document.querySelectorAll('#tgHeaderCta, #tgCtaMain').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if ((a.getAttribute("href") || "").charAt(0) !== "#") return; // live: real t.me link, let it navigate
+      ev.preventDefault();
+      var phone = document.querySelector(".phone");
+      if (phone) {
+        phone.scrollIntoView({ block: "center", behavior: "smooth" });
+        phone.classList.remove("tg-attn");
+        void phone.offsetWidth; // restart the animation even on a repeat click
+        phone.classList.add("tg-attn");
+        setTimeout(function () { phone.classList.remove("tg-attn"); }, 900);
+      }
+    });
+  });
   // On a phone the chat lives inside the phone mock further down the page: bring it
   // on screen before opening, or the tap does nothing a person can see.
   function openChat() {
@@ -768,6 +790,12 @@ document.addEventListener("DOMContentLoaded", function () {
       main.textContent = "Chat on Telegram";
       note.textContent = "Opens a real Telegram conversation with Nomad Circuits.";
       sub.textContent = "Watt · on Telegram now";
+      var headline = document.getElementById("tgHeadline");
+      var pageSub = document.getElementById("tgSub");
+      var badgeText = document.getElementById("tgBadgeText");
+      if (headline) headline.textContent = "The Telegram thread — live now.";
+      if (pageSub) pageSub.textContent = "Nomad Circuits' Telegram bot is live at @" + username + ". The thread below is the real assistant — try it here, or open it in Telegram.";
+      if (badgeText) badgeText.textContent = "Live — @" + username;
     }
   }).catch(function () {});
 })();
