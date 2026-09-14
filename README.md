@@ -11,9 +11,9 @@ server, the form-card builder, the card and avatar UI, the brand and knowledge b
 
 | Demo | Live site | How to integrate | Code |
 |---|---|---|---|
-| Web chat widget | [web.demo.busymate.ai](https://web.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/web-widget) | [`web/`](https://github.com/serebano/busymate-ai-demos/tree/main/web) |
+| Web chat widget | [web.demo.busymate.ai](https://web.demo.busymate.ai) | [guide](https://busymate.ai/integrations/web) | [`web/`](https://github.com/serebano/busymate-ai-demos/tree/main/web) |
 | Shopify store | [shopify.demo.busymate.ai](https://shopify.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/shopify) | [`shopify/`](https://github.com/serebano/busymate-ai-demos/tree/main/shopify) |
-| Site-scan quick start | [scan.demo.busymate.ai](https://scan.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/site-scan) | [`scan/`](https://github.com/serebano/busymate-ai-demos/tree/main/scan) |
+| Site-scan quick start | [scan.demo.busymate.ai](https://scan.demo.busymate.ai) | [guide](https://busymate.ai/integrations/site-crawl) | [`scan/`](https://github.com/serebano/busymate-ai-demos/tree/main/scan) |
 | WhatsApp channel | [whatsapp.demo.busymate.ai](https://whatsapp.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/whatsapp) | [`whatsapp/`](https://github.com/serebano/busymate-ai-demos/tree/main/whatsapp) |
 | Telegram channel | [telegram.demo.busymate.ai](https://telegram.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/telegram) | [`telegram/`](https://github.com/serebano/busymate-ai-demos/tree/main/telegram) |
 | Slack channel | [slack.demo.busymate.ai](https://slack.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/slack) | [`slack/`](https://github.com/serebano/busymate-ai-demos/tree/main/slack) |

@@ -9,7 +9,7 @@
   "status": "live",
   "order": 3,
   "icon": "web",
-  "docs": "https://busymate.ai/docs/guides/site-scan",
+  "docs": "https://busymate.ai/integrations/site-crawl",
   "code": "https://github.com/serebano/busymate-ai-demos/tree/main/scan",
   "backend_port": 8104
 }
