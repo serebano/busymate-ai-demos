@@ -118,16 +118,34 @@ export function generate(config) {
   // SAME `pages` list llms.txt already publishes — headings + links, never
   // a bare list of bare URLs — so no demo ships without one.
   const sitemapMdPath = path.join(config.outDir, "sitemap.md");
+  const genToday = new Date().toISOString().slice(0, 10);
+  const genFrontMatter = (title, description) =>
+    `---\ntitle: "${String(title).replace(/"/g, '\\"')}"\ndescription: "${String(description).replace(/"/g, '\\"').replace(/\n/g, " ")}"\nlast_updated: ${genToday}\n---\n\n`;
+  const sitemapMdSection = `\n\n## Sitemap\n\nEvery page on this site: [sitemap.md](${config.siteUrl}/sitemap.md)\n`;
   if (!fs.existsSync(sitemapMdPath)) {
-    const today = new Date().toISOString().slice(0, 10);
     fs.writeFileSync(
       sitemapMdPath,
-      `---\ntitle: "${config.name} — Sitemap"\ndescription: "Every page on ${config.name}."\nlast_updated: ${today}\n---\n\n`
+      genFrontMatter(`${config.name} — Sitemap`, `Every page on ${config.name}.`)
       + `# Sitemap\n\nSource: ${config.siteUrl}/sitemap.md\n\n## Pages\n\n`
       + config.pages.map((p) => `- [${p.title}](${p.url})${p.md ? ` — Markdown: ${p.md}` : ""}`).join("\n")
       + `\n\n## Discovery\n\n- [llms.txt](${config.siteUrl}/llms.txt)\n- [agents.json](${config.siteUrl}/agents.json)\n`
       + `- [openapi.json](${config.siteUrl}/openapi.json)\n- [webmcp-catalog.json](${config.siteUrl}/webmcp-catalog.json)\n`
       + `- [sitemap.xml](${config.siteUrl}/sitemap.xml)\n`,
+    );
+  }
+
+  // P19: content negotiation on `/` needs an index.md to rewrite to — a
+  // demo with content/*.md gets a real one from gen-content-pages.mjs; a
+  // knowledge-only demo gets a minimal one here (same facts as llms.txt's
+  // own header) so its HOME page is never the one page content negotiation
+  // silently 404s on.
+  const indexMdPath = path.join(config.outDir, "index.md");
+  if (!fs.existsSync(indexMdPath)) {
+    fs.writeFileSync(
+      indexMdPath,
+      `${genFrontMatter(config.name, config.description)}# ${config.name}\n\nSource: ${config.siteUrl}/\n\n> ${config.description}\n\n`
+      + `See [llms.txt](${config.siteUrl}/llms.txt) for the full page index, or [llms-full.txt](${config.siteUrl}/llms-full.txt) `
+      + `for this entire site in one request.${sitemapMdSection}`,
     );
   }
   const { hasMcp, allTools } = resolveTools(config);
