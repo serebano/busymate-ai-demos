@@ -775,7 +775,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // there, the CTAs switch to a genuine https://t.me/<username> link
 // automatically.
 (function () {
-  fetch("/telegram-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+  fetch("/telegram-config.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (cfg) {
     var username = cfg && cfg.username;
     var header = document.getElementById("tgHeaderCta");
     var main = document.getElementById("tgCtaMain");
