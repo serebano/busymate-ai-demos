@@ -464,7 +464,7 @@ html{color-scheme:light}
 .fernweh-card h3{color:#f6f1e7;font-size:1.05rem;margin:0 0 .5rem;line-height:1.3}
 .fernweh-card p{color:rgba(246,241,231,.8);font-size:.92rem;line-height:1.55;margin:0 0 .75rem}
 .fernweh-card__try{border-left:2px solid #c08a3e;padding-left:.75rem;color:#f6f1e7!important}
-.fernweh-card__try span{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;color:#c08a3e}
+.fernweh-card__try span{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:#c08a3e}
 .fernweh-card__link a,.fernweh-demo a{color:#e3b877;text-decoration:underline}
 .fernweh-demo__foot{margin-top:2rem;border-top:1px solid rgba(246,241,231,.18);padding-top:1.5rem}
 .fernweh-demo__foot h3{color:#f6f1e7;font-size:1.05rem;margin:0 0 .5rem}

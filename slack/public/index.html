@@ -65,7 +65,7 @@ nav a:hover{color:var(--ink)}
 .btn:hover{filter:brightness(1.08)}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .btn.small{padding:8px 14px;font-size:13px}
-.btn.tiny{padding:6px 11px;font-size:12px}
+.btn.tiny{padding:9px 12px;font-size:12px;min-height:36px}
 .btn.sl{background:#4a154b;color:#fff}
 .btn[hidden]{display:none}
 .sl-cta{background:#4a154b;color:#fff;flex:0 0 auto}
@@ -92,7 +92,7 @@ h2{font-size:28px;letter-spacing:-.02em;margin:0 0 10px;font-weight:700}
 .hero .eyebrow{color:#5fd3bb}
 .hero .lead{color:#c9d3df}
 .hero .btn.ghost{color:#f4f7f5;border-color:#ffffff40}
-.hero .credit{position:absolute;right:14px;bottom:10px;z-index:2;font-size:11px;color:#ffffff88}
+.hero .credit{position:absolute;right:16px;bottom:10px;z-index:2;font-size:12px;padding:6px 0;color:#ffffff88}
 .hero .credit a{color:#ffffffaa}
 
 section{padding:56px 0;border-top:1px solid var(--line)}
@@ -111,9 +111,9 @@ section{padding:56px 0;border-top:1px solid var(--line)}
 .svc .ic svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .svc h4{margin:2px 0 0;font-size:15px;font-weight:700}
 .svc p{margin:0;font-size:13px;color:var(--muted)}
-.svc .meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px;font-size:11px}
-.svc .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);opacity:.8}
-.svc .plan{font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:999px;padding:2px 7px}
+.svc .meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px;font-size:12px}
+.svc .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);opacity:.8}
+.svc .plan{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:999px;padding:2px 7px}
 .svc-photo{grid-column:span 2;position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--line);min-height:180px}
 .svc-photo img,.svc-photo img[width][height]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .svc-photo span{position:absolute;left:12px;bottom:10px;font-size:12px;color:#fff;background:#0009;border-radius:8px;padding:4px 8px}
@@ -138,7 +138,7 @@ section{padding:56px 0;border-top:1px solid var(--line)}
 .status-list{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px}
 .status-list li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}
 .status-list li:last-child{border-bottom:0}
-.pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.pill{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 8px;white-space:nowrap}
 .pill.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
 .pill.warn{color:#8a5a00;background:color-mix(in srgb,var(--warn) 22%,transparent)}
 
@@ -146,7 +146,7 @@ section{padding:56px 0;border-top:1px solid var(--line)}
 .sl-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
 .sl-band h2{color:var(--band-ink)}
 .sl-band .sub{color:var(--band-muted)}
-.sl-badge{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f3e8ff;background:#4a154b;border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.sl-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f3e8ff;background:#4a154b;border-radius:999px;padding:5px 12px;margin-bottom:16px}
 .sl-badge svg{width:12px;height:12px;fill:#fff}
 .sl-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:start}
 .sl-window{background:var(--sl-main);color:var(--sl-text);border-radius:14px;overflow:hidden;box-shadow:0 30px 70px #0008;border:1px solid #ffffff14;display:grid;grid-template-columns:200px 1fr;grid-template-rows:44px 1fr;height:600px}
@@ -252,7 +252,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
 
 /* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
 @media(max-width:480px){
-  .wrap{padding:0 14px}
+  .wrap{padding:0 16px}
   .bar{height:56px;gap:8px}
   .logo{font-size:14px;gap:7px}
   .logo img{width:24px;height:24px}
@@ -262,7 +262,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
   .sl-cta-icon{width:18px;height:18px}
   .hero{min-height:0;padding-top:40px;padding-bottom:44px}
   h1{font-size:27px;line-height:1.12;margin:10px 0 12px}
-  .eyebrow{font-size:10.5px}
+  .eyebrow{font-size:12px}
   .lead{font-size:15px}
   .cta{flex-direction:column;align-items:stretch;margin-top:20px}
   .cta .btn{justify-content:center;width:100%}
@@ -651,15 +651,22 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
     flash("Signed out");
   });
+  // On a phone the chat lives inside the phone mock further down the page: bring it
+  // on screen before opening, or the tap does nothing a person can see.
+  function openChat() {
+    var slot = document.querySelector('iframe[src*="busymate.ai/support"]');
+    if (slot) { var r = slot.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) slot.scrollIntoView({ block: "center" }); }
+    if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+  }
   document.querySelectorAll("[data-open-chat]").forEach(function (b) {
-    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
+    b.addEventListener("click", function () { openChat(); });
   });
   document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
     b.addEventListener("click", async function () {
       var text = b.getAttribute("data-try-prompt");
       try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
       catch (e) { flash("Ask Patch: " + text); }
-      if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+      openChat();
     });
   });
 });
