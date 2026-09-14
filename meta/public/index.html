@@ -877,7 +877,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
     b.addEventListener("click", function () {
       var text = b.getAttribute("data-try-prompt");
-      if (window.BusymateAI && window.BusymateAI.ask) { window.BusymateAI.ask(text); return; }
+      if (window.BusymateAI && window.BusymateAI.ask) { window.BusymateAI.ask(text, { submit: true }); return; }
       if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
       navigator.clipboard.writeText(text).then(
         function () { flash("Copied — paste it into the chat"); },
@@ -956,6 +956,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.__solSetChannel = setChannel;
 
   function mount() {
+    if (mounted) return;
     tries++;
     var slot = document.getElementById(SLOTS[active]);
     var layer = document.querySelector("[data-support-chat]");
@@ -967,11 +968,18 @@ document.addEventListener("DOMContentLoaded", function () {
         wired = true;
         window.addEventListener("resize", follow);
         window.addEventListener("scroll", follow, { passive: true });
+        window.addEventListener("load", follow);
+        document.addEventListener("visibilitychange", function () { if (!document.hidden) follow(); });
+        setTimeout(follow, 300); setTimeout(follow, 1200);
       }
       window.BusymateAI.open();
       return;
     }
-    if (tries < 100) setTimeout(mount, 100);
+    // No 10s give-up: the async embed can take far longer on a cold/mobile
+    // connection, and bailing left the frame stuck on "Loading the live thread…"
+    // with the corner launcher hidden and no way to chat. Keep trying (fast for
+    // ~6s, then relaxed for up to ~5 min) so a slow embed recovers into the frame.
+    if (tries < 600) setTimeout(mount, tries < 60 ? 100 : 500);
   }
 
   document.querySelectorAll("[data-channel-btn]").forEach(function (b) {
@@ -1001,6 +1009,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   paintPlaceholders();
   mount();
+  // A tab restored from bfcache or first shown after opening in the background
+  // may have missed the moment the embed became ready — try again then.
+  window.addEventListener("load", mount);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) mount(); });
 })();
 
 // ── The go-live hooks: two fields in /meta-config.json. null (today) = the

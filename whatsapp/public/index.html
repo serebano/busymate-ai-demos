@@ -686,7 +686,7 @@ document.addEventListener("DOMContentLoaded", function () {
     b.addEventListener("click", function () {
       var text = b.getAttribute("data-try-prompt");
       openChat();
-      if (window.BusymateAI && window.BusymateAI.ask) window.BusymateAI.ask(text);
+      if (window.BusymateAI && window.BusymateAI.ask) window.BusymateAI.ask(text, { submit: true });
       else navigator.clipboard.writeText(text).then(
         function () { flash("Copied — paste it into the chat"); },
         function () { flash("Ask Marlow: " + text); },
@@ -718,11 +718,15 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   var tries = 0;
   var positioned = false;
+  var mounted = false;
   function follow() {
     var slot = document.getElementById("waScreen");
     var layer = document.querySelector("[data-support-chat]");
     if (!slot || !layer) return;
     var r = slot.getBoundingClientRect();
+    // A frame that is hidden or not yet laid out measures 0×0 — leave the live
+    // chat where it is rather than collapsing it into nothing (mobile / late layout).
+    if (r.width < 2 || r.height < 2) return;
     layer.style.position = "absolute";
     layer.style.right = "auto";
     layer.style.bottom = "auto";
@@ -732,10 +736,12 @@ document.addEventListener("DOMContentLoaded", function () {
     layer.style.height = r.height + "px";
   }
   function mount() {
+    if (mounted) return;
     tries++;
     var slot = document.getElementById("waScreen");
     var layer = document.querySelector("[data-support-chat]");
     if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      mounted = true;
       var ph = document.getElementById("waPlaceholder");
       if (ph) ph.remove();
       follow();
@@ -743,13 +749,26 @@ document.addEventListener("DOMContentLoaded", function () {
         positioned = true;
         window.addEventListener("resize", follow);
         window.addEventListener("scroll", follow, { passive: true });
+        window.addEventListener("load", follow);
+        document.addEventListener("visibilitychange", function () { if (!document.hidden) follow(); });
+        setTimeout(follow, 300); setTimeout(follow, 1200);
       }
       window.BusymateAI.open();
       return;
     }
-    if (tries < 100) setTimeout(mount, 100);
+    // No 10s give-up: the embed script is async and can take far longer than a
+    // second on a cold or mobile connection. Bailing early left the frame stuck
+    // on "Loading the live preview…" with the corner launcher hidden by CSS and
+    // NO way to open the chat at all — the "demo doesn't work" report. Keep
+    // trying (fast for the first ~6s, then relaxed for up to ~5 min) so a slow
+    // embed recovers straight into the frame.
+    if (tries < 600) setTimeout(mount, tries < 60 ? 100 : 500);
   }
   mount();
+  // A tab restored from bfcache, or first shown after being opened in the
+  // background, may have missed the window in which the embed became ready.
+  window.addEventListener("load", mount);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) mount(); });
 })();
 
 // ── The wa.me hook: a single field in /whatsapp-config.json. null (today) =
