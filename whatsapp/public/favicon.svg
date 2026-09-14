@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Marlow's Kitchen">
+  <title>Marlow's Kitchen</title>
+  <!-- An invented mark for an invented bistro: a monogram M, drawn as one
+       unbroken line so its two peaks double as a fork's outer tines, with a
+       single ember above it. Nothing here is any real business's asset. -->
+  <defs>
+    <linearGradient id="mk-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3f5d3e"/>
+      <stop offset="1" stop-color="#1c2a1b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#mk-bg)"/>
+  <polyline points="144,374 144,138 256,297 368,138 368,374"
+        fill="none" stroke="#fbf6ee" stroke-width="49" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="96" r="16" fill="#d98a4b"/>
+</svg>

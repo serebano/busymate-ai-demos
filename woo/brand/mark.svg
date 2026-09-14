@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fernweh Supply Co.">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a717a"/>
+      <stop offset="1" stop-color="#1e4046"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <!-- a horizon, because Fernweh is the ache for somewhere further off -->
+  <path d="M12 40 h40" fill="none" stroke="#f6f1e7" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  <!-- the road running out to it: reads as an F laid on its side -->
+  <path d="M18 51 L32 40 L46 51" fill="none" stroke="#f6f1e7" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- sun just clear of the horizon -->
+  <circle cx="32" cy="28" r="7.5" fill="#c08a3e"/>
+  <path d="M32 13.5 v4 M32 38.5 v-4 M17.5 28 h4 M46.5 28 h-4" stroke="#c08a3e" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

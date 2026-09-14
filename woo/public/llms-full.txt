@@ -1,0 +1,203 @@
+# Fernweh Supply Co.
+
+Source: https://woo.demo.busymate.ai/
+
+> Small-batch gear for the long way round. A Busymate AI demonstration WooCommerce store.
+
+This is the whole shop in one request: every product with its price, stock and specification, and all four policy pages in full.
+
+## The shop
+
+# Fernweh Supply Co.
+
+> Small-batch gear for the long way round.
+> A Busymate AI demonstration store — nothing is dispatched and no payment is taken. Source: https://woo.demo.busymate.ai/
+
+Fernweh Supply Co. — a real WooCommerce shop with a live catalogue, a signed-in customer, real orders and an open REST API to drive it all.
+
+## Merino Layers
+
+Non-mulesed merino from a single mill in Biella. Warm wet, quiet on a night train, and it goes a week between washes without anyone minding.
+
+- Alpenglühen Merino Crew 250 (FW-ML-C250) — €139.00. Weight: 250 gsm. Fibre: 100% non-mulesed merino. Knit: Waffle interlock. Sizes: XS-XXL. 250 gsm interlock merino in a waffle knit, spun and knitted at one mill outside Biella from non-mulesed Australian wool. It is the weight we settled on after three winters of arguing: heavy enough to wear alone at 5 °C, light enough that it does not sulk under a shell. The body is cut long at the back so it stays put under a pack hip belt, and the cuffs are ribbed 4 cm deep so they still grip after a season. Wash it cold, dry it flat, and it will hold its shape for years. Page: https://woo.demo.busymate.ai/product/alpengluhen-merino-crew-250/
+- Hüttenwarm Merino Hiking Socks (FW-ML-SK) — €29.00. Fibre: 72% merino / 26% nylon / 2% elastane. Cushioning: Terry sole and toe. Sizes: 35-38, 39-42, 43-46. Made in: Portugal. 72% merino, 26% nylon and 2% elastane — the nylon is there because a pure-wool sock does not survive a heel, whatever anyone tells you. Terry cushioning under the foot and across the toe box, a flat toe seam, and a ribbed cuff that holds without leaving a mark. Knitted in Portugal in runs of five hundred pairs, which is why the patterns change once a year and then never come back. Sold as a single pair; most people buy three. Page: https://woo.demo.busymate.ai/product/huttenwarm-merino-hiking-socks/
+- Zugfahrt Merino Longsleeve 190 (FW-ML-LS190) — €79.00 (was €99.00). Weight: 190 gsm. Fibre: 100% non-mulesed merino. Seams: Flatlock, offset shoulder. Sizes: XS-XXL. 190 gsm single-jersey merino, which is the lightest weight we could get to survive a pack strap without pilling. Flatlock seams sit outside the shoulder line so nothing rubs where a pack sits, and the neck is bound rather than ribbed so it does not stretch out in a rucksack. This is the piece people write to us about: it goes seven days between washes and still gets on a plane. Available in cardinal, slate and undyed. Page: https://woo.demo.busymate.ai/product/zugfahrt-merino-longsleeve-190/
+
+## Bottles & Flasks
+
+Double-walled 18/8 steel, no liner, no paint on the inside. Everything here takes a dent and keeps working.
+
+- Brühzeit 500 Vacuum Flask (FW-BT-F500) — €56.00. Capacity: 500 ml. Hot: 12 h above 70 °C. Lid: Steel cup + pour stopper. Weight: 420 g. Half a litre, a steel cup that unscrews from the top, and a stopper you can pour through without taking off. It holds above 70 °C for twelve hours, which is long enough for a pre-dawn start and a second cup at the summit. The body is 0.6 mm steel — heavier than it needs to be, so it survives being wedged into a pack against a stove. Every part of the stopper comes apart for cleaning, and we stock replacements. Page: https://woo.demo.busymate.ai/product/bruhzeit-500-vacuum-flask/
+- Quelle 1L Wide-Mouth Bottle (FW-BT-Q1L) — €34.00. Only 3 left. Capacity: 1 L. Material: 18/8 stainless, single wall. Mouth: 63 mm. Weight: 280 g. Single-walled, so it is light (280 g) and you can boil water in it over a stove, which the insulated one will not thank you for. The 63 mm mouth takes standard gravity-filter threads, a handful of ice, or a bottle brush that actually reaches the bottom. The loop lid is dishwasher-safe and sold separately for six euros when the seal eventually goes. In sea green, slate and undyed steel. Page: https://woo.demo.busymate.ai/product/quelle-1l-wide-mouth-bottle/
+- Quelle 750 Insulated Bottle (FW-BT-Q750) — €42.00. Capacity: 750 ml. Material: 18/8 stainless, double wall. Hot: 18 h. Cold: 26 h. Double-walled 18/8 stainless with a vacuum gap and a copper-shielded inner wall. We measured it ourselves at 18 hours above 60 °C and 26 hours below 8 °C in a 20 °C room, which is a boring way to say it works. Nothing that touches your drink is plastic or painted — the cap seal is food-grade silicone and the threads are steel — so it does not pick up the taste of yesterday’s coffee. The exterior is bead-blasted rather than powder-coated, so the scratches it collects look like use rather than damage. Page: https://woo.demo.busymate.ai/product/quelle-750-insulated-bottle/
+
+## Notebooks & Paper
+
+120 gsm paper that takes fountain ink without ghosting, bound flat so the page stays open on a bus tray table.
+
+- Etappe Ruled Refill, 2-Pack (FW-NB-R02) — €18.00. Format: A6. Pages: 192 each. Ruling: 6 mm. Pack: 2 blocks. The inside of the Reisetagebuch, sold on its own: two A6 blocks of 192 ruled pages in the same 120 gsm cream stock, section-sewn so they lie flat. Ruled at 6 mm, which is a line height most people can write two trips of notes in. They slot straight into an existing leather wrap — no glue, no tools — and the old block keeps its own covers so a finished journal still looks like a book on a shelf. Also sold dotted, under FW-NB-R02D. Page: https://woo.demo.busymate.ai/product/etappe-ruled-refill-2-pack/
+- Feldnotiz Pocket Notebook, 3-Pack (FW-NB-P03) — €24.00. Format: 90 x 140 mm. Pages: 48 each. Paper: 100 gsm. Pack: 1 ruled, 1 dotted, 1 plain. Three books, 48 pages each, 90 x 140 mm — small enough for a shirt pocket and stiff enough to survive a back one. Kraft covers with a single saddle stitch, 100 gsm paper, and a dotted grid at 5 mm that disappears when you photograph a page. One ruled, one dotted, one plain in each pack, because nobody agrees and we stopped trying to guess. The covers take a pen for labelling, which is the only feature anyone has ever asked us to add. Page: https://woo.demo.busymate.ai/product/feldnotiz-pocket-notebook-3-pack/
+- Reisetagebuch Leather Journal (FW-NB-J01) — €64.00. Format: A6. Pages: 192. Paper: 120 gsm cream. Binding: Section-sewn, lies flat. Vegetable-tanned leather over a section-sewn block of 192 pages, A6, in 120 gsm cream paper that takes fountain ink without ghosting through. It is sewn rather than glued, so it lies flat from page one — which matters more than anything else on a bus tray table. The cover is a wrap with an elastic, and the whole block pops out when it is full: refills are eighteen euros and use the same binding. The leather is undyed and will go the colour of whatever you spill on it. Page: https://woo.demo.busymate.ai/product/reisetagebuch-leather-journal/
+- Tintenzug Pen & Journal Set (FW-NB-PS1) — €96.00 (was €112.00). Nib: Medium steel, German-made. Fill: Piston converter (included). Ink: 30 ml blue-black iron gall. Includes: Reisetagebuch A6 journal. A medium steel-nib fountain pen in brushed brass, a piston converter so you are not tied to cartridges, a 30 ml bottle of blue-black iron-gall ink, and the Reisetagebuch journal, in a box that is worth keeping. The nib is German-made and runs wet, which suits the 120 gsm paper and will bleed through most notebooks that are not ours. Ink and converter are both refillable and both sold separately. It is the present we send our own people when they go somewhere far. Page: https://woo.demo.busymate.ai/product/tintenzug-pen-journal-set/
+
+## Packs & Bags
+
+Packs sized to the trip, not to the spec sheet. Waxed canvas, recycled nylon and full-grain leather, cut and sewn in batches of two hundred.
+
+- Fernweh 40L Weekender Duffel (FW-PK-D40) — €289.00. Volume: 40 L. Material: 2.0 mm full-grain leather. Weight: 1.9 kg. Hardware: Solid brass, replaceable. A weekender in 2.0 mm full-grain leather that starts stiff and is properly yours by the third trip. The 40-litre body swallows four days of clothes and a pair of boots, and the base is a single unbroken panel so there is no seam to split where the bag is set down. Brass hardware throughout, riveted rather than glued, and the shoulder pad and strap are both replaceable with a screwdriver — we keep spares for ten years from the batch date. It arrives at 1.9 kg empty and will outlast most of the trips you take it on. Page: https://woo.demo.busymate.ai/product/fernweh-40l-weekender-duffel/
+- Grand Tour 38L Cabin Case (FW-PK-G38) — €349.00. Currently out of stock. Only 0 left. Volume: 38 L. Shell: Recycled polycarbonate. Weight: 3.4 kg. Cabin fit: 55 x 38 x 22 cm. The Grand Tour is our one wheeled bag, built because enough people asked for a case that does not sound like a shopping trolley on cobbles. A recycled-polycarbonate shell over an aluminium frame, 38 litres, 55 x 38 x 22 cm, and 3.4 kg on our scales. The interior is lined in the same merino jersey as our base layers, which sounds precious until you have pulled a shirt out of it unwrinkled. The wheels are held on by four visible screws and we sell them for eleven euros a pair, because a case that dies from a broken wheel is a design failure, not a sale. Page: https://woo.demo.busymate.ai/product/grand-tour-38l-cabin-case/
+- Nachtzug 22L City Pack (FW-PK-N22) — €99.00 (was €119.00). Volume: 22 L. Material: Recycled 420D nylon. Weight: 0.72 kg. Cabin fit: 40 x 30 x 20 cm. Nachtzug is the bag for the leg of the trip that is not the adventure: the sleeper, the airport, the walk from the station at six in the morning. 22 litres of recycled 420D nylon, a flat back so it sits square against a seat, and a lay-flat main compartment that opens like a clamshell so security never asks you to unpack it. There is a zipped pocket on the strap for a passport and a pass-through sleeve for a roller handle. At 40 x 30 x 20 cm it fits the personal-item allowance of every carrier we have flown it on. Page: https://woo.demo.busymate.ai/product/nachtzug-22l-city-pack/
+- Wanderweg 28L Daypack (FW-PK-W28) — €149.00. Volume: 28 L. Material: 18 oz waxed cotton canvas. Weight: 1.1 kg. Laptop: Fits 16 in. The Wanderweg is the pack we made first and have changed least. 28 litres of 18 oz waxed cotton canvas over a 3 mm foam back panel, with a padded 16-inch laptop sleeve that lifts 4 cm off the base so a dropped bag does not land on the screen. The roll-top closes down to about 20 litres for a commute and opens out for a two-day hut trip, and the leather-tab compression straps double as a place to strap a wet jacket. It weighs 1.1 kg empty, which is not the lightest pack in the category, and we have never pretended otherwise. Page: https://woo.demo.busymate.ai/product/wanderweg-28l-daypack/
+
+## Policies
+
+- [Shipping](https://woo.demo.busymate.ai/shipping/) — Markdown: https://woo.demo.busymate.ai/shipping.md
+- [Returns & Repairs](https://woo.demo.busymate.ai/returns/) — Markdown: https://woo.demo.busymate.ai/returns.md
+- [Privacy](https://woo.demo.busymate.ai/privacy/) — Markdown: https://woo.demo.busymate.ai/privacy.md
+- [Terms](https://woo.demo.busymate.ai/terms/) — Markdown: https://woo.demo.busymate.ai/terms.md
+
+## Delivery, in short
+
+| Destination | Cost | Free over |
+| --- | --- | --- |
+| Germany | €4.90 | €120.00 |
+| European Union | €9.90 | €180.00 |
+| United Kingdom & Switzerland | €14.90 | €250.00 |
+| Rest of world | €24.90 | — |
+
+---
+
+## Shipping
+
+# Shipping
+
+> Fernweh Supply Co. — Small-batch gear for the long way round.
+> A Busymate AI demonstration store. Source: https://woo.demo.busymate.ai/shipping/
+
+Everything is packed and sent from our own workshop in Leipzig. There is no third-party fulfilment, which is why we can tell you exactly where an order is.
+
+## When it leaves us
+
+Orders placed before 13:00 CET on a working day go out the same afternoon. Anything after that, or at a weekend, goes the next working day. We do not ship on German public holidays, and the one week a year the workshop closes is announced on this page a month ahead.
+
+## What it costs and how long it takes
+
+| Destination | Cost | Typical transit | Free over |
+| --- | --- | --- | --- |
+| Germany | €4.90 | 1–2 working days | €120 |
+| European Union | €9.90 | 2–5 working days | €180 |
+| United Kingdom & Switzerland | €14.90 | 3–7 working days | €250 |
+| Rest of world | €24.90 | 7–21 working days | — |
+
+## Duties and taxes
+
+EU prices include German VAT at 19%. Orders to the United Kingdom, Switzerland and the rest of the world are sent excluding VAT, and the carrier will collect import duty and local tax before delivery. We cannot estimate that figure for you and we do not mark parcels as gifts.
+
+## Tracking
+
+Every parcel is tracked. The tracking number reaches you by email the moment the label is scanned, not when it is printed — so if you have the number, the parcel is genuinely on its way. If tracking has not moved for four working days, write to us and we will chase the carrier rather than asking you to.
+
+## If something goes missing
+
+We treat a parcel as lost after 10 working days domestically and 30 internationally, and we replace it at our cost without asking you to open a claim with the carrier. That is our problem, not yours.
+
+---
+
+## Returns & Repairs
+
+# Returns & Repairs
+
+> Fernweh Supply Co. — Small-batch gear for the long way round.
+> A Busymate AI demonstration store. Source: https://woo.demo.busymate.ai/returns/
+
+You have 60 days from delivery to send anything back, for any reason or none. That is longer than the 14 days EU law requires, and the extra days are ours, not a legal obligation — your statutory right of withdrawal is described at the bottom of this page and is unaffected by anything above it.
+
+## How to send something back
+
+- Write to [hallo@fernweh.example](mailto:hallo@fernweh.example) with your order number, or ask in the chat on this site.
+- We email a prepaid label for Germany and the EU. Elsewhere we refund the return postage once the parcel arrives.
+- Refunds go back to the original payment method within three working days of the parcel reaching us. Cards take a further two to five days to show it.
+
+## What we can take back
+
+Unworn, unwashed items in resaleable condition, with tags where they had them. Merino that has been worn once is fine — we would rather you tried it than guessed. Underwear and socks that have been worn are not, for reasons that need no explanation. Sale items return at the price you paid.
+
+## Repairs
+
+We repair anything we made, for as long as we can get the parts, and for the first three years we do it free including postage. After that it is charged at cost — typically €15 to €40 for a zip, a strap or a re-stitch — and we tell you the price before we start. Send a photograph first; half of what people ask about turns out to be a five-minute fix they can do at home, and we will say so.
+
+## Guarantee
+
+Three years against manufacturing fault, from the delivery date, on everything except the ink and the paper refills. A fault is a seam, a zip, a weld or a coating that failed doing what the product is for. Wear is not a fault, and neither is a bag that was overloaded past its rating.
+
+## Your statutory right of withdrawal
+
+As a consumer in the EU you may withdraw from this contract within 14 days of receiving the goods without giving any reason. To do so, tell us in a clear statement — an email is enough. We will refund all payments received, including standard outbound delivery, within 14 days of being told. We may withhold the refund until the goods are back with us.
+
+---
+
+## Privacy
+
+# Privacy
+
+> Fernweh Supply Co. — Small-batch gear for the long way round.
+> A Busymate AI demonstration store. Source: https://woo.demo.busymate.ai/privacy/
+
+This is a demonstration store. It is not a real trading company, and you should not enter real personal data into it. Everything below describes how the demo behaves, honestly, so that it is a useful example of a privacy page rather than a placeholder.
+
+## What this site stores
+
+- **Order data** — the name, address and email attached to an order, the items and the amount. Held in this store's own database on its own isolated volume.
+- **Account data** — if you sign in as the provided demo customer, your session cookie and the order history attached to that account.
+- **Technical logs** — request paths and timestamps, kept for seven days for operational reasons and then deleted.
+
+## What it does not store
+
+No payment details ever reach this store: the demo does not take real payments and has no card processor attached. There are no advertising trackers, no analytics pixels and no third-party scripts that profile you. Nothing is sold, shared or transferred to anyone.
+
+## The assistant
+
+If you use the chat on this site, your messages are processed to answer them and to call the store's own tools on your behalf — looking up an order, checking stock. Ask the assistant to hand you to a person and it will stop and do that instead.
+
+## Your rights
+
+Under the GDPR you may ask for a copy of your data, ask for it to be corrected, or ask for it to be deleted, and we act on that within 30 days. For this demo, the fastest route is to ask in the chat, or write to [privacy@fernweh.example](mailto:privacy@fernweh.example).
+
+## Cookies
+
+Two: a session cookie that keeps your cart between pages, and one that remembers you dismissed the cookie notice. Both expire when you close the browser or within 30 days. There is no third-party cookie on this site at all.
+
+---
+
+## Terms
+
+# Terms
+
+> Fernweh Supply Co. — Small-batch gear for the long way round.
+> A Busymate AI demonstration store. Source: https://woo.demo.busymate.ai/terms/
+
+**Fernweh Supply Co. is an invented brand, created to demonstrate a working online shop.** No goods are really dispatched, no payment is really taken, and no contract of sale is formed by anything you do here. These terms are written as a real shop's terms would be, because a demo with lorem ipsum in it teaches nobody anything.
+
+## Prices
+
+Prices are in euro and include German VAT at 19% for orders inside the EU. Orders outside the EU are charged without VAT and are subject to import duty in the destination country. We may change a price at any time, but never after an order is placed.
+
+## Orders
+
+An order is an offer to buy. The contract is formed when we send the dispatch confirmation, not when the order confirmation lands — so if something sells out between the two, we cancel and refund in full rather than making you wait. Stock figures on a product page are live to within a minute.
+
+## Availability
+
+Everything on this site is made in batches. When a batch runs out, the product page says so and gives the date the next one is expected; that date is our honest estimate and it slips sometimes. We do not take payment for a backorder until the batch is in the building.
+
+## Liability
+
+We are liable for the goods being as described and fit for their purpose, and for anything the law does not permit us to limit. We are not liable for a trip that went badly. Nothing here affects your statutory rights as a consumer.
+
+## Governing law
+
+German law, with the courts of Leipzig having jurisdiction, and without affecting any mandatory consumer protection you have where you live.
+
+## Contact
+
+Fernweh Supply Co. (demonstration), Hainstrasse 14, 04103 Leipzig. Written enquiries to [hallo@fernweh.example](mailto:hallo@fernweh.example).

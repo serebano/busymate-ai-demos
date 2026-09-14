@@ -1,0 +1,30 @@
+{
+  "extraOrigins": ["https://demo.busymate.ai"],
+  "connectorIds": ["2f761fd6-9437-464c-8cff-4e32447ffe26"],
+  "queueName": "Patchwell desk",
+  "timezone": "Europe/Lisbon",
+  "suggestions": [
+    { "label": "What's in the Team plan?", "prompt": "What does the Team plan include, and what does it cost?" },
+    { "label": "Open a ticket", "prompt": "My laptop keeps dropping off the office Wi-Fi, can you open a ticket?" },
+    { "label": "Request access", "prompt": "I need admin on Notion for the launch project." },
+    { "label": "Is the VPN down?", "prompt": "Is the VPN down right now?" },
+    { "label": "Talk to an engineer", "prompt": "Can I talk to a person about a phishing email?" }
+  ],
+  "identityProvider": {
+    "id": "9feb3db9-2fc7-4747-9b11-a30f910795b1",
+    "label": "Patchwell demo identity",
+    "issuer": "https://slack.demo.busymate.ai",
+    "jwksUri": "https://slack.demo.busymate.ai/.well-known/jwks.json",
+    "audiences": ["busymate-ai"],
+    "tenantClaim": "tenant_id",
+    "subjectClaim": "sub",
+    "displayClaims": ["name"],
+    "allowedAlgs": ["ES256"],
+    "maxTokenAgeSeconds": 120,
+    "delegatedAccess": false,
+    "identityEndpointUrl": "https://slack.demo.busymate.ai/api/identity/mint",
+    "loginUrl": "https://slack.demo.busymate.ai/api/identity/start",
+    "accountUrl": "https://slack.demo.busymate.ai/#identity",
+    "enabled": true
+  }
+}

@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marlow's Kitchen — a neighborhood bistro, and your mate on WhatsApp</title>
+<meta name="description" content="Marlow's Kitchen: menu, hours and table booking answered live by Marlow, its Busymate AI mate — with a faithful preview of how it will look on WhatsApp once the number goes live.">
+<link rel="canonical" href="https://whatsapp.demo.busymate.ai/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt.md" title="This site as Markdown">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="Marlow's Kitchen — your mate on WhatsApp">
+<meta property="og:description" content="A neighborhood bistro whose mate already answers on the web — see a faithful preview of the WhatsApp thread, before the number goes live.">
+<meta property="og:image" content="https://whatsapp.demo.busymate.ai/img/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Restaurant","@id":"https://whatsapp.demo.busymate.ai/#biz","name":"Marlow's Kitchen","url":"https://whatsapp.demo.busymate.ai/","description":"A demonstration neighborhood bistro used to show how Busymate AI works as a WhatsApp mate. No real bookings are taken.","servesCuisine":["Bistro","American"],"priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"482 Elm Street","addressLocality":"Riverton"}},
+ {"@type":"WebSite","@id":"https://whatsapp.demo.busymate.ai/#site","url":"https://whatsapp.demo.busymate.ai/","name":"Marlow's Kitchen","publisher":{"@id":"https://whatsapp.demo.busymate.ai/#biz"}},
+ {"@type":"Menu","hasMenuSection":[
+   {"@type":"MenuSection","name":"Mains","hasMenuItem":[
+     {"@type":"MenuItem","name":"Braised Short Rib Tagliatelle","offers":{"@type":"Offer","price":"26","priceCurrency":"USD"}},
+     {"@type":"MenuItem","name":"Marlow's Burger & Fries","offers":{"@type":"Offer","price":"19","priceCurrency":"USD"}}
+   ]}
+ ]},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"Do I need a reservation, or can I just walk in?","acceptedAnswer":{"@type":"Answer","text":"Bar and terrace seats are first-come. The dining room is best booked ahead — easiest by messaging Marlow."}},
+   {"@type":"Question","name":"Is there parking near Marlow's Kitchen?","acceptedAnswer":{"@type":"Answer","text":"Street parking, plus a public lot two blocks north on Elm."}},
+   {"@type":"Question","name":"Can the kitchen work around an allergy?","acceptedAnswer":{"@type":"Answer","text":"Tell Marlow when you book and the kitchen can flag or adjust most dishes for common allergens."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  --bg:#fbf6ee; --ink:#241c15; --muted:#7c6e5d; --card:#fffdf9; --line:#ecdfc9;
+  --brand:#3f5d3e; --brand-ink:#fbf6ee; --accent:#c1652b; --ok:#3f5d3e;
+  --band-bg:#1b1712; --band-ink:#f7f1e6; --band-muted:#b7a996; --band-line:#332c22; --band-accent:#d98a4b;
+  --wa-1:#128c7e; --wa-2:#075e54; --wa-bg:#e7ddd0;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#181410; --ink:#f3ecdf; --muted:#b3a58f; --card:#221c16; --line:#332b21;
+         --brand:#5e8c5c; --brand-ink:#0e150e; --accent:#e0975a; --ok:#6ea16c;
+         --band-bg:#111009; --band-line:#2a2419; --wa-bg:#0b141a; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:17px;margin-right:auto;font-family:Georgia,"Times New Roman",serif}
+.logo img{width:34px;height:34px;border-radius:50%}
+nav{display:flex;gap:18px}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brand-ink);border:0;border-radius:999px;padding:11px 19px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.tiny{padding:6px 11px;font-size:12px}
+.btn.wa{background:linear-gradient(135deg,var(--wa-1),var(--wa-2));color:#fff}
+.btn[disabled],.btn.disabled{opacity:.55;cursor:default}
+.wa-cta{background:linear-gradient(135deg,var(--wa-1),var(--wa-2));color:#fff;flex:0 0 auto}
+.wa-cta-icon{width:16px;height:16px;fill:currentColor;flex:0 0 auto}
+.id-chip{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+@media(min-width:860px){.id-chip{display:flex}}
+.id-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.id-chip.on .dot{background:var(--ok)}
+
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.01em;margin:14px 0 16px;font-weight:600}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:28px;letter-spacing:-.01em;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);margin:0 0 26px;max-width:62ch}
+.lead{font-size:18px;color:var(--muted);max-width:42ch}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+
+.hero{position:relative;padding:0;border-top:0;min-height:min(72vh,640px);display:flex;align-items:center;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(18,14,10,.86) 0%,rgba(18,14,10,.62) 42%,rgba(18,14,10,.22) 75%);z-index:1}
+.hero-inner{position:relative;z-index:2;padding-top:96px;padding-bottom:64px;color:#fbf6ee}
+.hero-inner .eyebrow{color:var(--band-accent)}
+.hero-inner .lead{color:#ead9c4}
+.hero .btn.ghost{color:#fbf6ee;border-color:#ffffff40}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.two-col figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.two-col figure img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.two-col figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.about-copy{align-self:center}
+.about-copy ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.about-copy li{display:flex;gap:8px}
+.about-copy li strong{color:var(--ink);font-weight:600;min-width:96px}
+
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.menu-section h3{font-family:Georgia,"Times New Roman",serif;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 12px}
+.menu-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.menu-section ul{list-style:none;margin:0;padding:0}
+.menu-section li:last-child .menu-item{border-bottom:0}
+.menu-item img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:0 0 auto}
+.menu-item .txt{flex:1;min-width:0}
+.menu-item .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.menu-item h4{margin:0;font-size:15px;font-weight:600}
+.menu-item .price{font-weight:700;white-space:nowrap}
+.menu-item p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.menu-item .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:999px;padding:2px 7px;margin-top:5px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.book-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.policy ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14px}
+.policy li{padding-bottom:9px;border-bottom:1px solid var(--line)}
+.policy li:last-child{border-bottom:0;padding-bottom:0}
+.try-row{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:12px;padding:13px 15px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.try-row span{font-size:14px}
+
+/* ---- WhatsApp preview phone ---- */
+.wa-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
+.wa-band h2{color:var(--band-ink)}
+.wa-band .sub{color:var(--band-muted)}
+.wa-badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#eafff3;background:color-mix(in srgb,var(--wa-1) 55%,transparent);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.wa-badge svg{width:12px;height:12px;fill:#fff}
+.wa-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:center}
+.phone{width:min(360px,100%);margin:0 auto;background:#0b0b0b;border-radius:38px;padding:12px;box-shadow:0 30px 70px #0007}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:6px 16px 2px;color:#fff;font-size:12px;font-weight:600}
+.phone-screen{border-radius:26px;overflow:hidden;background:var(--wa-bg);display:flex;flex-direction:column;height:560px}
+.wa-header{background:linear-gradient(135deg,var(--wa-1),var(--wa-2));color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;flex:0 0 auto}
+.wa-header .back{opacity:.85;font-size:18px}
+.wa-header .avatar{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wa-header .avatar img{width:100%;height:100%;object-fit:cover}
+.wa-header .who{flex:1;min-width:0}
+.wa-header .who b{display:block;font-size:14.5px;font-weight:600}
+.wa-header .who span{display:block;font-size:11.5px;opacity:.85}
+.wa-header .icons{display:flex;gap:14px;opacity:.55;font-size:15px}
+.wa-screen-slot{flex:1;position:relative;background:var(--wa-bg)}
+.wa-screen-slot .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#5c6b63;font-size:13px;text-align:center;padding:0 20px}
+/* The REAL live embed widget, repositioned (never reparented — moving a
+   cross-origin iframe to a new DOM parent reloads it, which raced the
+   identity handshake and hung the panel) to sit exactly over #waScreen via
+   position:absolute + JS-measured coordinates (see the mount script below).
+   Position itself is set inline by JS; these rules only reshape its box. */
+[data-support-chat]>button{display:none !important}
+[data-support-chat]>div{position:static !important;inset:auto !important;width:100% !important;height:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;background:transparent !important}
+[data-support-chat] iframe{width:100%;height:100%;border:0}
+.wa-copy p{color:var(--band-muted)}
+.wa-copy .btn.wa{margin-top:6px}
+.wa-note{font-size:12.5px;color:var(--band-muted);margin-top:10px}
+
+.live-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.live-steps .card{background:#ffffff08;border:1px solid var(--band-line);border-radius:var(--radius);padding:18px}
+.live-steps .num{width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--wa-1) 30%,transparent);color:#c9fbe8;display:grid;place-items:center;font-weight:700;font-size:12px;margin-bottom:10px}
+.live-steps h4{margin:0 0 4px;font-size:15px}
+.live-steps p{margin:0;font-size:13.5px;color:var(--band-muted)}
+.wa-band .howto-row{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.wa-band .howto-row a{color:var(--band-accent);font-weight:600;text-decoration:none}
+.wa-band .howto-row a:hover{text-decoration:underline}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feature{display:flex;flex-direction:column;gap:9px}
+.feature h3{margin:0;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:13.5px}
+.feature .try{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.feature .files{display:flex;flex-wrap:wrap;gap:8px}
+.feature .files a{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);border-radius:8px;padding:5px 9px;text-decoration:none}
+.feature .how{margin-top:auto;padding-top:4px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+.scorecard{margin-top:24px;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--card)}
+.scorecard p{margin:0;color:var(--muted);font-size:14px;max-width:56ch}
+
+.id-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.id-panel .customer{font-size:14px;color:var(--muted)}
+.demo-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:12px}
+.tcard p{margin:0;font-size:14.5px}
+.tcard .who{display:flex;align-items:center;gap:10px}
+.avatar-chip{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex:0 0 auto}
+.tcard .who b{display:block;font-size:13.5px}
+.tcard .who span{display:block;font-size:12px;color:var(--muted)}
+
+.faq dt{font-weight:600;font-size:15px;margin:0 0 4px;font-family:Georgia,"Times New Roman",serif}
+.faq dd{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:70ch}
+
+/* The booking action card (a real <dialog>, not a chat bubble) */
+dialog.booking-modal{border:0;border-radius:var(--radius);padding:0;width:min(420px,92vw);background:var(--card);color:var(--ink);box-shadow:0 24px 60px #0005}
+dialog.booking-modal::backdrop{background:#00000099}
+dialog.booking-modal .head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+dialog.booking-modal .head h3{margin:0;font-size:16px;font-family:Georgia,"Times New Roman",serif}
+dialog.booking-modal .body{padding:18px 20px;display:grid;gap:12px}
+dialog.booking-modal label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);font-weight:600}
+dialog.booking-modal input,dialog.booking-modal textarea{font:inherit;font-size:15px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+dialog.booking-modal textarea{resize:vertical;font-weight:400}
+dialog.booking-modal .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dialog.booking-modal .foot{padding:16px 20px;border-top:1px solid var(--line)}
+dialog.booking-modal .foot .btn{width:100%;justify-content:center}
+dialog.booking-modal .foot .btn[disabled]{opacity:.6}
+.booking-result{font-size:13.5px;padding:10px 12px;border-radius:9px}
+.booking-result.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.booking-result.err{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0003}
+#flash[hidden]{display:none}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+
+@media(max-width:920px){
+  .two-col,.book-grid,.wa-layout{grid-template-columns:1fr}
+  .menu-grid,.features,.live-steps,.testimonials{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media(max-width:600px){
+  .menu-grid,.features,.live-steps,.testimonials{grid-template-columns:1fr}
+  .phone-screen{height:64vh}
+}
+
+/* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
+@media(max-width:480px){
+  .wrap{padding:0 14px}
+  .bar{height:56px;gap:8px}
+  .logo{font-size:14px;gap:7px}
+  .logo img{width:24px;height:24px}
+  .id-chip{display:none}
+  .wa-cta{padding:9px;border-radius:50%;line-height:0}
+  .wa-cta-label{display:none}
+  .wa-cta-icon{width:18px;height:18px}
+  .hero-inner{padding-top:36px;padding-bottom:40px}
+  .hero{min-height:0}
+  h1{font-size:26px;line-height:1.12;margin:10px 0 12px}
+  .eyebrow{font-size:10.5px}
+  .lead{font-size:15px}
+  .cta{flex-direction:column;align-items:stretch;margin-top:20px}
+  .cta .btn{justify-content:center;width:100%}
+  h2{font-size:22px}
+  section{padding:38px 0}
+  .book-grid .try-row{flex-direction:column;align-items:stretch}
+  .book-grid .try-row button{width:100%}
+  .phone{width:100%}
+  .phone-status{font-size:11px}
+  .wa-header .who b{font-size:13.5px}
+  .wa-header .who span{font-size:10.5px}
+  .id-panel{flex-direction:column;align-items:stretch}
+  .id-panel > div:last-child{display:flex;gap:10px}
+  .id-panel .btn{flex:1}
+  dialog.booking-modal{width:94vw}
+  dialog.booking-modal .row2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-signed-in="no">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><img src="/img/mark.png" alt="" aria-hidden="true">Marlow's Kitchen</div>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#book">Book a table</a>
+      <a href="#whatsapp">WhatsApp preview</a>
+      <a href="#agents">For agents</a>
+    </nav>
+    <span class="id-chip" id="idChip"><span class="dot"></span><span id="idChipText">Browsing as a guest</span></span>
+    <a class="btn wa-cta" id="waHeaderCta" href="#whatsapp" aria-label="Chat on WhatsApp">
+      <svg class="wa-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      <span class="wa-cta-label">Chat on WhatsApp</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="/img/hero.webp" alt="A candlelit table at Marlow's Kitchen, mid-service" width="1600" height="900">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Neighborhood bistro &amp; terrace</div>
+    <h1>Your mate, right where your guests already message.</h1>
+    <p class="lead">Marlow answers menu, hours and booking questions the moment someone reaches out — live on the web tonight, and shown here exactly as it will look once Marlow's Kitchen's WhatsApp number goes live.</p>
+    <div class="cta">
+      <a class="btn" href="#book">Book a table</a>
+      <button class="btn ghost" type="button" data-open-chat>Ask Marlow something</button>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="about">
+  <div class="wrap two-col">
+    <div class="about-copy">
+      <div class="eyebrow">The room</div>
+      <h2>A dining room and a terrace, not a drive-through.</h2>
+      <p class="sub" style="margin-bottom:14px">Wood-fired mains, a short cocktail list, and a terrace that stays open past the kitchen's last table on a warm night. Marlow's Kitchen seats 46 inside and 22 on the terrace, plus bar seating for walk-ins.</p>
+      <ul>
+        <li><strong>Address</strong><span>482 Elm Street, Riverton</span></li>
+        <li><strong>Parking</strong><span>Street parking, or the public lot two blocks north on Elm</span></li>
+        <li><strong>Dogs</strong><span>Welcome on the terrace</span></li>
+        <li><strong>Kids</strong><span>Kids menu on request, high chairs available</span></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="/img/interior.webp" alt="Marlow's Kitchen's dining room, dark wood and warm light" width="1400" height="1050" loading="lazy">
+      <figcaption>The dining room, seats 46</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="eyebrow">Currently serving</div>
+    <h2>What's on tonight</h2>
+    <p class="sub">Six sections, every price current — Marlow answers from exactly this list, not a guess at what a bistro "probably" serves.</p>
+    <div class="menu-grid">
+      <div class="menu-section">
+        <h3>Starters</h3>
+        <ul>
+          <li><div class="menu-item">
+            <img src="/img/dish-bowl.webp" alt="Harvest Grain Bowl" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>Harvest Grain Bowl</h4><span class="price">$14</span></div>
+            <p>Roasted sweet potato, chickpea, avocado, citrus tahini.</p><span class="tag">Vegan</span></div>
+          </div></li>
+          <li><div class="menu-item">
+            <div class="txt" style="margin-left:76px"><div class="row"><h4>Charred Bread &amp; Whipped Feta</h4><span class="price">$9</span></div>
+            <p>Wood-fired sourdough, whipped feta, chili oil.</p><span class="tag">Vegetarian</span></div>
+          </div></li>
+          <li><div class="menu-item">
+            <div class="txt" style="margin-left:76px"><div class="row"><h4>Soup of the Day</h4><span class="price">$8</span></div>
+            <p>Changes daily — ask your server, or ask Marlow.</p></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <h3>Mains</h3>
+        <ul>
+          <li><div class="menu-item">
+            <img src="/img/dish-tagliatelle.webp" alt="Braised Short Rib Tagliatelle" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>Braised Short Rib Tagliatelle</h4><span class="price">$26</span></div>
+            <p>Slow-braised short rib, fresh tagliatelle, salsa verde.</p></div>
+          </div></li>
+          <li><div class="menu-item">
+            <img src="/img/dish-sharing.webp" alt="Marlow's Burger & Fries" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>Marlow's Burger &amp; Fries</h4><span class="price">$19</span></div>
+            <p>House blend, aged cheddar, burnt-onion mayo — a terrace favorite for sharing.</p></div>
+          </div></li>
+          <li><div class="menu-item">
+            <div class="txt" style="margin-left:76px"><div class="row"><h4>Wood-Fired Mushroom Risotto</h4><span class="price">$21</span></div>
+            <p>Wild mushroom, parmesan, thyme.</p><span class="tag">Vegetarian</span></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <h3>Weekend brunch, Fri–Sun til 15:00</h3>
+        <ul>
+          <li><div class="menu-item">
+            <img src="/img/dish-brunch.webp" alt="The Full Marlow brunch plate" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>The Full Marlow</h4><span class="price">$18</span></div>
+            <p>Eggs your way, bacon, a waffle, seasonal fruit.</p></div>
+          </div></li>
+          <li><div class="menu-item">
+            <div class="txt" style="margin-left:76px"><div class="row"><h4>Avocado on Sourdough</h4><span class="price">$13</span></div>
+            <p>Smashed avocado, chili flake, lemon.</p><span class="tag">Vegetarian</span></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <h3>Terrace &amp; bar</h3>
+        <ul>
+          <li><div class="menu-item">
+            <img src="/img/drink-oldfashioned.webp" alt="Smoked Old Fashioned cocktail" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>Smoked Old Fashioned</h4><span class="price">$13</span></div>
+            <p>Bourbon, demerara, orange, applewood smoke.</p></div>
+          </div></li>
+          <li><div class="menu-item">
+            <img src="/img/dish-sundae.webp" alt="Salted Caramel Sundae" width="200" height="200" loading="lazy">
+            <div class="txt"><div class="row"><h4>Salted Caramel Sundae</h4><span class="price">$9</span></div>
+            <p>Vanilla, warm salted caramel, brownie, wafer.</p></div>
+          </div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap book-grid">
+    <div class="panel">
+      <div class="eyebrow">Table &amp; terrace</div>
+      <h2>Getting a table shouldn't need a phone call.</h2>
+      <p class="sub">Ask Marlow for a time and party size — it opens an inline form right in the chat for the details, one tap to submit, instead of asking for them one by one.</p>
+      <div class="try-row">
+        <span>Try it: "Do you have a table for 2 tonight at 7:30?"</span>
+        <button class="btn tiny" type="button" data-try-prompt="Do you have a table for 2 tonight at 7:30?">Copy &amp; open chat</button>
+      </div>
+      <div class="try-row">
+        <span>Try it: "I'd like to book a table" (Marlow opens the form)</span>
+        <button class="btn tiny" type="button" data-try-prompt="I'd like to book a table.">Copy &amp; open chat</button>
+      </div>
+      <p class="sub" style="margin:14px 0 0"><button class="btn small" type="button" id="openBookingFormBtn">Open the booking form directly →</button></p>
+    </div>
+    <div class="panel policy">
+      <h3 style="margin-top:0">Booking policy</h3>
+      <ul>
+        <li>Tables held 15 minutes past the booking time.</li>
+        <li>Parties of 1–8 book online or on WhatsApp; 9+ message us for the private-dining pack.</li>
+        <li>48 hours' notice for a cancellation, where possible.</li>
+        <li>Closed Monday. Weekend brunch runs Fri–Sun until 15:00.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="whatsapp" class="wa-band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--band-accent)">A faithful preview</div>
+    <h2>See the WhatsApp thread, before the number exists.</h2>
+    <p class="sub">Marlow's Kitchen's Meta number is still being connected — the section below is not a mock-up or a recording. It's the exact live assistant, dressed the way the conversation will look inside WhatsApp the moment that number goes live.</p>
+    <div class="wa-layout">
+      <div class="wa-copy">
+        <div class="wa-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Preview — real assistant, no live number yet</div>
+        <p>This IS Marlow, running on the same brain, the same menu, and the same booking tool as the widget on this page — only the wrapper around it changes once WhatsApp is live. Ask it about tonight's specials, or try booking a table right in the thread.</p>
+        <a class="btn wa" id="waCtaMain" href="#whatsapp">This becomes a real WhatsApp chat soon</a>
+        <p class="wa-note" id="waCtaNote">The "Chat on WhatsApp" button above does the same thing until the number is live — it scrolls here.</p>
+      </div>
+      <div class="phone">
+        <div class="phone-status"><span>9:41</span><span>●●● WiFi 100%</span></div>
+        <div class="phone-screen">
+          <div class="wa-header">
+            <span class="back" aria-hidden="true">‹</span>
+            <span class="avatar"><img src="/img/mark.png" alt="" aria-hidden="true"></span>
+            <div class="who"><b>Marlow's Kitchen</b><span id="waSubtitle">Marlow · usually replies in seconds</span></div>
+            <span class="icons" aria-hidden="true">⌕ ⋮</span>
+          </div>
+          <div class="wa-screen-slot" id="waScreen">
+            <div class="placeholder" id="waPlaceholder">Loading the live preview…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:56px">What changes once the number is real</h2>
+    <p class="sub">The same brain, knowledge and tools above — just reached the way Meta's WhatsApp Business Platform actually works.</p>
+    <div class="live-steps">
+      <div class="card"><div class="num">1</div><h4>A guest messages first</h4><p>A "Message us" link, a QR code on the table, or a saved contact opens WhatsApp with Marlow's Kitchen's number pre-filled — the guest always starts the conversation, never the business.</p></div>
+      <div class="card"><div class="num">2</div><h4>Meta's Cloud API delivers it</h4><p>The message arrives over Meta's WhatsApp Cloud API webhook, gets normalized into the same conversation shape as the web chat, and Marlow answers from the same menu and policies shown above.</p></div>
+      <div class="card"><div class="num">3</div><h4>The 24-hour window, then templates</h4><p>Marlow can reply freely for 24 hours after the guest's last message. After that, only a pre-approved template message (a booking reminder, say) can restart the thread — standard WhatsApp Business rules, same as any provider.</p></div>
+    </div>
+    <div class="howto-row">
+      <a href="https://busymate.ai/integrations/whatsapp">Current status of the WhatsApp channel →</a>
+      <a href="https://busymate.ai/docs/guides/connect-mcp-server">How the booking tool connects →</a>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="eyebrow">Under the hood</div>
+    <h2>Everything above, and why it works</h2>
+    <p class="sub">Nine things this page actually does, each with the exact doc for adding it to your own site.</p>
+    <div class="features">
+      <div class="card feature">
+        <h3>The chat, from one script tag</h3>
+        <p>The bubble in the corner (and the phone above) is the live product on a workspace of its own. One line of HTML put it there.</p>
+        <div class="try"><span>Try: "What's good for two people who don't eat meat?"</span><button class="btn tiny" data-try-prompt="What's good for two people who don't eat meat?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Grounded in Marlow's own words</h3>
+        <p>The menu, hours and booking policy above were published to the workspace as text. Answers quote it and cite it; anything outside it gets an honest "I don't know".</p>
+        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It can work the page</h3>
+        <p>This site publishes its own actions — check a table, book one, search the menu. Ask for one and watch it happen without a form.</p>
+        <div class="try"><span>Try: "Is Saturday at 7 open for 6 people?"</span><button class="btn tiny" data-try-prompt="Is Saturday at 7 open for 6 people?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It reaches the systems behind the page</h3>
+        <p>Marlow's Kitchen runs a small MCP server of its own, connected to the workspace. The menu and the floor plan come from there over HTTPS — the same answer whether or not this tab is open.</p>
+        <div class="files"><a href="/agents.json">/agents.json</a><a href="/llms.txt">/llms.txt</a></div>
+        <a class="how" href="https://busymate.ai/docs/guides/connect-mcp-server">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It knows who's asking</h3>
+        <p>Sign in as the demo guest below and Marlow can pull up that guest's own reservations — through the page's own tools, for that guest and nobody else.</p>
+        <div class="try"><span>Try (signed in): "What are my reservations?"</span><button class="btn tiny" data-try-prompt="What are my reservations?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>A person can take over</h3>
+        <p>Ask for a person and the thread lands in the team inbox, mid-conversation — the same handoff works on WhatsApp once it's live, no restart, no ticket number.</p>
+        <div class="try"><span>Try: "Can I talk to someone about a private event?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a private event for 20 people?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Readable without a browser</h3>
+        <p>An agent that never renders this page can still work with it: a plain-text brief, a tool manifest, and the live schema behind every booking action.</p>
+        <div class="files"><a href="/llms.txt">/llms.txt</a><a href="/llms.txt.md">/llms.txt.md</a><a href="/robots.txt">/robots.txt</a><a href="/sitemap.xml">/sitemap.xml</a></div>
+        <a class="how" href="https://busymate.ai/articles/is-your-website-agent-ready-checklist">The six layers, checked →</a>
+      </div>
+      <div class="card feature">
+        <h3>Useful before anyone signs in</h3>
+        <p>Signed out, the menu, hours and availability are still answerable — to a guest and to any agent. Only a guest's own reservations wait for a signed-in proof of who's asking.</p>
+        <div class="try"><span>Try: "What time do you open Friday?"</span><button class="btn tiny" data-try-prompt="What time do you open Friday?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Honest about what isn't live yet</h3>
+        <p>The WhatsApp preview above is labeled exactly for what it is — a real assistant, a faithful wrapper, no invented phone number. Nothing on this page claims a channel that doesn't exist yet.</p>
+        <div class="files"><a href="https://busymate.ai/integrations/whatsapp">/integrations/whatsapp</a></div>
+        <a class="how" href="https://busymate.ai/integrations/whatsapp">See every channel's real status →</a>
+      </div>
+    </div>
+    <div class="scorecard">
+      <p>Two checkers grade any address, this page included: one scores how ready a site is for AI agents, the other lists the tools a page publishes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/whatsapp.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Fwhatsapp.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <div class="eyebrow">Try it as a guest</div>
+    <h2>Sign in and Marlow already knows your reservations</h2>
+    <p class="sub">A throwaway demo guest is provided — no password, no real person.</p>
+    <div class="panel id-panel">
+      <div>
+        <div class="customer" id="idPanelText">Signed out — Marlow only sees what a guest can see.</div>
+        <p class="demo-note">Demo guest: <strong>Riley Chen</strong>, phone <code>+1-555-0142</code>, one upcoming table for 2 on Sep 18 at 19:30. A throwaway public demo identity, not a real person.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="idSignInBtn" type="button">Sign in as the demo guest</button>
+        <button class="btn ghost" id="idSignOutBtn" type="button" hidden>Sign out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="eyebrow">From regulars</div>
+    <h2>Faster than calling, they say</h2>
+    <div class="testimonials">
+      <div class="card tcard">
+        <p>"Booked our anniversary table over a chat in under a minute — Marlow even held the corner booth we asked for."</p>
+        <div class="who"><span class="avatar-chip" style="background:#c1652b">PT</span><div><b>Priya T.</b><span>Regular, Tuesdays</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Best short rib in the neighborhood, and getting a table is genuinely easier than phoning during service."</p>
+        <div class="who"><span class="avatar-chip" style="background:#3f5d3e">SO</span><div><b>Sam O.</b><span>First-time guest</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Mentioned a dairy allergy before we even arrived, and the kitchen had already sorted it by the time we sat down."</p>
+        <div class="who"><span class="avatar-chip" style="background:#7c6e5d">DK</span><div><b>Devon K.</b><span>Terrace regular</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Before you message us</div>
+    <h2>A few things people ask first</h2>
+    <dl class="faq">
+      <dt>Do I need a reservation, or can I just walk in?</dt>
+      <dd>Bar and terrace seats are first-come. The dining room is best booked ahead — easiest by messaging Marlow.</dd>
+      <dt>Is there parking?</dt>
+      <dd>Street parking, plus a public lot two blocks north on Elm.</dd>
+      <dt>Can the kitchen work around an allergy?</dt>
+      <dd>Tell Marlow when you book — the kitchen can flag or adjust most dishes for common allergens.</dd>
+      <dt>What about a party of 9 or more?</dt>
+      <dd>Message us for the private-dining pack — Marlow can point larger groups the right way, and a person picks it up from there.</dd>
+      <dt>Do you sell gift cards?</dt>
+      <dd>Yes — digital gift cards sent by text or WhatsApp, no expiry.</dd>
+    </dl>
+  </div>
+</section>
+</main>
+
+<!-- The booking action card. Marlow (in chat, via the open_booking_form
+     WebMCP tool below) and the "Open the booking form directly" button both
+     open this SAME dialog — one inline form, one submit button, instead of
+     the assistant asking for name/phone/party size/date/time one at a time
+     in prose. Submits straight to this site's own /mcp book_table tool. -->
+<dialog id="bookingModal" class="booking-modal">
+  <form id="bookingForm">
+    <div class="head"><h3>Book a table</h3><button class="btn ghost small" type="button" id="bookingClose">Close</button></div>
+    <div class="body">
+      <label>Name<input required name="name" type="text" autocomplete="name" placeholder="Jordan Rivers"></label>
+      <label>Phone<input required name="phone" type="tel" autocomplete="tel" placeholder="555-0100"></label>
+      <div class="row2">
+        <label>Date<input required name="date" type="date"></label>
+        <label>Time<input required name="time" type="time"></label>
+      </div>
+      <label>Party size<input required name="party_size" type="number" min="1" max="20" value="2"></label>
+      <label>Notes <span class="muted" style="font-weight:400">(optional)</span><textarea name="notes" rows="2" placeholder="Allergy, occasion, seating request…"></textarea></label>
+      <div id="bookingResult" class="booking-result" hidden></div>
+    </div>
+    <div class="foot"><button class="btn" type="submit" id="bookingSubmit">Book table</button></div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    Marlow's Kitchen is a demonstration restaurant. No table is actually held, and the guest behind the sign-in button is not a real person.<br>
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:hello@marlows-kitchen.example">hello@marlows-kitchen.example</a>, or ask the assistant for a human and a colleague at Marlow's Kitchen joins the same conversation.</p>
+    Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a>
+  </div>
+</footer>
+
+<div id="flash" role="status" hidden></div>
+
+<script>
+// ── Identity: define getIdentity BEFORE the embed script loads (per
+// https://busymate.ai/docs/guides/identified-visitors). A signed-in guest
+// mints a fresh 120s launch proof from THIS site's own /api/identity/mint;
+// signed-out returns null. Nothing persisted here.
+function marlowNonce() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode.apply(null, bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+async function marlowSession() {
+  try { return (await fetch("/api/identity/session")).json(); } catch (e) { return { signedIn: false }; }
+}
+window.BusymateAI = window.BusymateAI || {};
+window.BusymateAI.getIdentity = async function () {
+  var s = await marlowSession();
+  if (!s.signedIn) return null;
+  var res = await fetch("/api/identity/mint", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nonce: marlowNonce() }),
+  });
+  if (!res.ok) return null;
+  var out = await res.json();
+  return { token: out.token, nonce: out.nonce };
+};
+
+async function marlowRenderIdentity() {
+  var s = await marlowSession();
+  var chip = document.getElementById("idChip"), chipText = document.getElementById("idChipText");
+  var panelText = document.getElementById("idPanelText");
+  var inBtn = document.getElementById("idSignInBtn"), outBtn = document.getElementById("idSignOutBtn");
+  document.body.setAttribute("data-signed-in", s.signedIn ? "yes" : "no");
+  if (s.signedIn) {
+    chip.classList.add("on"); chipText.textContent = "Signed in as " + s.customer.name;
+    panelText.textContent = "Signed in as " + s.customer.name + " — Marlow now answers about this guest's own reservations.";
+    inBtn.hidden = true; outBtn.hidden = false;
+  } else {
+    chip.classList.remove("on"); chipText.textContent = "Browsing as a guest";
+    panelText.textContent = "Signed out — Marlow only sees what a guest can see.";
+    inBtn.hidden = false; outBtn.hidden = true;
+  }
+}
+function flash(msg) {
+  var el = document.getElementById("flash");
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 2600);
+}
+document.addEventListener("DOMContentLoaded", function () {
+  marlowRenderIdentity();
+  document.getElementById("idSignInBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/login", { method: "POST" });
+    await marlowRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed in as Riley Chen");
+  });
+  document.getElementById("idSignOutBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/logout", { method: "POST" });
+    await marlowRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed out");
+  });
+  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
+    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
+  });
+  document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var text = b.getAttribute("data-try-prompt");
+      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
+      catch (e) { flash("Ask Marlow: " + text); }
+      if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+    });
+  });
+});
+</script>
+
+<!-- Busymate AI web chat widget (live). data-assistant = the demo tenant slug.
+     Also remounted, unstyled-inside, into the WhatsApp phone frame below. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demo-whatsapp"
+        data-label="Chat with us"
+        data-aria-label="Open Marlow's Kitchen chat"
+        data-title="Marlow's Kitchen"
+        async></script>
+
+<script>
+// ── WhatsApp preview: the SAME live widget, repositioned on top of the
+// phone frame's screen area and kept open. This is the real product — cross-
+// origin iframe content is untouched, only the outer wrapper's position is
+// restyled from our own page. Deliberately NEVER reparented (moving a cross-
+// origin iframe to a new DOM parent makes the browser reload it, which raced
+// the postMessage identity handshake and hung the panel on a blank screen —
+// found live, 2026-09-11): the widget layer stays a child of <body>, exactly
+// where the embed script put it, and only its computed position/size follow
+// #waScreen's own box on scroll and resize.
+(function () {
+  var tries = 0;
+  var positioned = false;
+  function follow() {
+    var slot = document.getElementById("waScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (!slot || !layer) return;
+    var r = slot.getBoundingClientRect();
+    layer.style.position = "absolute";
+    layer.style.right = "auto";
+    layer.style.bottom = "auto";
+    layer.style.left = window.scrollX + r.left + "px";
+    layer.style.top = window.scrollY + r.top + "px";
+    layer.style.width = r.width + "px";
+    layer.style.height = r.height + "px";
+  }
+  function mount() {
+    tries++;
+    var slot = document.getElementById("waScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      var ph = document.getElementById("waPlaceholder");
+      if (ph) ph.remove();
+      follow();
+      if (!positioned) {
+        positioned = true;
+        window.addEventListener("resize", follow);
+        window.addEventListener("scroll", follow, { passive: true });
+      }
+      window.BusymateAI.open();
+      return;
+    }
+    if (tries < 100) setTimeout(mount, 100);
+  }
+  mount();
+})();
+
+// ── The wa.me hook: a single field in /whatsapp-config.json. null (today) =
+// the honest preview state; once the channel lane sets a real number there,
+// the CTAs switch to a genuine https://wa.me/<number> link automatically.
+(function () {
+  fetch("/whatsapp-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+    var number = cfg && cfg.number;
+    var header = document.getElementById("waHeaderCta");
+    var main = document.getElementById("waCtaMain");
+    var note = document.getElementById("waCtaNote");
+    var sub = document.getElementById("waSubtitle");
+    if (number) {
+      var url = "https://wa.me/" + number;
+      [header, main].forEach(function (el) {
+        el.href = url; el.target = "_blank"; el.rel = "noopener noreferrer";
+        el.classList.remove("disabled");
+      });
+      main.textContent = "Chat on WhatsApp";
+      note.textContent = "Opens a real WhatsApp conversation with Marlow's Kitchen.";
+      sub.textContent = "Marlow · on WhatsApp now";
+    }
+  }).catch(function () {});
+})();
+</script>
+
+<script>
+// ── The booking action card: ONE inline form + ONE submit button, opened by
+// the assistant (via the open_booking_form WebMCP tool below) or by the
+// "Open the booking form directly" button — never a prose back-and-forth for
+// name/phone/party size/date/time. Submits straight to this site's own /mcp.
+(function () {
+  var modal = document.getElementById("bookingModal");
+  var form = document.getElementById("bookingForm");
+  var result = document.getElementById("bookingResult");
+  var submitBtn = document.getElementById("bookingSubmit");
+
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+
+  function showResult(kind, text) {
+    result.hidden = false;
+    result.className = "booking-result " + kind;
+    result.textContent = text;
+  }
+
+  function friendlyError(out) {
+    if (out.error === "fully_booked_that_slot" && out.suggested_times) {
+      return "That time is fully booked for a party that size. Nearby times: " + out.suggested_times.join(" or ") + ".";
+    }
+    if (out.error === "closed_that_day") return "Marlow's Kitchen is closed that day.";
+    if (out.error === "outside_service_hours") return "That time is outside service hours — see the hours above.";
+    if (out.error === "name_and_phone_required") return "A name and phone number are both needed to hold the table.";
+    return "Something went wrong — please try again.";
+  }
+
+  window.__openBookingForm = function (prefill) {
+    prefill = prefill || {};
+    result.hidden = true;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Book table";
+    form.reset();
+    form.querySelectorAll("input,textarea").forEach(function (el) { el.disabled = false; });
+    if (prefill.name) form.name.value = prefill.name;
+    if (prefill.phone) form.phone.value = prefill.phone;
+    if (prefill.date) form.date.value = prefill.date;
+    if (prefill.time) form.time.value = prefill.time;
+    if (prefill.party_size) form.party_size.value = prefill.party_size;
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    return { opened: true, note: "A booking form is now open on the page for the visitor to fill in and submit." };
+  };
+
+  document.getElementById("bookingClose").addEventListener("click", function () { modal.close(); });
+  document.getElementById("openBookingFormBtn")?.addEventListener("click", function () { window.__openBookingForm({}); });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    submitBtn.disabled = true;
+    var payload = {
+      date: form.date.value,
+      time: form.time.value,
+      party_size: Number(form.party_size.value),
+      name: form.name.value,
+      phone: form.phone.value,
+    };
+    if (form.notes.value) payload.notes = form.notes.value;
+    try {
+      var out = await callMcp("book_table", payload);
+      if (out && out.confirmation_code) {
+        showResult("ok", "Booked — confirmation " + out.confirmation_code + ", " + payload.date + " at " + payload.time + " for " + payload.party_size + ".");
+        form.querySelectorAll("input,textarea").forEach(function (el) { el.disabled = true; });
+        submitBtn.textContent = "Booked";
+      } else {
+        showResult("err", friendlyError(out || {}));
+        submitBtn.disabled = false;
+      }
+    } catch (e) {
+      showResult("err", "Could not reach the booking system — please try again.");
+      submitBtn.disabled = false;
+    }
+  });
+})();
+
+// ── WebMCP page tools: one registerPageTools() call. Every tool calls this
+// site's own /mcp so the tool logic has exactly one source of truth (the
+// backend in sites/whatsapp/backend/). https://busymate.ai/docs/guides/page-tools
+(function () {
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+  var tools = [
+    {
+      name: "opening_hours",
+      description: "Marlow's Kitchen's opening hours, by day of the week, including brunch/dinner service windows and any closed days.",
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: true },
+      execute: function () { return callMcp("opening_hours", {}); },
+    },
+    {
+      name: "list_menu",
+      description: "List every dish and drink Marlow's Kitchen serves, grouped by section, with prices.",
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: true },
+      execute: function () { return callMcp("list_menu", {}); },
+    },
+    {
+      name: "search_menu",
+      description: "Search Marlow's Kitchen's menu by name, ingredient, or keyword (e.g. an allergen or 'vegetarian').",
+      inputSchema: {
+        type: "object",
+        properties: { query: { type: "string", description: "A dish name, ingredient, or keyword to search for, e.g. 'vegetarian' or 'short rib'." } },
+        required: ["query"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("search_menu", args); },
+    },
+    {
+      name: "check_availability",
+      description: "Check whether Marlow's Kitchen has a table for a given date, time and party size, with nearby alternative times if that exact slot is full.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          date: { type: "string", description: "The requested date, as YYYY-MM-DD." },
+          time: { type: "string", description: "The requested time, 24-hour HH:MM, e.g. '19:30'." },
+          party_size: { type: "number", description: "Number of guests in the party." },
+        },
+        required: ["date", "time", "party_size"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("check_availability", args); },
+    },
+    {
+      name: "book_table",
+      description: "Do NOT call this tool to ask the visitor for date, time, party size, name or phone — call open_booking_form for that instead, it is the ONLY approved way to collect a missing field, never a chat question. Book a table at Marlow's Kitchen, but ONLY once the visitor has already stated every one of those five fields themselves, in their own words, earlier in this conversation. Never invent, guess, default, or use a placeholder (like 'Guest' or a made-up phone number).",
+      inputSchema: {
+        type: "object",
+        properties: {
+          date: { type: "string", description: "The booking date, as YYYY-MM-DD." },
+          time: { type: "string", description: "The booking time, 24-hour HH:MM, e.g. '19:30'." },
+          party_size: { type: "number", description: "Number of guests in the party." },
+          name: { type: "string", description: "Name the booking is under." },
+          phone: { type: "string", description: "A phone number to hold the booking against." },
+          notes: { type: "string", description: "Anything the kitchen or floor should know — an allergy, a seating request, an occasion." },
+        },
+        required: ["date", "time", "party_size", "name", "phone"],
+        additionalProperties: false,
+      },
+      execute: function (args) { return callMcp("book_table", args); },
+    },
+    {
+      name: "get_my_reservations",
+      description: "List the reservations at Marlow's Kitchen booked under a phone number. Requires an identified (signed-in) visitor.",
+      inputSchema: {
+        type: "object",
+        properties: { phone: { type: "string", description: "The phone number the reservation was booked under (the signed-in visitor's own)." } },
+        required: ["phone"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("get_my_reservations", args); },
+    },
+    {
+      name: "cancel_reservation",
+      description: "Cancel a reservation at Marlow's Kitchen by its confirmation code + the phone number it was booked under.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          confirmation_code: { type: "string", description: "The reservation's confirmation code, as given when it was booked, e.g. 'MK-58231'." },
+          phone: { type: "string", description: "The phone number the reservation was booked under." },
+        },
+        required: ["confirmation_code", "phone"],
+        additionalProperties: false,
+      },
+      execute: function (args) { return callMcp("cancel_reservation", args); },
+    },
+    {
+      name: "open_booking_form",
+      description: "Open an inline booking form on the page for the visitor to fill in and submit themselves — name, phone, party size, date and time, one \"Book table\" button. ALWAYS call this instead of asking for those details one at a time in the conversation; pass any values already known (a date/time/party size from earlier in the chat, or a signed-in guest's own name/phone) as prefill so the visitor only fills in what's missing.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          date: { type: "string", description: "A YYYY-MM-DD date to prefill, if already known." },
+          time: { type: "string", description: "A 24-hour HH:MM time to prefill, if already known." },
+          party_size: { type: "number", description: "A party size to prefill, if already known." },
+          name: { type: "string", description: "A name to prefill, if already known (e.g. the signed-in guest's own)." },
+          phone: { type: "string", description: "A phone number to prefill, if already known (e.g. the signed-in guest's own)." },
+        },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return window.__openBookingForm(args || {}); },
+    },
+  ];
+
+  function whenReady(cb, triesLeft) {
+    if (window.BusymateAI && window.BusymateAI.registerPageTools) return cb();
+    if (!triesLeft) return;
+    setTimeout(function () { whenReady(cb, triesLeft - 1); }, 100);
+  }
+  whenReady(function () {
+    window.BusymateAI.registerPageTools(tools).catch(function (e) {
+      console.error("registerPageTools failed:", e && e.message);
+    });
+  }, 100);
+})();
+</script>
+</body>
+</html>

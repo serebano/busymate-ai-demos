@@ -1,0 +1,104 @@
+{
+  "title": "Northwind Coffee Co.",
+  "note": "Pinned Commons files — a live search would change the pictures under us.",
+  "images": [
+    {
+      "id": "hero",
+      "file": "File:Barista prepares espresso at coffee shop.jpg",
+      "alt": "A barista pulling a shot at the Northwind counter",
+      "width": 1500,
+      "aspect": 1.35
+    },
+    {
+      "id": "story",
+      "file": "File:Coffee Roaster.JPG",
+      "alt": "Our drum roaster mid-batch",
+      "width": 1100,
+      "aspect": 1.5
+    },
+    {
+      "id": "grind",
+      "file": "File:Coffee machine grinding beans (Unsplash).jpg",
+      "alt": "Grinding to order",
+      "width": 1100,
+      "aspect": 1.5
+    },
+    {
+      "id": "eth",
+      "file": "File:Manual drip (pour-over) coffee.jpg",
+      "alt": "Ethiopia Yirgacheffe, brewed as a pour-over",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "col",
+      "file": "File:Coffee Beans Photographed in Macro.jpg",
+      "alt": "Colombia Huila beans",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "sum",
+      "file": "File:Dark roasted coffee on white background.jpg",
+      "alt": "Sumatra Mandheling, dark roasted",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "esp",
+      "file": "File:Espresso Coffee 01.jpg",
+      "alt": "Northwind Espresso, pulled as a double",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "dec",
+      "file": "File:Moon coffee (Unsplash).jpg",
+      "alt": "Midnight Decaf, late in the evening",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "smp",
+      "file": "File:Spilled coffee beans (Unsplash).jpg",
+      "alt": "The Roaster's Sampler, four origins",
+      "width": 760,
+      "aspect": 1
+    },
+    {
+      "id": "cat-espresso",
+      "file": "File:Foamy latte art (Unsplash).jpg",
+      "alt": "For espresso and milk drinks",
+      "width": 820,
+      "aspect": 1.25
+    },
+    {
+      "id": "cat-filter",
+      "file": "File:Café coado.jpg",
+      "alt": "For filter and pour-over",
+      "width": 820,
+      "aspect": 1.25
+    },
+    {
+      "id": "cat-gift",
+      "file": "File:The Coffee life (Unsplash).jpg",
+      "alt": "Gifts and samplers",
+      "width": 820,
+      "aspect": 1.25
+    },
+    {
+      "id": "brew-press",
+      "file": "File:French Press coffee making 07.jpg",
+      "alt": "Brewing in a French press",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "brew-aero",
+      "file": "File:Brewing Coffee with AeroPress.jpg",
+      "alt": "Brewing with an AeroPress",
+      "width": 820,
+      "aspect": 1.4
+    }
+  ]
+}

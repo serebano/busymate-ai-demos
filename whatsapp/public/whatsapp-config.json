@@ -1,0 +1,4 @@
+{
+  "_comment": "The ONE field this page reads to know whether the WhatsApp channel itself is live. null = not live yet (the page shows the honest 'preview' state + the in-page simulator). Once the WhatsApp channel lane provisions a real Meta Cloud API number for the demo tenant, set 'number' to that number in E.164 with no '+' (e.g. '15551234567') and redeploy — the 'Chat on WhatsApp' CTA switches automatically to a real https://wa.me/<number> link, no other code change needed.",
+  "number": null
+}

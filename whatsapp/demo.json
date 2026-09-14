@@ -1,0 +1,17 @@
+{
+  "name": "whatsapp",
+  "subdomain": "whatsapp",
+  "title": "WhatsApp channel",
+  "tagline": "Marlow's Kitchen — a faithful WhatsApp-style preview of your mate, grounded chat, an MCP server over the menu and floor plan, WebMCP booking actions, and identified-guest reservations.",
+  "type": "static",
+  "assistant": "demo-whatsapp",
+  "tenant_id": "57069ed8-c9a2-442f-abe6-4df48cd6eb73",
+  "status": "live",
+  "order": 3,
+  "icon": "whatsapp",
+  "docs": "https://busymate.ai/docs/guides/whatsapp",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/whatsapp",
+  "backend_port": 8102,
+  "whatsapp_number": null,
+  "whatsapp_number_note": "The real go-live hook lives in public/whatsapp-config.json (the field the page actually reads at runtime). This field is a documentation mirror only — set both together when the WhatsApp channel lane provisions a real Meta Cloud API number for this tenant."
+}

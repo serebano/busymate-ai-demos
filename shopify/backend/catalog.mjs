@@ -1,0 +1,339 @@
+// sites/shopify/backend/catalog.mjs — Northline Outdoor's ONE source of
+// truth for store data. The MCP server (index.mjs) serves it live; the site
+// build (sites/shopify/build.mjs) projects it into public/assets/catalog.js,
+// public/catalog.json, the JSON-LD block, and the tenant knowledge that the
+// assistant is grounded in. Edit HERE, then run scripts/build-demo.sh shopify.
+//
+// Everything is fictional demo data: no real brand, no real person.
+
+export const STORE = {
+  name: "Northline Outdoor",
+  tagline: "Gear built for the long way round.",
+  url: "https://shopify.demo.busymate.ai",
+  currency: "USD",
+  founded: 2014,
+  hometown: "Bellingham, Washington",
+  email: "hello@northline.example",
+  phone: "+1 (360) 555-0142",
+  hours: "Mon–Fri 8am–6pm PT · Sat 9am–3pm PT",
+};
+
+export const CATEGORIES = [
+  { slug: "shelter", name: "Shelter", blurb: "Tents that pitch in minutes and stay put in weather.", image: "cat-shelter" },
+  { slug: "packs", name: "Packs", blurb: "Daypacks to multi-day haulers, all carry-first.", image: "cat-packs" },
+  { slug: "apparel", name: "Apparel", blurb: "Layers for rain, wind, cold, and the climb back up.", image: "cat-apparel" },
+  { slug: "footwear", name: "Footwear", blurb: "Boots and socks that go the distance.", image: "cat-footwear" },
+  { slug: "kitchen", name: "Camp kitchen", blurb: "Stoves, bottles and mugs for real meals outside.", image: "cat-kitchen" },
+  { slug: "sleep", name: "Sleep & light", blurb: "Warm bags, bright headlamps, better mornings.", image: "cat-sleep" },
+];
+
+/**
+ * A product's `stock` map is keyed by variant label ("Moss / XL", "Slate",
+ * or "default" for single-variant items) → "in_stock" | "low" | "backorder" |
+ * "sold_out". `backorderShips` is quoted for backordered variants.
+ */
+export const PRODUCTS = [
+  {
+    sku: "RIDGECREST-2P", title: "Ridgecrest 2P Tent", category: "shelter", price: 329, compareAt: 379,
+    badge: "bestseller", image: "ridgecrest-2p", weight: "1.9 kg",
+    options: { colors: ["Glacier Blue", "Moss"] },
+    stock: { "Glacier Blue": "in_stock", "Moss": "low" },
+    short: "Freestanding two-person tent with two doors and two vestibules.",
+    description: "A three-season, freestanding two-person tent with a full-mesh inner for star-watching, two doors so nobody climbs over anybody, and two vestibules for boots and packs. DAC-style aluminum poles, a 3,000 mm silicone-coated fly, and color-coded clips make setup a two-minute job.",
+    specs: ["Floor 2.2 × 1.3 m", "Peak height 105 cm", "Packed 48 × 15 cm", "Fly 20D ripstop, 3,000 mm"],
+  },
+  {
+    sku: "BASECAMP-3P", title: "Basecamp 3P Tent", category: "shelter", price: 389,
+    badge: "new", image: "basecamp-3p", weight: "2.6 kg",
+    options: { colors: ["Ember Orange"] },
+    stock: { "Ember Orange": "in_stock" },
+    short: "Roomy three-person dome for weekends where comfort wins.",
+    description: "Our most livable tent: near-vertical walls, a 120 cm peak, and a wide front vestibule that doubles as a porch in the rain. Pitches fly-first in a downpour so the inner stays dry, and the stuff sack turns into a gear loft.",
+    specs: ["Floor 2.2 × 1.9 m", "Peak height 120 cm", "Fly 40D ripstop, 3,000 mm", "Fly-first pitch"],
+  },
+  {
+    sku: "RIDGE-PACK-28", title: "Ridgeline Backpack 28L", category: "packs", price: 96,
+    badge: "bestseller", image: "ridgeline-28", weight: "820 g",
+    options: { colors: ["Slate", "Clay"] },
+    stock: { "Slate": "in_stock", "Clay": "in_stock" },
+    short: "The daypack that goes from trailhead to Tuesday.",
+    description: "A 28-liter daypack with a padded 16-inch laptop sleeve, a removable hip belt, stretch side pockets that actually hold a bottle, and a rain cover stashed in the base. Recycled 420D nylon shell with a DWR finish.",
+    specs: ["28 L", "Laptop sleeve to 16\"", "Removable hip belt", "Included rain cover"],
+  },
+  {
+    sku: "CAIRN-PACK-55", title: "Cairn Trekking Pack 55L", category: "packs", price: 219,
+    badge: "featured", image: "cairn-55", weight: "1.7 kg",
+    options: { colors: ["Storm Blue", "Brick"], sizes: ["S/M", "M/L"] },
+    stock: { "Storm Blue / S/M": "in_stock", "Storm Blue / M/L": "in_stock", "Brick / S/M": "low", "Brick / M/L": "backorder" },
+    backorderShips: "about 3 weeks",
+    short: "A multi-day hauler with a ventilated back panel and a real hip belt.",
+    description: "Fifty-five liters for three to five days out. A suspended mesh back panel keeps air moving, the hip belt transfers load the way it should, and the brain lid pops off to become a summit pack. Sleeping-bag compartment, side-zip access, and dual ice-axe loops.",
+    specs: ["55 L", "Suspended mesh back", "Removable lid / summit pack", "Torso fit S/M 41–48 cm, M/L 46–53 cm"],
+  },
+  {
+    sku: "TIMBER-DAY-22", title: "Timber Canvas Daypack 22L", category: "packs", price: 118,
+    image: "timber-22", weight: "900 g",
+    options: { colors: ["Wheat"] },
+    stock: { "Wheat": "in_stock" },
+    short: "Waxed canvas and brass, built to age well.",
+    description: "A 22-liter roll-top in 18 oz waxed canvas with full-grain leather straps and solid brass hardware. Padded tablet sleeve, cotton-lined interior, and a wax that re-proofs with a tin and an afternoon.",
+    specs: ["22 L", "18 oz waxed canvas", "Full-grain leather trim", "Roll-top closure"],
+  },
+  {
+    sku: "ALPINE-PACK-40", title: "Northline Alpine Pack 40L", category: "packs", price: 169,
+    badge: "new", image: "alpine-40", weight: "1.1 kg",
+    options: { colors: ["Pine"] },
+    stock: { "Pine": "in_stock" },
+    short: "Stripped-down forty liters for fast overnights.",
+    description: "A clean-lined 40-liter climbing and fastpacking bag: roll-top with a floating lid, reinforced haul loop, tool attachments, and a removable frame sheet so it packs flat for travel. Nothing you don't need.",
+    specs: ["40 L", "Removable frame sheet", "Roll-top + floating lid", "Ice-axe and pole carry"],
+  },
+  {
+    sku: "TRAIL-SHELL", title: "Trailhead Rain Shell", category: "apparel", price: 128,
+    badge: "bestseller", image: "trailhead-shell", weight: "310 g",
+    options: { colors: ["Moss", "Charcoal", "Tidal Blue"], sizes: ["S", "M", "L", "XL"] },
+    stock: {
+      "Moss / S": "in_stock", "Moss / M": "in_stock", "Moss / L": "in_stock", "Moss / XL": "backorder",
+      "Charcoal / S": "in_stock", "Charcoal / M": "in_stock", "Charcoal / L": "low", "Charcoal / XL": "in_stock",
+      "Tidal Blue / S": "in_stock", "Tidal Blue / M": "in_stock", "Tidal Blue / L": "in_stock", "Tidal Blue / XL": "in_stock",
+    },
+    backorderShips: "about 2 weeks",
+    short: "Waterproof 2.5-layer shell that packs into its own pocket.",
+    description: "A fully seam-taped 2.5-layer waterproof-breathable shell (20,000 mm / 20,000 g) with pit zips, a helmet-compatible hood, and a chest pocket the whole jacket stows into. Cut to layer over a fleece without ballooning.",
+    specs: ["2.5-layer, 20k/20k", "Fully taped seams", "Pit zips", "Packs into chest pocket"],
+  },
+  {
+    sku: "CIRRUS-DOWN", title: "Cirrus Down Jacket", category: "apparel", price: 198, compareAt: 240,
+    badge: "featured", image: "cirrus-down", weight: "290 g",
+    options: { colors: ["Black", "Juniper"], sizes: ["S", "M", "L", "XL"] },
+    stock: { "Black / S": "in_stock", "Black / M": "in_stock", "Black / L": "in_stock", "Black / XL": "in_stock", "Juniper / S": "low", "Juniper / M": "in_stock", "Juniper / L": "in_stock", "Juniper / XL": "sold_out" },
+    short: "800-fill responsibly sourced down, 290 grams, stuffs to a grapefruit.",
+    description: "An 800-fill-power down puffy with a water-resistant shell and hydrophobic down, so a little drizzle doesn't end the day. Elastic cuffs, a drop hem, and an inside stuff pocket. Warm enough for shoulder-season summits, light enough to forget it's in the pack.",
+    specs: ["800 FP RDS-certified down", "20D water-resistant shell", "Stuffs into inner pocket", "290 g (size M)"],
+  },
+  {
+    sku: "ALPINE-BASE", title: "Alpine Base Layer", category: "apparel", price: 58,
+    image: "alpine-base", weight: "190 g",
+    options: { colors: ["Charcoal", "Sand", "Navy"], sizes: ["XS", "S", "M", "L", "XL"] },
+    stock: { "Charcoal / XS": "in_stock", "Charcoal / S": "in_stock", "Charcoal / M": "in_stock", "Charcoal / L": "in_stock", "Charcoal / XL": "in_stock", "Sand / XS": "in_stock", "Sand / S": "in_stock", "Sand / M": "in_stock", "Sand / L": "low", "Sand / XL": "in_stock", "Navy / XS": "in_stock", "Navy / S": "in_stock", "Navy / M": "in_stock", "Navy / L": "in_stock", "Navy / XL": "in_stock" },
+    short: "Merino-blend long sleeve you can wear three days straight.",
+    description: "A 160 g/m² merino-nylon blend long-sleeve crew: naturally odor-resistant, quick to dry, flatlock seams so nothing rubs under a pack. Pairs with the Trailhead Rain Shell as our wet-weather layering set.",
+    specs: ["87% merino / 13% nylon", "160 g/m²", "Flatlock seams", "Machine washable"],
+  },
+  {
+    sku: "LODGE-FLEECE", title: "Lodge Wool Fleece", category: "apparel", price: 142,
+    badge: "new", image: "lodge-fleece", weight: "520 g",
+    options: { colors: ["Walnut"], sizes: ["S", "M", "L", "XL"] },
+    stock: { "Walnut / S": "in_stock", "Walnut / M": "in_stock", "Walnut / L": "in_stock", "Walnut / XL": "in_stock" },
+    short: "Heavyweight wool fleece with a shawl collar for cabin nights.",
+    description: "A heavyweight boiled-wool fleece with a shawl collar, two hand-warmer pockets, and a blanket-soft interior. This is the layer for the campfire, the drive home, and most of November.",
+    specs: ["Boiled wool blend", "Shawl collar", "Snap front", "Relaxed fit"],
+  },
+  {
+    sku: "GRANITE-BOOT", title: "Granite Hiking Boot", category: "footwear", price: 189,
+    badge: "bestseller", image: "granite-boot", weight: "1.1 kg / pair",
+    options: { colors: ["Tobacco"], sizes: ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"] },
+    stock: { "Tobacco / US 7": "in_stock", "Tobacco / US 8": "in_stock", "Tobacco / US 9": "in_stock", "Tobacco / US 10": "low", "Tobacco / US 11": "in_stock", "Tobacco / US 12": "backorder" },
+    backorderShips: "about 10 days",
+    short: "Full-grain leather, waterproof membrane, resoleable.",
+    description: "A mid-cut boot in 2.4 mm full-grain leather with a waterproof-breathable membrane, a stiff-enough shank for loaded miles, and a Vibram-style lugged outsole that a cobbler can replace. Broken in after a week, good for a decade.",
+    specs: ["Full-grain leather upper", "Waterproof membrane", "Resoleable lugged outsole", "Half sizes on request"],
+  },
+  {
+    sku: "TRAIL-SOCK-2PK", title: "Trail Sock 2-pack", category: "footwear", price: 24,
+    image: "trail-sock", weight: "120 g",
+    options: { sizes: ["S", "M", "L"] },
+    stock: { "S": "in_stock", "M": "in_stock", "L": "in_stock" },
+    short: "Merino crew socks with a cushioned footbed. Lifetime guarantee.",
+    description: "Two pairs of midweight merino crew socks with targeted cushioning under the heel and ball, a seamless toe, and arch compression that keeps them from bunching. If they wear out, we replace them — for life.",
+    specs: ["Merino blend", "Seamless toe", "Midweight cushion", "Lifetime guarantee"],
+  },
+  {
+    sku: "EMBER-STOVE", title: "Ember Pocket Stove", category: "kitchen", price: 64,
+    badge: "featured", image: "ember-stove", weight: "88 g",
+    options: { colors: ["Titanium"] },
+    stock: { "Titanium": "in_stock" },
+    short: "88-gram canister stove that boils a liter in under four minutes.",
+    description: "A fold-out canister stove with a piezo igniter, a wide burner head for real simmering, and a pot support that holds a two-liter pot without wobble. Boils 1 L in 3 min 40 s at sea level. Fits inside your mug.",
+    specs: ["88 g", "Piezo igniter", "Boil 1 L: 3:40", "Fits standard screw-thread canisters"],
+  },
+  {
+    sku: "BASECAMP-STOVE", title: "Basecamp 2-Burner Stove", category: "kitchen", price: 139,
+    image: "basecamp-stove", weight: "4.2 kg",
+    options: { colors: ["Forest"] },
+    stock: { "Forest": "in_stock" },
+    short: "Two 10,000 BTU burners and a wind shield for the whole crew's breakfast.",
+    description: "A classic folding two-burner propane stove with independent simmer control, three-sided wind panels, and a drip tray that lifts out for cleaning. Runs on 1 lb canisters or a bulk tank with the included adapter.",
+    specs: ["2 × 10,000 BTU", "Three-sided wind shield", "Removable drip tray", "Bulk-tank adapter included"],
+  },
+  {
+    sku: "SUMMIT-BOTTLE-750", title: "Summit Insulated Bottle 750ml", category: "kitchen", price: 32,
+    badge: "bestseller", image: "summit-bottle", weight: "380 g",
+    options: { colors: ["Black", "Sand", "Forest", "Clay"] },
+    stock: { "Black": "in_stock", "Sand": "in_stock", "Forest": "in_stock", "Clay": "low" },
+    short: "Double-wall stainless. Cold 24 hours, hot 12.",
+    description: "A 750 ml vacuum-insulated stainless bottle with a leakproof loop cap, a wide mouth for ice, and a powder coat that survives being dropped on granite. Keeps drinks cold for 24 hours and hot for 12.",
+    specs: ["750 ml", "18/8 stainless", "Cold 24 h / hot 12 h", "Dishwasher safe"],
+  },
+  {
+    sku: "FIRESIDE-MUG", title: "Fireside Enamel Mug", category: "kitchen", price: 18,
+    image: "fireside-mug", weight: "150 g",
+    options: { colors: ["Ember Red", "Cream"] },
+    stock: { "Ember Red": "in_stock", "Cream": "in_stock" },
+    short: "The 350 ml enamel mug that outlives every trip.",
+    description: "Steel enamel with a rolled rim, 350 ml, safe over a flame. Chips add character. Two of these live in every Northline staff car.",
+    specs: ["350 ml", "Steel enamel", "Flame safe", "Stackable"],
+  },
+  {
+    sku: "DRIFT-BAG-20", title: "Drift Down Sleeping Bag (−7 °C)", category: "sleep", price: 249,
+    badge: "featured", image: "drift-bag", weight: "960 g",
+    options: { sizes: ["Regular", "Long"] },
+    stock: { "Regular": "in_stock", "Long": "low" },
+    short: "700-fill mummy bag rated to −7 °C, under a kilo.",
+    description: "A 700-fill hydrophobic down mummy bag with a −7 °C comfort limit, a contoured hood, a draft collar and a full-length zipper baffle. Compresses to 20 × 30 cm. Two Drifts zip together.",
+    specs: ["700 FP hydrophobic down", "Comfort −7 °C", "960 g (Regular)", "Left/right zips pair"],
+  },
+  {
+    sku: "CONTOUR-POLES", title: "Contour Carbon Trekking Poles", category: "sleep", price: 119,
+    image: "contour-poles", weight: "420 g / pair",
+    options: { colors: ["Carbon"] },
+    stock: { "Carbon": "in_stock" },
+    short: "Three-section carbon poles with cork grips and flip locks.",
+    description: "A pair of three-section carbon fiber poles with cork grips, extended foam lower grips for steep sidehills, flip-lock adjusters, and interchangeable trail and snow baskets. 420 grams for the pair.",
+    specs: ["Carbon fiber", "Cork grips", "Flip locks", "Adjust 100–135 cm"],
+  },
+  {
+    sku: "LUMEN-400", title: "Lumen 400 Headlamp", category: "sleep", price: 49,
+    badge: "new", image: "lumen-headlamp", weight: "78 g",
+    options: { colors: ["Ember Orange"] },
+    stock: { "Ember Orange": "in_stock" },
+    short: "400 lumens, USB-C rechargeable, red night mode.",
+    description: "A 400-lumen rechargeable headlamp with a spot-and-flood beam, red night mode that saves your camp mates' eyes, a lock-out so it doesn't drain in the pack, and IPX7 water resistance. USB-C, 40 hours on low.",
+    specs: ["400 lm", "USB-C rechargeable", "IPX7", "Red mode + lock-out"],
+  },
+  {
+    sku: "RIDGE-BEANIE", title: "Ridge Wool Beanie", category: "apparel", price: 28,
+    image: "ridge-beanie", weight: "60 g",
+    options: { colors: ["Tidal Blue", "Charcoal", "Oat"] },
+    stock: { "Tidal Blue": "in_stock", "Charcoal": "in_stock", "Oat": "in_stock" },
+    short: "Ribbed merino beanie, one size, every season.",
+    description: "A ribbed merino beanie with a fold-over cuff — warm enough for a winter summit, thin enough for a cold morning at the trailhead. One size.",
+    specs: ["100% merino", "One size", "Fold cuff", "Machine washable"],
+  },
+];
+
+export const DEMO_CUSTOMER = { id: "cust_demo_northline_01", name: "Jordan Rivers", email: "jordan@example.com" };
+
+export const ORDERS = [
+  {
+    orderNumber: "#1042", email: DEMO_CUSTOMER.email, status: "shipped", placedAt: "2026-09-04",
+    items: [{ sku: "TRAIL-SHELL", variant: "Moss / M", qty: 1 }, { sku: "SUMMIT-BOTTLE-750", variant: "Forest", qty: 2 }],
+    tracking: "1Z999DEMO0142 (demo tracking number, not a real carrier record)",
+    eta: "2026-09-13",
+  },
+  {
+    orderNumber: "#1039", email: DEMO_CUSTOMER.email, status: "delivered", placedAt: "2026-08-27",
+    items: [{ sku: "ALPINE-BASE", variant: "Charcoal / M", qty: 1 }],
+    tracking: "1Z999DEMO0139 (demo tracking number, not a real carrier record)",
+    deliveredAt: "2026-08-31",
+  },
+];
+
+export const POLICIES = {
+  shipping: [
+    "Free standard shipping on US orders over $75; under $75 a flat $6.95 applies.",
+    "Standard US delivery takes 3–5 business days; orders placed before 1pm PT ship the same day.",
+    "Expedited 2-day shipping is available at checkout for $14.95.",
+    "Canada and the EU: 7–14 business days, rates calculated at checkout by destination; duties are prepaid for the EU.",
+  ],
+  returns: [
+    "30 days from delivery for a full refund on unworn items with tags attached.",
+    "US return labels are free — a prepaid label is emailed as soon as a return is started.",
+    "Exchanges for a different size ship as soon as the carrier scans the original, no need to wait for the refund.",
+    "Clearance items marked final sale can't be returned.",
+    "Every Northline product carries a lifetime warranty against defects in materials and workmanship; normal wear, and damage from misuse, aren't covered but we'll repair what we can at cost.",
+  ],
+};
+
+export const FAQ = [
+  { q: "How do I pick a Cairn pack size?", a: "Measure your torso from the C7 vertebra (the bump at the base of your neck) to the top of your hip bones. 41–48 cm is S/M, 46–53 cm is M/L. If you're on the line, go M/L." },
+  { q: "Does the Trailhead Rain Shell fit over a fleece?", a: "Yes — it's cut to layer over the Lodge Wool Fleece or a midweight midlayer without ballooning. Size up only if you'd wear a puffy under it." },
+  { q: "Can I re-wax the Timber Daypack myself?", a: "Absolutely. A tin of fabric wax, a hair dryer and an afternoon. We include a starter tin with every pack." },
+  { q: "Is the Drift Sleeping Bag warm enough for −7 °C, really?", a: "−7 °C is the comfort limit for a standard sleeper on an insulated pad. Cold sleepers should treat it as a −2 °C bag or add a liner." },
+  { q: "Do you ship internationally?", a: "To Canada and the EU, 7–14 business days, with duties prepaid for the EU. More destinations are coming later this year." },
+  { q: "What does the lifetime warranty cover?", a: "Defects in materials and workmanship, forever. Normal wear and misuse aren't covered, but we repair what we can at cost." },
+];
+
+export const REVIEWS = [
+  { name: "Priya N.", where: "Enchantments, WA", rating: 5, product: "CAIRN-PACK-55", text: "Carried 18 kg for four days and never once thought about the pack. The lid-turned-summit-bag trick is genuinely useful." },
+  { name: "Marcus T.", where: "Boulder, CO", rating: 5, product: "TRAIL-SHELL", text: "Eight hours of Colorado sleet. Dry. The pit zips saved me on the climb out." },
+  { name: "Elena R.", where: "Chamonix", rating: 4, product: "CIRRUS-DOWN", text: "Astonishingly warm for the weight. Would love a two-way zip, hence four stars — but I wear it every single day." },
+  { name: "Sam O.", where: "Isle of Skye", rating: 5, product: "RIDGECREST-2P", text: "Pitched it in a 50 km/h gust on my own. It didn't move all night. Two doors is the whole argument." },
+  { name: "Dana K.", where: "Adirondacks, NY", rating: 5, product: "GRANITE-BOOT", text: "Broke in fast, no hot spots, and my cobbler already told me he can resole them. Buy once." },
+  { name: "Theo L.", where: "Lake District", rating: 5, product: "EMBER-STOVE", text: "Boils fast and actually simmers, which most tiny stoves don't. Lives in my mug." },
+];
+
+export const TEAM = [
+  { name: "Rowan Hale", role: "Founder, gear design", initials: "RH", note: "Started Northline in a garage with a sewing machine and a pile of returned tents." },
+  { name: "Mei Tanaka", role: "Materials + testing", initials: "MT", note: "Runs the field-test program: 40 testers, 14 countries, one very worn spreadsheet." },
+  { name: "Luis Ortega", role: "Customer care", initials: "LO", note: "Answers the questions the assistant hands off, usually within the hour." },
+  { name: "Ada Okafor", role: "Sustainability", initials: "AO", note: "Keeps the recycled-content numbers honest and the repair program growing." },
+];
+
+export const STORY = {
+  headline: "Twelve years of gear that gets repaired, not replaced.",
+  paragraphs: [
+    "Northline started in 2014 in a Bellingham garage, rebuilding tents the big brands had written off. The first product we sold new was a rain shell we'd redesigned after fixing three hundred broken ones.",
+    "Everything in the range is field-tested by real people on real trips — forty testers across fourteen countries — and every product carries a lifetime warranty with a repair program behind it. Buy once, fix when needed, hand it down.",
+  ],
+  stats: [
+    { value: "40", label: "field testers" },
+    { value: "14", label: "countries tested in" },
+    { value: "6,200+", label: "repairs completed" },
+    { value: "78%", label: "recycled fabric by weight" },
+  ],
+};
+
+export function findProduct(sku) {
+  return PRODUCTS.find((p) => p.sku.toLowerCase() === String(sku || "").toLowerCase());
+}
+
+export function searchProducts(query) {
+  const q = String(query || "").toLowerCase().trim();
+  if (!q) return PRODUCTS;
+  const words = q.split(/\s+/);
+  return PRODUCTS.filter((p) => {
+    const hay = [p.title, p.short, p.description, p.sku, p.category, ...(p.options.colors || [])].join(" ").toLowerCase();
+    return words.every((w) => hay.includes(w));
+  });
+}
+
+export function findOrder(orderNumber, email) {
+  const n = String(orderNumber || "").trim().replace(/^#?/, "#");
+  const o = ORDERS.find((x) => x.orderNumber.toLowerCase() === n.toLowerCase());
+  if (!o) return { error: "no_such_order" };
+  if (String(email || "").toLowerCase() !== o.email.toLowerCase()) return { error: "email_does_not_match_order" };
+  return { order: o };
+}
+
+/** Stock summary in words, for the assistant's knowledge + the product tool. */
+export function stockSummary(p) {
+  const entries = Object.entries(p.stock);
+  const bad = entries.filter(([, s]) => s !== "in_stock");
+  if (!bad.length) return "In stock in every variant.";
+  const words = { low: "low stock", backorder: `backordered (ships in ${p.backorderShips || "a few weeks"})`, sold_out: "sold out" };
+  return `In stock except: ${bad.map(([v, s]) => `${v} — ${words[s]}`).join("; ")}.`;
+}
+
+/** The catalog as a public, MCP-shaped product record (no build-only fields). */
+export function publicProduct(p) {
+  return {
+    sku: p.sku, title: p.title, category: p.category, price: p.price, currency: STORE.currency,
+    compareAt: p.compareAt || null, badge: p.badge || null, weight: p.weight,
+    options: p.options, stock: p.stock, backorderShips: p.backorderShips || null,
+    inStock: Object.values(p.stock).some((s) => s === "in_stock" || s === "low"),
+    description: p.short + " " + p.description, specs: p.specs,
+    image: `${STORE.url}/img/products/${p.image}-960.webp`,
+    url: `${STORE.url}/#p-${p.sku}`,
+  };
+}

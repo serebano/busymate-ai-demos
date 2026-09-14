@@ -1,0 +1,16 @@
+{
+  "name": "telegram",
+  "subdomain": "telegram",
+  "title": "Telegram channel",
+  "tagline": "Nomad Circuits — a faithful Telegram-style preview of your mate, grounded chat, an MCP server over the catalogue and repair bench, WebMCP shop actions, and identified-customer order/repair lookup.",
+  "type": "static",
+  "assistant": "demo-telegram",
+  "tenant_id": "721c2bed-edde-4201-9978-7375da111a89",
+  "status": "live",
+  "order": 4,
+  "icon": "telegram",
+  "docs": "https://busymate.ai/docs/guides/telegram",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/telegram",
+  "backend_port": 8103,
+  "telegram_bot_note": "The real go-live hook lives in public/telegram-config.json (the field the page actually reads at runtime). This field is a documentation mirror only — set both together when the Telegram customer-channel lane (#2671) provisions a real BotFather bot for this demo tenant via connect_channel."
+}

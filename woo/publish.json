@@ -1,0 +1,34 @@
+{
+  "$comment2": "displayClaims MUST include email: the order-lookup gate resolves the customer's VERIFIED email from the projected display claims and refuses with no_verified_email otherwise — an email a visitor types is not verified, so it is deliberately the only source. The key is clockSkewSeconds, NOT clockToleranceSeconds: the published config is a zod strictObject, so one unknown key makes the WHOLE config unparseable and every /support/<slug> render 404s while publish_tenant_runtime still answers ok.",
+  "$comment": "Publishing REPLACES the workspace config, so this is the WHOLE of it — sites/_shared/publish/build-publish.mjs folds brand.json, demo.json and knowledge.json into one payload and nothing is ever published piecemeal.",
+  "extraOrigins": ["https://demo.busymate.ai"],
+  "connectorIds": ["cfb45545-87f7-4c58-a865-6136d76c38e5"],
+  "queueName": "Fernweh workshop inbox",
+  "timezone": "Europe/Berlin",
+  "suggestions": [
+    { "label": "Which pack?", "prompt": "I want one bag for a weekend by train and a laptop on weekdays — which pack, and what does it actually weigh?" },
+    { "label": "In stock?", "prompt": "Which packs under €150 are in stock right now?" },
+    { "label": "Delivery", "prompt": "What does delivery to Austria cost, and how long does it take?" },
+    { "label": "Where is my order?", "prompt": "Where has my last order got to?" },
+    { "label": "Start a return", "prompt": "I would like to return something from order 53." },
+    { "label": "Talk to a person", "prompt": "Can I talk to a person about a repair?" }
+  ],
+  "identityProvider": {
+    "id": "9c09d709-fb16-4d10-81b3-69317ce6d97c",
+    "label": "Fernweh Supply Co. store sign-in",
+    "issuer": "https://woo.demo.busymate.ai",
+    "jwksUri": "https://woo.demo.busymate.ai/.well-known/jwks.json",
+    "audiences": ["busymate-ai"],
+    "tenantClaim": "tenant_id",
+    "subjectClaim": "sub",
+    "displayClaims": ["name", "email"],
+    "allowedAlgs": ["ES256"],
+    "maxTokenAgeSeconds": 120,
+    "clockSkewSeconds": 30,
+    "delegatedAccess": true,
+    "identityEndpointUrl": "https://woo.demo.busymate.ai/wp-json/busymate/v1/launch",
+    "loginUrl": "https://woo.demo.busymate.ai/fernweh-demo-signin",
+    "accountUrl": "https://woo.demo.busymate.ai/my-account/",
+    "enabled": true
+  }
+}

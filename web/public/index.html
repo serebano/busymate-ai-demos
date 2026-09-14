@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northwind Coffee Co. — small-batch coffee, roasted to order</title>
+<meta name="description" content="A Portland roaster's storefront you can actually use: six coffees, a subscription, an account with orders — and every Busymate AI capability live on the page, each one with the instructions for adding it to your own site.">
+<link rel="canonical" href="https://web.demo.busymate.ai/">
+<link rel="alternate" type="text/markdown" href="/index.md" title="This page as Markdown">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="Northwind Coffee Co.">
+<meta property="og:description" content="Small-batch coffee, roasted to order — and a live Busymate AI assistant that can work the page.">
+<meta property="og:image" content="https://web.demo.busymate.ai/img/og.png">
+<meta property="og:url" content="https://web.demo.busymate.ai/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#8a4b26">
+<link rel="preload" as="image" href="/img/hero.webp">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://web.demo.busymate.ai/#org","name":"Northwind Coffee Co.","url":"https://web.demo.busymate.ai/","logo":"https://web.demo.busymate.ai/img/mark.png","foundingDate":"2016","email":"hello@northwind-demo.example","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"hello@northwind-demo.example","availableLanguage":"en"},"description":"A demonstration specialty coffee roaster used to show how Busymate AI works on a real storefront. No orders are fulfilled and no payment is taken.","areaServed":["US","CA"]},
+ {"@type":"WebSite","@id":"https://web.demo.busymate.ai/#site","url":"https://web.demo.busymate.ai/","name":"Northwind Coffee Co.","publisher":{"@id":"https://web.demo.busymate.ai/#org"}},
+ {"@type":"Store","name":"Northwind Coffee Co.","image":"https://web.demo.busymate.ai/img/hero.webp","url":"https://web.demo.busymate.ai/","currenciesAccepted":"USD","address":{"@type":"PostalAddress","addressLocality":"Portland","addressRegion":"OR","addressCountry":"US"},"parentOrganization":{"@id":"https://web.demo.busymate.ai/#org"}},
+ {"@type":"FAQPage","@id":"https://web.demo.busymate.ai/#faq","mainEntity":[{"@type":"Question","name":"How fresh is the coffee when it arrives?","acceptedAnswer":{"@type":"Answer","text":"It is roasted the day it ships, and the roast date is printed on every bag. Rest it three to five days, then use it within four weeks."}},{"@type":"Question","name":"Whole bean or ground?","acceptedAnswer":{"@type":"Answer","text":"Either — choose at checkout and we grind to your method. Whole bean keeps better, so it is what we send unless you tell us otherwise."}},{"@type":"Question","name":"Do you ship outside the US?","acceptedAnswer":{"@type":"Answer","text":"Canada, yes. Nowhere else yet: we would rather not send coffee somewhere it arrives stale."}},{"@type":"Question","name":"What if I do not like it?","acceptedAnswer":{"@type":"Answer","text":"Tell us within 14 days of delivery and we replace it or refund it, and you keep the bag. We would rather find you the right coffee than argue about a return."}},{"@type":"Question","name":"Can I pause a subscription?","acceptedAnswer":{"@type":"Answer","text":"Any time before the next roast date, from the account page or by asking the assistant. No notice period, no fee."}},{"@type":"Question","name":"Is this a real shop?","acceptedAnswer":{"@type":"Answer","text":"No. Northwind Coffee is a demonstration store for Busymate AI: real catalogue, real policies, real assistant — no orders, no payments, no real customers."}}]}
+]}
+</script>
+<!-- getIdentity must exist before the widget launches, so this one is not deferred. -->
+<script src="/assets/identity.js"></script>
+</head>
+<body data-signed-in="no">
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="/">
+      <img src="/img/mark.png" alt="" width="40" height="40" decoding="async">
+      <span><strong>Northwind</strong><span>Coffee Co.</span></span>
+    </a>
+    <nav>
+      <a href="#coffee">Coffee</a>
+      <a href="#story">Our roastery</a>
+      <a href="#subscription">Subscription</a>
+      <a href="#account">Account</a>
+      <a href="#help">Help</a>
+    </nav>
+    <button class="btn ghost small" type="button" id="signin-btn" data-when="signed-out">
+      <span class="wide">Sign in as the demo customer</span><span class="narrow">Sign in</span>
+    </button>
+    <button class="btn ghost small" type="button" id="signout-btn" data-when="signed-in">Sign out</button>
+    <button class="btn small" type="button" id="cart-btn" aria-haspopup="dialog" aria-label="Open the cart">Cart<span id="cart-count" hidden>0</span></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Portland, Oregon · roasting since 2016</div>
+        <h1>Coffee that leaves the roaster the day you order it.</h1>
+        <p class="lead">Six coffees from six farms, roasted in 5kg batches and shipped the same afternoon. Free delivery over $40, and a subscription that pauses when you do.</p>
+        <div class="cta">
+          <a class="btn" href="#coffee">Shop the range</a>
+          <button class="btn ghost" type="button" data-open-chat>Ask about a coffee</button>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Roasted</dt><dd>to order</dd></div>
+          <div><dt>Shipping</dt><dd>2-4 days</dd></div>
+          <div><dt>Subscription</dt><dd>15% off</dd></div>
+        </dl>
+      </div>
+      <figure class="hero-shot">
+        <img src="/img/hero.webp" alt="A barista pulling a shot at the Northwind counter" width="1500" height="1111" fetchpriority="high" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap" id="categories">
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="wrap" id="coffee">
+    <div class="section-head">
+      <div>
+        <h2>This week on the roaster</h2>
+        <p class="sub">Whole bean, or ground for your method at checkout. Everything below is in stock and carries its roast date on the bag.</p>
+      </div>
+      <button class="btn ghost small" type="button" data-open-chat>Not sure? Ask</button>
+    </div>
+    <div class="grid" id="catalog">
+<article class="card product" data-sku="NW-ETH-250">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/eth.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Kochere, Yirgacheffe</span>
+      <h3>Ethiopia Yirgacheffe</h3>
+      <p class="note">Bright, floral, citrus</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Light</dd></div>
+        <div><dt>Process</dt><dd>Washed</dd></div>
+        <div><dt>Best for</dt><dd>Filter, pour-over</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$18 <small>250g</small></span>
+        <button class="btn" type="button" data-add="NW-ETH-250">Add to cart</button>
+      </div>
+    </div>
+  </article>
+<article class="card product" data-sku="NW-COL-250">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/col.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Pitalito, Huila</span>
+      <h3>Colombia Huila</h3>
+      <p class="note">Balanced, caramel, red apple</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Medium</dd></div>
+        <div><dt>Process</dt><dd>Washed</dd></div>
+        <div><dt>Best for</dt><dd>Filter, espresso</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$16 <small>250g</small></span>
+        <button class="btn" type="button" data-add="NW-COL-250">Add to cart</button>
+      </div>
+    </div>
+  </article>
+<article class="card product" data-sku="NW-SUM-250">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/sum.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Lintong, North Sumatra</span>
+      <h3>Sumatra Mandheling</h3>
+      <p class="note">Earthy, bold, low acidity</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Dark</dd></div>
+        <div><dt>Process</dt><dd>Wet-hulled</dd></div>
+        <div><dt>Best for</dt><dd>French press, moka pot</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$17 <small>250g</small></span>
+        <button class="btn" type="button" data-add="NW-SUM-250">Add to cart</button>
+      </div>
+    </div>
+  </article>
+<article class="card product" data-sku="NW-ESP-250">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/esp.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Brazil + Colombia</span>
+      <h3>Northwind Espresso</h3>
+      <p class="note">Chocolate, smooth, low-acid blend</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Medium-dark</dd></div>
+        <div><dt>Process</dt><dd>Blend</dd></div>
+        <div><dt>Best for</dt><dd>Espresso, milk drinks</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$15 <small>250g</small></span>
+        <button class="btn" type="button" data-add="NW-ESP-250">Add to cart</button>
+      </div>
+    </div>
+  </article>
+<article class="card product" data-sku="NW-DEC-250">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/dec.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Huila, Colombia</span>
+      <h3>Midnight Decaf</h3>
+      <p class="note">Cocoa, plum, gentle sweetness</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Medium</dd></div>
+        <div><dt>Process</dt><dd>Sugarcane EA decaf</dd></div>
+        <div><dt>Best for</dt><dd>Filter, espresso, evenings</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$17 <small>250g</small></span>
+        <button class="btn" type="button" data-add="NW-DEC-250">Add to cart</button>
+      </div>
+    </div>
+  </article>
+<article class="card product" data-sku="NW-SMP-4X100">
+    <a class="shot" href="#coffee" aria-hidden="true" tabindex="-1">
+      <img src="/img/smp.webp" alt="" width="380" height="380" loading="lazy" decoding="async">
+    </a>
+    <div class="meta">
+      <span class="origin">Four origins</span>
+      <h3>Roaster's Sampler</h3>
+      <p class="note">4 x 100g of this week's roast</p>
+      <dl class="spec">
+        <div><dt>Roast</dt><dd>Mixed</dd></div>
+        <div><dt>Process</dt><dd>Mixed</dd></div>
+        <div><dt>Best for</dt><dd>Everything</dd></div>
+      </dl>
+      <div class="row">
+        <span class="cost">$26 <small>4 x 100g</small></span>
+        <button class="btn" type="button" data-add="NW-SMP-4X100">Add to cart</button>
+      </div>
+    </div>
+  </article>
+</div>
+  </section>
+
+  <section class="wrap" id="story">
+    <div class="story">
+      <div class="story-copy">
+        <h2>One garage, one drum roaster, six farms</h2>
+        <p>Northwind started in 2016 with a 5kg roaster in a Portland garage and a standing order from the cafe across the street. We still roast in small batches to order, still buy from the same six farms and cooperatives, and still ship the day we roast.</p>
+        <p>Nothing sits in a warehouse. If a bag reaches you more than three days after its roast date, something has gone wrong and we would like to hear about it.</p>
+        <a class="btn ghost small" href="/brewing">How we brew it →</a>
+      </div>
+      <div class="story-shots">
+        <figure><img src="/img/story.webp" alt="Our drum roaster mid-batch" width="1100" height="733" loading="lazy" decoding="async"></figure>
+        <figure><img src="/img/grind.webp" alt="Grinding to order" width="1100" height="733" loading="lazy" decoding="async"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="subscription">
+    <div class="banner">
+      <div>
+        <h2>Never run out. Save 15%.</h2>
+        <p class="sub" style="margin:0">Your beans every 2, 4 or 6 weeks, delivered free. Pause, skip, swap or cancel before the next roast date — no minimum, no notice, no fee.</p>
+      </div>
+      <button class="btn" type="button" data-open-chat>Ask about plans</button>
+    </div>
+  </section>
+
+  <section class="wrap" id="reviews">
+    <h2>What people say</h2>
+    <p class="sub">Invented customers for an invented roaster — the names and faces are generated, not real people.</p>
+    <div class="quotes" id="quotes">
+<figure class="quote">
+    <blockquote>The Espresso blend is the only coffee my machine has never fought me on. Four years, same bag, every four weeks.</blockquote>
+    <figcaption>
+      <img class="avatar" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%20width%3D%2296%22%20height%3D%2296%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2248%22%20fill%3D%22%238a2f45%22%2F%3E%3Ctext%20x%3D%2248%22%20y%3D%2261%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-sans-serif%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22600%22%20fill%3D%22%23fbe9ee%22%3EMK%3C%2Ftext%3E%3C%2Fsvg%3E" alt="" width="44" height="44" loading="lazy">
+      <span><strong>Marta Køhler</strong><span>Subscriber since 2019</span></span>
+    </figcaption>
+  </figure>
+<figure class="quote">
+    <blockquote>They roast on Tuesday and it is on my bar Thursday. Nobody else I have worked with is that consistent about the date on the bag.</blockquote>
+    <figcaption>
+      <img class="avatar" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%20width%3D%2296%22%20height%3D%2296%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2248%22%20fill%3D%22%235b4b8a%22%2F%3E%3Ctext%20x%3D%2248%22%20y%3D%2261%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-sans-serif%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22600%22%20fill%3D%22%23efeaf7%22%3EDA%3C%2Ftext%3E%3C%2Fsvg%3E" alt="" width="44" height="44" loading="lazy">
+      <span><strong>Devon Aluko</strong><span>Cafe owner, Astoria</span></span>
+    </figcaption>
+  </figure>
+<figure class="quote">
+    <blockquote>I had no idea what I liked. The sampler sorted that out in a fortnight and I have been on the Yirgacheffe ever since.</blockquote>
+    <figcaption>
+      <img class="avatar" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%20width%3D%2296%22%20height%3D%2296%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2248%22%20fill%3D%22%237a6a1f%22%2F%3E%3Ctext%20x%3D%2248%22%20y%3D%2261%22%20text-anchor%3D%22middle%22%20font-family%3D%22ui-sans-serif%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22600%22%20fill%3D%22%23f7f2df%22%3EPR%3C%2Ftext%3E%3C%2Fsvg%3E" alt="" width="44" height="44" loading="lazy">
+      <span><strong>Priya Raghavan</strong><span>Bought the sampler first</span></span>
+    </figcaption>
+  </figure>
+</div>
+  </section>
+
+  <section class="wrap" id="account">
+    <div class="section-head">
+      <div>
+        <h2>Your account</h2>
+        <p class="sub">One throwaway customer sits behind this button: no password, no sign-up, nobody real. Use it to see what changes once the assistant knows who is asking.</p>
+      </div>
+    </div>
+    <div class="account-grid">
+      <div class="panel">
+        <h3>Orders</h3>
+        <p class="muted" id="account-who" style="font-size:13px;margin:0 0 14px"></p>
+        <ul id="account-orders"></ul>
+      </div>
+      <div class="panel">
+        <h3>Subscription</h3>
+        <p class="muted" style="font-size:13px;margin:0 0 14px" id="account-sub"></p>
+        <div data-when="signed-out"><button class="btn small" type="button" data-signin>Sign in as the demo customer</button></div>
+        <div data-when="signed-in"><button class="btn ghost small" type="button" data-signout>Sign out</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="help">
+    <h2>Questions we get a lot</h2>
+    <p class="sub">The assistant answers from exactly this text and cites it. Every page here is also published as Markdown for anything reading without a browser.</p>
+    <div class="faq" id="faq">
+<details><summary>How fresh is the coffee when it arrives?</summary><p>It is roasted the day it ships, and the roast date is printed on every bag. Rest it three to five days, then use it within four weeks.</p></details>
+<details><summary>Whole bean or ground?</summary><p>Either — choose at checkout and we grind to your method. Whole bean keeps better, so it is what we send unless you tell us otherwise.</p></details>
+<details><summary>Do you ship outside the US?</summary><p>Canada, yes. Nowhere else yet: we would rather not send coffee somewhere it arrives stale.</p></details>
+<details><summary>What if I do not like it?</summary><p>Tell us within 14 days of delivery and we replace it or refund it, and you keep the bag. We would rather find you the right coffee than argue about a return.</p></details>
+<details><summary>Can I pause a subscription?</summary><p>Any time before the next roast date, from the account page or by asking the assistant. No notice period, no fee.</p></details>
+<details><summary>Is this a real shop?</summary><p>No. Northwind Coffee is a demonstration store for Busymate AI: real catalogue, real policies, real assistant — no orders, no payments, no real customers.</p></details>
+</div>
+    <div class="prose" style="margin-top:24px">
+      <div class="panel"><h3>Delivery</h3><p>2-4 business days for $5, free over $40. Next-day $12 before 11:00. US and Canada. <a href="/shipping">Full policy</a></p></div>
+      <div class="panel"><h3>Returns</h3><p>Unopened within 30 days for a refund. Opened and not right? Tell us within 14 days — keep the coffee. <a href="/returns">Full policy</a></p></div>
+      <div class="panel"><h3>Subscribe and save</h3><p>Every 2, 4 or 6 weeks, 15% off, free delivery, cancel any time. <a href="/subscription">How it works</a></p></div>
+      <div class="panel"><h3>Brewing</h3><p>1:16, 195-205°F, 3-4 minutes for a pour-over, 30-45 seconds of bloom. <a href="/brewing">Brew guide</a></p></div>
+    </div>
+  </section>
+</main>
+
+<section class="band" id="demo">
+  <div class="wrap">
+    <header>
+      <div data-include="/_shared/brand-mark.html"></div>
+      <h2>Everything above is the demo. Here is what it is demonstrating.</h2>
+      <p class="lead">Northwind is not a real roaster — it is a full-size sandbox for Busymate AI. Each block below is live on this page right now, with something to try and the exact instructions for doing the same on your own site.</p>
+    </header>
+
+    <div class="features" id="features"></div>
+
+    <div class="scorecard">
+      <p>Two checkers grade any address, this one included: one scores how ready a site is for AI agents, the other lists the tools a page publishes. Run them on Northwind, then run them on yours.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/web.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Fweb.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:hello@northwind-demo.example">hello@northwind-demo.example</a>,
+       or ask the assistant for a human and a colleague joins the same conversation from the team Inbox.</p>
+    <p>Northwind Coffee Co. is a demonstration store. No order is fulfilled, no payment is taken, and the customer behind the sign-in button is not a real person.</p>
+    <p>Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a> · <a href="https://github.com/serebano/busymate-ai-demo">Photography credits</a></p>
+  </div>
+</footer>
+
+<dialog id="cart">
+  <div class="head"><h3>Your cart</h3><button class="btn ghost small" type="button" id="cart-close">Close</button></div>
+  <div class="body"><ul id="cart-lines"></ul></div>
+  <div class="foot"><span id="cart-total" class="muted"></span><button class="btn small" type="button" data-open-chat>Ask about an order</button></div>
+</dialog>
+
+<div id="flash" role="status" hidden></div>
+
+<!-- The live Busymate AI widget. data-assistant is the demo workspace's slug. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demos"
+        data-label="Ask Northwind"
+        data-aria-label="Open the Northwind Coffee assistant"
+        data-title="Northwind Coffee"
+        async></script>
+<script type="module" src="/assets/boot.js"></script>
+</body>
+</html>

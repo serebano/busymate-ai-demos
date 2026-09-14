@@ -1,0 +1,53 @@
+{
+  "$comment": "type:\"dynamic\" — this demo is a real WordPress + WooCommerce application in its own containers, not a static docroot. scripts/deploy.sh only handles type:\"static\" demos, so it neither rsyncs nor re-renders this vhost; the landing index and demos.json DO include it (they read every demo.json). `container` is a field this demo adds: the dynamic-demo run shape, so the box is reproducible from this file. `backend_port` is the WordPress container; `mcp_port` is this demo's OWN MCP server container (demo-woo-backend), which nginx routes /mcp to. `connector_id` is the tenant MCP connector this store's own /mcp is registered as — non-secret, and the value the box scopes its HS256 actor verifier to. See sites/woo/README.md.",
+  "name": "woo",
+  "subdomain": "woo",
+  "title": "WooCommerce store",
+  "tagline": "Fernweh Supply Co. — a real WooCommerce shop with a live catalogue, a signed-in customer, real orders and an open REST API to drive it all.",
+  "type": "dynamic",
+  "assistant": "fernweh",
+  "tenant_id": "7ce7ec4a-bced-465b-a4dd-d4fc2efc4677",
+  "connector_id": "cfb45545-87f7-4c58-a865-6136d76c38e5",
+  "status": "live",
+  "order": 6,
+  "icon": "woocommerce",
+  "docs": "https://busymate.ai/docs/guides/woocommerce",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/woo",
+  "backend_port": 8106,
+  "mcp_port": 8107,
+  "container": {
+    "app": {
+      "name": "demo-woo",
+      "image": "wordpress:php8.3-apache",
+      "publish": "127.0.0.1:8106:80",
+      "network": "demo-woo-net",
+      "restart": "unless-stopped",
+      "memory": "768m",
+      "volumes": [
+        "/srv/demos/woo/data/wp:/var/www/html"
+      ]
+    },
+    "db": {
+      "name": "demo-woo-db",
+      "image": "mariadb:11",
+      "network": "demo-woo-net",
+      "restart": "unless-stopped",
+      "memory": "512m",
+      "args": [
+        "--innodb-buffer-pool-size=64M",
+        "--performance-schema=OFF",
+        "--max-connections=40",
+        "--key-buffer-size=8M"
+      ],
+      "volumes": [
+        "/srv/demos/woo/data/db:/var/lib/mysql"
+      ]
+    },
+    "vhost_templates": [
+      "infra/nginx/wordpress-http.conf.template",
+      "infra/nginx/wordpress-https.conf.template"
+    ],
+    "acme_root": "/srv/demos/woo/acme",
+    "seed": "sites/woo/seed/seed.sh"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "webmcp": "1",
+  "site": "scan.demo.busymate.ai",
+  "origin": "https://scan.demo.busymate.ai",
+  "source": "server",
+  "exposedTo": [
+    "https://busymate.ai"
+  ],
+  "tools": [
+    {
+      "name": "scan_site",
+      "title": "Scan a website",
+      "description": "Open the real Busymate AI quick start for a website address, at busymate.ai/try/<host> — the same one-click scan and grounded assistant preview this page demonstrates. Opens in a new tab; does not scan inside this page.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "untrustedContentHint": false,
+        "consequentialHint": false
+      }
+    },
+    {
+      "name": "list_examples",
+      "title": "List the pre-scanned examples",
+      "description": "List the three pre-scanned example sites on this page, with their live busymate.ai/try/<host> result URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "untrustedContentHint": false,
+        "consequentialHint": false
+      }
+    },
+    {
+      "name": "show_example",
+      "title": "Show a pre-scanned example",
+      "description": "Scroll to and highlight one of this page's three pre-scanned example sites (so a visitor can see its real result without typing anything), or open its live quick-start result in a new tab.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "site": {
+            "type": "string",
+            "description": "Which example to show.",
+            "enum": [
+              "busydrivers.com",
+              "web.demo.busymate.ai",
+              "shopify.demo.busymate.ai"
+            ]
+          }
+        },
+        "required": [
+          "site"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "untrustedContentHint": false,
+        "consequentialHint": false
+      }
+    },
+    {
+      "name": "get_readiness",
+      "title": "Score a website's AI-readiness",
+      "description": "Score ANY website's AI-readiness live — the same six-layer checker (llms.txt, agents.json, MCP, WebMCP, structured data, robots/sitemap) the quick start runs — through Beacon's own MCP server, so an agent can grade a site without leaving this page.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "untrustedContentHint": false,
+        "consequentialHint": false
+      }
+    }
+  ]
+}
