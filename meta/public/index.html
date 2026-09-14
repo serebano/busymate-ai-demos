@@ -977,6 +977,28 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-channel-btn]").forEach(function (b) {
     b.addEventListener("click", function () { setChannel(b.getAttribute("data-channel-btn")); });
   });
+
+  // The channel CTAs. Until a real Page id / IG username is connected (see the
+  // /meta-config.json hook below, which flips el.dataset.live="1" and sets a
+  // real m.me/ig.me href), "Open in Messenger" / "Open in Instagram" and the
+  // header "Message us" are NOT dead: they move the live thread into the named
+  // frame and smooth-scroll it into view — exactly what the copy promises. Once
+  // live, dataset.live short-circuits the handler and the anchor opens the app.
+  function scrollToPhones() {
+    var p = document.querySelector(".phones");
+    if (p) p.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  [["messengerCta", "messenger"], ["instagramCta", "instagram"], ["dmHeaderCta", null]].forEach(function (pair) {
+    var el = document.getElementById(pair[0]);
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      if (el.dataset.live === "1") return; // real m.me / ig.me link — let it open
+      ev.preventDefault();
+      if (pair[1]) setChannel(pair[1]);
+      scrollToPhones();
+    });
+  });
+
   paintPlaceholders();
   mount();
 })();
@@ -997,6 +1019,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var live = [];
     function activate(el, url) {
       el.href = url; el.target = "_blank"; el.rel = "noopener noreferrer";
+      el.dataset.live = "1"; // the in-page scroll handler now steps aside for the real app link
     }
     if (page) {
       activate(messengerCta, "https://m.me/" + page);

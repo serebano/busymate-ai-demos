@@ -868,6 +868,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (invite) {
       [header, main].forEach(function (el) {
         el.href = invite; el.target = "_blank"; el.rel = "noopener noreferrer";
+        el.dataset.live = "1"; // the in-page scroll handler steps aside for the real invite
       });
       main.textContent = "Join our Discord";
       note.textContent = "Opens the " + (cfg.serverName || "studio") + " server, where " + (cfg.botName || "Forge") + " answers in #support.";
@@ -875,6 +876,24 @@ document.addEventListener("DOMContentLoaded", function () {
       topic.textContent = (cfg.botName || "Forge") + " answers here now · a person joins the same thread when you ask";
     }
   }).catch(function () {});
+
+  // Until a real server invite is connected these CTAs are NOT dead: they
+  // smooth-scroll the live #support conversation into view (what the copy
+  // promises). Once an invite is set above, dataset.live short-circuits this
+  // and the real invite link opens instead.
+  function scrollToPreview() {
+    var p = document.getElementById("discordScreen") || document.getElementById("channel");
+    if (p) p.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  ["dcHeaderCta", "dcCtaMain"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      if (el.dataset.live === "1") return;
+      ev.preventDefault();
+      scrollToPreview();
+    });
+  });
 })();
 </script>
 
