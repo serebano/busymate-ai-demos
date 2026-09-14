@@ -8,8 +8,7 @@
   "sources": [
     {
       "id": "mcp",
-      "type": "openapi",
-      "url": "https://shopify.demo.busymate.ai/openapi.json"
+      "path": "https://shopify.demo.busymate.ai/openapi.json"
     }
   ],
   "flows": [
@@ -17,76 +16,158 @@
       "id": "list_products",
       "title": "list products",
       "description": "List every product Northline Outdoor sells, with price and stock.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "list_products",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "search_products",
       "title": "search products",
       "description": "Search Northline Outdoor's catalog by name or keyword.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "search_products",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A product name or keyword to search for, e.g. 'rain jacket'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "get_product",
       "title": "get product",
       "description": "Get one product's full detail by SKU.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "get_product",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "The product's SKU code, as shown on its product card.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "get_order_status",
       "title": "get order status",
       "description": "Look up an order's status and tracking by order number + the email on the order. Call it as soon as a shopper asks about an order — even before they give the number: the call shows an order-lookup card in the chat where they type it. Requires an identified (signed-in) visitor on a real store.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "get_order_status",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true,
-      "x-access": "identified"
+      "fields": {
+        "parameters": [
+          {
+            "name": "order_number",
+            "description": "The order number, as printed on the receipt or confirmation email, e.g. '#1042'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email address the order was placed under.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "start_return",
       "title": "start return",
       "description": "Start a return for an item on an order. Call it as soon as a shopper wants to return something — the call shows a return card in the chat where they pick the order, the item and the reason. Requires an identified (signed-in) visitor on a real store; this demo does not actually process anything.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "start_return",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": false,
-      "x-access": "identified"
-    },
-    {
-      "id": "add_to_cart",
-      "title": "add to cart",
-      "description": "Add a product (by SKU, optionally a specific variant) to this visitor's cart on this page. The cart badge and drawer update immediately.",
-      "operations": [],
-      "x-mcpTool": "add_to_cart",
-      "x-transport": "webmcp",
-      "x-readOnly": false
-    },
-    {
-      "id": "view_cart",
-      "title": "view cart",
-      "description": "Show what's currently in this visitor's cart with line totals, subtotal, shipping and total.",
-      "operations": [],
-      "x-mcpTool": "view_cart",
-      "x-transport": "webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [
+          {
+            "name": "order_number",
+            "description": "The order number the item was purchased on, e.g. '#1042'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email address the order was placed under.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "The SKU of the item on that order to return.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "Why the item is being returned, in the customer's own words.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     }
   ]
 }

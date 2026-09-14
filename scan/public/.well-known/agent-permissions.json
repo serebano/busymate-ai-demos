@@ -1,39 +1,51 @@
 {
   "metadata": {
     "schema_version": "1.0.0",
-    "last_updated": "2026-09-14"
+    "last_updated": "2026-09-14T00:00:00Z"
   },
   "strict": true,
-  "tools": {
-    "scan_site": {
-      "access": "public",
-      "readOnly": true,
-      "requiresConfirmation": false,
-      "transport": "mcp+webmcp"
+  "resource_rules": [
+    {
+      "verb": "read_content",
+      "selector": "*",
+      "allowed": true
     },
-    "list_examples": {
-      "access": "public",
-      "readOnly": true,
-      "requiresConfirmation": false,
-      "transport": "mcp+webmcp"
+    {
+      "verb": "read_metadata",
+      "selector": "*",
+      "allowed": true
     },
-    "show_example": {
-      "access": "public",
-      "readOnly": true,
-      "requiresConfirmation": false,
-      "transport": "mcp+webmcp"
-    },
-    "get_readiness": {
-      "access": "public",
-      "readOnly": true,
-      "requiresConfirmation": false,
-      "transport": "mcp+webmcp"
-    },
-    "my_recent_scans": {
-      "access": "identified",
-      "readOnly": true,
-      "requiresConfirmation": false,
-      "transport": "mcp"
+    {
+      "verb": "follow_link",
+      "selector": "*",
+      "allowed": true
     }
-  }
+  ],
+  "api": [
+    {
+      "type": "mcp",
+      "endpoint": "https://scan.demo.busymate.ai/mcp",
+      "docs": "https://scan.demo.busymate.ai/.well-known/mcp.json",
+      "description": "This site's MCP server — prefer calling its tools over simulating page interactions."
+    },
+    {
+      "type": "openapi",
+      "endpoint": "https://scan.demo.busymate.ai/openapi.json",
+      "description": "The same tools, documented as a REST-style OpenAPI spec."
+    }
+  ],
+  "action_guidelines": [
+    {
+      "directive": "SHOULD",
+      "description": "Prefer this site's MCP/WebMCP tools over simulating clicks or form fills on the page."
+    },
+    {
+      "directive": "MUST NOT",
+      "description": "Treat any action on this demo as touching a real order, payment or person — this is a sandbox."
+    },
+    {
+      "directive": "SHOULD",
+      "description": "Expect an identified-visitor tool (my_recent_scans) to require a signed launch proof and answer for that visitor alone."
+    }
+  ]
 }

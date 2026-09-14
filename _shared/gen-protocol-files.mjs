@@ -128,52 +128,100 @@ export function generate(config) {
 
   // ---- C6: /agents.json (BARE path — verified 2026-09-14 against a live
   // agent-ready.dev rescan; the original ticket assumed .well-known/, but
-  // the real checker's `details.url` is the bare path) — the agents.json
-  // v0.1.0 "tool actions" schema (agentsjson.org / Wildcard): top-level
-  // agentsJson/info/sources/flows, every flow's operations naming a REAL
-  // openapi.json operationId. Our whole surface is one JSON-RPC endpoint,
-  // so every MCP-backed flow shares the one real operationId and carries
-  // which tool/arguments to send as extension fields (`x-*`) rather than
-  // inventing per-tool REST routes. A WebMCP-only tool (no MCP backend) has
-  // no OpenAPI operation to point at, so its flow's `operations` stays
-  // empty — never a fabricated one. Busymate's OWN bespoke discovery card
-  // (name/url/tools/identity/human-hand-off — no external scanner checks
-  // it) lives at `.well-known/agents.json` instead — see gen-agent-files.mjs.
+  // the real checker's `details.url` is the bare path) — the REAL
+  // agents.json v0.1.0 schema (wild-card-ai/agents-json, fetched verbatim
+  // via `gh api repos/wild-card-ai/agents-json/contents/…schema.json` —
+  // never guessed): top-level agentsJson/info/sources[]/flows[]. Every
+  // `sources[]` entry needs {id, path} (path = a URL to an OpenAPI 3+
+  // spec — our real openapi.json). Every `flows[]` entry needs
+  // {id, title, description, actions[], fields}: one `actions[]` entry per
+  // flow ({id, sourceId, operationId} — operationId is the ONE real
+  // operation openapi.json documents, since our whole surface is one
+  // JSON-RPC endpoint), and `fields.parameters[]` derived from the tool's
+  // OWN inputSchema properties (never invented) plus `fields.responses.success`.
+  // A WebMCP-only tool (no MCP backend) has no OpenAPI source to point at,
+  // so it gets no flow here — it is not a fabricated API action.
+  // Busymate's OWN bespoke discovery card (name/url/tools/identity/
+  // human-hand-off — no external scanner checks it) lives at
+  // `.well-known/agents.json` instead — see gen-agent-files.mjs.
+  const jsonSchemaTypeOf = (prop) => (prop && typeof prop === "object" ? prop.type : undefined);
   const agentsJsonV01 = {
     agentsJson: "0.1.0",
     info: { title: config.name, description: config.description, version: "1.0.0" },
-    sources: hasMcp ? [{ id: "mcp", type: "openapi", url: `${config.siteUrl}/openapi.json` }] : [],
-    flows: Object.entries(allTools).map(([n, t]) => ({
-      id: n,
-      title: n.replace(/_/g, " "),
-      description: t.description,
-      operations: t.transport === "webmcp" ? [] : ["mcpJsonRpcCall"],
-      "x-mcpTool": n,
-      "x-transport": t.transport,
-      "x-readOnly": !!t.readOnlyHint,
-      ...(t.accessHint ? { "x-access": t.accessHint } : {}),
-    })),
+    sources: hasMcp ? [{ id: "mcp", path: `${config.siteUrl}/openapi.json` }] : [],
+    flows: Object.entries(allTools)
+      .filter(([, t]) => t.transport !== "webmcp")
+      .map(([n, t]) => {
+        const props = (t.inputSchema && t.inputSchema.properties) || {};
+        const required = new Set((t.inputSchema && t.inputSchema.required) || []);
+        return {
+          id: n,
+          title: n.replace(/_/g, " "),
+          description: t.description,
+          actions: [{ id: "call", sourceId: "mcp", operationId: "mcpJsonRpcCall" }],
+          fields: {
+            parameters: Object.entries(props).map(([pname, pdef]) => ({
+              name: pname,
+              ...(pdef && pdef.description ? { description: pdef.description } : {}),
+              required: required.has(pname),
+              ...(jsonSchemaTypeOf(pdef) ? { type: jsonSchemaTypeOf(pdef) } : {}),
+            })),
+            responses: {
+              success: { type: "object", description: "The JSON-RPC 2.0 tools/call result for this tool." },
+            },
+          },
+        };
+      }),
   };
   fs.writeFileSync(path.join(config.outDir, "agents.json"), `${JSON.stringify(agentsJsonV01, null, 2)}\n`);
 
-  // ---- C7: agent-permissions.json — one row per tool, derived straight
-  // from the SAME readOnlyHint/accessHint/confirmHint this repo's real
-  // dispatcher (mcp-identity-server.mjs) already gates on. strict:true
-  // states plainly what that dispatcher already does: a tool NOT listed
-  // here does not exist as far as this server is concerned (unknown method
-  // -> JSON-RPC -32601), so an agent must not assume undeclared access.
-  // Served at BOTH the bare path (what the live checker's `details.url`
-  // actually reads, verified 2026-09-14) and the well-known path (the
-  // convention the original ticket named) — same bytes, no reason to pick.
+  // ---- C7: agent-permissions.json — the REAL las-wg/agent-permissions.json
+  // v1.0.0 schema (fetched verbatim via `gh api
+  // repos/las-wg/agent-permissions.json/contents/README.md` — its only
+  // top-level keys are metadata/strict/resource_rules/action_guidelines/api,
+  // additionalProperties:false, so a per-tool "tools" map — this repo's
+  // first draft — fails validation outright). `resource_rules` states
+  // what's genuinely true of every page here (reading is always allowed);
+  // `api` points at the real MCP + OpenAPI endpoints, honestly preferring
+  // them over page interaction; `action_guidelines` are derived straight
+  // from confirmHint/accessHint — never invented ones.
+  const mutating = Object.entries(allTools).filter(([, t]) => t.confirmHint);
+  const identified = Object.entries(allTools).filter(([, t]) => t.accessHint === "identified" || t.accessHint === "delegated");
   const permissions = {
-    metadata: { schema_version: "1.0.0", last_updated: today },
+    metadata: { schema_version: "1.0.0", last_updated: `${today}T00:00:00Z` },
     strict: true,
-    tools: Object.fromEntries(Object.entries(allTools).map(([n, t]) => [n, {
-      access: t.accessHint === "identified" || t.accessHint === "delegated" ? "identified" : "public",
-      readOnly: !!t.readOnlyHint,
-      requiresConfirmation: !!t.confirmHint,
-      transport: t.transport,
-    }])),
+    resource_rules: [
+      { verb: "read_content", selector: "*", allowed: true },
+      { verb: "read_metadata", selector: "*", allowed: true },
+      { verb: "follow_link", selector: "*", allowed: true },
+    ],
+    ...(hasMcp ? {
+      api: [
+        {
+          type: "mcp",
+          endpoint: config.mcpUrl,
+          docs: `${config.siteUrl}/.well-known/mcp.json`,
+          description: "This site's MCP server — prefer calling its tools over simulating page interactions.",
+        },
+        {
+          type: "openapi",
+          endpoint: `${config.siteUrl}/openapi.json`,
+          description: "The same tools, documented as a REST-style OpenAPI spec.",
+        },
+      ],
+    } : {}),
+    action_guidelines: [
+      { directive: "SHOULD", description: "Prefer this site's MCP/WebMCP tools over simulating clicks or form fills on the page." },
+      { directive: "MUST NOT", description: "Treat any action on this demo as touching a real order, payment or person — this is a sandbox." },
+      ...(mutating.length ? [{
+        directive: "MUST",
+        description: `Confirm with the visitor before calling a mutating tool (${mutating.map(([n]) => n).join(", ")}) — each one changes something.`,
+      }] : []),
+      ...(identified.length ? [{
+        directive: "SHOULD",
+        description: `Expect an identified-visitor tool (${identified.map(([n]) => n).join(", ")}) to require a signed launch proof and answer for that visitor alone.`,
+      }] : []),
+    ],
   };
   const permissionsText = `${JSON.stringify(permissions, null, 2)}\n`;
   fs.writeFileSync(path.join(config.outDir, "agent-permissions.json"), permissionsText);

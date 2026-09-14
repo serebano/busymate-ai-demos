@@ -8,8 +8,7 @@
   "sources": [
     {
       "id": "mcp",
-      "type": "openapi",
-      "url": "https://discord.demo.busymate.ai/openapi.json"
+      "path": "https://discord.demo.busymate.ai/openapi.json"
     }
   ],
   "flows": [
@@ -17,78 +16,191 @@
       "id": "list_games",
       "title": "list games",
       "description": "Every game Pixelforge Games has released — name, genre, price, the platforms it runs on, its current patch version and whether it is finished or still in early access.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "list_games",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "search_patch_notes",
       "title": "search patch notes",
       "description": "Search the public patch notes Pixelforge Games publishes, by keyword — a bug that was fixed, a feature that landed, a platform, a build number. Returns the matching entries with their version, date and the lines that mention it.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "search_patch_notes",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A keyword or short phrase, e.g. 'save corruption', 'controller', 'ultrawide' or '1.8.1'.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "game",
+            "description": "Optional game id or name to search within, e.g. 'lumen-drift' or 'Ironroot Tactics'. Leave blank to search every game.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "get_server_status",
       "title": "get server status",
       "description": "Live status of the services Pixelforge Games runs for its players — cloud saves, the leaderboards, the key redemption service, the store and the studio's community server — plus any open incident.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "get_server_status",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "report_bug",
       "title": "report bug",
       "description": "Do NOT call this to ask the player which game, which platform, what happened or their email — calling it with whatever is already known IS how the bug form opens, never a chat question for a missing field. Files a bug report with Pixelforge Games and reports its id, the queue it landed in and what happens next.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "report_bug",
-      "x-transport": "mcp",
-      "x-readOnly": false
+      "fields": {
+        "parameters": [
+          {
+            "name": "game",
+            "description": "The game id, e.g. 'lumen-drift', 'ironroot-tactics' or 'sundog-rally'. Leave blank if not yet known — the form lets the player pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "description": "Where it happened: 'windows', 'macos', 'linux' or 'handheld'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "what_happened",
+            "description": "What the player did and what went wrong, in their own words.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email the studio replies to.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "get_my_purchases",
       "title": "get my purchases",
       "description": "The games the signed-in player owns at Pixelforge Games, with the receipt, the purchase date, the price paid and the build they last played. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "get_my_purchases",
-      "x-transport": "mcp+webmcp",
-      "x-readOnly": true,
-      "x-access": "identified"
+      "fields": {
+        "parameters": [
+          {
+            "name": "email",
+            "description": "The signed-in player's own email address.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     },
     {
       "id": "request_refund",
       "title": "request refund",
       "description": "Start a refund on one of the signed-in player's own purchases at Pixelforge Games, by its receipt number. Requires an identified (signed-in) visitor and the player's explicit go-ahead first — say what will happen, then call it. This demo files the request but no money moves.",
-      "operations": [
-        "mcpJsonRpcCall"
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
       ],
-      "x-mcpTool": "request_refund",
-      "x-transport": "mcp",
-      "x-readOnly": false,
-      "x-access": "identified"
-    },
-    {
-      "id": "open_bug_report_form",
-      "title": "open bug report form",
-      "description": "Open the bug-report form on the page itself for the player to fill in and send — game, platform, what happened and an email, with one \"Send report\" button. Use this when the player is looking at the page; pass anything already known (the game they named, the platform, what they described, a signed-in player's own email) as prefill so they only fill in what is missing.",
-      "operations": [],
-      "x-mcpTool": "open_bug_report_form",
-      "x-transport": "webmcp",
-      "x-readOnly": true
+      "fields": {
+        "parameters": [
+          {
+            "name": "receipt",
+            "description": "The receipt number of the purchase to refund, e.g. 'PF-40271'.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The signed-in player's own email address, the one the purchase is under.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "One line on why — the studio reads every one.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
     }
   ]
 }
