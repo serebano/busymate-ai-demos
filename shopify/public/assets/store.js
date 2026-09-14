@@ -123,6 +123,12 @@
   function renderCart() {
     var s = cartSummary();
     var badge = $("#cartBadge"); badge.textContent = s.itemCount; badge.dataset.n = s.itemCount;
+    // #2905/#2906 (agent-ready.dev A11, WCAG 2.5.3) — the button's accessible
+    // name must contain its visible text ("Cart" + the badge), which changes
+    // with every add/remove. Composing it here — the ONE place the badge
+    // itself is written — means the two can never drift apart.
+    var cartBtn = $(".cart-btn");
+    if (cartBtn) cartBtn.setAttribute("aria-label", "Cart, " + s.itemCount + " item" + (s.itemCount === 1 ? "" : "s") + " — open cart");
     var box = $("#cartItems");
     if (!s.items.length) { box.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L20 8H6.3"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>Your cart is empty.<br><small>Try asking the assistant to add something.</small></div>'; }
     else box.innerHTML = s.items.map(function (l, idx) {

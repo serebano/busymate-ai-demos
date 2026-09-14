@@ -147,6 +147,14 @@ function renderCart() {
     count.textContent = String(c.itemCount);
     count.hidden = c.itemCount === 0;
   }
+  // #2905/#2906 (agent-ready.dev A11, WCAG 2.5.3) — the button's accessible
+  // name must contain its visible text ("Cart" + the count span), which
+  // changes with every add/remove. Composing it here — the ONE place the
+  // count itself is written — means the two can never drift apart.
+  const cartBtn = el("cart-btn");
+  if (cartBtn) {
+    cartBtn.setAttribute("aria-label", `Cart ${c.itemCount} item${c.itemCount === 1 ? "" : "s"} — open the cart`);
+  }
   const panel = el("cart-lines");
   if (!panel) return;
   panel.innerHTML = c.lines.length
