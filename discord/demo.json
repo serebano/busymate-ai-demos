@@ -1,0 +1,17 @@
+{
+  "name": "discord",
+  "subdomain": "discord",
+  "title": "Discord channel",
+  "tagline": "Pixelforge Games — an indie studio's player desk shown the way it reads in a Discord #support channel: grounded chat, an MCP server over the games and patch notes, WebMCP page actions, a bug-report card and identified-player library and refunds.",
+  "type": "static",
+  "assistant": "demo-discord",
+  "tenant_id": "06765747-009c-41f5-8ecb-ac53d4b00e2f",
+  "status": "live",
+  "order": 7,
+  "icon": "discord",
+  "backend_port": 8113,
+  "docs": "https://busymate.ai/integrations/discord",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/discord",
+  "discord_invite_url": null,
+  "discord_invite_url_note": "The real go-live hook lives in public/discord-config.json (the field the page actually reads at runtime). This field is a documentation mirror only — set both together once the Discord channel lane connects a real Pixelforge Games server to this tenant and has an invite to publish."
+}

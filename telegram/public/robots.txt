@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Explicit allow for AI/agent crawlers (six-layer agent-ready standard,
+# "Discoverable" layer) — no blanket disallow, this is a public demo.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://telegram.demo.busymate.ai/sitemap.xml

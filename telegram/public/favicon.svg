@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Nomad Circuits">
+  <title>Nomad Circuits</title>
+  <!-- An invented mark for an invented travel-tech shop: a monogram N, drawn
+       as one unbroken line (echoing a folded route on a map), with a single
+       amber solder-point above it for the "circuits" half of the name.
+       Nothing here is any real business's or platform's asset. -->
+  <defs>
+    <linearGradient id="nc-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16212b"/>
+      <stop offset="1" stop-color="#0a1119"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#nc-bg)"/>
+  <polyline points="144,374 144,138 368,374 368,138"
+        fill="none" stroke="#f5efe2" stroke-width="49" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="88" r="17" fill="#e0a458"/>
+</svg>

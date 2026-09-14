@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixelforge Games — three indie games, and your mate on the #support channel</title>
+<meta name="description" content="Pixelforge Games: three games, their public patch notes and a player desk answered live by Forge, its Busymate AI mate — with a faithful preview of how it reads in the studio's Discord #support channel.">
+<link rel="canonical" href="https://discord.demo.busymate.ai/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt.md" title="This site as Markdown">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="image" href="/img/hero.webp">
+<meta property="og:title" content="Pixelforge Games — your mate on the #support channel">
+<meta property="og:description" content="A three-person studio whose player desk already answers on the web — see exactly how the same conversation reads inside a Discord #support channel.">
+<meta property="og:image" content="https://discord.demo.busymate.ai/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://discord.demo.busymate.ai/#studio","name":"Pixelforge Games","url":"https://discord.demo.busymate.ai/","description":"A demonstration three-person game studio used to show how Busymate AI works as a player-support desk on a community channel. No real game is sold and no real refund is issued.","email":"support@pixelforgegames.example","telephone":"+1-555-0188"},
+ {"@type":"WebSite","@id":"https://discord.demo.busymate.ai/#site","url":"https://discord.demo.busymate.ai/","name":"Pixelforge Games","publisher":{"@id":"https://discord.demo.busymate.ai/#studio"}},
+ {"@type":"VideoGame","name":"Lumen Drift","genre":"Puzzle-platformer","softwareVersion":"1.8.2","operatingSystem":"Windows, macOS, Linux","publisher":{"@id":"https://discord.demo.busymate.ai/#studio"},"offers":{"@type":"Offer","price":"19.99","priceCurrency":"USD"}},
+ {"@type":"VideoGame","name":"Ironroot Tactics","genre":"Turn-based tactics","softwareVersion":"2.3.0","operatingSystem":"Windows, Linux","publisher":{"@id":"https://discord.demo.busymate.ai/#studio"},"offers":{"@type":"Offer","price":"24.99","priceCurrency":"USD"}},
+ {"@type":"VideoGame","name":"Sundog Rally","genre":"Racing","softwareVersion":"0.9.4","operatingSystem":"Windows, macOS","publisher":{"@id":"https://discord.demo.busymate.ai/#studio"},"offers":{"@type":"Offer","price":"14.99","priceCurrency":"USD"}},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"Can I get a refund?","acceptedAnswer":{"@type":"Answer","text":"Within 14 days of buying, if the game has been played for less than two hours. Outside that a person at the studio will still look at it."}},
+   {"@type":"Question","name":"Is Sundog Rally finished?","acceptedAnswer":{"@type":"Answer","text":"No — it is in early access at a lower price. Eleven of sixteen stages are in, and the replay editor is still being built."}},
+   {"@type":"Question","name":"Do your games run on a handheld PC?","acceptedAnswer":{"@type":"Answer","text":"Lumen Drift and Ironroot Tactics do, with handheld-sized text. Sundog Rally does not yet."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  --bg:#f5f5fb; --ink:#191b2c; --muted:#666a85; --card:#ffffff; --line:#e4e3f1;
+  --brand:#1b1f3b; --brand-ink:#f2f0ff; --accent:#6842f0; --ok:#1f9d6b; --warn:#c9761f; --ember:#e2643a;
+  --band-bg:#12132a; --band-ink:#eeecff; --band-muted:#a2a3c4; --band-line:#262848;
+  --dc-rail:#1e1f22; --dc-side:#2b2d31; --dc-main:#313338; --dc-line:#3f4147;
+  --dc-text:#dbdee1; --dc-muted:#949ba4; --dc-active:#404249; --dc-input:#383a40;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#101120; --ink:#eceaf8; --muted:#9c9db8; --card:#191b2c; --line:#272a41;
+         --brand:#7c5cff; --brand-ink:#0d0f1c; --accent:#9b83ff; --ok:#3fcf96; --warn:#e8a33d; --ember:#ff8a5c;
+         --band-bg:#0b0c18; --band-line:#1e2038; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+img[width][height]{height:auto}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:17px;margin-right:auto}
+.logo img{width:32px;height:32px;border-radius:9px}
+nav{display:flex;gap:18px}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brand-ink);border:0;border-radius:999px;padding:11px 19px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.12)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.tiny{padding:6px 11px;font-size:12px}
+.btn.dc{background:#5865f2;color:#fff}
+.dc-cta{background:#5865f2;color:#fff;flex:0 0 auto}
+.dc-cta-icon{width:18px;height:14px;fill:currentColor;flex:0 0 auto}
+.id-chip{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+@media(min-width:860px){.id-chip{display:flex}}
+.id-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.id-chip.on .dot{background:var(--ok)}
+
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.04;letter-spacing:-.03em;margin:14px 0 16px;font-weight:800}
+h2{font-size:28px;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 26px;max-width:64ch}
+.lead{font-size:18px;color:var(--muted);max-width:46ch}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+
+.hero{position:relative;padding:0;min-height:min(70vh,620px);display:flex;align-items:center;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(11,12,24,.92) 0%,rgba(11,12,24,.72) 44%,rgba(11,12,24,.26) 78%);z-index:1}
+.hero-inner{position:relative;z-index:2;padding-top:92px;padding-bottom:64px;color:#f2f0ff}
+.hero-inner .eyebrow{color:#b9a6ff}
+.hero-inner .lead{color:#d6d3ef}
+.hero .btn.ghost{color:#f2f0ff;border-color:#ffffff3d}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+.two-col figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.two-col figure img,.two-col figure img[width][height]{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2}
+.two-col figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.about-copy{align-self:center}
+.about-copy ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.about-copy li{display:flex;gap:8px}
+.about-copy li strong{color:var(--ink);font-weight:600;min-width:118px}
+
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.game{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.game .shot{aspect-ratio:4/3;width:100%;object-fit:cover}
+.game .body{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.game h3{margin:0;font-size:18px;letter-spacing:-.01em}
+.game .genre{font-size:12.5px;color:var(--muted);margin:0}
+.game p.pitch{margin:0;font-size:13.5px;color:var(--muted)}
+.game .facts{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:12.5px;color:var(--muted)}
+.game .facts b{color:var(--ink);font-weight:600}
+.game .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:6px}
+.game .price{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.tagpill{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.tagpill.ea{color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,transparent)}
+.tagpill.done{color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,transparent)}
+
+.notes{display:grid;grid-template-columns:1.25fr .75fr;gap:24px}
+.note-list{margin:0;padding:0;list-style:none;display:grid;gap:14px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.note .head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.note .ver{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;font-weight:700;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);border-radius:7px;padding:2px 8px}
+.note h4{margin:0;font-size:15.5px}
+.note .when{margin-left:auto;font-size:12px;color:var(--muted)}
+.note ul{margin:9px 0 0;padding-left:18px;font-size:13.5px;color:var(--muted);display:grid;gap:4px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.status-list{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14px}
+.status-list li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.status-list li:last-child{border-bottom:0;padding-bottom:0}
+.pill{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.pill.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.pill.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 20%,transparent)}
+.try-row{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:12px;padding:13px 15px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.try-row span{font-size:14px}
+
+/* ---- The Discord window ---- */
+.dc-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
+.dc-band h2{color:var(--band-ink)}
+.dc-band .sub{color:var(--band-muted)}
+.dc-badge{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#e7e9ff;background:#5865f2;border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.dc-badge svg{width:14px;height:11px;fill:#fff}
+.dc-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:36px;align-items:start}
+.dc-window{background:var(--dc-main);color:var(--dc-text);border-radius:14px;overflow:hidden;box-shadow:0 30px 70px #0009;border:1px solid #ffffff12;display:grid;grid-template-columns:68px 214px 1fr;height:620px}
+.dc-rail{background:var(--dc-rail);padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:9px;overflow:hidden}
+.dc-rail .srv{width:44px;height:44px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:15px;color:#dbdee1;background:#313338;overflow:hidden}
+.dc-rail .srv.on{border-radius:14px;background:#5865f2;color:#fff}
+.dc-rail .srv img{width:100%;height:100%;object-fit:cover}
+.dc-rail .sep{width:32px;height:2px;border-radius:2px;background:#35373c;margin:3px 0}
+.dc-chans{background:var(--dc-side);display:flex;flex-direction:column;min-width:0}
+.dc-chans .srvname{padding:0 14px;height:48px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:14.5px;color:#f2f3f5;border-bottom:1px solid #1f2023;box-shadow:0 1px 0 #ffffff08}
+.dc-chans .grp{padding:14px 14px 4px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--dc-muted)}
+.dc-chans a{display:flex;align-items:center;gap:7px;margin:1px 8px;padding:6px 8px;border-radius:6px;text-decoration:none;color:var(--dc-muted);font-size:14.5px;font-weight:500}
+.dc-chans a:hover{background:#35373c;color:#dbdee1}
+.dc-chans a.active{background:var(--dc-active);color:#fff;font-weight:600}
+.dc-chans a .hash{opacity:.65;font-weight:600}
+.dc-chans .me{margin-top:auto;background:#232428;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:13px}
+.dc-chans .me .av{width:30px;height:30px;border-radius:50%;background:#5865f2;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 auto}
+.dc-chans .me b{display:block;font-size:13px;color:#f2f3f5;font-weight:600}
+.dc-chans .me span{display:block;font-size:11px;color:var(--dc-muted)}
+.dc-pane{display:flex;flex-direction:column;min-width:0}
+.dc-chanhead{display:flex;align-items:center;gap:10px;padding:0 14px;height:48px;border-bottom:1px solid #00000033;box-shadow:0 1px 0 #00000026;font-size:14px;color:var(--dc-muted)}
+.dc-chanhead b{font-size:15px;color:#f2f3f5}
+.dc-chanhead .hash{color:var(--dc-muted);font-weight:600;font-size:18px}
+.dc-chanhead .topic{border-left:1px solid #3f4147;padding-left:10px;font-size:12.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc-screen{flex:1;position:relative;background:var(--dc-main);display:flex;flex-direction:column;min-height:0}
+.dc-screen .placeholder{flex:1;display:flex;align-items:center;justify-content:center;color:var(--dc-muted);font-size:13px;text-align:center;padding:0 20px}
+/* The composer is part of the FRAME, drawn in CSS like the rest of it. The
+   live widget layer is measured against #discordScreen — which wraps the
+   message area AND this bar — so once the real chat mounts it covers this
+   with its own input rather than standing beside it (two composers in one
+   pane would read as a mock-up sitting next to the product). */
+.dc-composer{margin:0 16px 16px;background:var(--dc-input);border-radius:8px;display:flex;align-items:center;gap:10px;padding:11px 14px;color:var(--dc-muted);font-size:14.5px;flex:0 0 auto}
+.dc-composer .plus{width:22px;height:22px;border-radius:50%;background:var(--dc-muted);color:var(--dc-input);display:grid;place-items:center;font-weight:800;font-size:15px;line-height:1;flex:0 0 auto}
+.dc-composer .ph{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc-composer .icons{letter-spacing:4px;opacity:.7}
+/* The REAL live embed widget, repositioned (never reparented — moving a
+   cross-origin iframe to a new DOM parent reloads it, which races the
+   identity handshake and hangs the panel; found live on the WhatsApp demo
+   2026-09-11) to sit exactly over #discordScreen via position:absolute +
+   JS-measured coordinates (see the mount script below). These rules only
+   reshape its box; the position itself is set inline by JS. */
+[data-support-chat]>button{display:none !important}
+[data-support-chat]>div{position:static !important;inset:auto !important;width:100% !important;height:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;background:transparent !important}
+[data-support-chat] iframe{width:100%;height:100%;border:0}
+.dc-copy p{color:var(--band-muted)}
+.dc-copy .btn.dc{margin-top:6px}
+.dc-note{font-size:12.5px;color:var(--band-muted);margin-top:10px}
+
+.live-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.live-steps .card{background:#ffffff0a;border:1px solid var(--band-line);border-radius:var(--radius);padding:18px}
+.live-steps .num{width:24px;height:24px;border-radius:7px;background:#5865f2;color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;margin-bottom:10px}
+.live-steps h4{margin:0 0 4px;font-size:15px}
+.live-steps p{margin:0;font-size:13.5px;color:var(--band-muted)}
+.dc-band .howto-row{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.dc-band .howto-row a{color:#b9a6ff;font-weight:600;text-decoration:none}
+.dc-band .howto-row a:hover{text-decoration:underline}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feature{display:flex;flex-direction:column;gap:9px}
+.feature h3{margin:0;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:13.5px}
+.feature .try{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.feature .files{display:flex;flex-wrap:wrap;gap:8px}
+.feature .files a{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);border-radius:8px;padding:5px 9px;text-decoration:none}
+.feature .how{margin-top:auto;padding-top:4px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+.scorecard{margin-top:24px;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--card)}
+.scorecard p{margin:0;color:var(--muted);font-size:14px;max-width:56ch}
+
+.id-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.id-panel .customer{font-size:14px;color:var(--muted)}
+.demo-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+
+.banner{padding:0;overflow:hidden;margin:0 0 18px}
+.banner img{width:100%;aspect-ratio:3/1;object-fit:cover}
+.banner figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:12px}
+.tcard p{margin:0;font-size:14.5px}
+.tcard .who{display:flex;align-items:center;gap:10px}
+.avatar-chip{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex:0 0 auto}
+.tcard .who b{display:block;font-size:13.5px}
+.tcard .who span{display:block;font-size:12px;color:var(--muted)}
+
+.faq dt{font-weight:700;font-size:15px;margin:0 0 4px}
+.faq dd{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:70ch}
+
+.support-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+.reach{margin:0;padding:0;list-style:none;display:grid;gap:12px;font-size:14.5px}
+.reach li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.reach strong{min-width:92px;color:var(--muted);font-weight:600;font-size:13px}
+.reach a{color:var(--accent);font-weight:600;text-decoration:none;overflow-wrap:anywhere}
+.reach a:hover{text-decoration:underline}
+
+/* The bug-report action card (a real <dialog>, not a chat bubble) */
+dialog.bug-modal{border:0;border-radius:var(--radius);padding:0;width:min(440px,92vw);background:var(--card);color:var(--ink);box-shadow:0 24px 60px #0006}
+dialog.bug-modal::backdrop{background:#0b0c18b3}
+dialog.bug-modal .head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+dialog.bug-modal .head h3{margin:0;font-size:16px}
+dialog.bug-modal .body{padding:18px 20px;display:grid;gap:12px}
+dialog.bug-modal label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);font-weight:600}
+dialog.bug-modal input,dialog.bug-modal textarea,dialog.bug-modal select{font:inherit;font-size:15px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+dialog.bug-modal textarea{resize:vertical;font-weight:400}
+dialog.bug-modal .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dialog.bug-modal .foot{padding:16px 20px;border-top:1px solid var(--line)}
+dialog.bug-modal .foot .btn{width:100%;justify-content:center}
+dialog.bug-modal .foot .btn[disabled]{opacity:.6}
+.bug-result{font-size:13.5px;padding:10px 12px;border-radius:9px}
+.bug-result.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.bug-result.err{background:color-mix(in srgb,var(--ember) 18%,transparent);color:var(--ember)}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0003}
+#flash[hidden]{display:none}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+
+@media(max-width:980px){
+  .two-col,.notes,.dc-layout,.support-grid{grid-template-columns:1fr}
+  .games,.features,.live-steps,.reviews{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media(max-width:760px){
+  .dc-window{grid-template-columns:1fr}
+  .dc-rail,.dc-chans{display:none}
+}
+@media(max-width:600px){
+  .games,.features,.live-steps,.reviews{grid-template-columns:1fr}
+  .dc-window{height:68vh;min-height:520px}
+}
+
+/* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
+@media(max-width:480px){
+  .wrap{padding:0 14px}
+  .bar{height:56px;gap:8px}
+  .logo{font-size:14px;gap:7px}
+  .logo img{width:24px;height:24px}
+  .id-chip{display:none}
+  .dc-cta{padding:9px 11px;border-radius:999px}
+  .dc-cta-label{display:none}
+  .hero-inner{padding-top:36px;padding-bottom:40px}
+  .hero{min-height:0}
+  h1{font-size:26px;line-height:1.12;margin:10px 0 12px}
+  .eyebrow{font-size:10.5px}
+  .lead{font-size:15px}
+  .cta{flex-direction:column;align-items:stretch;margin-top:20px}
+  .cta .btn{justify-content:center;width:100%}
+  h2{font-size:22px}
+  section{padding:38px 0}
+  .try-row{flex-direction:column;align-items:stretch}
+  .try-row .btn{width:100%;justify-content:center}
+  .id-panel{flex-direction:column;align-items:stretch}
+  .id-panel > div:last-child{display:flex;gap:10px}
+  .id-panel .btn{flex:1}
+  .scorecard > div{display:flex;gap:10px;width:100%}
+  .scorecard .btn{flex:1;justify-content:center}
+  dialog.bug-modal{width:94vw}
+  dialog.bug-modal .row2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-signed-in="no">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><img src="/img/mark.png" alt="" aria-hidden="true">Pixelforge Games</div>
+    <nav>
+      <a href="#games">Games</a>
+      <a href="#patch-notes">Patch notes</a>
+      <a href="#channel">Channel preview</a>
+      <a href="#support">Support</a>
+      <a href="#agents">For agents</a>
+    </nav>
+    <span class="id-chip" id="idChip"><span class="dot"></span><span id="idChipText">Browsing as a guest</span></span>
+    <a class="btn dc-cta" id="dcHeaderCta" href="#channel" aria-label="Join our Discord">
+      <svg class="dc-cta-icon" viewBox="0 0 24 19" aria-hidden="true"><path d="M20.317 3.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 8.0458-.319 12.5799.0992 17.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 14.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg>
+      <span class="dc-cta-label">Join our Discord</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="/img/hero.webp" alt="A row of glowing arcade joysticks on the studio's test wall" width="1600" height="900">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Three people, three games</div>
+    <h1>Players ask where they already hang out.</h1>
+    <p class="lead">Forge answers what a game costs, what the last patch changed, whether anything is down, and what a signed-in player owns — live on this page tonight, and shown here exactly as it reads in the studio's <code>#support</code> channel.</p>
+    <div class="cta">
+      <a class="btn" href="#games">See the games</a>
+      <button class="btn ghost" type="button" data-open-chat>Ask Forge something</button>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="games">
+  <div class="wrap">
+    <div class="eyebrow">Out now</div>
+    <h2>What the studio has shipped</h2>
+    <p class="sub">Three releases, every price and build number current. Forge answers from exactly this list — including the one that is not finished yet.</p>
+    <div class="games">
+      <article class="game">
+        <img class="shot" src="/img/lumen.webp" alt="Lit cave formations, the drowned caves Lumen Drift is set in" width="800" height="600" loading="lazy">
+        <div class="body">
+          <h3>Lumen Drift</h3>
+          <p class="genre">Atmospheric puzzle-platformer · about 9 hours</p>
+          <p class="pitch">Carry the last light down through a drowned cave system. No combat and no timer — the light is the puzzle, and it burns down as you use it.</p>
+          <ul class="facts">
+            <li><b>Build</b> 1.8.2 · released November 2024</li>
+            <li><b>Runs on</b> Windows, macOS, Linux, handheld PC</li>
+          </ul>
+          <div class="foot"><span class="price">$19.99</span><span class="tagpill done">Finished</span></div>
+        </div>
+      </article>
+      <article class="game">
+        <img class="shot" src="/img/ironroot.webp" alt="A misty winter forest, the dying woodland of the Ironroot Tactics campaign" width="800" height="600" loading="lazy">
+        <div class="body">
+          <h3>Ironroot Tactics</h3>
+          <p class="genre">Turn-based tactics · runs of 40–90 minutes</p>
+          <p class="pitch">Six squads, one dying forest, permanent losses. Every run reshuffles the map and the enemy doctrine, so no two campaigns rhyme.</p>
+          <ul class="facts">
+            <li><b>Build</b> 2.3.0 · released June 2025</li>
+            <li><b>Runs on</b> Windows, Linux, handheld PC · 2-player hotseat</li>
+          </ul>
+          <div class="foot"><span class="price">$24.99</span><span class="tagpill done">Finished</span></div>
+        </div>
+      </article>
+      <article class="game">
+        <img class="shot" src="/img/sundog.webp" alt="Desert dunes late in the day, the stages Sundog Rally races across" width="800" height="600" loading="lazy">
+        <div class="body">
+          <h3>Sundog Rally</h3>
+          <p class="genre">Arcade rally racer · weekly leaderboards</p>
+          <p class="pitch">Eleven desert stages, one car you rebuild between runs, and a sun that sets while you drive. Stages 12–16 and the replay editor are still to come.</p>
+          <ul class="facts">
+            <li><b>Build</b> 0.9.4 · first out July 2026</li>
+            <li><b>Runs on</b> Windows, macOS</li>
+          </ul>
+          <div class="foot"><span class="price">$14.99</span><span class="tagpill ea">Early access</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="try-row">
+      <span>Try it: "Which of your games runs on Linux, and is any of them unfinished?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="Which of your games runs on Linux, and is any of them unfinished?">Copy &amp; open chat</button>
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="wrap two-col">
+    <div class="about-copy">
+      <div class="eyebrow">Who makes them</div>
+      <h2>Small enough that the person who fixed it answers you</h2>
+      <p class="sub" style="margin-bottom:14px">Pixelforge Games is three people above a seaside arcade: one designer, one engineer, one who does art and everything else. There is no publisher and no support tier — a bug report goes into the same weekly triage the next build comes out of.</p>
+      <ul>
+        <li><strong>Founded</strong><span>2023, after one game jam that would not let go</span></li>
+        <li><strong>Desk hours</strong><span>Mon–Fri, 09:00–18:00 Western European Time</span></li>
+        <li><strong>Refunds</strong><span>14 days, under two hours played</span></li>
+        <li><strong>Patch notes</strong><span>Public, every build, no marketing pass</span></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="/img/studio.webp" alt="Lit cabinets in the studio's front room" width="1200" height="800" loading="lazy">
+      <figcaption>The front room, and the arcade that paid for the first build</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="patch-notes">
+  <div class="wrap">
+    <div class="eyebrow">Every build, in public</div>
+    <h2>What changed, and when</h2>
+    <p class="sub">The last five releases. Ask about any line of it and Forge searches these notes rather than guessing at what an update "probably" fixed.</p>
+    <div class="notes">
+      <ul class="note-list">
+        <li class="note">
+          <div class="head"><span class="ver">Lumen Drift 1.8.2</span><h4>Save integrity + ultrawide</h4><span class="when">5 Sep 2026</span></div>
+          <ul>
+            <li>Fixed a save corruption that could strip Chapter 4 lantern upgrades when the game was closed from the pause menu during an autosave.</li>
+            <li>Ultrawide (21:9 and 32:9) now letterboxes cutscenes instead of cropping the top of the frame.</li>
+            <li>Linux: fixed a crash on launch with no PulseAudio server running.</li>
+          </ul>
+        </li>
+        <li class="note">
+          <div class="head"><span class="ver">Sundog Rally 0.9.4</span><h4>Stage 11 + wheel support</h4><span class="when">9 Sep 2026</span></div>
+          <ul>
+            <li>Stage 11, Saltpan Run, is in.</li>
+            <li>Force-feedback wheels are supported; the rebind screen reads pedal axes correctly.</li>
+            <li>Known issue: replays recorded before 0.9.4 will not load — the format changed and the editor is still being built.</li>
+          </ul>
+        </li>
+        <li class="note">
+          <div class="head"><span class="ver">Ironroot Tactics 2.3.0</span><h4>The Bramble Accord</h4><span class="when">28 Aug 2026</span></div>
+          <ul>
+            <li>New squad: the Bramble Accord, four units built around terrain denial.</li>
+            <li>Enemy doctrine now rerolls between acts, so a run can change shape at the halfway point.</li>
+            <li>Fixed hotseat desync when both players undid a move in the same turn.</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="panel">
+        <h3 style="margin-top:0;font-size:16px">Services, right now</h3>
+        <ul class="status-list">
+          <li>Cloud saves <span class="pill ok">Operational</span></li>
+          <li>Leaderboards <span class="pill warn">Degraded</span></li>
+          <li>Key redemption <span class="pill ok">Operational</span></li>
+          <li>Store &amp; checkout <span class="pill ok">Operational</span></li>
+          <li>Patch delivery <span class="pill ok">Operational</span></li>
+        </ul>
+        <p class="demo-note">Sundog Rally weekly boards have been recalculating since 08:20 UTC. Times are being recorded, they are just slow to appear.</p>
+        <div class="try-row">
+          <span>Try it: "Are the leaderboards broken?"</span>
+          <button class="btn tiny" type="button" data-try-prompt="Are the leaderboards broken right now?">Copy &amp; open chat</button>
+        </div>
+        <p class="sub" style="margin:14px 0 0"><button class="btn small" type="button" id="openBugFormBtn">Report a bug directly →</button></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="channel" class="dc-band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:#b9a6ff">A faithful preview</div>
+    <h2>Read the #support channel before the server exists</h2>
+    <p class="sub">Pixelforge Games' community server is not connected yet — so this is neither a recording nor a mock-up. The window below wraps the exact live assistant in the chrome of a Discord channel, so you can read the conversation the way a player would after typing in <code>#support</code>.</p>
+    <div class="dc-layout">
+      <div class="dc-copy">
+        <div class="dc-badge" id="dcBadge"><svg viewBox="0 0 24 19" aria-hidden="true"><path d="M20.317 3.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 8.0458-.319 12.5799.0992 17.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 14.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg><span id="dcBadgeText">Live assistant · no server connected yet</span></div>
+        <p>Everything in this window runs on Forge's real brain, the same three games, the same patch notes and the same tools as the sections above — only the wrapper is a channel's. Ask what changed in a build, report a bug, or ask for a person, right here.</p>
+        <a class="btn dc" id="dcCtaMain" href="#channel">This becomes a real invite soon</a>
+        <p class="dc-note" id="dcCtaNote">The "Join our Discord" button above does the same thing until the server is connected — it scrolls here. No invite link is invented in the meantime.</p>
+      </div>
+      <div class="dc-window" aria-label="A community-app window showing the #support channel">
+        <aside class="dc-rail" aria-hidden="true">
+          <span class="srv on"><img src="/img/mark.png" alt=""></span>
+          <span class="sep"></span>
+          <span class="srv">LD</span>
+          <span class="srv">IR</span>
+          <span class="srv">SR</span>
+          <span class="srv">+</span>
+        </aside>
+        <nav class="dc-chans" aria-hidden="true">
+          <div class="srvname">Pixelforge Games <span>▾</span></div>
+          <div class="grp">Information</div>
+          <a href="#channel"><span class="hash">#</span>announcements</a>
+          <a href="#channel"><span class="hash">#</span>patch-notes</a>
+          <div class="grp">Players</div>
+          <a href="#channel" class="active"><span class="hash">#</span>support</a>
+          <a href="#channel"><span class="hash">#</span>bug-reports</a>
+          <a href="#channel"><span class="hash">#</span>screenshots</a>
+          <div class="me"><span class="av">KM</span><div><b>kaim</b><span>#4471</span></div></div>
+        </nav>
+        <div class="dc-pane">
+          <div class="dc-chanhead"><span class="hash">#</span><b>support</b><span class="topic" id="dcTopic">Forge answers here · a person joins the same thread when you ask</span></div>
+          <div class="dc-screen" id="discordScreen">
+            <div class="placeholder" id="dcPlaceholder">Loading the live conversation…</div>
+            <div class="dc-composer" aria-hidden="true">
+              <span class="plus">+</span>
+              <span class="ph">Message #support</span>
+              <span class="icons">☺ ⌾ ⊞</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:56px">What changes once the server is connected</h2>
+    <p class="sub">The same brain, knowledge and tools as the window above — just reached the way a community app actually delivers a message.</p>
+    <div class="live-steps">
+      <div class="card"><div class="num">1</div><h4>A player posts first</h4><p>Someone writes in <code>#support</code>, or mentions the studio's bot. The player always opens the conversation; the studio never posts into a thread unasked.</p></div>
+      <div class="card"><div class="num">2</div><h4>The gateway delivers it</h4><p>The message arrives over the app's own gateway, its signature is checked, and it becomes a visitor turn with the same tool floor as the chat on this page — no platform tool ever reaches a player.</p></div>
+      <div class="card"><div class="num">3</div><h4>Forge answers in the thread</h4><p>A patch note, a status line, a bug card or a hand-off — posted as a threaded reply, so the channel stays readable and a developer can pick the thread up where it stopped.</p></div>
+    </div>
+    <div class="howto-row">
+      <a href="https://busymate.ai/integrations/discord">Current status of this channel →</a>
+      <a href="https://busymate.ai/docs/guides/connect-mcp-server">How the studio's tools connect →</a>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="eyebrow">Under the hood</div>
+    <h2>Ten capabilities, each with its own guide</h2>
+    <p class="sub">What this page really does, block by block, and the exact doc for putting the same on your own site.</p>
+    <div class="features">
+      <div class="card feature">
+        <h3>The chat, from one script tag</h3>
+        <p>The bubble in the corner and the channel window above are one live product on a workspace of its own; a single line of HTML put it here.</p>
+        <div class="try"><span>Try: "What do you make?"</span><button class="btn tiny" data-try-prompt="What games does Pixelforge make, and what do they cost?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Grounded in the studio's own words</h3>
+        <p>The games, the patch notes and the refund policy above were published to the workspace as text. Answers quote them; anything outside gets an honest "I don't know".</p>
+        <div class="try"><span>Try: "Did you ever fix the ultrawide cropping?"</span><button class="btn tiny" data-try-prompt="Did you ever fix the ultrawide cropping in Lumen Drift?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It can work the page</h3>
+        <p>Five actions are registered on this page over WebMCP — list the games, search the notes, check the services, read a signed-in library, open the bug form. Ask for one and watch it run.</p>
+        <div class="try"><span>Try: "Search the notes for 'hotseat'."</span><button class="btn tiny" data-try-prompt="Search your patch notes for hotseat.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It reaches the systems behind the page</h3>
+        <p>Pixelforge runs a small MCP server of its own, connected to the workspace. The catalogue, the notes and the status board come from there over HTTPS — the same answer in a channel as in this tab.</p>
+        <div class="files"><a href="/agents.json">/agents.json</a><a href="/llms.txt">/llms.txt</a></div>
+        <a class="how" href="https://busymate.ai/docs/guides/connect-mcp-server">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It asks with a card, not a questionnaire</h3>
+        <p>Say something broke and a form opens inside the chat — which game, which platform, what happened, an email, one button — instead of four questions in a row.</p>
+        <div class="try"><span>Try: "Sundog Rally freezes loading an old replay."</span><button class="btn tiny" data-try-prompt="Sundog Rally freezes when I load an old replay.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/form-cards">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It knows who's asking</h3>
+        <p>Sign in as the demo player below and Forge can read that player's own library, the build they are behind on, and start a refund — for them and nobody else.</p>
+        <div class="try"><span>Try (signed in): "What do I own, and can I refund any of it?"</span><button class="btn tiny" data-try-prompt="What do I own, and can I refund any of it?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>A developer can take over</h3>
+        <p>Ask for a person and the thread lands in the studio's inbox mid-conversation — the same hand-off works in a channel once one is connected, no restart and no ticket number.</p>
+        <div class="try"><span>Try: "My key stopped working after a refund — talk to a person."</span><button class="btn tiny" data-try-prompt="My key stopped working after a refund, I need to talk to a person.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Useful before anyone signs in</h3>
+        <p>Signed out, the catalogue, the prices, every patch note, the service board and a bug report all still work — for a player and for any agent. Only a library and a refund wait for a signed-in proof of who's asking.</p>
+        <div class="try"><span>Try: "What's the cheapest one, and is it finished?"</span><button class="btn tiny" data-try-prompt="What's your cheapest game, and is it finished?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Readable without a browser</h3>
+        <p>An agent that never renders this page can still work with it: a plain-text brief, a tool manifest, the whole corpus in one request, and the live schema behind every action.</p>
+        <div class="files"><a href="/llms.txt">/llms.txt</a><a href="/llms-full.txt">/llms-full.txt</a><a href="/webmcp-catalog.json">/webmcp-catalog.json</a><a href="/sitemap.xml">/sitemap.xml</a></div>
+        <a class="how" href="https://busymate.ai/articles/is-your-website-agent-ready-checklist">The six layers, checked →</a>
+      </div>
+      <div class="card feature">
+        <h3>Honest about the channel</h3>
+        <p>The window above is labelled for exactly what it is at any moment: the real assistant in a faithful frame, and a real invite only once a server is actually connected — never an invented link.</p>
+        <div class="files"><a href="/discord-config.json">/discord-config.json</a></div>
+        <a class="how" href="https://busymate.ai/integrations/discord">See every channel's real status →</a>
+      </div>
+    </div>
+    <div class="scorecard">
+      <p>Two checkers grade any address, this page included: one scores how ready a site is for AI agents, the other lists the tools a page publishes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/discord.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Fdiscord.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <div class="eyebrow">Try it as a player</div>
+    <h2>Sign in and Forge already has your library</h2>
+    <p class="sub">A throwaway demo player is provided — no password, no real person, no real purchase.</p>
+    <div class="panel id-panel">
+      <div>
+        <div class="customer" id="idPanelText">Signed out — Forge only sees what a guest can see.</div>
+        <p class="demo-note">Demo player: <strong>Kai Moreno</strong>, tag <code>kaim#4471</code> — owns Lumen Drift (receipt PF-40271), Ironroot Tactics (PF-41188, one build behind) and Sundog Rally (PF-41903, bought three days ago, 0.6 hours played, so it is still inside the refund window). A throwaway public demo identity, not a real person.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="idSignInBtn" type="button">Sign in as the demo player</button>
+        <button class="btn ghost" id="idSignOutBtn" type="button" hidden>Sign out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <div class="eyebrow">From players</div>
+    <h2>Answers in minutes, they say</h2>
+    <figure class="card banner">
+      <img src="/img/community.webp" alt="A dim arcade at night, lit by its cabinets" width="1200" height="800" loading="lazy">
+      <figcaption>Launch night is still a room full of cabinets. Every other night, the questions arrive in the channel.</figcaption>
+    </figure>
+    <div class="reviews">
+      <div class="card tcard">
+        <p>"Reported a save bug on a Sunday, got a build number back in the same thread and the fix two weeks later. That never happens."</p>
+        <div class="who"><span class="avatar-chip" style="background:#6842f0">RV</span><div><b>Robin V.</b><span>Lumen Drift, 40 hours</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Asked whether the campaign reroll was in yet and it quoted me the actual patch line instead of telling me to read the notes."</p>
+        <div class="who"><span class="avatar-chip" style="background:#e2643a">AM</span><div><b>Ana M.</b><span>Ironroot Tactics, hotseat regular</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Bought the rally game, decided it was too early for me, refund started from the chat in under a minute. No form, no ticket."</p>
+        <div class="who"><span class="avatar-chip" style="background:#1f9d6b">TO</span><div><b>Tomas O.</b><span>Early-access buyer</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <div class="eyebrow">Stuck on something</div>
+    <h2>Reaching the three of us</h2>
+    <div class="support-grid">
+      <div class="panel">
+        <p class="sub" style="margin-bottom:14px">Forge answers first, at any hour, and hands over to whoever is at the desk the moment you ask for a person — in the same conversation, with everything you already said still there.</p>
+        <ul class="reach">
+          <li><strong>Email</strong><a href="mailto:support@pixelforgegames.example">support@pixelforgegames.example</a></li>
+          <li><strong>Phone</strong><a href="tel:+15550188">+1-555-0188</a> <span class="muted">· desk hours</span></li>
+          <li><strong>Channel</strong><span class="muted">The community server's <code>#support</code>, previewed above</span></li>
+          <li><strong>Bugs</strong><span class="muted">The card in the chat, or the button on the patch-notes panel</span></li>
+        </ul>
+      </div>
+      <figure class="card" style="padding:0;overflow:hidden">
+        <img src="/img/desk.webp" alt="A headset on a lit desk, where the studio answers players" width="1200" height="800" loading="lazy">
+        <figcaption style="padding:12px 16px;font-size:13px;color:var(--muted)">One desk, three people, and a chat that never sleeps</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Before you write in</div>
+    <h2>A few things players ask first</h2>
+    <dl class="faq">
+      <dt>Can I get a refund?</dt>
+      <dd>Within 14 days of buying, if the game has been played for less than two hours. Outside that, ask anyway — a person at the studio still reads it.</dd>
+      <dt>Is Sundog Rally finished?</dt>
+      <dd>No, and the price says so. Eleven of sixteen stages are in, the replay editor is not, and old replays stopped loading in 0.9.4 when the format changed.</dd>
+      <dt>Do your games run on a handheld PC?</dt>
+      <dd>Lumen Drift and Ironroot Tactics do, with handheld-sized text since 2.2.7. Sundog Rally does not yet.</dd>
+      <dt>I bought a key from a reseller — is it supported?</dt>
+      <dd>Yes. Redeem it on the studio's key service and the refund window runs from the redemption date instead.</dd>
+      <dt>Will you tell me what you are working on next?</dt>
+      <dd>Forge will not — the studio announces a new game when there is a build to show, not before.</dd>
+    </dl>
+  </div>
+</section>
+</main>
+
+<!-- The bug-report action card. Forge (in chat, via the open_bug_report_form
+     WebMCP tool below) and the "Report a bug directly" button both open this
+     SAME dialog — one inline form, one send button, instead of the assistant
+     asking for the game, the platform, what happened and an email one at a
+     time in prose. Submits straight to this site's own /mcp report_bug tool. -->
+<dialog id="bugModal" class="bug-modal">
+  <form id="bugForm">
+    <div class="head"><h3>Report a bug</h3><button class="btn ghost small" type="button" id="bugClose">Close</button></div>
+    <div class="body">
+      <div class="row2">
+        <label>Which game<select required name="game">
+          <option value="lumen-drift">Lumen Drift</option>
+          <option value="ironroot-tactics">Ironroot Tactics</option>
+          <option value="sundog-rally">Sundog Rally</option>
+        </select></label>
+        <label>Where you played<select required name="platform">
+          <option value="windows">Windows</option>
+          <option value="macos">macOS</option>
+          <option value="linux">Linux</option>
+          <option value="handheld">Handheld PC</option>
+        </select></label>
+      </div>
+      <label>What happened<textarea required name="what_happened" rows="3" placeholder="The game froze on the third checkpoint of Chapter 2, every time…"></textarea></label>
+      <label>Email for the reply<input required name="email" type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <div id="bugResult" class="bug-result" hidden></div>
+    </div>
+    <div class="foot"><button class="btn" type="submit" id="bugSubmit">Send report</button></div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    Pixelforge Games is a demonstration studio. No game is sold, no refund is issued, no developer is paged, and the player behind the sign-in button is not a real person.<br>
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:support@pixelforgegames.example">support@pixelforgegames.example</a>, call <a href="tel:+15550188">+1-555-0188</a>, or ask the assistant for a human and whoever is at the desk joins the same conversation.</p>
+    Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a> · <a href="/img/CREDITS.md">Image credits</a>
+  </div>
+</footer>
+
+<div id="flash" role="status" hidden></div>
+
+<script>
+// ── Identity: define getIdentity BEFORE the embed script loads (per
+// https://busymate.ai/docs/guides/identified-visitors). A signed-in player
+// mints a fresh 120s launch proof from THIS site's own /api/identity/mint;
+// signed-out returns null. Nothing persisted here.
+function pfNonce() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode.apply(null, bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+async function pfSession() {
+  try { return (await fetch("/api/identity/session")).json(); } catch (e) { return { signedIn: false }; }
+}
+window.BusymateAI = window.BusymateAI || {};
+window.BusymateAI.getIdentity = async function () {
+  var s = await pfSession();
+  if (!s.signedIn) return null;
+  var res = await fetch("/api/identity/mint", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nonce: pfNonce() }),
+  });
+  if (!res.ok) return null;
+  var out = await res.json();
+  return { token: out.token, nonce: out.nonce };
+};
+
+var pfCustomer = null;
+async function pfRenderIdentity() {
+  var s = await pfSession();
+  pfCustomer = s.signedIn ? s.customer : null;
+  var chip = document.getElementById("idChip"), chipText = document.getElementById("idChipText");
+  var panelText = document.getElementById("idPanelText");
+  var inBtn = document.getElementById("idSignInBtn"), outBtn = document.getElementById("idSignOutBtn");
+  document.body.setAttribute("data-signed-in", s.signedIn ? "yes" : "no");
+  if (s.signedIn) {
+    chip.classList.add("on"); chipText.textContent = "Signed in as " + s.customer.name;
+    panelText.textContent = "Signed in as " + s.customer.name + " — Forge now answers about this player's own library and refunds.";
+    inBtn.hidden = true; outBtn.hidden = false;
+  } else {
+    chip.classList.remove("on"); chipText.textContent = "Browsing as a guest";
+    panelText.textContent = "Signed out — Forge only sees what a guest can see.";
+    inBtn.hidden = false; outBtn.hidden = true;
+  }
+}
+function flash(msg) {
+  var el = document.getElementById("flash");
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 2600);
+}
+document.addEventListener("DOMContentLoaded", function () {
+  pfRenderIdentity();
+  document.getElementById("idSignInBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/login", { method: "POST" });
+    await pfRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed in as Kai Moreno");
+  });
+  document.getElementById("idSignOutBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/logout", { method: "POST" });
+    await pfRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed out");
+  });
+  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
+    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
+  });
+  document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var text = b.getAttribute("data-try-prompt");
+      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
+      catch (e) { flash("Ask Forge: " + text); }
+      if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+    });
+  });
+});
+</script>
+
+<!-- Busymate AI web chat widget (live). data-assistant = the demo tenant slug.
+     Also repositioned, unstyled-inside, over the channel window's message pane. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demo-discord"
+        data-label="Chat with us"
+        data-aria-label="Open Pixelforge Games chat"
+        data-title="Pixelforge Games"
+        async></script>
+
+<script>
+// ── The channel view: the SAME live widget, repositioned on top of the
+// window's message pane and kept open. This is the real product — cross-origin
+// iframe content is untouched, only the outer wrapper's position is restyled
+// from our own page. Deliberately NEVER reparented (moving a cross-origin
+// iframe to a new DOM parent makes the browser reload it, which would race the
+// postMessage identity handshake and hang the panel on a blank screen — found
+// live on the WhatsApp demo 2026-09-11): the widget layer stays a child of
+// <body>, exactly where the embed script put it, and only its computed
+// position/size follow #discordScreen's own box on scroll and resize. The slot
+// deliberately includes the CSS composer bar, so the live chat's own input
+// replaces it instead of standing next to it.
+(function () {
+  var tries = 0;
+  var positioned = false;
+  function follow() {
+    var slot = document.getElementById("discordScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (!slot || !layer) return;
+    var r = slot.getBoundingClientRect();
+    layer.style.position = "absolute";
+    layer.style.right = "auto";
+    layer.style.bottom = "auto";
+    layer.style.left = window.scrollX + r.left + "px";
+    layer.style.top = window.scrollY + r.top + "px";
+    layer.style.width = r.width + "px";
+    layer.style.height = r.height + "px";
+  }
+  function mount() {
+    tries++;
+    var slot = document.getElementById("discordScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      var ph = document.getElementById("dcPlaceholder");
+      if (ph) ph.remove();
+      follow();
+      if (!positioned) {
+        positioned = true;
+        window.addEventListener("resize", follow);
+        window.addEventListener("scroll", follow, { passive: true });
+      }
+      window.BusymateAI.open();
+      return;
+    }
+    if (tries < 100) setTimeout(mount, 100);
+  }
+  mount();
+})();
+
+// ── The invite hook: a single field in /discord-config.json. null (today) =
+// the honest preview state; once the channel lane connects a real server to
+// this tenant and publishes an invite there, every "Join our Discord" control
+// switches to that genuine link automatically.
+(function () {
+  fetch("/discord-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+    var invite = cfg && cfg.inviteUrl;
+    var header = document.getElementById("dcHeaderCta");
+    var main = document.getElementById("dcCtaMain");
+    var note = document.getElementById("dcCtaNote");
+    var badge = document.getElementById("dcBadgeText");
+    var topic = document.getElementById("dcTopic");
+    if (invite) {
+      [header, main].forEach(function (el) {
+        el.href = invite; el.target = "_blank"; el.rel = "noopener noreferrer";
+      });
+      main.textContent = "Join our Discord";
+      note.textContent = "Opens the " + (cfg.serverName || "studio") + " server, where " + (cfg.botName || "Forge") + " answers in #support.";
+      badge.textContent = "Live in the channel";
+      topic.textContent = (cfg.botName || "Forge") + " answers here now · a person joins the same thread when you ask";
+    }
+  }).catch(function () {});
+})();
+</script>
+
+<script>
+// ── The bug-report action card: ONE inline form + ONE send button, opened by
+// Forge (via the open_bug_report_form WebMCP tool below) or by the "Report a
+// bug directly" button — never a prose back-and-forth for game / platform /
+// what happened / email. Submits straight to this site's own /mcp.
+(function () {
+  var modal = document.getElementById("bugModal");
+  var form = document.getElementById("bugForm");
+  var result = document.getElementById("bugResult");
+  var submitBtn = document.getElementById("bugSubmit");
+
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+
+  function showResult(kind, text) {
+    result.hidden = false;
+    result.className = "bug-result " + kind;
+    result.textContent = text;
+  }
+
+  function friendlyError(out) {
+    if (out.error === "missing_details") return "The game, the platform, what happened and an email are all needed.";
+    if (out.error === "bad_email") return "That email address does not look right.";
+    if (out.error === "unknown_game") return out.detail || "That is not one of the studio's games.";
+    return "Something went wrong — please try again.";
+  }
+
+  window.__openBugForm = function (prefill) {
+    prefill = prefill || {};
+    result.hidden = true;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send report";
+    form.reset();
+    form.querySelectorAll("input,textarea,select").forEach(function (el) { el.disabled = false; });
+    if (prefill.game) form.game.value = prefill.game;
+    if (prefill.platform) form.platform.value = prefill.platform;
+    if (prefill.what_happened) form.what_happened.value = prefill.what_happened;
+    if (prefill.email) form.email.value = prefill.email;
+    else if (pfCustomer && pfCustomer.email) form.email.value = pfCustomer.email;
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    return { opened: true, note: "A bug-report form is now open on the page for the player to fill in and send." };
+  };
+
+  document.getElementById("bugClose").addEventListener("click", function () { modal.close(); });
+  document.getElementById("openBugFormBtn").addEventListener("click", function () { window.__openBugForm({}); });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    submitBtn.disabled = true;
+    var payload = {
+      game: form.game.value,
+      platform: form.platform.value,
+      what_happened: form.what_happened.value,
+      email: form.email.value,
+    };
+    try {
+      var out = await callMcp("report_bug", payload);
+      if (out && out.bug_id) {
+        showResult("ok", "Filed — " + out.bug_id + " on " + out.game + ". " + out.next_step);
+        form.querySelectorAll("input,textarea,select").forEach(function (el) { el.disabled = true; });
+        submitBtn.textContent = "Sent";
+      } else {
+        showResult("err", friendlyError(out || {}));
+        submitBtn.disabled = false;
+      }
+    } catch (e) {
+      showResult("err", "Could not reach the studio's desk — please try again.");
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+<script type="module">
+// ── WebMCP page tools: one registerPageTools() call. Every tool that the MCP
+// server owns calls this site's own /mcp, so the tool logic has exactly one
+// source of truth (the backend in sites/discord/backend/);
+// open_bug_report_form is the page's own, and opens the dialog above.
+// https://busymate.ai/docs/guides/page-tools
+// The specs are imported from the SAME data twin scripts/gen-webmcp-catalog.mjs
+// reads to publish /webmcp-catalog.json, so the two can never drift.
+import { TOOL_SPECS } from "/assets/page-tools.data.js";
+async function callMcp(name, args) {
+  const res = await fetch("/mcp", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name, arguments: args || {} } }),
+  });
+  const body = await res.json();
+  const text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+  return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+}
+/** The one tool the PAGE itself answers; everything else goes to /mcp. */
+const LOCAL = {
+  open_bug_report_form: (args) => window.__openBugForm(args || {}),
+};
+const tools = TOOL_SPECS.map((spec) => ({
+  name: spec.name,
+  description: spec.description,
+  inputSchema: spec.inputSchema,
+  annotations: spec.annotations,
+  execute: LOCAL[spec.name] || ((args) => callMcp(spec.name, args)),
+}));
+function whenReady(cb, triesLeft) {
+  if (window.BusymateAI && window.BusymateAI.registerPageTools) return cb();
+  if (!triesLeft) return;
+  setTimeout(() => whenReady(cb, triesLeft - 1), 100);
+}
+whenReady(() => {
+  window.BusymateAI.registerPageTools(tools).catch((e) => {
+    console.error("registerPageTools failed:", e && e.message);
+  });
+}, 100);
+</script>
+</body>
+</html>

@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nomad Circuits — travel tech, repaired and shipped, and your mate on Telegram</title>
+<meta name="description" content="Nomad Circuits: catalogue, hours and repair booking answered live by Watt, its Busymate AI mate — with a faithful preview of how it will look on Telegram once the bot goes live.">
+<link rel="canonical" href="https://telegram.demo.busymate.ai/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt.md" title="This site as Markdown">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="Nomad Circuits — your mate on Telegram">
+<meta property="og:description" content="An indie travel-tech and repair shop whose mate already answers on the web — see a faithful preview of the Telegram thread, before the bot goes live.">
+<meta property="og:image" content="https://telegram.demo.busymate.ai/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"ElectronicsStore","@id":"https://telegram.demo.busymate.ai/#biz","name":"Nomad Circuits","url":"https://telegram.demo.busymate.ai/","description":"A demonstration travel-tech and gadget-repair shop used to show how Busymate AI works as a Telegram mate. No real orders are fulfilled.","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"Unit 12, Alfama Market","addressLocality":"Lisbon"}},
+ {"@type":"WebSite","@id":"https://telegram.demo.busymate.ai/#site","url":"https://telegram.demo.busymate.ai/","name":"Nomad Circuits","publisher":{"@id":"https://telegram.demo.busymate.ai/#biz"}},
+ {"@type":"OfferCatalog","name":"Nomad Circuits catalogue","itemListElement":[
+   {"@type":"Offer","itemOffered":{"@type":"Product","name":"Voyager 20K Power Bank","sku":"NC-PWR-20K"},"price":"49","priceCurrency":"USD"},
+   {"@type":"Offer","itemOffered":{"@type":"Product","name":"Skyline Micro Drone","sku":"NC-DRN-MC"},"price":"199","priceCurrency":"USD"}
+ ]},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"Do you ship worldwide?","acceptedAnswer":{"@type":"Answer","text":"Yes, 3-7 business days, free over $75, a flat $6 under that."}},
+   {"@type":"Question","name":"Can I book a repair without buying anything?","acceptedAnswer":{"@type":"Answer","text":"Yes — walk in or message Watt to book a slot; the diagnostic is always free."}},
+   {"@type":"Question","name":"Do your gadgets work with any country's plug or voltage?","acceptedAnswer":{"@type":"Answer","text":"The Everywhere Adapter covers 190+ countries, and most gadgets are dual-voltage already."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  --bg:#f6f3ec; --ink:#1b2129; --muted:#736a5c; --card:#fffdf8; --line:#e7dfce;
+  --brand:#16212b; --brand-ink:#f5efe2; --accent:#c9822f; --ok:#3f8f86;
+  --band-bg:#0e1a24; --band-ink:#eef3f6; --band-muted:#9fb2bd; --band-line:#1f313f;
+  --tg-1:#2aabee; --tg-2:#229ed9; --tg-bg:#dceaf5;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#141a1f; --ink:#eef0ef; --muted:#a3aab0; --card:#1b232a; --line:#2a333b;
+         --brand:#e0a458; --brand-ink:#171008; --accent:#e0a458; --ok:#5fb3a9;
+         --band-bg:#0a1319; --band-line:#1b2731; --tg-bg:#0e1f2b; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:17px;margin-right:auto;font-family:Georgia,"Times New Roman",serif}
+.logo img{width:32px;height:32px;border-radius:9px}
+nav{display:flex;gap:18px}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brand-ink);border:0;border-radius:999px;padding:11px 19px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.tiny{padding:9px 12px;font-size:12px;min-height:36px}
+.btn.tg{background:linear-gradient(135deg,var(--tg-1),var(--tg-2));color:#fff}
+.btn[disabled],.btn.disabled{opacity:.55;cursor:default}
+.btn[hidden]{display:none}
+.tg-cta{background:linear-gradient(135deg,var(--tg-1),var(--tg-2));color:#fff;flex:0 0 auto}
+.tg-cta-icon{width:16px;height:16px;fill:currentColor;flex:0 0 auto}
+.id-chip{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+@media(min-width:860px){.id-chip{display:flex}}
+.id-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.id-chip.on .dot{background:var(--ok)}
+
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.01em;margin:14px 0 16px;font-weight:600}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:28px;letter-spacing:-.01em;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);margin:0 0 26px;max-width:62ch}
+.lead{font-size:18px;color:var(--muted);max-width:44ch}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+
+.hero{position:relative;padding:0;border-top:0;min-height:min(72vh,640px);display:flex;align-items:center;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(10,15,20,.88) 0%,rgba(10,15,20,.64) 42%,rgba(10,15,20,.22) 75%);z-index:1}
+.hero-inner{position:relative;z-index:2;padding-top:96px;padding-bottom:64px;color:#f5efe2}
+.hero-inner .eyebrow{color:#e0a458}
+.hero-inner .lead{color:#d8cdb8}
+.hero .btn.ghost{color:#f5efe2;border-color:#ffffff40}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.two-col figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.two-col figure img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.two-col figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.about-copy{align-self:center}
+.about-copy ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.about-copy li{display:flex;gap:8px}
+.about-copy li strong{color:var(--ink);font-weight:600;min-width:112px}
+
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cat-section h3{font-family:Georgia,"Times New Roman",serif;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 12px}
+.cat-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.cat-section ul{list-style:none;margin:0;padding:0}
+.cat-section li:last-child .cat-item{border-bottom:0}
+.cat-item .ic{width:44px;height:44px;border-radius:11px;background:color-mix(in srgb,var(--accent) 14%,transparent);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.cat-item .ic svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.cat-item .txt{flex:1;min-width:0}
+.cat-item .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.cat-item h4{margin:0;font-size:15px;font-weight:600}
+.cat-item .price{font-weight:700;white-space:nowrap}
+.cat-item p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.cat-item .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:999px;padding:2px 7px;margin-top:5px}
+.cat-item .sku{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);opacity:.75}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.book-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.policy ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14px}
+.policy li{padding-bottom:9px;border-bottom:1px solid var(--line)}
+.policy li:last-child{border-bottom:0;padding-bottom:0}
+.try-row{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:12px;padding:13px 15px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.try-row span{font-size:14px}
+
+/* ---- Telegram preview phone ---- */
+.tg-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
+.tg-band h2{color:var(--band-ink)}
+.tg-band .sub{color:var(--band-muted)}
+.tg-badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#eaf6ff;background:color-mix(in srgb,var(--tg-1) 55%,transparent);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.tg-badge svg{width:12px;height:12px;fill:#fff}
+.tg-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:center}
+.phone{width:min(360px,100%);margin:0 auto;background:#0b0b0b;border-radius:38px;padding:12px;box-shadow:0 30px 70px #0007}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:6px 16px 2px;color:#fff;font-size:12px;font-weight:600}
+.phone-screen{border-radius:26px;overflow:hidden;background:var(--tg-bg);display:flex;flex-direction:column;height:560px}
+.tg-header{background:linear-gradient(135deg,var(--tg-1),var(--tg-2));color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;flex:0 0 auto}
+.tg-header .back{opacity:.85;font-size:18px}
+.tg-header .avatar{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tg-header .avatar img{width:100%;height:100%;object-fit:cover}
+.tg-header .who{flex:1;min-width:0}
+.tg-header .who b{display:block;font-size:14.5px;font-weight:600}
+.tg-header .who span{display:block;font-size:12px;opacity:.85}
+.tg-header .icons{display:flex;gap:14px;opacity:.55;font-size:15px}
+.tg-screen-slot{flex:1;position:relative;background:var(--tg-bg)}
+.tg-screen-slot .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#6b7d89;font-size:13px;text-align:center;padding:0 20px}
+/* The REAL live embed widget, repositioned (never reparented — moving a
+   cross-origin iframe to a new DOM parent reloads it, which would race the
+   identity handshake and hang the panel — same fix as the WhatsApp demo,
+   found live 2026-09-11) to sit exactly over #tgScreen via position:absolute
+   + JS-measured coordinates (see the mount script below). Position itself is
+   set inline by JS; these rules only reshape its box. */
+[data-support-chat]>button{display:none !important}
+[data-support-chat]>div{position:static !important;inset:auto !important;width:100% !important;height:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;background:transparent !important}
+[data-support-chat] iframe{width:100%;height:100%;border:0}
+.tg-copy p{color:var(--band-muted)}
+.tg-copy .btn.tg{margin-top:6px}
+.tg-note{font-size:12.5px;color:var(--band-muted);margin-top:10px}
+
+.live-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.live-steps .card{background:#ffffff08;border:1px solid var(--band-line);border-radius:var(--radius);padding:18px}
+.live-steps .num{width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--tg-1) 30%,transparent);color:#d6f0ff;display:grid;place-items:center;font-weight:700;font-size:12px;margin-bottom:10px}
+.live-steps h4{margin:0 0 4px;font-size:15px}
+.live-steps p{margin:0;font-size:13.5px;color:var(--band-muted)}
+.tg-band .howto-row{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.tg-band .howto-row a{color:#7ecbf0;font-weight:600;text-decoration:none}
+.tg-band .howto-row a:hover{text-decoration:underline}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feature{display:flex;flex-direction:column;gap:9px}
+.feature h3{margin:0;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:13.5px}
+.feature .try{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.feature .files{display:flex;flex-wrap:wrap;gap:8px}
+.feature .files a{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);border-radius:8px;padding:5px 9px;text-decoration:none}
+.feature .how{margin-top:auto;padding-top:4px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+.scorecard{margin-top:24px;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--card)}
+.scorecard p{margin:0;color:var(--muted);font-size:14px;max-width:56ch}
+
+.id-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.id-panel .customer{font-size:14px;color:var(--muted)}
+.demo-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:12px}
+.tcard p{margin:0;font-size:14.5px}
+.tcard .who{display:flex;align-items:center;gap:10px}
+.avatar-chip{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex:0 0 auto}
+.tcard .who b{display:block;font-size:13.5px}
+.tcard .who span{display:block;font-size:12px;color:var(--muted)}
+
+.faq dt{font-weight:600;font-size:15px;margin:0 0 4px;font-family:Georgia,"Times New Roman",serif}
+.faq dd{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:70ch}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0003}
+#flash[hidden]{display:none}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+
+@media(max-width:920px){
+  .two-col,.book-grid,.tg-layout{grid-template-columns:1fr}
+  .cat-grid,.features,.live-steps,.testimonials{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media(max-width:600px){
+  .cat-grid,.features,.live-steps,.testimonials{grid-template-columns:1fr}
+  .phone-screen{height:64vh}
+}
+
+/* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
+@media(max-width:480px){
+  .wrap{padding:0 16px}
+  .bar{height:56px;gap:8px}
+  .logo{font-size:14px;gap:7px}
+  .logo img{width:24px;height:24px}
+  .id-chip{display:none}
+  .tg-cta{padding:9px;border-radius:50%;line-height:0}
+  .tg-cta-label{display:none}
+  .tg-cta-icon{width:18px;height:18px}
+  .hero-inner{padding-top:36px;padding-bottom:40px}
+  .hero{min-height:0}
+  h1{font-size:26px;line-height:1.12;margin:10px 0 12px}
+  .eyebrow{font-size:12px}
+  .lead{font-size:15px}
+  .cta{flex-direction:column;align-items:stretch;margin-top:20px}
+  .cta .btn{justify-content:center;width:100%}
+  h2{font-size:22px}
+  section{padding:38px 0}
+  .book-grid .try-row{flex-direction:column;align-items:stretch}
+  .book-grid .try-row button{width:100%}
+  .phone{width:100%}
+  .phone-status{font-size:12px}
+  .tg-header .who b{font-size:13.5px}
+  .tg-header .who span{font-size:12px}
+  .id-panel{flex-direction:column;align-items:stretch}
+  .id-panel > div:last-child{display:flex;gap:10px}
+  .id-panel .btn{flex:1}
+}
+</style>
+</head>
+<body data-signed-in="no">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><img src="/img/mark.png" alt="" aria-hidden="true">Nomad Circuits</div>
+    <nav>
+      <a href="#catalog">Catalogue</a>
+      <a href="#repair">Book a repair</a>
+      <a href="#telegram">Telegram preview</a>
+      <a href="#agents">For agents</a>
+    </nav>
+    <span class="id-chip" id="idChip"><span class="dot"></span><span id="idChipText">Browsing as a guest</span></span>
+    <a class="btn tg-cta" id="tgHeaderCta" href="#telegram" aria-label="Chat on Telegram">
+      <svg class="tg-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      <span class="tg-cta-label">Chat on Telegram</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="/img/hero.webp" alt="Messaging support from a laptop while traveling" width="1600" height="900">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Travel tech &amp; repairs</div>
+    <h1>Your mate, right where your trip already lives.</h1>
+    <p class="lead">Watt answers catalogue, hours and repair questions the moment you reach out — live on the web tonight, and shown here exactly as it will look once Nomad Circuits' Telegram bot goes live.</p>
+    <div class="cta">
+      <a class="btn" href="#repair">Book a repair</a>
+      <button class="btn ghost" type="button" data-open-chat>Ask Watt something</button>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="about">
+  <div class="wrap two-col">
+    <div class="about-copy">
+      <div class="eyebrow">The bench</div>
+      <h2>A counter and a repair bench, not a warehouse.</h2>
+      <p class="sub" style="margin-bottom:14px">Power banks, connectivity, cameras and e-readers for people who live out of a carry-on — plus a real bench that fixes what breaks along the way. Nomad Circuits ships worldwide and keeps a small counter for walk-ins and repair drop-off.</p>
+      <ul>
+        <li><strong>Counter</strong><span>Unit 12, Alfama Market, Lisbon</span></li>
+        <li><strong>Shipping</strong><span>Worldwide, 3-7 business days, free over $75</span></li>
+        <li><strong>Warranty</strong><span>1 year on every gadget</span></li>
+        <li><strong>Repairs</strong><span>Free 15-minute diagnostic, no obligation</span></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="/img/workshop.webp" alt="A repair technician soldering a small circuit board on the bench" width="1400" height="1050" loading="lazy">
+      <figcaption>The repair bench, behind the counter</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="shipping">
+  <div class="wrap two-col">
+    <figure>
+      <img src="/img/worldmap.webp" alt="A world map covered in pins marking where past orders have shipped" width="1600" height="720" loading="lazy">
+      <figcaption>Every pin is a past order — a nomad shop, worldwide</figcaption>
+    </figure>
+    <div class="about-copy">
+      <div class="eyebrow">Ships worldwide</div>
+      <h2>Wherever the trip goes next.</h2>
+      <p class="sub" style="margin-bottom:14px">Orders leave the Lisbon counter for anywhere — a hostel in Da Nang, a co-working desk in Lisbon itself, a poste-restante pickup in Cusco. Every parts drawer behind the counter is labeled by hand, the same drawers a repair pulls its solder and connectors from.</p>
+      <ul>
+        <li><strong>Coverage</strong><span>Worldwide, no country excluded</span></li>
+        <li><strong>Speed</strong><span>3-7 business days once it ships</span></li>
+        <li><strong>Free shipping</strong><span>Over $75, otherwise a flat $6</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="catalog">
+  <div class="wrap">
+    <div class="eyebrow">Currently in stock</div>
+    <h2>What's in the case tonight</h2>
+    <p class="sub">Four categories, every price current — Watt answers from exactly this list, not a guess at what a gadget shop "probably" sells.</p>
+    <div class="cat-grid">
+      <div class="cat-section">
+        <h3>Power &amp; charging</h3>
+        <ul>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M18 10h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2"/><path d="M6 10v4M9 10v4M12 10v4"/></svg></div>
+            <div class="txt"><div class="row"><h4>Voyager 20K Power Bank</h4><span class="price">$49</span></div>
+            <p>20,000mAh, 65W USB-C PD fast charge — a phone 4x or a laptop top-up.</p><span class="tag">Bestseller</span> <span class="sku">NC-PWR-20K</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 3l-3 3M12 3l3 3"/><rect x="4" y="9" width="16" height="12" rx="2"/></svg></div>
+            <div class="txt"><div class="row"><h4>Solstice Solar Panel</h4><span class="price">$39</span></div>
+            <p>14W foldable solar charger, clips to a pack, IP64 splashproof.</p><span class="tag">Eco</span> <span class="sku">NC-SOL-14</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div>
+            <div class="txt"><div class="row"><h4>Everywhere Adapter</h4><span class="price">$24</span></div>
+            <p>One plug for 190+ countries, 2x USB-C + 1x USB-A, 65W GaN.</p><span class="tag">Essential</span> <span class="sku">NC-ADP-GL</span></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="cat-section">
+        <h3>Connectivity</h3>
+        <ul>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 10a12 12 0 0 1 16 0M7 13.5a7.5 7.5 0 0 1 10 0M10 17a3 3 0 0 1 4 0"/><circle cx="12" cy="20" r="1"/></svg></div>
+            <div class="txt"><div class="row"><h4>PocketLink 5G Hotspot</h4><span class="price">$89</span></div>
+            <p>eSIM-ready pocket wifi, 10 devices, 12-hour battery.</p><span class="sku">NC-HSP-5G</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-1v-6h3M4 18v-5h3v6H6a2 2 0 0 1-2-2Z"/></svg></div>
+            <div class="txt"><div class="row"><h4>Everyday EchoBuds</h4><span class="price">$69</span></div>
+            <p>ANC travel earbuds, 30-hour case, water resistant.</p><span class="sku">NC-EAR-EB</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg></div>
+            <div class="txt"><div class="row"><h4>Lingua Mini Translator</h4><span class="price">$99</span></div>
+            <p>Two-way voice translation, 40 languages, 12 offline.</p><span class="tag">Popular</span> <span class="sku">NC-TRN-40</span></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="cat-section">
+        <h3>Capture &amp; read</h3>
+        <ul>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><circle cx="12" cy="13.5" r="4"/><path d="M8 7l1.5-2h5L16 7"/></svg></div>
+            <div class="txt"><div class="row"><h4>TrailCam 4K</h4><span class="price">$159</span></div>
+            <p>Rugged 4K action camera, waterproof to 10m.</p><span class="sku">NC-CAM-4K</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><rect x="10" y="10" width="4" height="4" rx="1"/><path d="M8 7l3 3M16 7l-3 3M8 17l3-3M16 17l-3-3"/></svg></div>
+            <div class="txt"><div class="row"><h4>Skyline Micro Drone</h4><span class="price">$199</span></div>
+            <p>249g foldable 4K drone, under most carry-on limits.</p><span class="tag">Bestseller</span> <span class="sku">NC-DRN-MC</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div>
+            <div class="txt"><div class="row"><h4>InkPage Reader</h4><span class="price">$129</span></div>
+            <p>Waterproof e-reader, weeks of battery, ~10,000 books.</p><span class="sku">NC-RDR-WP</span></div>
+          </div></li>
+        </ul>
+      </div>
+      <div class="cat-section">
+        <h3>Care &amp; repairs</h3>
+        <ul>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 18h6" stroke-width="2"/><path d="M4 9l3-3M4 15l3 3" transform="translate(0)"/></svg></div>
+            <div class="txt"><div class="row"><h4>Screen Repair</h4><span class="price">from $59</span></div>
+            <p>Most phone and tablet models, about 45 minutes.</p><span class="tag">Service</span> <span class="sku">NC-SVC-SCR</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="14" rx="2"/><path d="M10 3h4v4h-4z"/><path d="M10 13h4"/></svg></div>
+            <div class="txt"><div class="row"><h4>Battery Swap</h4><span class="price">from $39</span></div>
+            <p>Same-day on most models.</p><span class="tag">Service</span> <span class="sku">NC-SVC-BAT</span></div>
+          </div></li>
+          <li><div class="cat-item">
+            <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg></div>
+            <div class="txt"><div class="row"><h4>Free Diagnostic</h4><span class="price">$0</span></div>
+            <p>15-minute check, no obligation.</p><span class="tag">Service</span> <span class="sku">NC-SVC-DIAG</span></div>
+          </div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="repair">
+  <div class="wrap book-grid">
+    <div class="panel">
+      <div class="eyebrow">Repairs &amp; orders</div>
+      <h2>Getting a repair booked shouldn't need a phone call.</h2>
+      <p class="sub">Ask Watt for a device and a time — it opens an inline form right in the chat for the details, one tap to submit, instead of asking for them one by one. Ordering a gadget works the same way.</p>
+      <div class="try-row">
+        <span>Try it: "My phone screen is cracked, can I book a repair?"</span>
+        <button class="btn tiny" type="button" data-try-prompt="My phone screen is cracked, can I book a repair?">Copy &amp; open chat</button>
+      </div>
+      <div class="try-row">
+        <span>Try it: "I'll take a Voyager 20K Power Bank, ship it to Portugal."</span>
+        <button class="btn tiny" type="button" data-try-prompt="I'll take a Voyager 20K Power Bank, ship it to Portugal.">Copy &amp; open chat</button>
+      </div>
+    </div>
+    <div class="panel policy">
+      <img src="/img/organizer.webp" alt="Labeled parts drawers behind the repair counter" width="1000" height="750" loading="lazy" style="border-radius:11px;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px">
+      <h3 style="margin-top:0">Shipping &amp; repair policy</h3>
+      <ul>
+        <li>Worldwide shipping, 3-7 business days, free over $75, $6 flat under that.</li>
+        <li>30-day returns on any unopened gadget; 1-year warranty on every gadget.</li>
+        <li>A repair is not returnable, but carries a 90-day workmanship guarantee.</li>
+        <li>Closed Monday. Sunday is repair pickup/drop-off only.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="telegram" class="tg-band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:#7ecbf0">A faithful preview</div>
+    <h2>See the Telegram thread, before the bot exists.</h2>
+    <p class="sub">Nomad Circuits' Telegram bot is still being connected — the section below is not a mock-up or a recording. It's the exact live assistant, dressed the way the conversation will look inside Telegram the moment that bot goes live.</p>
+    <div class="tg-layout">
+      <div class="tg-copy">
+        <div class="tg-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>Preview — real assistant, no live bot yet</div>
+        <p>This IS Watt, running on the same brain, the same catalogue, and the same order/repair tools as the widget on this page — only the wrapper around it changes once Telegram is live. Ask it about a gadget, or try booking a repair right in the thread.</p>
+        <a class="btn tg" id="tgCtaMain" href="#telegram">This becomes a real Telegram chat soon</a>
+        <p class="tg-note" id="tgCtaNote">The "Chat on Telegram" button above does the same thing until the bot is live — it scrolls here.</p>
+      </div>
+      <div class="phone">
+        <div class="phone-status"><span>9:41</span><span>●●● WiFi 100%</span></div>
+        <div class="phone-screen">
+          <div class="tg-header">
+            <span class="back" aria-hidden="true">‹</span>
+            <span class="avatar"><img src="/img/mark.png" alt="" aria-hidden="true"></span>
+            <div class="who"><b>Nomad Circuits</b><span id="tgSubtitle">Watt · usually replies in seconds</span></div>
+            <span class="icons" aria-hidden="true">⌕ ⋮</span>
+          </div>
+          <div class="tg-screen-slot" id="tgScreen">
+            <div class="placeholder" id="tgPlaceholder">Loading the live preview…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:56px">What changes once the bot is real</h2>
+    <p class="sub">The same brain, knowledge and tools above — just reached the way Telegram's Bot API actually works.</p>
+    <div class="live-steps">
+      <div class="card"><div class="num">1</div><h4>A traveler messages first</h4><p>A "Message us" link or a t.me/&lt;bot&gt; deep link opens Telegram with Nomad Circuits' bot pre-filled — the visitor always starts the conversation, never the shop.</p></div>
+      <div class="card"><div class="num">2</div><h4>Telegram's Bot API delivers it</h4><p>The message arrives over Telegram's Bot API webhook, gets normalized into the same conversation shape as the web chat, and Watt answers from the same catalogue and policies shown above.</p></div>
+      <div class="card"><div class="num">3</div><h4>DM or group, your call</h4><p>Watt can answer in a direct message or, in a group chat, only when mentioned — same assistant, same tools, scoped so it never talks over a group unasked.</p></div>
+    </div>
+    <div class="howto-row">
+      <a href="https://busymate.ai/integrations/telegram">Current status of the Telegram channel →</a>
+      <a href="https://busymate.ai/docs/guides/connect-mcp-server">How the order/repair tools connect →</a>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="eyebrow">Under the hood</div>
+    <h2>Everything above, and why it works</h2>
+    <p class="sub">Nine things this page actually does, each with the exact doc for adding it to your own site.</p>
+    <div class="features">
+      <div class="card feature">
+        <h3>The chat, from one script tag</h3>
+        <p>The bubble in the corner (and the phone above) is the live product on a workspace of its own. One line of HTML put it there.</p>
+        <div class="try"><span>Try: "What's a good power bank for a weekend trip?"</span><button class="btn tiny" data-try-prompt="What's a good power bank for a weekend trip?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Grounded in Nomad Circuits' own words</h3>
+        <p>The catalogue, hours and repair policy above were published to the workspace as text. Answers quote it and cite it; anything outside it gets an honest "I don't know".</p>
+        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It can work the page</h3>
+        <p>This site publishes its own actions — search the catalogue, book a repair, place an order. Ask for one and watch it happen without a form.</p>
+        <div class="try"><span>Try: "Do you have anything for translating on the go?"</span><button class="btn tiny" data-try-prompt="Do you have anything for translating on the go?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It reaches the systems behind the page</h3>
+        <p>Nomad Circuits runs a small MCP server of its own, connected to the workspace. The catalogue and the repair bench come from there over HTTPS — the same answer whether or not this tab is open.</p>
+        <div class="files"><a href="/agents.json">/agents.json</a><a href="/llms.txt">/llms.txt</a></div>
+        <a class="how" href="https://busymate.ai/docs/guides/connect-mcp-server">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It knows who's asking</h3>
+        <p>Sign in as the demo customer below and Watt can pull up that customer's own orders and repair tickets — through the page's own tools, for that customer and nobody else.</p>
+        <div class="try"><span>Try (signed in): "What's the status of my order?"</span><button class="btn tiny" data-try-prompt="What's the status of my order?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>A person can take over</h3>
+        <p>Ask for a person and the thread lands in the team inbox, mid-conversation — the same handoff works on Telegram once it's live, no restart, no ticket number.</p>
+        <div class="try"><span>Try: "Can I talk to someone about a bulk order?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a bulk order of 20 power banks?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Readable without a browser</h3>
+        <p>An agent that never renders this page can still work with it: a plain-text brief, a tool manifest, and the live schema behind every order and repair action.</p>
+        <div class="files"><a href="/llms.txt">/llms.txt</a><a href="/llms.txt.md">/llms.txt.md</a><a href="/robots.txt">/robots.txt</a><a href="/sitemap.xml">/sitemap.xml</a></div>
+        <a class="how" href="https://busymate.ai/articles/is-your-website-agent-ready-checklist">The six layers, checked →</a>
+      </div>
+      <div class="card feature">
+        <h3>Useful before anyone signs in</h3>
+        <p>Signed out, the catalogue, hours and shipping policy are still answerable — to a visitor and to any agent. Only a customer's own orders and repairs wait for a signed-in proof of who's asking.</p>
+        <div class="try"><span>Try: "What time do you open Saturday?"</span><button class="btn tiny" data-try-prompt="What time do you open Saturday?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Honest about what isn't live yet</h3>
+        <p>The Telegram preview above is labeled exactly for what it is — a real assistant, a faithful wrapper, no invented bot handle. Nothing on this page claims a channel that doesn't exist yet.</p>
+        <div class="files"><a href="https://busymate.ai/integrations/telegram">/integrations/telegram</a></div>
+        <a class="how" href="https://busymate.ai/integrations/telegram">See every channel's real status →</a>
+      </div>
+    </div>
+    <div class="scorecard">
+      <p>Two checkers grade any address, this page included: one scores how ready a site is for AI agents, the other lists the tools a page publishes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/telegram.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Ftelegram.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <div class="eyebrow">Try it as a customer</div>
+    <h2>Sign in and Watt already knows your orders</h2>
+    <p class="sub">A throwaway demo customer is provided — no password, no real person.</p>
+    <div class="panel id-panel">
+      <div>
+        <div class="customer" id="idPanelText">Signed out — Watt only sees what a visitor can see.</div>
+        <p class="demo-note">Demo customer: <strong>Priya Fenwick</strong>, one order in transit (NC-48213) and one repair ticket ready for pickup (NC-R-1042). A throwaway public demo identity, not a real person.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="idSignInBtn" type="button">Sign in as the demo customer</button>
+        <button class="btn ghost" id="idSignOutBtn" type="button" hidden>Sign out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="eyebrow">From regulars</div>
+    <h2>Faster than calling, they say</h2>
+    <div class="testimonials">
+      <div class="card tcard">
+        <p>"Messaged about a fried charger between flights, had the tracking number before I'd finished my coffee."</p>
+        <div class="who"><span class="avatar-chip" style="background:#c9822f">TR</span><div><b>Tomas R.</b><span>Digital nomad</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Battery swap on my earbuds case took 20 minutes, no appointment."</p>
+        <div class="who"><span class="avatar-chip" style="background:#3f8f86">AK</span><div><b>Aline K.</b><span>Local regular</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Booked a screen repair over chat before I even landed — walked straight to the counter."</p>
+        <div class="who"><span class="avatar-chip" style="background:#736a5c">DM</span><div><b>Devon M.</b><span>First-time customer</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Before you message us</div>
+    <h2>A few things people ask first</h2>
+    <dl class="faq">
+      <dt>Do you ship worldwide?</dt>
+      <dd>Yes, 3-7 business days, free over $75, a flat $6 under that.</dd>
+      <dt>Can I book a repair without buying anything?</dt>
+      <dd>Yes — walk in or message Watt to book a slot; the diagnostic is always free, no obligation.</dd>
+      <dt>Do your gadgets work with any country's plug or voltage?</dt>
+      <dd>The Everywhere Adapter covers 190+ countries, and most gadgets are dual-voltage (100-240V) already.</dd>
+      <dt>What if my device isn't on the repair list?</dt>
+      <dd>Message Watt with the device — most brands are fine; a few cases need an in-person look first.</dd>
+      <dt>Do you sell cables and cases too?</dt>
+      <dd>Yes, at the counter and by message — ask Watt.</dd>
+    </dl>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Nomad Circuits is a demonstration shop. No order or repair is actually fulfilled, and the customer behind the sign-in button is not a real person.<br>
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:hello@nomad-circuits.example">hello@nomad-circuits.example</a>, or ask the assistant for a human and a colleague at Nomad Circuits joins the same conversation.</p>
+    Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a> · <a href="/img/CREDITS.md">Photography credits</a>
+  </div>
+</footer>
+
+<div id="flash" role="status" hidden></div>
+
+<script>
+// ── Identity: define getIdentity BEFORE the embed script loads (per
+// https://busymate.ai/docs/guides/identified-visitors). A signed-in customer
+// mints a fresh 120s launch proof from THIS site's own /api/identity/mint;
+// signed-out returns null. Nothing persisted here.
+function nomadNonce() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode.apply(null, bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+async function nomadSession() {
+  try { return (await fetch("/api/identity/session")).json(); } catch (e) { return { signedIn: false }; }
+}
+window.BusymateAI = window.BusymateAI || {};
+window.BusymateAI.getIdentity = async function () {
+  var s = await nomadSession();
+  if (!s.signedIn) return null;
+  var res = await fetch("/api/identity/mint", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nonce: nomadNonce() }),
+  });
+  if (!res.ok) return null;
+  var out = await res.json();
+  return { token: out.token, nonce: out.nonce };
+};
+
+async function nomadRenderIdentity() {
+  var s = await nomadSession();
+  var chip = document.getElementById("idChip"), chipText = document.getElementById("idChipText");
+  var panelText = document.getElementById("idPanelText");
+  var inBtn = document.getElementById("idSignInBtn"), outBtn = document.getElementById("idSignOutBtn");
+  document.body.setAttribute("data-signed-in", s.signedIn ? "yes" : "no");
+  if (s.signedIn) {
+    chip.classList.add("on"); chipText.textContent = "Signed in as " + s.customer.name;
+    panelText.textContent = "Signed in as " + s.customer.name + " — Watt now answers about this customer's own orders and repairs.";
+    inBtn.hidden = true; outBtn.hidden = false;
+  } else {
+    chip.classList.remove("on"); chipText.textContent = "Browsing as a guest";
+    panelText.textContent = "Signed out — Watt only sees what a visitor can see.";
+    inBtn.hidden = false; outBtn.hidden = true;
+  }
+}
+function flash(msg) {
+  var el = document.getElementById("flash");
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 2600);
+}
+document.addEventListener("DOMContentLoaded", function () {
+  nomadRenderIdentity();
+  document.getElementById("idSignInBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/login", { method: "POST" });
+    await nomadRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed in as Priya Fenwick");
+  });
+  document.getElementById("idSignOutBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/logout", { method: "POST" });
+    await nomadRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed out");
+  });
+  // On a phone the chat lives inside the phone mock further down the page: bring it
+  // on screen before opening, or the tap does nothing a person can see.
+  function openChat() {
+    var slot = document.querySelector('iframe[src*="busymate.ai/support"]');
+    if (slot) { var r = slot.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) slot.scrollIntoView({ block: "center" }); }
+    if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+  }
+  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
+    b.addEventListener("click", function () { openChat(); });
+  });
+  document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var text = b.getAttribute("data-try-prompt");
+      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
+      catch (e) { flash("Ask Watt: " + text); }
+      openChat();
+    });
+  });
+});
+</script>
+
+<!-- Busymate AI web chat widget (live). data-assistant = the demo tenant slug.
+     Also remounted, unstyled-inside, into the Telegram phone frame below. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demo-telegram"
+        data-label="Chat with us"
+        data-aria-label="Open Nomad Circuits chat"
+        data-title="Nomad Circuits"
+        async></script>
+
+<script>
+// ── Telegram preview: the SAME live widget, repositioned on top of the
+// phone frame's screen area and kept open. This is the real product — cross-
+// origin iframe content is untouched, only the outer wrapper's position is
+// restyled from our own page. Deliberately NEVER reparented (moving a cross-
+// origin iframe to a new DOM parent makes the browser reload it, which would
+// race the postMessage identity handshake and hang the panel on a blank
+// screen — the same fix as the WhatsApp demo, found live 2026-09-11): the
+// widget layer stays a child of <body>, exactly where the embed script put
+// it, and only its computed position/size follow #tgScreen's own box on
+// scroll and resize.
+(function () {
+  var tries = 0;
+  var positioned = false;
+  function follow() {
+    var slot = document.getElementById("tgScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (!slot || !layer) return;
+    var r = slot.getBoundingClientRect();
+    layer.style.position = "absolute";
+    layer.style.right = "auto";
+    layer.style.bottom = "auto";
+    layer.style.left = window.scrollX + r.left + "px";
+    layer.style.top = window.scrollY + r.top + "px";
+    layer.style.width = r.width + "px";
+    layer.style.height = r.height + "px";
+  }
+  function mount() {
+    tries++;
+    var slot = document.getElementById("tgScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      var ph = document.getElementById("tgPlaceholder");
+      if (ph) ph.remove();
+      follow();
+      if (!positioned) {
+        positioned = true;
+        window.addEventListener("resize", follow);
+        window.addEventListener("scroll", follow, { passive: true });
+      }
+      window.BusymateAI.open();
+      return;
+    }
+    if (tries < 100) setTimeout(mount, 100);
+  }
+  mount();
+})();
+
+// ── The t.me hook: a single field in /telegram-config.json. null (today) =
+// the honest preview state; once the channel lane sets a real bot username
+// there, the CTAs switch to a genuine https://t.me/<username> link
+// automatically.
+(function () {
+  fetch("/telegram-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+    var username = cfg && cfg.username;
+    var header = document.getElementById("tgHeaderCta");
+    var main = document.getElementById("tgCtaMain");
+    var note = document.getElementById("tgCtaNote");
+    var sub = document.getElementById("tgSubtitle");
+    if (username) {
+      var url = "https://t.me/" + username;
+      [header, main].forEach(function (el) {
+        el.href = url; el.target = "_blank"; el.rel = "noopener noreferrer";
+        el.classList.remove("disabled");
+      });
+      main.textContent = "Chat on Telegram";
+      note.textContent = "Opens a real Telegram conversation with Nomad Circuits.";
+      sub.textContent = "Watt · on Telegram now";
+    }
+  }).catch(function () {});
+})();
+</script>
+
+<script>
+// ── WebMCP page tools: one registerPageTools() call. Every tool calls this
+// site's own /mcp so the tool logic has exactly one source of truth (the
+// backend in sites/telegram/backend/). https://busymate.ai/docs/guides/page-tools
+// Kept in sync with public/assets/page-tools.data.js (the plain-data twin
+// scripts/gen-webmcp-catalog.mjs reads to publish /webmcp-catalog.json).
+(function () {
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+  var tools = [
+    {
+      name: "opening_hours",
+      description: "Nomad Circuits's opening hours for walk-in orders and repair drop-off, by day of the week, including any closed days.",
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: true },
+      execute: function () { return callMcp("opening_hours", {}); },
+    },
+    {
+      name: "list_catalog",
+      description: "List everything Nomad Circuits sells and repairs, grouped by category, with prices and SKUs.",
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: true },
+      execute: function () { return callMcp("list_catalog", {}); },
+    },
+    {
+      name: "search_catalog",
+      description: "Search Nomad Circuits's catalogue and repair services by name, category or keyword (e.g. 'charging', 'earbuds', 'screen repair').",
+      inputSchema: {
+        type: "object",
+        properties: { query: { type: "string", description: "A product name, category, or keyword to search for, e.g. 'power bank' or 'screen repair'." } },
+        required: ["query"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("search_catalog", args); },
+    },
+    {
+      name: "place_order",
+      description: "Places an order at Nomad Circuits for one catalogue item and reports the order number and status. Call it with whatever is already known — it opens the order form for anything missing.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          sku: { type: "string", description: "The SKU of the item to order, e.g. 'NC-PWR-20K'." },
+          quantity: { type: "number", description: "How many of that item, default 1." },
+          name: { type: "string", description: "Name the order ships to." },
+          email: { type: "string", description: "Email address for the order confirmation." },
+          country: { type: "string", description: "Shipping country." },
+        },
+        additionalProperties: false,
+      },
+      execute: function (args) { return callMcp("place_order", args); },
+    },
+    {
+      name: "book_repair",
+      description: "Books a repair drop-off slot at Nomad Circuits and reports the ticket number. Call it with whatever is already known — it opens the booking form for anything missing.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          device: { type: "string", description: "The device coming in, e.g. 'phone, cracked screen'." },
+          issue: { type: "string", description: "What is wrong with it." },
+          name: { type: "string", description: "Name the repair ticket is under." },
+          email: { type: "string", description: "Email address to notify when it's ready." },
+          preferred_date: { type: "string", description: "Preferred drop-off date, YYYY-MM-DD." },
+          preferred_time: { type: "string", description: "Preferred drop-off time, 24-hour HH:MM." },
+        },
+        additionalProperties: false,
+      },
+      execute: function (args) { return callMcp("book_repair", args); },
+    },
+    {
+      name: "track_order",
+      description: "Look up the status of an order or a repair ticket at Nomad Circuits by its number and the email it was placed under.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          reference: { type: "string", description: "The order number (e.g. 'NC-48213') or repair ticket number (e.g. 'NC-R-1042')." },
+          email: { type: "string", description: "The email it was placed under." },
+        },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("track_order", args); },
+    },
+    {
+      name: "get_my_account",
+      description: "Every order and repair ticket belonging to the signed-in customer.",
+      inputSchema: {
+        type: "object",
+        properties: { email: { type: "string", description: "The signed-in visitor's own email." } },
+        required: ["email"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("get_my_account", args); },
+    },
+    {
+      name: "contact_us",
+      description: "Leave a message for a person at Nomad Circuits. Collects a name, an email address and the message itself.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          name: { type: "string", description: "Who is writing." },
+          email: { type: "string", description: "Where the shop should reply." },
+          message: { type: "string", description: "What they want to say." },
+        },
+        additionalProperties: false,
+      },
+      execute: function (args) { return callMcp("contact_us", args); },
+    },
+  ];
+
+  function whenReady(cb, triesLeft) {
+    if (window.BusymateAI && window.BusymateAI.registerPageTools) return cb();
+    if (!triesLeft) return;
+    setTimeout(function () { whenReady(cb, triesLeft - 1); }, 100);
+  }
+  whenReady(function () {
+    window.BusymateAI.registerPageTools(tools).catch(function (e) {
+      console.error("registerPageTools failed:", e && e.message);
+    });
+  }, 100);
+})();
+</script>
+</body>
+</html>

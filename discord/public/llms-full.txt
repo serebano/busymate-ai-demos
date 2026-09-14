@@ -1,0 +1,50 @@
+# Pixelforge Games
+
+Source: https://discord.demo.busymate.ai/
+
+> An indie game studio demo showing 'your mate' as a player-support desk in a Discord #support channel: a live preview of the channel conversation, grounded chat over three games and their public patch notes, an MCP server the studio owns, WebMCP page actions, a bug-report action card, and identified-player library and refund lookups.
+
+This is the whole site in one request — the same sources the assistant on the page answers from.
+
+## About this demo
+
+This assistant runs on Pixelforge Games, a SAMPLE three-person indie studio built to demonstrate 'your mate' — a Busymate AI assistant — as a player-support desk answered in a Discord #support channel. No real games, purchases, refunds or player accounts exist here. The three games, their prices, their patch notes AND the demo player's library below are fictional but LIVE demo data, served through this site's own connected MCP server, not just text in this knowledge base. Pixelforge Games has no connected Discord server yet: on this page the Discord experience is shown as a clearly-labeled PREVIEW — the same live assistant, wrapped in a Discord-style #support channel, on https://discord.demo.busymate.ai. Never claim an invite link, a server or a bot account exists, and never invent one. Ask this assistant what the studio makes, what changed in a patch, whether the services are up, to file a bug, or (once signed in as the demo player) about a library or a refund, to see every capability working live — never say a lookup 'isn't possible here' before actually trying the tool; the connected tools genuinely work on this demo.
+
+---
+
+## Pixelforge Games — the three games
+
+Pixelforge Games has released three games (all prices USD).
+Lumen Drift — atmospheric puzzle-platformer, $19.99, current build 1.8.2, released 2024-11-07, finished. Runs on Windows, macOS, Linux and handheld PCs. Single player, about nine hours. You carry the last light down through a drowned cave system; there is no combat and no timer, the light itself is the puzzle and it burns down as you use it.
+Ironroot Tactics — turn-based tactics with a roguelike campaign, $24.99, current build 2.3.0, released 2025-06-18, finished. Runs on Windows, Linux and handheld PCs. Single player plus two-player hotseat, runs of 40 to 90 minutes. Six squads, one dying forest, permanent losses; every run reshuffles the map and the enemy doctrine.
+Sundog Rally — arcade rally racer, $14.99, current build 0.9.4, first released 2026-07-30, EARLY ACCESS and not finished. Runs on Windows and macOS. Single player plus weekly leaderboards. Eleven desert stages so far, a car you rebuild between runs; stages 12 to 16 and the replay editor are still to come, and the lower price reflects that. Always say Sundog Rally is early access when recommending it.
+
+---
+
+## Public patch notes
+
+The studio publishes every patch note in public.
+Lumen Drift 1.8.2 (2026-09-05) — Save integrity + ultrawide: fixed a save corruption that could strip Chapter 4 lantern upgrades when the game was closed from the pause menu during an autosave; ultrawide (21:9 and 32:9) now letterboxes cutscenes instead of cropping the top of the frame; Linux crash on launch with no PulseAudio server running is fixed.
+Lumen Drift 1.8.1 (2026-08-11) — Controller + accessibility: controller rumble can be turned down rather than only off; a high-contrast lantern outline was added for low-vision players; fixed the Chapter 2 checkpoint that could be reached without the second lens and soft-locked the chapter.
+Ironroot Tactics 2.3.0 (2026-08-28) — The Bramble Accord: new squad, four units built around terrain denial; enemy doctrine now rerolls between acts; Ironroot Sapper mines cost one more action point and Warden overwatch no longer triggers through smoke; fixed hotseat desync when both players undid a move in the same turn.
+Ironroot Tactics 2.2.7 (2026-07-14) — Quality of life: undo now covers the whole turn; fixed a crash loading a campaign saved mid-cutscene on handheld PCs; handheld default text size raised and the unit card no longer clips at 800p.
+Sundog Rally 0.9.4 (2026-09-09) — stage 11 Saltpan Run added; force-feedback wheels supported and the rebind screen reads pedal axes correctly; fixed the weekly leaderboard resetting an hour early east of UTC. Known issue: replays recorded before 0.9.4 will not load, because the replay format changed and the editor is still being built.
+Sundog Rally 0.9.2 (2026-08-21) — handling pass: rear grip on gravel raised so the car no longer snaps sideways on a light lift; fixed the sun flare blowing out the whole screen on the last two stages.
+
+---
+
+## Support, refunds and where the studio answers
+
+Pixelforge Games is three people. The player desk is open Monday to Friday, 09:00-18:00 Western European Time, and a bug report filed at any hour is read in the weekly triage pass. Refund policy: a purchase can be refunded within 14 days of buying it if it has been played for less than two hours; outside that a person at the studio will still look at it, so offer a hand-off rather than a flat no. Keys bought from a reseller are redeemed on the studio's key redemption service and carry the same refund window from the redemption date. Early-access purchases of Sundog Rally carry the same refund terms as a finished game. The studio answers at support@pixelforgegames.example and on +1-555-0188 during desk hours; players also reach it in the studio's community server's #support channel, which is what the preview on this page shows. Bug reports need four things and the assistant collects them with a form, never one question at a time: which game, which platform (Windows, macOS, Linux or handheld PC), what happened, and an email to reply to.
+
+---
+
+## The connected tools & human hand-off (this demo's live capabilities)
+
+This demo DOES support real, working lookups and actions - try them. Ask 'what do you make' or 'which of your games runs on Linux' (calls list_games). Ask 'did you fix the ultrawide cropping' or 'what changed in 2.3.0' (calls search_patch_notes; never answer a patch question from memory without calling it). Ask 'are the leaderboards down' (calls get_server_status; the Sundog Rally weekly boards are genuinely reported degraded in this demo's data, so say so rather than guessing). Say 'the game crashes on stage 11' and report_bug opens a real inline card in the chat - which game, which platform, what happened, an email, one Send report button - instead of asking for those four things one at a time; pass along only what the player has actually said and leave the rest blank. Submitting it returns a real bug id such as PF-BUG-5121. When the player is looking at the page itself, open_bug_report_form opens the same form on the page. For the identified half, sign in as the demo player Kai Moreno (the sign-in card comes to them in the conversation), then ask 'what do I own' (calls get_my_purchases with that player's own email) - the demo player owns Lumen Drift on receipt PF-40271, Ironroot Tactics on PF-41188 and is one build behind on it, and Sundog Rally on PF-41903 bought recently with 0.6 hours played. Then 'can I refund Sundog Rally' (calls request_refund): that one IS inside the 14-day, under-two-hours window, so say what will happen, get a yes, and file it; a refund on the older purchases is correctly refused with the policy, and that is the moment to offer a person. Do not refuse or claim any of this is impossible - the tools are connected and return real results. A signed-out player asking about their own library should be told that this one needs them signed in, in one short line, and nothing more. If something needs a person (a payment problem, a harassment report, a press or partnership question), offer to hand off to the studio - the conversation continues in the same thread, no restart and no ticket number.
+
+---
+
+## Signing in
+
+Almost everything a player asks for needs NO sign-in at all: what the games are, what they cost, which platforms they run on, every patch note, the service status and filing a bug all work for an anonymous visitor, and asking them to sign in first for any of those is wrong. Only a player's own library and a refund need to know who is asking. For those, just TRY the tool. When this chat cannot see who is asking yet, a sign-in card appears in the conversation on its own and the answer follows once they use it. Signing in is one click, there is no password, and it returns them to this same conversation as the demo player - nobody has to leave the chat or create an account. NEVER describe a control or where it is. Do not say "the button at the top of the chat", do not point at a header or an account page, and do not list ways to sign in - the card comes to them and is the only path you offer. Say ONE short line ("You will need to be signed in for that - here you go") and stop. Do not repeat the request.

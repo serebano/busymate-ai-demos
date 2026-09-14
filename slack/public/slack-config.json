@@ -1,0 +1,9 @@
+{
+  "_comment": "The fields this page reads to know whether Patchwell's own Slack app is live. Patchwell's Slack app (created in the tictapp demo workspace) is connected to the demo-slack tenant and answers @-mentions in-thread — proven live 2026-09-13, see img/slack-proof.jpg. channelUrl opens the demo workspace channel where the bot lives; a real customer would point this at their own workspace. Set channelUrl null to return to the honest preview state.",
+  "channelUrl": "https://app.slack.com/client/T03UQ0J578R/C03U4P0PWHL",
+  "workspaceName": "demo",
+  "botName": "Patch",
+  "proofImage": "/img/slack-proof.jpg",
+  "proofAlt": "A Slack thread in #it-help where Patch answered an @-mention about plans in-thread, grounded in Patchwell's catalogue",
+  "proofCaption": "Live proof: @Patch answered in-thread in Slack, grounded in Patchwell's own plans and service catalogue."
+}

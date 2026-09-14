@@ -1,0 +1,44 @@
+[
+  {
+    "id": "hero",
+    "alt": "A row of glowing arcade joysticks, the studio's own wall of test rigs",
+    "width": 1600,
+    "height": 899
+  },
+  {
+    "id": "studio",
+    "alt": "The lit cabinets in the studio's front room, where Pixelforge started",
+    "width": 1200,
+    "height": 800
+  },
+  {
+    "id": "lumen",
+    "alt": "Lumen Drift — lit cave formations, the drowned caves the game is set in",
+    "width": 902,
+    "height": 602
+  },
+  {
+    "id": "ironroot",
+    "alt": "Ironroot Tactics — the dying forest its campaign is fought across",
+    "width": 902,
+    "height": 602
+  },
+  {
+    "id": "sundog",
+    "alt": "Sundog Rally — the desert stages, late in the day",
+    "width": 902,
+    "height": 602
+  },
+  {
+    "id": "desk",
+    "alt": "A headset on a lit desk — the player desk the studio answers from",
+    "width": 1200,
+    "height": 800
+  },
+  {
+    "id": "community",
+    "alt": "A dim arcade at night, lit by cabinets",
+    "width": 1200,
+    "height": 800
+  }
+]

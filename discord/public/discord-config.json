@@ -1,0 +1,6 @@
+{
+  "_comment": "The ONE field this page reads to know whether Pixelforge Games' own Discord server is live. null = not connected yet (the page shows the honest preview state: the in-page #support simulator, and the 'Join our Discord' calls to action stay on this page). Once the Discord channel lane connects a real server to the demo-discord tenant, set 'inviteUrl' to that server's invite link and redeploy — every 'Join our Discord' control switches to the real invite automatically, no other code change needed.",
+  "inviteUrl": null,
+  "serverName": "Pixelforge Games",
+  "botName": "Forge"
+}

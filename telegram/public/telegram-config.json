@@ -1,0 +1,4 @@
+{
+  "_comment": "The ONE field this page reads to know whether the Telegram channel itself is live. null = not live yet (the page shows the honest 'preview' state + the in-page simulator). Once the Telegram customer-channel lane (#2671) provisions a real BotFather bot for this demo tenant via connect_channel, set 'username' to that bot's @handle (without the @) and redeploy — the 'Chat on Telegram' CTA switches automatically to a real https://t.me/<username> link, no other code change needed.",
+  "username": null
+}

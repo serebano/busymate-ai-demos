@@ -1,0 +1,55 @@
+{
+  "title": "Pixelforge Games",
+  "note": "Pinned Commons files — a live search would change the pictures under us. Nothing here is a real studio's key art, and no photograph stands in for a named person.",
+  "images": [
+    {
+      "id": "hero",
+      "file": "File:DFC 0797 Close-up of a row of retro arcade game joysticks glowing with neon blue and pink lights.jpg",
+      "alt": "A row of glowing arcade joysticks, the studio's own wall of test rigs",
+      "width": 1600,
+      "aspect": 1.78
+    },
+    {
+      "id": "studio",
+      "file": "File:DFC 0798 Close-up of illuminated arcade claw machines with glowing joysticks and neon accents.jpg",
+      "alt": "The lit cabinets in the studio's front room, where Pixelforge started",
+      "width": 1200,
+      "aspect": 1.5
+    },
+    {
+      "id": "lumen",
+      "file": "File:Travertine drapery in Great Onyx Cave (Flint Ridge, Mammoth Cave National Park, Kentucky, USA) 1 (8314213900).jpg",
+      "alt": "Lumen Drift — lit cave formations, the drowned caves the game is set in",
+      "width": 800,
+      "aspect": 1.33
+    },
+    {
+      "id": "ironroot",
+      "file": "File:(Explored) Misty Winter morning in Stonor Forest - Flickr - scotbot.jpg",
+      "alt": "Ironroot Tactics — the dying forest its campaign is fought across",
+      "width": 800,
+      "aspect": 1.33
+    },
+    {
+      "id": "sundog",
+      "file": "File:Desert Sand Dunes near sunset.jpg",
+      "alt": "Sundog Rally — the desert stages, late in the day",
+      "width": 800,
+      "aspect": 1.33
+    },
+    {
+      "id": "desk",
+      "file": "File:RGB gaming headset on desk with ambient lighting.jpg",
+      "alt": "A headset on a lit desk — the player desk the studio answers from",
+      "width": 1200,
+      "aspect": 1.5
+    },
+    {
+      "id": "community",
+      "file": "File:DFC 0847 A person stands at a claw machine in a dimly lit arcade surrounded by colorful glowing game cabinets and neon lights.jpg",
+      "alt": "A dim arcade at night, lit by cabinets",
+      "width": 1200,
+      "aspect": 1.5
+    }
+  ]
+}

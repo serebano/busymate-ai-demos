@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bramble &amp; Co. — the people desk, with your mate in Microsoft Teams</title>
+<meta name="description" content="Bramble &amp; Co.: leave, benefit plans, pay dates and handbook policies for 300 people, answered live by Bram, its Busymate AI mate — shown here the way it looks in a Microsoft Teams chat pane.">
+<link rel="canonical" href="https://teams.demo.busymate.ai/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt.md" title="This site as Markdown">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="image" href="/img/hero.webp">
+<meta property="og:title" content="Bramble &amp; Co. — the people desk in Microsoft Teams">
+<meta property="og:description" content="A 300-person firm whose HR and benefits desk answers where people already work: leave balances, plan costs, pay dates and the handbook, in the chat pane beside the job.">
+<meta property="og:image" content="https://teams.demo.busymate.ai/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"ProfessionalService","@id":"https://teams.demo.busymate.ai/#biz","name":"Bramble & Co.","url":"https://teams.demo.busymate.ai/","description":"A demonstration 300-person professional-services firm, used to show how Busymate AI works as an HR and benefits desk inside a Microsoft Teams chat pane. No real employee record, benefit enrolment or leave booking exists.","numberOfEmployees":{"@type":"QuantitativeValue","value":300},"areaServed":["Bristol","Leeds","United Kingdom"],"email":"people@bramble-co.example","telephone":"+44-20-7946-0102"},
+ {"@type":"WebSite","@id":"https://teams.demo.busymate.ai/#site","url":"https://teams.demo.busymate.ai/","name":"Bramble & Co.","publisher":{"@id":"https://teams.demo.busymate.ai/#biz"}},
+ {"@type":"OfferCatalog","name":"Bramble & Co. employee benefits","itemListElement":[
+   {"@type":"Offer","name":"Health Essentials","itemOffered":{"@type":"Service","name":"Private medical cover","serviceType":"Employee benefit"},"price":"0","priceCurrency":"GBP","priceSpecification":{"@type":"UnitPriceSpecification","price":"0","priceCurrency":"GBP","unitText":"employee contribution per month"}},
+   {"@type":"Offer","name":"Health Plus (partner)","itemOffered":{"@type":"Service","name":"Private medical cover for a partner","serviceType":"Employee benefit"},"price":"42","priceCurrency":"GBP","priceSpecification":{"@type":"UnitPriceSpecification","price":"42","priceCurrency":"GBP","unitText":"employee contribution per month"}},
+   {"@type":"Offer","name":"Dental & Optical","itemOffered":{"@type":"Service","name":"Dental and optical cover","serviceType":"Employee benefit"},"price":"9","priceCurrency":"GBP","priceSpecification":{"@type":"UnitPriceSpecification","price":"9","priceCurrency":"GBP","unitText":"employee contribution per month"}}
+ ]},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"How many days of leave carry into next year?","acceptedAnswer":{"@type":"Answer","text":"Up to 5 unused days, and they must be taken by 31 March or they lapse."}},
+   {"@type":"Question","name":"When do benefit choices change?","acceptedAnswer":{"@type":"Answer","text":"Open enrolment runs 1 to 21 October and takes effect on 1 November; new joiners have 30 days, and a qualifying life event allows a change within 60 days."}},
+   {"@type":"Question","name":"When are people paid?","acceptedAnswer":{"@type":"Answer","text":"On the 26th, or the last working day before it, with anything that changes a payslip needed by the 12th."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  --bg:#f8f5ef; --ink:#211a2e; --muted:#6f6880; --card:#fffdf9; --line:#e7dfd2;
+  --brand:#4b2e83; --brand-ink:#f6f1e8; --accent:#4f7a5c; --ok:#6f9a7a; --warn:#c4703f;
+  --band-bg:#221240; --band-ink:#f2ecfa; --band-muted:#b6a7cf; --band-line:#37235c;
+  --tm-rail:#3b2a5a; --tm-rail-ink:#d8cfe8; --tm-list:#f3f0f8; --tm-main:#ffffff; --tm-line:#e4e0ec; --tm-text:#20182c;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#161221; --ink:#f1ecf7; --muted:#a79cbd; --card:#1e1830; --line:#2e2643;
+         --brand:#a98cdf; --brand-ink:#16102a; --accent:#8fc0a0; --ok:#8fc0a0; --warn:#e0a06f;
+         --band-bg:#140a28; --band-line:#2b1b49;
+         --tm-list:#221b33; --tm-main:#1a1428; --tm-line:#2d2542; --tm-text:#ece6f6; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+img[width][height]{height:auto}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:17px;margin-right:auto;font-family:ui-serif,Georgia,"Times New Roman",serif}
+.logo img{width:32px;height:32px;border-radius:9px}
+nav{display:flex;gap:18px}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brand-ink);border:0;border-radius:10px;padding:11px 19px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.tiny{padding:6px 11px;font-size:12px}
+.btn.tm{background:#4b2e83;color:#fff}
+.tm-cta{background:#4b2e83;color:#fff;flex:0 0 auto}
+.tm-cta-icon{width:16px;height:16px;fill:currentColor;flex:0 0 auto}
+.id-chip{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+@media(min-width:860px){.id-chip{display:flex}}
+.id-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.id-chip.on .dot{background:var(--ok)}
+
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.01em;margin:14px 0 16px;font-weight:600}
+h2{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:28px;letter-spacing:-.01em;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);margin:0 0 26px;max-width:62ch}
+.lead{font-size:18px;color:var(--muted);max-width:46ch}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+
+.hero{position:relative;min-height:min(72vh,620px);display:flex;align-items:center;overflow:hidden;padding:96px 0 64px}
+.hero > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(22,12,40,.92) 0%,rgba(22,12,40,.7) 45%,rgba(22,12,40,.28) 80%);z-index:1}
+.hero .wrap{position:relative;z-index:2;color:#f6f1e8;width:100%}
+.hero .eyebrow{color:#9fd0ac}
+.hero .lead{color:#d9cfe8}
+.hero .btn.ghost{color:#f6f1e8;border-color:#ffffff40}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.two-col figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.two-col figure img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.two-col figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.about-copy{align-self:center}
+.about-copy ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.about-copy li{display:flex;gap:8px}
+.about-copy li strong{color:var(--ink);font-weight:600;min-width:132px}
+
+/* ---- Benefits table + cards ---- */
+.plan-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.plan-scroll{overflow-x:auto}
+.plan-table th,.plan-table td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.plan-table th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;white-space:nowrap}
+.plan-table tbody tr:last-child td{border-bottom:0}
+.plan-table td.num{font-weight:700;white-space:nowrap}
+.plan-table .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted)}
+.plan-table td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
+.free{color:var(--ok);font-weight:700}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.tile{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card);display:flex;flex-direction:column}
+.tile img{width:100%;aspect-ratio:7/5;object-fit:cover}
+.tile .body{padding:14px 16px}
+.tile h4{margin:0 0 4px;font-size:15px}
+.tile p{margin:0;font-size:13.5px;color:var(--muted)}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.policy ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14px}
+.policy li{padding-bottom:9px;border-bottom:1px solid var(--line)}
+.policy li:last-child{border-bottom:0;padding-bottom:0}
+.try-row{background:color-mix(in srgb,var(--accent) 9%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:12px;padding:13px 15px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.try-row span{font-size:14px}
+
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pay{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.pay .m{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.pay .d{font-family:ui-serif,Georgia,serif;font-size:26px;margin:4px 0 2px}
+.pay .c{font-size:13px;color:var(--muted)}
+
+/* ---- The Teams-style chat pane ---- */
+.tm-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
+.tm-band h2{color:var(--band-ink)}
+.tm-band .sub{color:var(--band-muted)}
+.tm-badge{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#efe6ff;background:#5b3aa0;border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.tm-badge svg{width:13px;height:13px;fill:#fff}
+.tm-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:36px;align-items:start}
+.tm-window{background:var(--tm-main);color:var(--tm-text);border-radius:14px;overflow:hidden;box-shadow:0 30px 70px #0009;border:1px solid #ffffff14;display:grid;grid-template-columns:60px 210px 1fr;grid-template-rows:42px 1fr;height:610px}
+.tm-top{grid-column:1/4;background:#33215c;color:#e6dcf7;display:flex;align-items:center;gap:10px;padding:0 12px;font-size:12.5px}
+.tm-top .dots{display:flex;gap:6px;margin-right:6px}
+.tm-top .dots i{width:11px;height:11px;border-radius:50%;background:#ff5f57;display:block}
+.tm-top .dots i:nth-child(2){background:#febc2e}.tm-top .dots i:nth-child(3){background:#28c840}
+.tm-top .search{flex:1;max-width:380px;margin:0 auto;background:#ffffff1f;border-radius:6px;padding:4px 10px;text-align:center;color:#cdbfe6}
+.tm-rail{background:var(--tm-rail);color:var(--tm-rail-ink);display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0}
+.tm-rail .item{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;padding:7px 0;font-size:9.5px;letter-spacing:.02em;opacity:.72}
+.tm-rail .item.on{opacity:1;background:#ffffff14;box-shadow:inset 3px 0 0 #a98cdf}
+.tm-rail .glyph{width:20px;height:20px;display:block;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tm-list{background:var(--tm-list);border-right:1px solid var(--tm-line);padding:10px 0;overflow:hidden;font-size:13.5px}
+.tm-list .hd{padding:2px 12px 10px;font-weight:700;font-size:14.5px;display:flex;justify-content:space-between;align-items:center}
+.tm-list .grp{padding:8px 12px 4px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8a80a0}
+.tm-list .row{display:flex;align-items:center;gap:9px;padding:7px 12px;text-decoration:none;color:inherit}
+.tm-list .row.on{background:color-mix(in srgb,#4b2e83 14%,transparent);border-left:3px solid #4b2e83;padding-left:9px;font-weight:600}
+.tm-list .av{width:26px;height:26px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;overflow:hidden}
+.tm-list .av img{width:100%;height:100%;object-fit:cover}
+.tm-list .txt{min-width:0}
+.tm-list .txt b{display:block;font-size:13.5px;font-weight:inherit}
+.tm-list .txt span{display:block;font-size:11.5px;color:#8a80a0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-main{display:flex;flex-direction:column;min-width:0}
+.tm-head{display:flex;align-items:center;gap:10px;padding:9px 14px 0;border-bottom:1px solid var(--tm-line)}
+.tm-head .who{display:flex;align-items:center;gap:9px;padding-bottom:8px}
+.tm-head .who img{width:30px;height:30px;border-radius:50%}
+.tm-head .who b{font-size:14.5px}
+.tm-head .who span{display:block;font-size:11.5px;color:#8a80a0}
+.tm-tabs{display:flex;gap:16px;margin-left:20px;align-self:flex-end;font-size:13px}
+.tm-tabs span{padding:0 0 8px;color:#8a80a0}
+.tm-tabs span.on{color:var(--tm-text);font-weight:600;box-shadow:inset 0 -2px 0 #4b2e83}
+.tm-screen{flex:1;position:relative;background:var(--tm-main)}
+.tm-screen .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8a80a0;font-size:13px;text-align:center;padding:0 20px}
+.tm-compose{flex:0 0 auto;border-top:1px solid var(--tm-line);padding:9px 12px;display:flex;align-items:center;gap:10px}
+.tm-compose .box{flex:1;border:1px solid var(--tm-line);border-radius:8px;padding:7px 11px;font-size:13px;color:#8a80a0}
+.tm-compose .ic{width:17px;height:17px;stroke:#8a80a0;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+/* The REAL live embed widget, repositioned (never reparented — moving a
+   cross-origin iframe to a new DOM parent reloads it, which races the
+   identity handshake and hangs the panel; found live on an earlier demo
+   2026-09-11) to sit exactly over #teamsScreen via position:absolute +
+   JS-measured coordinates (see the mount script below). These rules only
+   reshape its box; the position itself is set inline by JS. */
+[data-support-chat]>button{display:none !important}
+[data-support-chat]>div{position:static !important;inset:auto !important;width:100% !important;height:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;background:transparent !important}
+[data-support-chat] iframe{width:100%;height:100%;border:0}
+.tm-copy p{color:var(--band-muted)}
+.tm-copy .btn.tm{margin-top:6px}
+.tm-note{font-size:12.5px;color:var(--band-muted);margin-top:10px}
+
+.live-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.live-steps .card{background:#ffffff0a;border:1px solid var(--band-line);border-radius:var(--radius);padding:18px}
+.live-steps .num{width:24px;height:24px;border-radius:7px;background:#5b3aa0;color:#efe6ff;display:grid;place-items:center;font-weight:700;font-size:12px;margin-bottom:10px}
+.live-steps h4{margin:0 0 4px;font-size:15px}
+.live-steps p{margin:0;font-size:13.5px;color:var(--band-muted)}
+.tm-band .howto-row{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.tm-band .howto-row a{color:#9fd0ac;font-weight:600;text-decoration:none}
+.tm-band .howto-row a:hover{text-decoration:underline}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feature{display:flex;flex-direction:column;gap:9px}
+.feature h3{margin:0;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:13.5px}
+.feature .try{background:color-mix(in srgb,var(--accent) 9%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.feature .files{display:flex;flex-wrap:wrap;gap:8px}
+.feature .files a{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);border-radius:8px;padding:5px 9px;text-decoration:none}
+.feature .how{margin-top:auto;padding-top:4px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+.scorecard{margin-top:24px;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--card)}
+.scorecard p{margin:0;color:var(--muted);font-size:14px;max-width:56ch}
+
+.id-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.id-panel .customer{font-size:14px;color:var(--muted)}
+.demo-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:12px}
+.tcard p{margin:0;font-size:14.5px}
+.tcard .who{display:flex;align-items:center;gap:10px}
+.avatar-chip{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex:0 0 auto}
+.tcard .who b{display:block;font-size:13.5px}
+.tcard .who span{display:block;font-size:12px;color:var(--muted)}
+
+.faq dt{font-weight:600;font-size:15px;margin:0 0 4px;font-family:ui-serif,Georgia,serif}
+.faq dd{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:70ch}
+
+dialog.leave-modal{border:0;border-radius:var(--radius);padding:0;width:min(440px,92vw);background:var(--card);color:var(--ink);box-shadow:0 24px 60px #0005}
+dialog.leave-modal::backdrop{background:#00000099}
+dialog.leave-modal .head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+dialog.leave-modal .head h3{margin:0;font-size:16px;font-family:ui-serif,Georgia,serif}
+dialog.leave-modal .body{padding:18px 20px;display:grid;gap:12px}
+dialog.leave-modal label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);font-weight:600}
+dialog.leave-modal input,dialog.leave-modal select,dialog.leave-modal textarea{font:inherit;font-size:15px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+dialog.leave-modal textarea{resize:vertical;font-weight:400}
+dialog.leave-modal .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dialog.leave-modal .foot{padding:16px 20px;border-top:1px solid var(--line)}
+dialog.leave-modal .foot .btn{width:100%;justify-content:center}
+.leave-result{font-size:13.5px;padding:10px 12px;border-radius:9px}
+.leave-result.ok{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--accent)}
+.leave-result.err{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0003}
+#flash[hidden]{display:none}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+
+@media(max-width:920px){
+  .two-col,.split,.tm-layout{grid-template-columns:1fr}
+  .tiles,.features,.live-steps,.voices,.pay-grid{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media(max-width:760px){
+  .tm-window{grid-template-columns:52px 1fr}
+  .tm-top{grid-column:1/3}
+  .tm-list{display:none}
+}
+@media(max-width:600px){
+  .tiles,.features,.live-steps,.voices,.pay-grid{grid-template-columns:1fr}
+  .tm-window{height:70vh;min-height:540px}
+  .tm-head{flex-wrap:wrap;padding-bottom:2px}
+  .tm-tabs{margin-left:auto;font-size:12px;gap:12px}
+  .plan-table th,.plan-table td{padding:9px 11px}
+}
+
+/* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
+@media(max-width:480px){
+  .wrap{padding:0 14px}
+  .bar{height:56px;gap:8px}
+  .logo{font-size:14px;gap:7px}
+  .logo img{width:24px;height:24px}
+  .id-chip{display:none}
+  .tm-cta{padding:9px;border-radius:50%;line-height:0}
+  .tm-cta-label{display:none}
+  .tm-cta-icon{width:18px;height:18px}
+  .hero{min-height:0;padding:36px 0 40px}
+  h1{font-size:26px;line-height:1.12;margin:10px 0 12px}
+  .eyebrow{font-size:10.5px}
+  .lead{font-size:15px}
+  .cta{flex-direction:column;align-items:stretch;margin-top:20px}
+  .cta .btn{justify-content:center;width:100%}
+  h2{font-size:22px}
+  section{padding:38px 0}
+  .try-row{flex-direction:column;align-items:stretch}
+  .try-row .btn{width:100%;justify-content:center}
+  .tm-window{grid-template-columns:1fr;grid-template-rows:42px 1fr}
+  .tm-top{grid-column:1/2}
+  .tm-rail{display:none}
+  .id-panel{flex-direction:column;align-items:stretch}
+  .id-panel > div:last-child{display:flex;gap:10px}
+  .id-panel .btn{flex:1}
+  dialog.leave-modal{width:94vw}
+  dialog.leave-modal .row2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-signed-in="no">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><img src="/img/mark.png" alt="" aria-hidden="true">Bramble &amp; Co.</div>
+    <nav>
+      <a href="#benefits">Benefits</a>
+      <a href="#leave">Time off</a>
+      <a href="#pay">Pay</a>
+      <a href="#chat-pane">In the chat pane</a>
+      <a href="#agents">For agents</a>
+    </nav>
+    <span class="id-chip" id="idChip"><span class="dot"></span><span id="idChipText">Browsing as a guest</span></span>
+    <a class="btn tm-cta" id="tmHeaderCta" href="#chat-pane" aria-label="Open the people desk in Microsoft Teams">
+      <svg class="tm-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 011 1v11a1 1 0 01-1 1h-7l-4 4v-4H4a1 1 0 01-1-1V5a1 1 0 011-1zm5.5 4a2 2 0 100 4 2 2 0 000-4zm5 1a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM6 15c.4-1.7 1.9-2.5 3.5-2.5s3.1.8 3.5 2.5H6zm7.6 0c-.2-.9-.7-1.6-1.3-2.1.5-.2 1-.3 1.6-.3 1.3 0 2.5.6 2.8 2.4h-3.1z"/></svg>
+      <span class="tm-cta-label">Open in Teams</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="/img/hero.webp" alt="Colleagues arriving on the office floor at the start of the day" width="1600" height="899">
+  <div class="wrap">
+    <div class="eyebrow">Advisory &amp; accounting · Bristol and Leeds</div>
+    <h1>Nobody should have to hunt for their holiday balance.</h1>
+    <p class="lead">Bram answers leave, benefits, pay dates and handbook questions for 300 people — live on this page today, and shown here exactly as it will look in the chat pane beside the work once the app is connected.</p>
+    <div class="cta">
+      <a class="btn" href="#leave">Book time off</a>
+      <button class="btn ghost" type="button" data-open-chat>Ask about a benefit</button>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="about">
+  <div class="wrap two-col">
+    <div class="about-copy">
+      <div class="eyebrow">The firm</div>
+      <h2>Three hundred people, one people team of four.</h2>
+      <p class="sub" style="margin-bottom:14px">Bramble &amp; Co. advises owner-managed businesses on tax, audit and the awkward years in between. Four people look after everyone else: contracts, payroll, benefits, the handbook and the hard conversations. The desk below takes the repetitive half of that off them.</p>
+      <ul>
+        <li><strong>Offices</strong><span>Bristol and Leeds, two anchor days a week</span></li>
+        <li><strong>People team</strong><span>Four, plus a payroll partner on call</span></li>
+        <li><strong>Leave year</strong><span>1 January to 31 December, 27 days plus 8 public holidays</span></li>
+        <li><strong>Pay day</strong><span>The 26th, or the working day before</span></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="/img/story.webp" alt="The open floor where the Bristol teams sit" width="1100" height="733" loading="lazy">
+      <figcaption>The Bristol floor, where most of the questions used to be asked over someone's shoulder</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="wrap">
+    <div class="eyebrow">What you get</div>
+    <h2>Every plan, and what it costs you a month</h2>
+    <p class="sub">Contributions come out of gross pay by salary sacrifice, so the real cost is lower than the figure shown. Bram quotes from exactly this table — not from a guess at what a firm this size "usually" offers.</p>
+    <div class="plan-scroll">
+      <table class="plan-table">
+        <thead><tr><th>Plan</th><th>What it covers</th><th>You pay / month</th><th>The firm pays</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Health Essentials</strong><small class="code">BR-HEA-E</small></td>
+            <td>Consultations, diagnostics, in-patient and day-patient treatment, a 24-hour nurse line.<small>Everyone enrolled from month one, no excess.</small></td>
+            <td class="num"><span class="free">£0</span></td><td class="num">£64</td>
+          </tr>
+          <tr>
+            <td><strong>Health Plus</strong><small class="code">BR-HEA-P</small></td>
+            <td>Essentials extended to a partner or a family, plus outpatient mental-health cover with no session cap.<small>£42 adds a partner, £78 covers a family.</small></td>
+            <td class="num">£42–£78</td><td class="num">£64</td>
+          </tr>
+          <tr>
+            <td><strong>Dental &amp; Optical</strong><small class="code">BR-DEN</small></td>
+            <td>Two check-ups and a hygienist visit, £450 of treatment, an eye test and £120 towards screen glasses.<small>Claims back within 10 working days.</small></td>
+            <td class="num">£9</td><td class="num">£11</td>
+          </tr>
+          <tr>
+            <td><strong>Pension</strong><small class="code">BR-PEN</small></td>
+            <td>Salary sacrifice. You put in 5% and the firm adds 6%; go to 8% and the firm matches it.<small>Percentages of salary, changeable any month before the 12th.</small></td>
+            <td class="num">5–8%</td><td class="num">6–8%</td>
+          </tr>
+          <tr>
+            <td><strong>Income protection &amp; life</strong><small class="code">BR-INC</small></td>
+            <td>75% of salary after 13 weeks unable to work, until you return or retire, plus life cover of 4x salary.<small>No medical questions under 45.</small></td>
+            <td class="num"><span class="free">£0</span></td><td class="num">£38</td>
+          </tr>
+          <tr>
+            <td><strong>Wellbeing allowance</strong><small class="code">BR-WEL</small></td>
+            <td>A gym, a class, a therapist, a bike service, running shoes — claimed as an expense.<small>Unused months do not roll over.</small></td>
+            <td class="num"><span class="free">£0</span></td><td class="num">£40</td>
+          </tr>
+          <tr>
+            <td><strong>Learning fund</strong><small class="code">BR-LRN</small></td>
+            <td>£1,200 a year for a course, a conference or a qualification, with 5 study days and the exam days on top.<small>Agreed with your manager before booking; resets in January.</small></td>
+            <td class="num"><span class="free">£0</span></td><td class="num">£100</td>
+          </tr>
+          <tr>
+            <td><strong>Cycle to work</strong><small class="code">BR-CYC</small></td>
+            <td>A bike and kit up to £2,500 by salary sacrifice over 12 or 24 months.<small>Open all year, not only in October.</small></td>
+            <td class="num">Varies</td><td class="num">Scheme fees</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="try-row">
+      <span>Try it: "What would Health Plus cost me for a partner, and what does the firm put in?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="What would Health Plus cost me for a partner, and what does the firm put in?">Copy &amp; open chat</button>
+    </div>
+    <div class="try-row">
+      <span>Try it: "When can I change my benefits, and what counts as a life event?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="When can I change my benefits, and what counts as a life event?">Copy &amp; open chat</button>
+    </div>
+    <div class="tiles">
+      <div class="tile"><img src="/img/clinic.webp" alt="The Leeds room where the October benefits clinics run" width="820" height="586" loading="lazy"><div class="body"><h4>October clinics</h4><p>Open enrolment runs 1–21 October; a partner from the provider sits in the Leeds room for three of those afternoons.</p></div></div>
+      <div class="tile"><img src="/img/home-desk.webp" alt="A home desk set up with the home-working allowance" width="820" height="586" loading="lazy"><div class="body"><h4>£350 for a home desk</h4><p>A chair, a desk or a monitor every three years, claimed as an expense with a receipt.</p></div></div>
+      <div class="tile"><img src="/img/learning.webp" alt="Books bought from a learning-fund claim" width="820" height="586" loading="lazy"><div class="body"><h4>The learning fund</h4><p>£1,200 a year, five study days, and the exam days do not come out of your holiday.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="leave">
+  <div class="wrap split">
+    <div class="panel">
+      <div class="eyebrow">Time off</div>
+      <h2>Asking for a week should take one message.</h2>
+      <p class="sub">Tell Bram the dates and it opens a short form in the chat — type of leave, first day, last day, a line for your approver — one tap to send, instead of a back-and-forth about what it needs to know.</p>
+      <div class="try-row">
+        <span>Try it: "I'd like the last week of November off"</span>
+        <button class="btn tiny" type="button" data-try-prompt="I'd like the last week of November off.">Copy &amp; open chat</button>
+      </div>
+      <div class="try-row">
+        <span>Try it: "How many days can I carry into next year?"</span>
+        <button class="btn tiny" type="button" data-try-prompt="How many days can I carry into next year, and when do they expire?">Copy &amp; open chat</button>
+      </div>
+      <p class="sub" style="margin:14px 0 0"><button class="btn small" type="button" id="openLeaveFormBtn">Open the leave form directly →</button></p>
+    </div>
+    <div class="panel policy">
+      <h3 style="margin-top:0">What the handbook says</h3>
+      <ul>
+        <li>27 days plus 8 public holidays, accruing 2.25 days a month.</li>
+        <li>Up to 5 days carry over, and lapse on 31 March.</li>
+        <li>An approver answers within 2 working days; over 10 days in a row needs 4 weeks' notice.</li>
+        <li>Sickness is self-certified for 7 days; a fit note from day 8 goes to the people team, not your team.</li>
+        <li>2 volunteering days and 5 study days a year, on top of annual leave.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap tiles">
+    <div class="tile"><img src="/img/floor.webp" alt="Desks on an anchor day, Tuesday morning" width="820" height="586" loading="lazy"><div class="body"><h4>Two anchor days</h4><p>Tuesday and Thursday in Bristol or Leeds; client work always comes first.</p></div></div>
+    <div class="tile"><img src="/img/breakout.webp" alt="The breakout floor, kept for reading and thinking" width="820" height="586" loading="lazy"><div class="body"><h4>20 days abroad</h4><p>Work from another country for up to 20 working days a year, with three weeks' notice for the tax check.</p></div></div>
+    <div class="tile"><img src="/img/quiet-room.webp" alt="A quiet room, bookable for a benefits call" width="820" height="586" loading="lazy"><div class="body"><h4>Parental leave</h4><p>26 weeks at full pay for the primary carer, 8 for the second, and a phased four-day first month back.</p></div></div>
+  </div>
+</section>
+
+<section id="pay">
+  <div class="wrap">
+    <div class="eyebrow">Payroll</div>
+    <h2>The dates that decide when money moves</h2>
+    <p class="sub">Salaries land on the 26th, or the last working day before it. Anything that changes a payslip — an expense claim, a benefit choice, a new bank account — has to be with payroll by the 12th to make that run. Bram works these out live rather than reading a fixed list.</p>
+    <div class="pay-grid" id="payGrid">
+      <div class="pay"><div class="m">Pay day</div><div class="d">The 26th</div><div class="c">Or the last working day before, when the 26th is a weekend or a public holiday.</div></div>
+      <div class="pay"><div class="m">Cut-off</div><div class="d">The 12th</div><div class="c">Expenses, hours and payroll changes must be in by then to land in that month.</div></div>
+      <div class="pay"><div class="m">Payslip</div><div class="d">Two days early</div><div class="c">In the people portal two working days before the money arrives.</div></div>
+    </div>
+    <div class="try-row">
+      <span>Try it: "When is the next pay day, and what's the cut-off for my expenses?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="When is the next pay day, and what's the cut-off for my expenses?">Copy &amp; open chat</button>
+    </div>
+    <div class="try-row">
+      <span>Try it: "What's the mileage rate if I drive to a client?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="What's the mileage rate if I drive to a client?">Copy &amp; open chat</button>
+    </div>
+  </div>
+</section>
+
+<section id="chat-pane" class="tm-band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:#9fd0ac">A faithful preview</div>
+    <h2>What it looks like beside the work</h2>
+    <p class="sub">Bramble &amp; Co.'s Microsoft Teams app is still being set up, so the pane below is not a recording and not a mock-up: it is the exact live assistant, dressed the way the conversation will look in a Teams chat the moment that app is connected.</p>
+    <div class="tm-layout">
+      <div class="tm-copy">
+        <div class="tm-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 011 1v11a1 1 0 01-1 1h-7l-4 4v-4H4a1 1 0 01-1-1V5a1 1 0 011-1zm5.5 4a2 2 0 100 4 2 2 0 000-4zm5 1a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM6 15c.4-1.7 1.9-2.5 3.5-2.5s3.1.8 3.5 2.5H6zm7.6 0c-.2-.9-.7-1.6-1.3-2.1.5-.2 1-.3 1.6-.3 1.3 0 2.5.6 2.8 2.4h-3.1z"/></svg><span id="tmBadgeText">Preview — real assistant, no app connected yet</span></div>
+        <p>Everything in this pane runs on Bram's real brain, the same handbook, the same benefit table and the same leave tools as the sections above — only the wrapper changes. Ask about carry-over, request a week off, or ask for a person, right here.</p>
+        <a class="btn tm" id="tmCtaMain" href="#chat-pane">This becomes a real Teams chat soon</a>
+        <p class="tm-note" id="tmCtaNote">The "Open in Teams" button at the top does the same thing until the app is connected — it brings you here. No app handle or deep link is invented in the meantime.</p>
+      </div>
+      <div class="tm-window" aria-label="A Microsoft Teams-style window showing a chat with the people desk">
+        <div class="tm-top"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="search">Search Bramble &amp; Co.</span></div>
+        <nav class="tm-rail" aria-hidden="true">
+          <span class="item"><svg class="glyph" viewBox="0 0 24 24"><path d="M12 4a5 5 0 015 5c0 4 2 5 2 5H5s2-1 2-5a5 5 0 015-5z"/><path d="M10 18a2 2 0 004 0"/></svg>Activity</span>
+          <span class="item on"><svg class="glyph" viewBox="0 0 24 24"><path d="M4 5h16v11h-7l-4 4v-4H4z"/></svg>Chat</span>
+          <span class="item"><svg class="glyph" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.2"/><path d="M4 19c.6-3 2.6-4.5 5-4.5s4.4 1.5 5 4.5"/><path d="M15 19c.3-2 1.3-3.2 3-3.2 1.5 0 2.6 1 3 3.2"/></svg>Teams</span>
+          <span class="item"><svg class="glyph" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Calendar</span>
+          <span class="item"><svg class="glyph" viewBox="0 0 24 24"><path d="M5 5h9l5 5v9H5z"/><path d="M14 5v5h5"/></svg>Files</span>
+        </nav>
+        <aside class="tm-list" aria-hidden="true">
+          <div class="hd">Chat <span>⌄</span></div>
+          <div class="grp">Pinned</div>
+          <span class="row on"><span class="av"><img src="/img/mark.png" alt=""></span><span class="txt"><b>People desk</b><span>Bram · answers in seconds</span></span></span>
+          <div class="grp">Recent</div>
+          <span class="row"><span class="av" style="background:#4f7a5c">DO</span><span class="txt"><b>Dilan Osei</b><span>Approved your October week</span></span></span>
+          <span class="row"><span class="av" style="background:#c4703f">AT</span><span class="txt"><b>Audit — Thornbury</b><span>Files moved to the new folder</span></span></span>
+          <span class="row"><span class="av" style="background:#4b2e83">FP</span><span class="txt"><b>Finance planning</b><span>Draft agenda for Thursday</span></span></span>
+          <span class="row"><span class="av" style="background:#6f6880">BR</span><span class="txt"><b>Bristol floor</b><span>Anchor-day lunch, anyone?</span></span></span>
+        </aside>
+        <div class="tm-main">
+          <div class="tm-head">
+            <span class="who"><img src="/img/mark.png" alt="" aria-hidden="true"><span><b>People desk</b><span id="tmSubtitle">Bram · usually replies in seconds</span></span></span>
+            <span class="tm-tabs" aria-hidden="true"><span class="on">Chat</span><span>Files</span><span>Benefits</span></span>
+          </div>
+          <div class="tm-screen" id="teamsScreen">
+            <div class="placeholder" id="teamsPlaceholder">Loading the live preview…</div>
+          </div>
+          <div class="tm-compose" aria-hidden="true">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            <span class="box">Type a message</span>
+            <svg class="ic" viewBox="0 0 24 24"><path d="M5 12l14-7-5 14-2.5-5.5L5 12z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:56px">What changes once the app is connected</h2>
+    <p class="sub">Same brain, same handbook, same tools as the pane above — reached the way a Microsoft Teams app actually works.</p>
+    <div class="live-steps">
+      <div class="card"><div class="num">1</div><h4>An admin installs it once</h4><p>The firm's IT administrator approves the app for the organisation and pins it to the chat rail. Nobody else installs anything, and the desk never messages first.</p></div>
+      <div class="card"><div class="num">2</div><h4>The conversation arrives as an event</h4><p>A message to the app is delivered to its endpoint, verified, and becomes a visitor turn with the same tool floor as this web chat — no platform tools ever reach an employee.</p></div>
+      <div class="card"><div class="num">3</div><h4>Who is asking travels with it</h4><p>The signed-in work identity is carried through, so a leave balance answers for that person and nobody else, exactly as the sign-in below does here.</p></div>
+    </div>
+    <div class="howto-row">
+      <a href="https://busymate.ai/integrations/teams">Current status of the Microsoft Teams channel →</a>
+      <a href="https://busymate.ai/docs/guides/connect-mcp-server">How the leave and benefits tools connect →</a>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="eyebrow">Under the hood</div>
+    <h2>Everything above, and why it works</h2>
+    <p class="sub">Nine things this page genuinely does, each with the exact doc for adding it to your own site.</p>
+    <div class="features">
+      <div class="card feature">
+        <h3>The chat, from one script tag</h3>
+        <p>The bubble in the corner — and the pane above — is the live product on a workspace of its own. One line of HTML put it there.</p>
+        <div class="try"><span>Try: "What does the firm actually do?"</span><button class="btn tiny" data-try-prompt="What does the firm actually do?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Grounded in the handbook</h3>
+        <p>The leave rules, the plan costs and the payroll dates on this page were published to the workspace as text. Answers quote them; anything outside gets an honest "I don't know".</p>
+        <div class="try"><span>Try: "What does the handbook say about working abroad?"</span><button class="btn tiny" data-try-prompt="What does the handbook say about working abroad?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It can work the page</h3>
+        <p>This site publishes its own actions — read the plan table, work out a pay date, search a policy, open the leave form. Ask for one and watch it happen.</p>
+        <div class="try"><span>Try: "Search the handbook for mileage."</span><button class="btn tiny" data-try-prompt="Search the handbook for mileage.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It reaches the systems behind the page</h3>
+        <p>Bramble &amp; Co. runs a small MCP server of its own, connected to the workspace. The benefit table, the payroll calendar and the leave book come from there over HTTPS — the same answer whether or not this tab is open.</p>
+        <div class="files"><a href="/agents.json">/agents.json</a><a href="/llms.txt">/llms.txt</a></div>
+        <a class="how" href="https://busymate.ai/docs/guides/connect-mcp-server">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It knows who's asking</h3>
+        <p>Sign in as the demo employee below and Bram can pull up that person's own balance, carry-over and booked days — for them and nobody else.</p>
+        <div class="try"><span>Try (signed in): "How much leave do I have left?"</span><button class="btn tiny" data-try-prompt="How much leave do I have left this year?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It asks with a form</h3>
+        <p>When the desk needs details — dates, a leave type, a note for the approver — an action card appears inside the message with fields and one button, rather than a list of things to type.</p>
+        <div class="try"><span>Try: "Book me Friday off."</span><button class="btn tiny" data-try-prompt="Book me Friday off.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/form-cards">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>A person can take over</h3>
+        <p>Anything personal or contested belongs with a human. Ask for one and the thread lands in the people team's inbox mid-conversation — the same hand-off works in a Teams chat once it is connected.</p>
+        <div class="try"><span>Try: "Can I speak to someone in confidence about my pay?"</span><button class="btn tiny" data-try-prompt="Can I speak to someone in confidence about my pay?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Useful before anyone signs in</h3>
+        <p>Signed out, the handbook, the plan costs and the pay dates all still answer — to a person and to any agent. Only somebody's own record waits for proof of who is asking.</p>
+        <div class="try"><span>Try: "What's the pension match?"</span><button class="btn tiny" data-try-prompt="What's the pension match?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Readable without a browser</h3>
+        <p>An agent that never renders this page can still work with it: a plain-text brief, a tool manifest, and the live schema behind every leave request.</p>
+        <div class="files"><a href="/llms.txt">/llms.txt</a><a href="/llms-full.txt">/llms-full.txt</a><a href="/robots.txt">/robots.txt</a><a href="/sitemap.xml">/sitemap.xml</a></div>
+        <a class="how" href="https://busymate.ai/articles/is-your-website-agent-ready-checklist">The six layers, checked →</a>
+      </div>
+    </div>
+    <div class="scorecard">
+      <p>Two checkers grade any address, this page included: one scores how ready a site is for AI agents, the other lists the tools a page publishes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/teams.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Fteams.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <div class="eyebrow">Try it as an employee</div>
+    <h2>Sign in and Bram already knows your balance</h2>
+    <p class="sub">A throwaway demo employee is provided — no password, no real person, no real record.</p>
+    <div class="panel id-panel">
+      <div>
+        <div class="customer" id="idPanelText">Signed out — Bram only answers what anyone at the firm may read.</div>
+        <p class="demo-note">Demo employee: <strong>Priya Nair</strong>, id <code>E-20417</code>, Advisory in Bristol — 27 days plus 4 carried over, 12.5 taken, a week booked in October. A throwaway public demo identity, not a real person.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="idSignInBtn" type="button">Sign in as the demo employee</button>
+        <button class="btn ghost" id="idSignOutBtn" type="button" hidden>Sign out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="wrap">
+    <div class="eyebrow">From the floor</div>
+    <h2>Shorter than finding the PDF</h2>
+    <div class="voices">
+      <div class="card tcard">
+        <p>"I asked what my carry-over was on the way to a client and had the answer before the train left. It used to be an email and a two-day wait."</p>
+        <div class="who"><span class="avatar-chip" style="background:#4b2e83">TM</span><div><b>Tom M.</b><span>Audit, Leeds</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Adding my partner to the health plan took one message in October. It told me the cost, the deadline and what happens if I miss it."</p>
+        <div class="who"><span class="avatar-chip" style="background:#4f7a5c">SA</span><div><b>Sana A.</b><span>Tax, Bristol</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"When I asked something I'd rather not put in writing, it stopped and offered me a person. That is exactly the right answer."</p>
+        <div class="who"><span class="avatar-chip" style="background:#c4703f">JO</span><div><b>Joel O.</b><span>Advisory, Bristol</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Asked most weeks</div>
+    <h2>The five that fill the people team's inbox</h2>
+    <dl class="faq">
+      <dt>How many days carry into next year?</dt>
+      <dd>Up to 5, and they must be taken by 31 March or they lapse. Ask Bram and it will tell you what is left on yours once you are signed in.</dd>
+      <dt>When can I change my benefits?</dt>
+      <dd>Open enrolment is 1–21 October, effective 1 November. New joiners have 30 days, and a life event — a birth, a marriage, a partner losing cover — allows a change within 60 days.</dd>
+      <dt>I lost a receipt. Can I still claim?</dt>
+      <dd>Under £10, yes. Over that, tell the people team what happened rather than guessing — it is usually fine, and the £30 overnight meal allowance never needs receipts.</dd>
+      <dt>Can I work from another country for a month?</dt>
+      <dd>Up to 20 working days a year, in a country on the approved list, with three weeks' notice so tax and insurance can be checked. Longer than that needs a conversation.</dd>
+      <dt>Something personal has come up. Who do I talk to?</dt>
+      <dd>A person, every time. Ask Bram for a people partner and the conversation moves to a named one the same day, in confidence.</dd>
+    </dl>
+  </div>
+</section>
+</main>
+
+<!-- The leave action card on the page itself. Bram (in chat, through the
+     open_leave_request_form WebMCP tool below) and the "Open the leave form
+     directly" button both open this SAME dialog — one form, one button,
+     instead of the assistant asking for type/dates/note one at a time.
+     Submits straight to this site's own /mcp request_leave tool. -->
+<dialog id="leaveModal" class="leave-modal">
+  <form id="leaveForm">
+    <div class="head"><h3>Request leave</h3><button class="btn ghost small" type="button" id="leaveClose">Close</button></div>
+    <div class="body">
+      <label>Type of leave
+        <select name="leave_type" required>
+          <option value="annual">Annual leave</option>
+          <option value="sick">Sickness</option>
+          <option value="parental">Parental leave</option>
+          <option value="compassionate">Compassionate leave</option>
+          <option value="study">Study leave</option>
+          <option value="volunteering">Volunteering day</option>
+          <option value="unpaid">Unpaid leave</option>
+        </select>
+      </label>
+      <div class="row2">
+        <label>First day away<input required name="start_date" type="date"></label>
+        <label>Last day away<input required name="end_date" type="date"></label>
+      </div>
+      <label>Anything your approver should know <span class="muted" style="font-weight:400">(optional)</span><textarea name="note" rows="2" placeholder="Cover agreed with the Bristol team."></textarea></label>
+      <div id="leaveResult" class="leave-result" hidden></div>
+    </div>
+    <div class="foot"><button class="btn" type="submit" id="leaveSubmit">Send request</button></div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    Bramble &amp; Co. is a demonstration firm. No leave is really booked, no payroll is really changed, and the employee behind the sign-in button is not a real person.<br>
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:people@bramble-co.example">people@bramble-co.example</a>, call <a href="tel:+442079460102">+44 20 7946 0102</a>, or ask the assistant for a human and a people partner joins the same conversation.</p>
+    Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a>
+  </div>
+</footer>
+
+<div id="flash" role="status" hidden></div>
+
+<script>
+// ── Identity: define getIdentity BEFORE the embed script loads (per
+// https://busymate.ai/docs/guides/identified-visitors). A signed-in employee
+// mints a fresh 120s launch proof from THIS site's own /api/identity/mint;
+// signed-out returns null. Nothing is persisted here.
+function brambleNonce() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode.apply(null, bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+async function brambleSession() {
+  try { return (await fetch("/api/identity/session")).json(); } catch (e) { return { signedIn: false }; }
+}
+window.BusymateAI = window.BusymateAI || {};
+window.BusymateAI.getIdentity = async function () {
+  var s = await brambleSession();
+  if (!s.signedIn) return null;
+  var res = await fetch("/api/identity/mint", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nonce: brambleNonce() }),
+  });
+  if (!res.ok) return null;
+  var out = await res.json();
+  return { token: out.token, nonce: out.nonce };
+};
+
+async function brambleRenderIdentity() {
+  var s = await brambleSession();
+  var chip = document.getElementById("idChip"), chipText = document.getElementById("idChipText");
+  var panelText = document.getElementById("idPanelText");
+  var inBtn = document.getElementById("idSignInBtn"), outBtn = document.getElementById("idSignOutBtn");
+  document.body.setAttribute("data-signed-in", s.signedIn ? "yes" : "no");
+  if (s.signedIn) {
+    chip.classList.add("on"); chipText.textContent = "Signed in as " + s.customer.name;
+    panelText.textContent = "Signed in as " + s.customer.name + " — Bram now answers about this person's own leave and bookings.";
+    inBtn.hidden = true; outBtn.hidden = false;
+  } else {
+    chip.classList.remove("on"); chipText.textContent = "Browsing as a guest";
+    panelText.textContent = "Signed out — Bram only answers what anyone at the firm may read.";
+    inBtn.hidden = false; outBtn.hidden = true;
+  }
+}
+function flash(msg) {
+  var el = document.getElementById("flash");
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 2600);
+}
+document.addEventListener("DOMContentLoaded", function () {
+  brambleRenderIdentity();
+  document.getElementById("idSignInBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/login", { method: "POST" });
+    await brambleRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed in as Priya Nair");
+  });
+  document.getElementById("idSignOutBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/logout", { method: "POST" });
+    await brambleRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed out");
+  });
+  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
+    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
+  });
+  document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var text = b.getAttribute("data-try-prompt");
+      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
+      catch (e) { flash("Ask Bram: " + text); }
+      if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+    });
+  });
+});
+</script>
+
+<!-- Busymate AI web chat widget (live). data-assistant = the demo tenant slug.
+     Also repositioned, unstyled-inside, over the chat pane's message area. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demo-teams"
+        data-label="Ask the people desk"
+        data-aria-label="Open the Bramble &amp; Co. people desk chat"
+        data-title="Bramble &amp; Co. people desk"
+        async></script>
+
+<script>
+// ── The chat pane: the SAME live widget, repositioned on top of the window's
+// message area and kept open. This is the real product — cross-origin iframe
+// content is untouched, only the outer wrapper's position is restyled from
+// our own page. Deliberately NEVER reparented (moving a cross-origin iframe
+// to a new DOM parent makes the browser reload it, which raced the
+// postMessage identity handshake and hung the panel on a blank screen —
+// found live 2026-09-11): the widget layer stays a child of <body>, exactly
+// where the embed script put it, and only its computed position and size
+// follow #teamsScreen's own box on scroll and resize.
+(function () {
+  var tries = 0;
+  var positioned = false;
+  function follow() {
+    var slot = document.getElementById("teamsScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (!slot || !layer) return;
+    var r = slot.getBoundingClientRect();
+    layer.style.position = "absolute";
+    layer.style.right = "auto";
+    layer.style.bottom = "auto";
+    layer.style.left = window.scrollX + r.left + "px";
+    layer.style.top = window.scrollY + r.top + "px";
+    layer.style.width = r.width + "px";
+    layer.style.height = r.height + "px";
+  }
+  function mount() {
+    tries++;
+    var slot = document.getElementById("teamsScreen");
+    var layer = document.querySelector("[data-support-chat]");
+    if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      var ph = document.getElementById("teamsPlaceholder");
+      if (ph) ph.remove();
+      follow();
+      if (!positioned) {
+        positioned = true;
+        window.addEventListener("resize", follow);
+        window.addEventListener("scroll", follow, { passive: true });
+      }
+      window.BusymateAI.open();
+      return;
+    }
+    if (tries < 100) setTimeout(mount, 100);
+  }
+  mount();
+})();
+
+// ── The go-live hook: a single field in /teams-config.json. deepLink null
+// (today) = the honest preview state; once the channel lane connects an app
+// for this tenant and sets a real deep link there, the calls to action switch
+// to it automatically, with no other code change.
+(function () {
+  fetch("/teams-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+    var link = cfg && cfg.deepLink;
+    var header = document.getElementById("tmHeaderCta");
+    var main = document.getElementById("tmCtaMain");
+    var note = document.getElementById("tmCtaNote");
+    var sub = document.getElementById("tmSubtitle");
+    var badge = document.getElementById("tmBadgeText");
+    var bot = (cfg && cfg.botName) || "Bram";
+    if (link) {
+      [header, main].forEach(function (el) {
+        el.href = link; el.target = "_blank"; el.rel = "noopener noreferrer";
+      });
+      main.textContent = "Open in Teams";
+      note.textContent = "Opens the real chat with the people desk"
+        + (cfg.tenantName ? " in " + cfg.tenantName : "") + ", where " + bot + " answers the same way it does here.";
+      sub.textContent = bot + " · in Teams now";
+      badge.textContent = "Connected in Teams";
+    }
+  }).catch(function () {});
+})();
+</script>
+
+<script>
+// ── The leave action card on the page: ONE form + ONE submit button, opened
+// by the assistant (through the open_leave_request_form WebMCP tool below) or
+// by the "Open the leave form directly" button — never a prose back-and-forth
+// for type/dates/note. Submits straight to this site's own /mcp.
+(function () {
+  var modal = document.getElementById("leaveModal");
+  var form = document.getElementById("leaveForm");
+  var result = document.getElementById("leaveResult");
+  var submitBtn = document.getElementById("leaveSubmit");
+
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+
+  function showResult(kind, text) {
+    result.hidden = false;
+    result.className = "leave-result " + kind;
+    result.textContent = text;
+  }
+
+  function friendlyError(out) {
+    if (out.error === "not_enough_days") return out.detail || "There are not enough days left this leave year.";
+    if (out.error === "bad_dates") return "Those dates don't read as a first day and a last day, in that order.";
+    if (out.error === "no_working_days") return "That range is all weekend and public holidays, so there's nothing to book.";
+    if (out.error === "unknown_leave_type") return "Pick one of the leave types in the list.";
+    if (out.error === "missing_details") return out.detail || "A type of leave and both dates are needed.";
+    return "Something went wrong — please try again.";
+  }
+
+  window.__openLeaveForm = function (prefill) {
+    prefill = prefill || {};
+    result.hidden = true;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send request";
+    form.reset();
+    form.querySelectorAll("input,select,textarea").forEach(function (el) { el.disabled = false; });
+    if (prefill.leave_type) form.leave_type.value = prefill.leave_type;
+    if (prefill.start_date) form.start_date.value = prefill.start_date;
+    if (prefill.end_date) form.end_date.value = prefill.end_date;
+    if (prefill.note) form.note.value = prefill.note;
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    return { opened: true, note: "A leave form is now open on the page for the visitor to fill in and submit." };
+  };
+
+  document.getElementById("leaveClose").addEventListener("click", function () { modal.close(); });
+  document.getElementById("openLeaveFormBtn")?.addEventListener("click", function () { window.__openLeaveForm({}); });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    submitBtn.disabled = true;
+    var payload = {
+      leave_type: form.leave_type.value,
+      start_date: form.start_date.value,
+      end_date: form.end_date.value,
+    };
+    if (form.note.value) payload.note = form.note.value;
+    try {
+      var out = await callMcp("request_leave", payload);
+      if (out && out.reference) {
+        showResult("ok", "Sent — " + out.reference + ", " + out.working_days + " working day"
+          + (out.working_days === 1 ? "" : "s") + " with " + out.approver + "."
+          + (out.balance_after === null || out.balance_after === undefined ? "" : " That would leave " + out.balance_after + " days."));
+        form.querySelectorAll("input,select,textarea").forEach(function (el) { el.disabled = true; });
+        submitBtn.textContent = "Sent";
+      } else {
+        showResult("err", friendlyError(out || {}));
+        submitBtn.disabled = false;
+      }
+    } catch (e) {
+      showResult("err", "Could not reach the people desk — please try again.");
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+<script type="module">
+// ── WebMCP page tools: one registerPageTools() call. The reads call this
+// site's own /mcp so the tool logic has exactly one source of truth (the
+// backend in sites/teams/backend/); the page-only tool opens the form above.
+// https://busymate.ai/docs/guides/page-tools
+// The specs are imported from the SAME data twin scripts/gen-webmcp-catalog.mjs
+// reads to publish /webmcp-catalog.json, so the two can never drift.
+import { TOOL_SPECS } from "/assets/page-tools.data.js";
+async function callMcp(name, args) {
+  const res = await fetch("/mcp", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name, arguments: args || {} } }),
+  });
+  const body = await res.json();
+  const text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+  return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+}
+const PAGE_HANDLERS = {
+  open_leave_request_form: (args) => window.__openLeaveForm(args || {}),
+};
+const tools = TOOL_SPECS.map((spec) => ({
+  name: spec.name,
+  description: spec.description,
+  inputSchema: spec.inputSchema,
+  annotations: spec.annotations,
+  execute: PAGE_HANDLERS[spec.name] || ((args) => callMcp(spec.name, args)),
+}));
+function whenReady(cb, triesLeft) {
+  if (window.BusymateAI && window.BusymateAI.registerPageTools) return cb();
+  if (!triesLeft) return;
+  setTimeout(() => whenReady(cb, triesLeft - 1), 100);
+}
+whenReady(() => {
+  window.BusymateAI.registerPageTools(tools).catch((e) => {
+    console.error("registerPageTools failed:", e && e.message);
+  });
+}, 100);
+</script>
+</body>
+</html>

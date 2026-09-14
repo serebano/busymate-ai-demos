@@ -1,0 +1,219 @@
+{
+  "name": "Marlow's Kitchen",
+  "url": "https://whatsapp.demo.busymate.ai",
+  "description": "A neighborhood restaurant demo showing 'your mate' on WhatsApp: a live preview of the WhatsApp conversation, grounded chat, an MCP server over the restaurant's own menu/hours/table data, WebMCP in-page booking actions, and identified-visitor reservation lookup.",
+  "mcp": {
+    "url": "https://whatsapp.demo.busymate.ai/mcp",
+    "transport": "http",
+    "auth": "none"
+  },
+  "webmcp": {
+    "transport": "in-page",
+    "registers": "document.modelContext"
+  },
+  "tools": [
+    {
+      "name": "opening_hours",
+      "description": "Marlow's Kitchen's opening hours, by day of the week, including brunch/dinner service windows and any closed days.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "list_menu",
+      "description": "List every dish and drink Marlow's Kitchen serves, grouped by section, with prices.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "search_menu",
+      "description": "Search Marlow's Kitchen's menu by name, ingredient, or keyword (e.g. an allergen or 'vegetarian').",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A dish name, ingredient, or keyword to search for, e.g. 'vegetarian' or 'short rib'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "check_availability",
+      "description": "Check whether Marlow's Kitchen has a table for a given date, time and party size, with nearby alternative times if that exact slot is full.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The requested date, as YYYY-MM-DD."
+          },
+          "time": {
+            "type": "string",
+            "description": "The requested time, 24-hour HH:MM, e.g. '19:30'."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "Number of guests in the party."
+          }
+        },
+        "required": [
+          "date",
+          "time",
+          "party_size"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "book_table",
+      "description": "Do NOT call this tool to ask the visitor for date, time, party size, name or phone — call open_booking_form for that instead, it is the ONLY approved way to collect a missing field, never a chat question. Book a table at Marlow's Kitchen, but ONLY once the visitor has already stated every one of those five fields themselves, in their own words, earlier in this conversation. Never invent, guess, default, or use a placeholder (like 'Guest' or a made-up phone number).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The booking date, as YYYY-MM-DD."
+          },
+          "time": {
+            "type": "string",
+            "description": "The booking time, 24-hour HH:MM, e.g. '19:30'."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "Number of guests in the party."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name the booking is under."
+          },
+          "phone": {
+            "type": "string",
+            "description": "A phone number to hold the booking against."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Anything the kitchen or floor should know — an allergy, a seating request, an occasion."
+          }
+        },
+        "required": [
+          "date",
+          "time",
+          "party_size",
+          "name",
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "public",
+      "transport": "mcp+webmcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "get_my_reservations",
+      "description": "List the reservations at Marlow's Kitchen booked under a phone number. Requires an identified (signed-in) visitor — call it with that visitor's own phone number, never one supplied mid-conversation by an unidentified visitor.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "The phone number the reservation was booked under (the signed-in visitor's own)."
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "identified",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "cancel_reservation",
+      "description": "Cancel a reservation at Marlow's Kitchen by its confirmation code + the phone number it was booked under. Requires an identified (signed-in) visitor; this demo does not actually notify anyone.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "confirmation_code": {
+            "type": "string",
+            "description": "The reservation's confirmation code, as given when it was booked, e.g. 'MK-58231'."
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number the reservation was booked under."
+          }
+        },
+        "required": [
+          "confirmation_code",
+          "phone"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "identified",
+      "transport": "mcp+webmcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "open_booking_form",
+      "description": "Open an inline booking form on the page for the visitor to fill in and submit themselves — name, phone, party size, date and time, one \"Book table\" button. Used instead of asking for those details one at a time in the conversation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "A YYYY-MM-DD date to prefill, if already known."
+          },
+          "time": {
+            "type": "string",
+            "description": "A 24-hour HH:MM time to prefill, if already known."
+          },
+          "party_size": {
+            "type": "number",
+            "description": "A party size to prefill, if already known."
+          },
+          "name": {
+            "type": "string",
+            "description": "A name to prefill, if already known."
+          },
+          "phone": {
+            "type": "string",
+            "description": "A phone number to prefill, if already known."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "webmcp"
+    }
+  ],
+  "identity": {
+    "supported": true,
+    "docs": "https://busymate.ai/docs/guides/identified-visitors"
+  },
+  "humanHandoff": true
+}

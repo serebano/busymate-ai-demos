@@ -1,0 +1,84 @@
+<!-- Busymate AI brand mark (italic soft-square B|m) -- THE bmai mark.
+     Geometry + stroke timeline copied from the approved icon kit (BmLoader).
+     Here it DRAWS IN ONCE when scrolled into view, then stays complete.
+     Theme-aware via currentColor. Static-complete under prefers-reduced-motion.
+     Reusable: drop this block into any demo page. -->
+<div class="bm-mark-wrap">
+  <svg class="bm-mark" xmlns="http://www.w3.org/2000/svg" viewBox="-397.5 -124 760 760"
+       fill="none" role="img" aria-label="Busymate AI" focusable="false">
+    <g transform="translate(54.41447978752566 0) skewX(-12)">
+      <g stroke="currentColor" stroke-width="70" stroke-linecap="butt" stroke-linejoin="round">
+        <g class="bm-track">
+          <g transform="translate(-46.5 0) scale(-1 1)">
+            <path stroke-linecap="square" d="M0 0 V512"/>
+            <path d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/>
+            <path transform="translate(0 256)" d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/>
+          </g>
+          <g transform="translate(11.5 0)">
+            <path d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/>
+            <path transform="translate(0 256)" d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/>
+          </g>
+        </g>
+        <g class="bm-ink">
+          <g transform="translate(-46.5 0) scale(-1 1)">
+            <path class="bm-b-spine" pathLength="100" stroke-linecap="square" d="M0 0 V512"/>
+            <path class="bm-b-upper" pathLength="100" d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/>
+            <path class="bm-b-lower" pathLength="100" transform="translate(0 256)" d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/>
+          </g>
+          <g transform="translate(11.5 0)">
+            <path class="bm-m-upper" pathLength="100" d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/>
+            <path class="bm-m-lower" pathLength="100" transform="translate(0 256)" d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+</div>
+<style>
+  .bm-mark-wrap { display:flex; justify-content:center; }
+  .bm-mark { width: clamp(104px, 17vw, 188px); height: auto; overflow: visible; color: currentColor; }
+  .bm-mark .bm-track { opacity: .12; }
+  /* Pre-draw state: ink hidden, strokes retracted. */
+  .bm-mark .bm-ink path { stroke-dasharray: 100 200; stroke-dashoffset: 100; opacity: 0; }
+  /* Draw in ONCE when the class lands; fill-mode forwards keeps it complete. */
+  .bm-mark.is-drawn .bm-ink path {
+    animation-name: bm-draw-in;
+    animation-timing-function: cubic-bezier(.45, 0, .25, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  /* Stagger matches the kit's timeline: B spine -> B bowls -> m arches. */
+  .bm-mark.is-drawn .bm-b-spine { animation-duration: 504ms;  animation-delay: 0ms; }
+  .bm-mark.is-drawn .bm-b-upper { animation-duration: 672ms;  animation-delay: 168ms; }
+  .bm-mark.is-drawn .bm-b-lower { animation-duration: 672ms;  animation-delay: 504ms; }
+  .bm-mark.is-drawn .bm-m-upper { animation-duration: 616ms;  animation-delay: 980ms; }
+  .bm-mark.is-drawn .bm-m-lower { animation-duration: 616ms;  animation-delay: 1288ms; }
+  @keyframes bm-draw-in {
+    0%   { stroke-dashoffset: 100; opacity: 0; }
+    1%   { opacity: 1; }
+    100% { stroke-dashoffset: 0;   opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bm-mark .bm-ink path,
+    .bm-mark.is-drawn .bm-ink path {
+      animation: none !important; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1;
+    }
+    .bm-mark .bm-track { opacity: 0; }
+  }
+</style>
+<script>
+(function () {
+  var mark = document.currentScript && document.currentScript.previousElementSibling;
+  var svg = document.querySelector('.bm-mark');
+  if (!svg) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { svg.classList.add('is-drawn'); return; }   // static-complete, no animation
+  if (!('IntersectionObserver' in window)) { svg.classList.add('is-drawn'); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('is-drawn'); io.unobserve(e.target); } // ONCE
+    });
+  }, { threshold: 0.35 });
+  io.observe(svg);
+})();
+</script>

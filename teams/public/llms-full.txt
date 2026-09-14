@@ -1,0 +1,61 @@
+# Bramble & Co.
+
+Source: https://teams.demo.busymate.ai/
+
+> An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.
+
+This is the whole site in one request — the same sources the assistant on the page answers from.
+
+## About this demo
+
+This assistant runs on Bramble & Co., a SAMPLE 300-person professional-services firm built to demonstrate 'your mate' — a Busymate AI assistant — as an HR and benefits desk that employees reach from a Microsoft Teams chat pane. No real employee, salary, benefit enrolment or leave booking exists here. The handbook, the benefit plans and their employee contributions, the payroll calendar AND the demo employee's leave balances below are fictional but LIVE demo data, served through this site's own connected MCP server, not just text in this knowledge base. Bramble & Co. has no Teams app connected yet: on this page the Teams experience is shown as a clearly-labelled PREVIEW — the same live assistant, wrapped in a Teams-style chat pane, on https://teams.demo.busymate.ai. Never claim a live Teams channel, a real deep link or a real app handle exists; the preview is honest about that. Ask about leave, the benefit plans, pay dates, parental leave, remote work or expenses, or (once signed in as the demo employee) a leave balance, to see every capability working live — never say a lookup 'isn't possible here' before actually trying the tool; the connected tools genuinely work on this demo.
+
+---
+
+## Leave: types, entitlements and carry-over
+
+Annual leave: 27 days a year plus 8 public holidays, pro-rata for part-time contracts, accruing 2.25 days a month over a leave year that runs 1 January to 31 December. Up to 5 unused days carry into the next year and must be taken by 31 March, after which they lapse. An approver has 2 working days to answer a request; anything longer than 10 consecutive working days needs 4 weeks' notice. Leave cancelled by the firm in a declared client emergency is reinstated plus a day.
+Sickness: tell your manager and the people desk on the first day. The first 7 calendar days are self-certified; from day 8 a fit note goes to the people desk, not to the team. Sick pay is full pay for 13 weeks and half pay for a further 13 in any rolling 12 months. Medical appointments that cannot be moved outside working hours are not deducted from annual leave.
+Other leave: compassionate leave is 5 paid days for the loss of someone close, extended by agreement. Study leave is 5 paid days a year for an accredited qualification, plus the exam days. Everyone has 2 paid volunteering days a year. Unpaid leave is at a manager's discretion, and after 4 years an unpaid sabbatical of up to 3 months can be applied for with the role held open.
+
+---
+
+## Benefit plans and what each costs an employee
+
+Employee contributions are per month and come out of gross pay by salary sacrifice, so the cost after tax is lower than the figure shown. All amounts are pounds sterling.
+Health Essentials (BR-HEA-E): private medical cover for you — consultations, diagnostics, in-patient and day-patient treatment, a 24-hour nurse line. Employee pays £0; the firm pays £64 a month. Everyone is enrolled automatically from their first month, no excess.
+Health Plus (BR-HEA-P): everything in Health Essentials extended to a partner, or a partner and children, plus outpatient mental-health cover with no session cap. Employee pays £42 a month for a partner or £78 a month for a family, on top of the firm's £64.
+Dental & Optical (BR-DEN): two check-ups and a hygienist visit a year, £450 of treatment, an eye test and £120 towards screen glasses. Employee pays £9 a month; the firm pays £11. Claims are reimbursed within 10 working days.
+Pension (BR-PEN): salary sacrifice, employee 5% and firm 6% by default; raise yours to 8% and the firm matches to 8%. These are percentages of salary, not flat fees, and can be changed in any month before the 12th.
+Income protection and life cover (BR-INC): 75% of salary if you cannot work for more than 13 weeks, until you return or retire, plus life cover of 4x salary. Employee pays £0; the firm pays £38 a month. No medical questions under 45.
+Wellbeing allowance (BR-WEL): £40 a month towards a gym, a class, a therapist, a bike service or running shoes, claimed as an expense. Unused months do not roll over.
+Learning fund (BR-LRN): £1,200 a year for a course, a conference or a qualification, agreed with your manager before booking; it resets each January.
+Cycle to work (BR-CYC): a bike and kit up to £2,500 by salary sacrifice over 12 or 24 months; open all year, not only in the enrolment window.
+Enrolment windows: open enrolment runs 1 to 21 October each year and takes effect on 1 November. A new joiner has 30 days from their start date, with cover beginning on the first of the following month. Outside those windows a qualifying life event — a marriage or civil partnership, a birth or adoption, a partner losing cover, a move abroad — allows a change within 60 days. Anything not changed rolls over at the new year's rates.
+
+---
+
+## Payroll calendar and expenses
+
+Salaries are paid monthly on the 26th, or the last working day before it when the 26th falls on a weekend or a public holiday. Payslips appear in the people portal two working days before pay day. Anything that changes a payslip — hours, expenses, a benefit choice, a new bank account — must be with payroll by the 12th to land in that month's run; the same rule shifts back to the previous working day when the 12th is a weekend or a public holiday. Pay is reviewed once a year in March, effective from the April run; a promotion can be made at any time on a partner's recommendation, and the profit share is paid with the July salary when the year allows it.
+Expenses: claim within 60 days of the spend, with a receipt for anything over £10; claims that reach payroll by the 12th are paid with that month's salary. Rail travel is standard class, with first class needing a partner's approval in advance and normally only for a journey over 3 hours with client work on the train. Mileage in your own car is 45p a mile for the first 10,000 miles in a year and 25p after that. An overnight stay carries a £30 daily meal allowance without receipts, or actual cost with them — whichever you prefer, not both. Software or a subscription under £100 needs your manager only; over that, the operations team buys it centrally.
+Changing where your salary is paid: ask for a payroll callback. Payroll rings a number already on file and takes the account details on that call — an account number is never typed into a chat, and asking here files a request only.
+
+---
+
+## Parental leave and where people work
+
+Parental leave: the primary carer takes 26 weeks at full pay followed by up to 13 weeks at the statutory rate; the second carer takes 8 weeks at full pay, which can be split into two blocks in the first year. Adoption and surrogacy are treated identically from the date of placement. Tell the people desk at least 15 weeks before the due or placement date so pay and cover can be arranged, and keeping-in-touch calls run at a rhythm the person chooses. Returners come back to the same role and to a phased four-day first month at full pay. Shared parental leave is available on request and is worked out case by case with payroll.
+Where people work: Bramble & Co. is hybrid with two anchor days, Tuesday and Thursday, in the Bristol or Leeds office; the rest is arranged within each team, and client work overrides the anchor days whenever a client needs someone on site. Working from abroad is allowed for up to 20 working days a year, in a country on the approved list, with 3 weeks' notice so tax and insurance can be checked. A home-setup allowance of £350 is available every 3 years for a chair, a desk or a monitor, claimed as an expense with a receipt.
+
+---
+
+## People-desk tools and human hand-off (this demo's connected tools)
+
+This demo DOES support real, working lookups and requests — try them. Ask 'what do the health plans cost me' (calls list_benefit_plans), 'when is the next pay day and when is the cut-off' (calls get_payroll_calendar), or 'what does the handbook say about working abroad' (calls search_policies, which returns the handbook section to quote rather than paraphrase). To book time off, call request_leave with whatever is already known: calling it is how an inline leave form opens in the chat — type of leave, first day, last day, a note for the approver, one button — instead of asking for those fields one at a time. Pass along only values the person has actually said, and leave the rest blank; never invent, guess or default a date or a leave type. Submitting the form returns a real reference such as BR-LV-3082, the working days it uses and the balance that would be left. The page also publishes open_leave_request_form, which opens the same form on the page itself. For the signed-in demo employee, sign in as Priya Nair, employee id E-20417 (Advisory, Bristol), then ask 'how much leave do I have left' (calls get_my_leave_balance for that employee id and nobody else) — Priya has 27 days plus 4 carried over that expire on 31 March 2027, 12.5 days taken, an approved week off from 19 to 23 October 2026, and a volunteering day taken in June. Do not refuse or claim a lookup is impossible: the tools are connected and return real results. To move where a salary is paid, update_bank_details_request files a request for payroll to verify on a callback — say plainly that nothing has been changed and that no account number is taken in a chat. Anything personal, contested or sensitive — a grievance, a pay dispute, harassment, a health matter — goes to a person: offer to hand off and the conversation continues in the same thread with a people partner, no restart and no ticket number.
+
+---
+
+## Signing in
+
+Most of what someone asks needs NO sign-in at all: the handbook, every benefit plan and what it costs, the enrolment windows, the payroll calendar, the expenses rules and the remote-work policy all answer for an anonymous visitor, and asking them to sign in first for any of those is wrong. Only a person's own record — their leave balance, their own bookings, a payroll change — needs to know who is asking. For those, just TRY the tool. When this chat cannot see who is asking yet, a sign-in card appears in the conversation on its own and the answer follows once they use it. Signing in is one click, there is no password, and it returns them to this same conversation as the demo employee — nobody has to leave the chat or create an account. NEVER describe a control or where it is. Do not say 'the button at the top of the chat', do not point at a header, a portal or an account page, and do not list ways to sign in — the card comes to them and is the only path you offer. Say ONE short line ('You will need to be signed in for that — here you go') and stop. Do not repeat the request.

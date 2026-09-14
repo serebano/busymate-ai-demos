@@ -1,0 +1,50 @@
+[
+  {
+    "id": "hero",
+    "alt": "Colleagues arriving on the office floor at the start of the day",
+    "width": 1600,
+    "height": 899
+  },
+  {
+    "id": "story",
+    "alt": "The open floor where the Bristol teams sit",
+    "width": 1100,
+    "height": 733
+  },
+  {
+    "id": "floor",
+    "alt": "Desks on an anchor day, Tuesday morning",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "quiet-room",
+    "alt": "A quiet room, bookable for a benefits call",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "home-desk",
+    "alt": "A home desk set up with the home-working allowance",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "clinic",
+    "alt": "The Leeds room where the October benefits clinics run",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "breakout",
+    "alt": "The breakout floor, kept for reading and thinking",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "learning",
+    "alt": "Books bought from a learning-fund claim",
+    "width": 820,
+    "height": 586
+  }
+]

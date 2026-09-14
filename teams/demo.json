@@ -1,0 +1,17 @@
+{
+  "name": "teams",
+  "subdomain": "teams",
+  "title": "Microsoft Teams channel",
+  "tagline": "Bramble & Co. — an HR and benefits desk answered in a Teams-style chat pane: grounded handbook answers, an MCP server over benefits and payroll, WebMCP page actions, and identified leave balances.",
+  "type": "static",
+  "assistant": "demo-teams",
+  "tenant_id": "218f0d50-411c-4169-b02c-e70291371140",
+  "status": "live",
+  "order": 8,
+  "icon": "teams",
+  "backend_port": 8108,
+  "docs": "https://busymate.ai/integrations/teams",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/teams",
+  "teams_deep_link": null,
+  "teams_deep_link_note": "The real go-live hook lives in public/teams-config.json (the field the page actually reads at runtime). This field is a documentation mirror only — set both together when the Teams channel lane connects an app for this tenant and a real deep link exists."
+}

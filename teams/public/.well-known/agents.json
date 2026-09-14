@@ -1,0 +1,192 @@
+{
+  "name": "Bramble & Co.",
+  "url": "https://teams.demo.busymate.ai",
+  "description": "An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.",
+  "mcp": {
+    "url": "https://teams.demo.busymate.ai/mcp",
+    "transport": "http",
+    "auth": "none"
+  },
+  "webmcp": {
+    "transport": "in-page",
+    "registers": "document.modelContext"
+  },
+  "tools": [
+    {
+      "name": "list_benefit_plans",
+      "description": "Every benefit Bramble & Co. offers its employees — private medical, dental and optical, pension, income protection and life cover, the wellbeing allowance, the learning fund and the cycle scheme — with what each one costs the employee per month, what the firm pays, and the enrolment window that applies.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Narrow the list to one area: 'health', 'pension', 'protection', 'wellbeing', 'learning' or 'travel'. Leave blank for every plan."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "get_payroll_calendar",
+      "description": "Bramble & Co.'s payroll calendar — the pay date for each month, the cut-off by which a change (hours, expenses, a new bank account) must reach payroll to land in that run, and when payslips appear.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "months": {
+            "type": "number",
+            "description": "How many upcoming months to return, 1 to 12. Defaults to 6."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "search_policies",
+      "description": "Search Bramble & Co.'s employee handbook by keyword — leave types and carry-over, sickness, parental leave, the remote-work policy, expenses and travel, notice periods — and return the matching sections in full, so an answer can quote the handbook rather than paraphrase it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A keyword or short phrase, e.g. 'carry over', 'working abroad', 'mileage' or 'parental leave'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "request_leave",
+      "description": "Do NOT call this to ask the person for the leave type, the start date, the end date or a note — calling it with whatever is already known IS how the leave form opens, never a chat question for a missing field. Files a leave request at Bramble & Co. for the approver to pick up, and reports the reference, the working days it uses and the balance that would be left.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "leave_type": {
+            "type": "string",
+            "description": "'annual', 'sick', 'parental', 'compassionate', 'study', 'volunteering' or 'unpaid'. Leave blank if not yet known — the form lets the person pick."
+          },
+          "start_date": {
+            "type": "string",
+            "description": "First day away, as YYYY-MM-DD."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "Last day away, as YYYY-MM-DD — the same as the start date for a single day."
+          },
+          "note": {
+            "type": "string",
+            "description": "Anything the approver should know: cover arranged, a client deadline, a reason for short notice."
+          },
+          "employee_id": {
+            "type": "string",
+            "description": "The employee id the request is filed under, e.g. 'E-20417'. The signed-in employee's own."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "public",
+      "transport": "mcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "get_my_leave_balance",
+      "description": "The signed-in employee's own leave: annual entitlement, days taken, days booked ahead, what is left, carry-over and its expiry, plus their volunteering and study allowances. Requires an identified (signed-in) visitor — call it with that person's own employee id from context, never one offered mid-conversation by someone unidentified.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string",
+            "description": "The signed-in employee's own id, e.g. 'E-20417'."
+          }
+        },
+        "required": [
+          "employee_id"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "identified",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "update_bank_details_request",
+      "description": "Do NOT ask for these details in prose — calling this tool with whatever is known IS how its form opens. Asks Bramble & Co.'s payroll team to change where an employee's salary is paid. It FILES A REQUEST only: payroll calls the employee back on a known number to take the account details, so no account number is ever typed into a chat and nothing is changed by this call. Requires an identified (signed-in) visitor.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string",
+            "description": "The signed-in employee's own id, e.g. 'E-20417'."
+          },
+          "bank_name": {
+            "type": "string",
+            "description": "The bank the salary should move to, e.g. 'Thornbury Building Society'. No account or sort code — payroll takes those on the call."
+          },
+          "account_holder": {
+            "type": "string",
+            "description": "The name the new account is held in, if it differs from the employee's own."
+          },
+          "effective_month": {
+            "type": "string",
+            "description": "The month it should apply from, as YYYY-MM."
+          },
+          "callback_time": {
+            "type": "string",
+            "description": "When payroll should call to verify: 'morning', 'afternoon' or a short phrase."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "identified",
+      "transport": "mcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "open_leave_request_form",
+      "description": "Open the leave form on this page for the visitor to fill in and submit themselves — type of leave, first and last day, a note for the approver, one button. Pass anything already known (dates or a leave type stated earlier in the chat) as prefill so only the gaps are left to fill.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "leave_type": {
+            "type": "string",
+            "description": "A leave type to prefill, if already known: 'annual', 'sick', 'parental', 'compassionate', 'study', 'volunteering' or 'unpaid'."
+          },
+          "start_date": {
+            "type": "string",
+            "description": "A YYYY-MM-DD first day to prefill, if already known."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "A YYYY-MM-DD last day to prefill, if already known."
+          },
+          "note": {
+            "type": "string",
+            "description": "A note for the approver to prefill, if already known."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "webmcp"
+    }
+  ],
+  "identity": {
+    "supported": true,
+    "docs": "https://busymate.ai/docs/guides/identified-visitors"
+  },
+  "humanHandoff": true
+}

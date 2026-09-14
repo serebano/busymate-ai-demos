@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bramble &amp; Co.">
+  <rect width="512" height="512" rx="116" fill="#4b2e83"/>
+  <g fill="none" stroke="#f6f1e8" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 400V214"/>
+    <path d="M256 268c-46-6-78-38-84-84 46 6 78 38 84 84z"/>
+    <path d="M256 300c46-6 78-38 84-84-46 6-78 38-84 84z"/>
+  </g>
+  <circle cx="256" cy="150" r="34" fill="#6f9a7a"/>
+  <circle cx="196" cy="196" r="20" fill="#6f9a7a"/>
+  <circle cx="316" cy="196" r="20" fill="#6f9a7a"/>
+</svg>

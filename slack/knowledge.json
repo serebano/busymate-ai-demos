@@ -1,0 +1,62 @@
+{
+  "tenant_id": "775fead6-ccb0-4682-9d82-45fc578068c2",
+  "embed_origins": [
+    "https://slack.demo.busymate.ai"
+  ],
+  "knowledge_sources": [
+    {
+      "key": "slack:about-demo",
+      "label": "About this demo",
+      "kind": "fact",
+      "content": "This assistant runs on Patchwell, a SAMPLE IT-helpdesk service for small teams built to demonstrate 'your mate' — a Busymate AI assistant — inside Slack. No real customers, tickets, engineers or devices exist here. The service catalogue, plans, hours, help articles, system status AND the demo tickets/access requests below are fictional but LIVE demo data, served through this site's own connected MCP server, not just text in this knowledge base. On this page, https://slack.demo.busymate.ai, the Slack experience is shown as a Slack-style frame around the same live assistant; whether Patchwell's own Slack bot is connected is stated on the page itself (the 'Open in Slack' button) — never claim a live Slack bot exists unless the page says so. Ask this assistant about the catalogue, plans, hours, a how-to, live status, opening a ticket, requesting access, or (once signed in as the demo customer) a ticket's progress, to see every capability working live — never say a lookup 'isn't possible here' before actually trying the tool; the connected tools genuinely work on this demo."
+    },
+    {
+      "key": "slack:services",
+      "label": "Patchwell — service catalogue",
+      "kind": "reference",
+      "content": "Patchwell service catalogue (every request a team can raise, with its code): PW-ONB Onboarding & offboarding (all plans) — a start date and a role in, a laptop enrolled and shipped plus SSO, email, Slack and the role's apps live before day one; every account closed within 1 hour of an offboarding. PW-ACC Access requests (all plans) — SaaS seats, Google groups, shared drives and VPN profiles requested in Slack, routed to the right approver with a one-tap approve; granted within 15 minutes of approval. PW-DEV Device repair & loaners (Team, Scale) — a loaner couriered within 24 hours in the EU and UK, repairs 3-5 business days, files follow through the managed backup. PW-PWD Password, MFA & lockouts (all plans) — self-serve in seconds; a lost authenticator is re-enrolled after a manager confirms in Slack, within 15 minutes. PW-NET Network & Wi-Fi (Team, Scale) — office Wi-Fi, guest networks, VPN, printers; same-day remote diagnosis, on-site next business day in Lisbon, Tallinn and Berlin. PW-SEC Security baseline (Team, Scale) — disk encryption, automatic patching, MDM enrolment, phishing reporting from Slack, a monthly posture report; critical patches within 48 hours. PW-LIC Licences & renewals (Scale) — every SaaS contract in one register, seats reconciled monthly, renewal notices 60 days ahead. PW-STA Status & incident updates (all plans) — an incident posted to the customer's #it-help channel within 5 minutes of detection."
+    },
+    {
+      "key": "slack:plans",
+      "label": "Plans and pricing",
+      "kind": "reference",
+      "content": "Patchwell plans: Starter, $6 per person per month, up to 25 people — onboarding & offboarding, access requests, password/MFA/lockouts, status updates, helpdesk-hours cover. Team, $11 per person per month, 25-200 people — everything in Starter plus device repair & loaners, network & Wi-Fi, the security baseline, and P1 on-call at any hour. Scale, priced per fleet, 200+ people or several offices — everything in Team plus licences & renewals, a named lead engineer and a quarterly audit pack. Every plan is month to month; the first month is free for teams moving from another provider."
+    },
+    {
+      "key": "slack:hours-sla",
+      "label": "Hours and response targets",
+      "kind": "reference",
+      "content": "The Patchwell helpdesk is staffed Monday to Friday, 08:00-20:00 Central European Time, by engineers in Lisbon and Tallinn. Outside those hours a P1 — a whole team or a customer-facing system down, or a security incident — pages the on-call engineer within 15 minutes, any day of the year; P2 and P3 wait for the next helpdesk shift. Response targets: P1 first response 15 minutes, resolution aim 4 hours. P2 (one person cannot work, or a shared tool degraded) first response 1 hour, resolution aim 1 business day. P3 (a question, a request, something you can work around) first response next business day, resolution aim 3 business days. Priority is set from the urgency the person gives when opening the ticket."
+    },
+    {
+      "key": "slack:how-it-works",
+      "label": "How the Slack helpdesk works",
+      "kind": "howto",
+      "content": "Patchwell lives in the customer's own Slack workspace. Anyone on the team can @-mention Patch in the #it-help channel or send it a direct message; Patch answers in the thread, from the same catalogue, help articles and ticket system as this page. Most requests are handled without a ticket: a how-to comes back as steps, a status question comes back with the live board, an access request goes straight to its approver. When something needs an engineer, Patch opens a ticket with a number and a first-response target and the engineer replies in the same thread. A person can be asked for at any time — 'talk to a human' hands the thread to the desk without starting over."
+    },
+    {
+      "key": "slack:faq",
+      "label": "Questions people ask",
+      "kind": "howto",
+      "content": "Q: Do we need to install anything on our laptops?\nA: The Patchwell app (menu-bar on macOS, tray on Windows) handles VPN, printers and enrolment; it ships pre-installed on any laptop Patchwell provisions, and existing laptops enrol in about five minutes.\n\nQ: Can Patch see our Slack messages?\nA: Only the messages that @-mention it or are sent to it directly; it never reads other channels.\n\nQ: What happens if the whole office loses internet?\nA: That's a P1 — the on-call engineer is paged within 15 minutes, and status updates go to #it-help from the engineer's phone until it's back.\n\nQ: Do you support Windows and Linux as well as macOS?\nA: macOS and Windows fully; Linux laptops are supported for access, VPN and security baseline but not for the loaner programme.\n\nQ: Can we keep our existing IT person?\nA: Yes — many teams use Patchwell as the first line and escalate to their own person or vendor; the hand-off is a mention in the thread."
+    },
+    {
+      "key": "slack:reviews",
+      "label": "What customers say",
+      "kind": "reference",
+      "content": "Lena V. (operations lead, 40-person studio): \"New starter's laptop was on her desk before she was, with everything signed in. Onboarding used to take me a whole day.\"\nOmar H. (founder, 18-person agency): \"Lost my phone in Lisbon airport with the authenticator on it. MFA reset from Slack in eight minutes, no ticket number, no phone call.\"\nJess P. (engineering manager): \"When the Berlin VPN gateway degraded, #it-help knew before we did. That's the whole point.\""
+    },
+    {
+      "key": "slack:demo-account",
+      "label": "The demo customer",
+      "kind": "fact",
+      "content": "A single throwaway demo customer is provided so the identified experience can be tested without a real account: Maya Okafor, operations lead at Fernwood Studio, email maya@example.com. Fernwood Studio is on the Team plan with 34 seats. Her account has one ticket in progress — PW-2041, 'Laptop drops off the office Wi-Fi every few minutes', P2, engineer Jonas at the Tallinn desk, opened 2026-09-11 09:12; latest update 2026-09-12 08:05: a replacement access point is being shipped to the Lisbon office, the 5 GHz network is stable in the meantime; the access point arrives 2026-09-13 — one resolved ticket PW-2017 (a Figma editor seat, added 2026-09-03), and one access request AR-118 (Notion admin) waiting for approval from Priya Desai, the workspace owner, raised 2026-09-12 07:58. Ticket and request details are only ever given to that signed-in customer."
+    },
+    {
+      "key": "slack:signing-in",
+      "label": "Signing in",
+      "kind": "howto",
+      "content": "Just TRY the tool that needs to know who is asking. When this chat cannot see them yet, a sign-in card appears in the conversation on its own and the answer follows once they use it. Signing in is one click, there is no password, and it returns them to this same conversation as the demo customer - nobody has to leave the chat or create an account. NEVER describe a control or where it is: do not say \"the Sign in button at the top of the chat\", do not point at a header or the page, and do not list ways to sign in - the card comes to them and is the only path you offer. For a question about where is my ticket, my access request, my team's plan, say ONE short line and stop. Do not repeat the request."
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+# Northline Outdoor
+
+Source: https://shopify.demo.busymate.ai/
+
+> Gear built for the long way round. An independent outdoor-gear store founded 2014 in Bellingham, Washington: field-tested tents, packs, shells, boots and camp kitchen gear with a lifetime warranty and a repair program behind it. This is a Busymate AI demonstration store — a working storefront you can shop, sign in to and put an assistant through its paces on. No order is fulfilled, no payment is taken, and the demo customer is not a real person.
+
+## The catalog
+
+| SKU | Product | Category | Price | Variants | Weight | Stock |
+|---|---|---|---|---|---|---|
+| RIDGECREST-2P | Ridgecrest 2P Tent | Shelter | $329 (was $379) | Colors: Glacier Blue, Moss | 1.9 kg | In stock except: Moss — low stock. |
+| BASECAMP-3P | Basecamp 3P Tent | Shelter | $389 | Colors: Ember Orange | 2.6 kg | In stock in every variant. |
+| RIDGE-PACK-28 | Ridgeline Backpack 28L | Packs | $96 | Colors: Slate, Clay | 820 g | In stock in every variant. |
+| CAIRN-PACK-55 | Cairn Trekking Pack 55L | Packs | $219 | Colors: Storm Blue, Brick; Sizes: S/M, M/L | 1.7 kg | In stock except: Brick / S/M — low stock; Brick / M/L — backordered (ships in about 3 weeks). |
+| TIMBER-DAY-22 | Timber Canvas Daypack 22L | Packs | $118 | Colors: Wheat | 900 g | In stock in every variant. |
+| ALPINE-PACK-40 | Northline Alpine Pack 40L | Packs | $169 | Colors: Pine | 1.1 kg | In stock in every variant. |
+| TRAIL-SHELL | Trailhead Rain Shell | Apparel | $128 | Colors: Moss, Charcoal, Tidal Blue; Sizes: S, M, L, XL | 310 g | In stock except: Moss / XL — backordered (ships in about 2 weeks); Charcoal / L — low stock. |
+| CIRRUS-DOWN | Cirrus Down Jacket | Apparel | $198 (was $240) | Colors: Black, Juniper; Sizes: S, M, L, XL | 290 g | In stock except: Juniper / S — low stock; Juniper / XL — sold out. |
+| ALPINE-BASE | Alpine Base Layer | Apparel | $58 | Colors: Charcoal, Sand, Navy; Sizes: XS, S, M, L, XL | 190 g | In stock except: Sand / L — low stock. |
+| LODGE-FLEECE | Lodge Wool Fleece | Apparel | $142 | Colors: Walnut; Sizes: S, M, L, XL | 520 g | In stock in every variant. |
+| GRANITE-BOOT | Granite Hiking Boot | Footwear | $189 | Colors: Tobacco; Sizes: US 7, US 8, US 9, US 10, US 11, US 12 | 1.1 kg / pair | In stock except: Tobacco / US 10 — low stock; Tobacco / US 12 — backordered (ships in about 10 days). |
+| TRAIL-SOCK-2PK | Trail Sock 2-pack | Footwear | $24 | Sizes: S, M, L | 120 g | In stock in every variant. |
+| EMBER-STOVE | Ember Pocket Stove | Camp kitchen | $64 | Colors: Titanium | 88 g | In stock in every variant. |
+| BASECAMP-STOVE | Basecamp 2-Burner Stove | Camp kitchen | $139 | Colors: Forest | 4.2 kg | In stock in every variant. |
+| SUMMIT-BOTTLE-750 | Summit Insulated Bottle 750ml | Camp kitchen | $32 | Colors: Black, Sand, Forest, Clay | 380 g | In stock except: Clay — low stock. |
+| FIRESIDE-MUG | Fireside Enamel Mug | Camp kitchen | $18 | Colors: Ember Red, Cream | 150 g | In stock in every variant. |
+| DRIFT-BAG-20 | Drift Down Sleeping Bag (−7 °C) | Sleep & light | $249 | Sizes: Regular, Long | 960 g | In stock except: Long — low stock. |
+| CONTOUR-POLES | Contour Carbon Trekking Poles | Sleep & light | $119 | Colors: Carbon | 420 g / pair | In stock in every variant. |
+| LUMEN-400 | Lumen 400 Headlamp | Sleep & light | $49 | Colors: Ember Orange | 78 g | In stock in every variant. |
+| RIDGE-BEANIE | Ridge Wool Beanie | Apparel | $28 | Colors: Tidal Blue, Charcoal, Oat | 60 g | In stock in every variant. |
+
+Live prices, variants and stock also come from the MCP server's `list_products`, `search_products` and `get_product` tools, and from `GET /catalog.json`.
+
+## Product details
+
+### Ridgecrest 2P Tent (RIDGECREST-2P)
+
+Freestanding two-person tent with two doors and two vestibules. A three-season, freestanding two-person tent with a full-mesh inner for star-watching, two doors so nobody climbs over anybody, and two vestibules for boots and packs. DAC-style aluminum poles, a 3,000 mm silicone-coated fly, and color-coded clips make setup a two-minute job.
+
+Specs: Floor 2.2 × 1.3 m; Peak height 105 cm; Packed 48 × 15 cm; Fly 20D ripstop, 3,000 mm.
+
+### Basecamp 3P Tent (BASECAMP-3P)
+
+Roomy three-person dome for weekends where comfort wins. Our most livable tent: near-vertical walls, a 120 cm peak, and a wide front vestibule that doubles as a porch in the rain. Pitches fly-first in a downpour so the inner stays dry, and the stuff sack turns into a gear loft.
+
+Specs: Floor 2.2 × 1.9 m; Peak height 120 cm; Fly 40D ripstop, 3,000 mm; Fly-first pitch.
+
+### Ridgeline Backpack 28L (RIDGE-PACK-28)
+
+The daypack that goes from trailhead to Tuesday. A 28-liter daypack with a padded 16-inch laptop sleeve, a removable hip belt, stretch side pockets that actually hold a bottle, and a rain cover stashed in the base. Recycled 420D nylon shell with a DWR finish.
+
+Specs: 28 L; Laptop sleeve to 16"; Removable hip belt; Included rain cover.
+
+### Cairn Trekking Pack 55L (CAIRN-PACK-55)
+
+A multi-day hauler with a ventilated back panel and a real hip belt. Fifty-five liters for three to five days out. A suspended mesh back panel keeps air moving, the hip belt transfers load the way it should, and the brain lid pops off to become a summit pack. Sleeping-bag compartment, side-zip access, and dual ice-axe loops.
+
+Specs: 55 L; Suspended mesh back; Removable lid / summit pack; Torso fit S/M 41–48 cm, M/L 46–53 cm.
+
+### Timber Canvas Daypack 22L (TIMBER-DAY-22)
+
+Waxed canvas and brass, built to age well. A 22-liter roll-top in 18 oz waxed canvas with full-grain leather straps and solid brass hardware. Padded tablet sleeve, cotton-lined interior, and a wax that re-proofs with a tin and an afternoon.
+
+Specs: 22 L; 18 oz waxed canvas; Full-grain leather trim; Roll-top closure.
+
+### Northline Alpine Pack 40L (ALPINE-PACK-40)
+
+Stripped-down forty liters for fast overnights. A clean-lined 40-liter climbing and fastpacking bag: roll-top with a floating lid, reinforced haul loop, tool attachments, and a removable frame sheet so it packs flat for travel. Nothing you don't need.
+
+Specs: 40 L; Removable frame sheet; Roll-top + floating lid; Ice-axe and pole carry.
+
+### Trailhead Rain Shell (TRAIL-SHELL)
+
+Waterproof 2.5-layer shell that packs into its own pocket. A fully seam-taped 2.5-layer waterproof-breathable shell (20,000 mm / 20,000 g) with pit zips, a helmet-compatible hood, and a chest pocket the whole jacket stows into. Cut to layer over a fleece without ballooning.
+
+Specs: 2.5-layer, 20k/20k; Fully taped seams; Pit zips; Packs into chest pocket.
+
+### Cirrus Down Jacket (CIRRUS-DOWN)
+
+800-fill responsibly sourced down, 290 grams, stuffs to a grapefruit. An 800-fill-power down puffy with a water-resistant shell and hydrophobic down, so a little drizzle doesn't end the day. Elastic cuffs, a drop hem, and an inside stuff pocket. Warm enough for shoulder-season summits, light enough to forget it's in the pack.
+
+Specs: 800 FP RDS-certified down; 20D water-resistant shell; Stuffs into inner pocket; 290 g (size M).
+
+### Alpine Base Layer (ALPINE-BASE)
+
+Merino-blend long sleeve you can wear three days straight. A 160 g/m² merino-nylon blend long-sleeve crew: naturally odor-resistant, quick to dry, flatlock seams so nothing rubs under a pack. Pairs with the Trailhead Rain Shell as our wet-weather layering set.
+
+Specs: 87% merino / 13% nylon; 160 g/m²; Flatlock seams; Machine washable.
+
+### Lodge Wool Fleece (LODGE-FLEECE)
+
+Heavyweight wool fleece with a shawl collar for cabin nights. A heavyweight boiled-wool fleece with a shawl collar, two hand-warmer pockets, and a blanket-soft interior. This is the layer for the campfire, the drive home, and most of November.
+
+Specs: Boiled wool blend; Shawl collar; Snap front; Relaxed fit.
+
+### Granite Hiking Boot (GRANITE-BOOT)
+
+Full-grain leather, waterproof membrane, resoleable. A mid-cut boot in 2.4 mm full-grain leather with a waterproof-breathable membrane, a stiff-enough shank for loaded miles, and a Vibram-style lugged outsole that a cobbler can replace. Broken in after a week, good for a decade.
+
+Specs: Full-grain leather upper; Waterproof membrane; Resoleable lugged outsole; Half sizes on request.
+
+### Trail Sock 2-pack (TRAIL-SOCK-2PK)
+
+Merino crew socks with a cushioned footbed. Lifetime guarantee. Two pairs of midweight merino crew socks with targeted cushioning under the heel and ball, a seamless toe, and arch compression that keeps them from bunching. If they wear out, we replace them — for life.
+
+Specs: Merino blend; Seamless toe; Midweight cushion; Lifetime guarantee.
+
+### Ember Pocket Stove (EMBER-STOVE)
+
+88-gram canister stove that boils a liter in under four minutes. A fold-out canister stove with a piezo igniter, a wide burner head for real simmering, and a pot support that holds a two-liter pot without wobble. Boils 1 L in 3 min 40 s at sea level. Fits inside your mug.
+
+Specs: 88 g; Piezo igniter; Boil 1 L: 3:40; Fits standard screw-thread canisters.
+
+### Basecamp 2-Burner Stove (BASECAMP-STOVE)
+
+Two 10,000 BTU burners and a wind shield for the whole crew's breakfast. A classic folding two-burner propane stove with independent simmer control, three-sided wind panels, and a drip tray that lifts out for cleaning. Runs on 1 lb canisters or a bulk tank with the included adapter.
+
+Specs: 2 × 10,000 BTU; Three-sided wind shield; Removable drip tray; Bulk-tank adapter included.
+
+### Summit Insulated Bottle 750ml (SUMMIT-BOTTLE-750)
+
+Double-wall stainless. Cold 24 hours, hot 12. A 750 ml vacuum-insulated stainless bottle with a leakproof loop cap, a wide mouth for ice, and a powder coat that survives being dropped on granite. Keeps drinks cold for 24 hours and hot for 12.
+
+Specs: 750 ml; 18/8 stainless; Cold 24 h / hot 12 h; Dishwasher safe.
+
+### Fireside Enamel Mug (FIRESIDE-MUG)
+
+The 350 ml enamel mug that outlives every trip. Steel enamel with a rolled rim, 350 ml, safe over a flame. Chips add character. Two of these live in every Northline staff car.
+
+Specs: 350 ml; Steel enamel; Flame safe; Stackable.
+
+### Drift Down Sleeping Bag (−7 °C) (DRIFT-BAG-20)
+
+700-fill mummy bag rated to −7 °C, under a kilo. A 700-fill hydrophobic down mummy bag with a −7 °C comfort limit, a contoured hood, a draft collar and a full-length zipper baffle. Compresses to 20 × 30 cm. Two Drifts zip together.
+
+Specs: 700 FP hydrophobic down; Comfort −7 °C; 960 g (Regular); Left/right zips pair.
+
+### Contour Carbon Trekking Poles (CONTOUR-POLES)
+
+Three-section carbon poles with cork grips and flip locks. A pair of three-section carbon fiber poles with cork grips, extended foam lower grips for steep sidehills, flip-lock adjusters, and interchangeable trail and snow baskets. 420 grams for the pair.
+
+Specs: Carbon fiber; Cork grips; Flip locks; Adjust 100–135 cm.
+
+### Lumen 400 Headlamp (LUMEN-400)
+
+400 lumens, USB-C rechargeable, red night mode. A 400-lumen rechargeable headlamp with a spot-and-flood beam, red night mode that saves your camp mates' eyes, a lock-out so it doesn't drain in the pack, and IPX7 water resistance. USB-C, 40 hours on low.
+
+Specs: 400 lm; USB-C rechargeable; IPX7; Red mode + lock-out.
+
+### Ridge Wool Beanie (RIDGE-BEANIE)
+
+Ribbed merino beanie, one size, every season. A ribbed merino beanie with a fold-over cuff — warm enough for a winter summit, thin enough for a cold morning at the trailhead. One size.
+
+Specs: 100% merino; One size; Fold cuff; Machine washable.
+
+## Categories
+
+- **Shelter** — Tents that pitch in minutes and stay put in weather.
+- **Packs** — Daypacks to multi-day haulers, all carry-first.
+- **Apparel** — Layers for rain, wind, cold, and the climb back up.
+- **Footwear** — Boots and socks that go the distance.
+- **Camp kitchen** — Stoves, bottles and mugs for real meals outside.
+- **Sleep & light** — Warm bags, bright headlamps, better mornings.
+
+## Shipping
+
+- Free standard shipping on US orders over $75; under $75 a flat $6.95 applies.
+- Standard US delivery takes 3–5 business days; orders placed before 1pm PT ship the same day.
+- Expedited 2-day shipping is available at checkout for $14.95.
+- Canada and the EU: 7–14 business days, rates calculated at checkout by destination; duties are prepaid for the EU.
+
+## Returns and warranty
+
+- 30 days from delivery for a full refund on unworn items with tags attached.
+- US return labels are free — a prepaid label is emailed as soon as a return is started.
+- Exchanges for a different size ship as soon as the carrier scans the original, no need to wait for the refund.
+- Clearance items marked final sale can't be returned.
+- Every Northline product carries a lifetime warranty against defects in materials and workmanship; normal wear, and damage from misuse, aren't covered but we'll repair what we can at cost.
+
+## Questions we get most
+
+**How do I pick a Cairn pack size?**
+Measure your torso from the C7 vertebra (the bump at the base of your neck) to the top of your hip bones. 41–48 cm is S/M, 46–53 cm is M/L. If you're on the line, go M/L.
+
+**Does the Trailhead Rain Shell fit over a fleece?**
+Yes — it's cut to layer over the Lodge Wool Fleece or a midweight midlayer without ballooning. Size up only if you'd wear a puffy under it.
+
+**Can I re-wax the Timber Daypack myself?**
+Absolutely. A tin of fabric wax, a hair dryer and an afternoon. We include a starter tin with every pack.
+
+**Is the Drift Sleeping Bag warm enough for −7 °C, really?**
+−7 °C is the comfort limit for a standard sleeper on an insulated pad. Cold sleepers should treat it as a −2 °C bag or add a liner.
+
+**Do you ship internationally?**
+To Canada and the EU, 7–14 business days, with duties prepaid for the EU. More destinations are coming later this year.
+
+**What does the lifetime warranty cover?**
+Defects in materials and workmanship, forever. Normal wear and misuse aren't covered, but we repair what we can at cost.
+
+## Our story
+
+Northline started in 2014 in a Bellingham garage, rebuilding tents the big brands had written off. The first product we sold new was a rain shell we'd redesigned after fixing three hundred broken ones.
+Everything in the range is field-tested by real people on real trips — forty testers across fourteen countries — and every product carries a lifetime warranty with a repair program behind it. Buy once, fix when needed, hand it down.
+
+- 40 field testers
+- 14 countries tested in
+- 6,200+ repairs completed
+- 78% recycled fabric by weight
+
+## The crew
+
+- Rowan Hale, Founder, gear design — Started Northline in a garage with a sewing machine and a pile of returned tents.
+- Mei Tanaka, Materials + testing — Runs the field-test program: 40 testers, 14 countries, one very worn spreadsheet.
+- Luis Ortega, Customer care — Answers the questions the assistant hands off, usually within the hour.
+- Ada Okafor, Sustainability — Keeps the recycled-content numbers honest and the repair program growing.
+
+## Contact
+
+- Email: hello@northline.example
+- Phone: +1 (360) 555-0142
+- Hours: Mon–Fri 8am–6pm PT · Sat 9am–3pm PT
+- Workshop: Bellingham, Washington
+- A human teammate takes over in the chat when the assistant cannot resolve something ("I'd like to talk to a person").
+
+## The demo customer
+
+Sign in on the page as Jordan Rivers (jordan@example.com) — a throwaway public account — to look up orders #1042 (shipped) and #1039 (delivered) and start a return.
+
+## For agents
+
+- MCP endpoint: https://shopify.demo.busymate.ai/mcp (JSON-RPC 2.0 over HTTPS, no auth for catalog reads; order tools need an identified visitor)
+- WebMCP page tools: https://shopify.demo.busymate.ai/webmcp-catalog.json
+- Agent card: https://shopify.demo.busymate.ai/agents.json
+- Short index: https://shopify.demo.busymate.ai/llms.txt
+

@@ -1,0 +1,152 @@
+/* Beacon — the site-scan quick-start demo's own look. A deliberately
+   product-launch page: one dark-leaning brand, amber signal accent, a real
+   photo texture behind the hero, real product screenshots everywhere else. */
+:root{
+  --bg:#f6f6fb; --bg2:#eef0f8; --ink:#11142a; --muted:#5b5f7d; --card:#ffffff; --line:#e2e4f0;
+  --tile:#12162a; --accent:#c2650f; --accent-soft:#fbe6d1; --ok:#1f8a53;
+  --btn-bg:#11142a; --btn-ink:#ffffff;
+  --radius:18px; --radius-lg:26px;
+  --hero-ink:#f4f5fb; --hero-muted:#aab0d1; --hero-line:#2a2f4d;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a0c16; --bg2:#0d0f1c; --ink:#eef0fb; --muted:#9aa1c2; --card:#12152a; --line:#212540;
+    --accent:#ffb067; --accent-soft:#2c2110; --ok:#57cf94;
+    --btn-bg:#ffb067; --btn-ink:#1a1206;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a0c16; --bg2:#0d0f1c; --ink:#eef0fb; --muted:#9aa1c2; --card:#12152a; --line:#212540;
+  --accent:#ffb067; --accent-soft:#2c2110; --ok:#57cf94;
+  --btn-bg:#ffb067; --btn-ink:#1a1206;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+/* An <img width height> pair (set for CLS) leaves a presentational `height`
+   hint the UA applies with NO scaling once CSS constrains width — the
+   result is a squashed/stretched image, not a shorter one. Overriding
+   height back to auto lets the intrinsic aspect-ratio (set from the same
+   attributes) do the actual scaling. */
+img[width][height]{height:auto}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+/* ── header ─────────────────────────────────────────────────────────── */
+header.site{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:18px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:18px;margin-right:auto;text-decoration:none}
+.logo img{width:30px;height:30px;border-radius:9px}
+nav.top{display:flex;gap:22px}
+nav.top a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px}
+nav.top a:hover{color:var(--ink)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--btn-bg);color:var(--btn-ink);border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:600;font-size:14.5px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.tiny{padding:8px 14px;font-size:13px}
+.btn.on-dark{background:var(--accent);color:#1a1206}
+
+/* ── hero ────────────────────────────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#0b0d1c,#111431 60%,#0b0d1c);color:var(--hero-ink);padding:76px 0 64px}
+.hero .photo{position:absolute;inset:0;opacity:.22;object-fit:cover;object-position:center;filter:saturate(1.1)}
+.hero .veil{position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 18% 30%,rgba(255,122,61,.22),transparent 60%),linear-gradient(180deg,rgba(9,10,20,.35),rgba(9,10,20,.85) 75%,rgba(9,10,20,.98))}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;min-width:0}
+.hero .wrap>div{min-width:0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.04;letter-spacing:-.03em;margin:16px 0 14px}
+.hero .lead{font-size:18px;color:var(--hero-muted);max-width:42ch;margin:0 0 28px}
+
+.scan-form{display:flex;gap:10px;background:#ffffff10;border:1px solid var(--hero-line);border-radius:999px;padding:6px 6px 6px 20px;max-width:520px;min-width:0}
+.scan-form input{flex:1;min-width:0;background:none;border:0;color:var(--hero-ink);font:inherit;font-size:15px;outline:none}
+.scan-form input::placeholder{color:var(--hero-muted)}
+.scan-form button{flex:0 0 auto}
+.scan-status{margin:12px 2px 0;font-size:13.5px;color:var(--hero-muted);min-height:20px}
+.scan-status.is-error{color:#ff9d80}
+
+.try-examples{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px;color:var(--hero-muted)}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#ffffff0d;border:1px solid var(--hero-line);border-radius:999px;padding:7px 13px 7px 8px;color:var(--hero-ink);font:inherit;font-size:13px;cursor:pointer}
+.chip:hover{background:#ffffff1a}
+.chip img{width:16px;height:16px;border-radius:4px}
+
+.mock{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#0d0f1c;border:1px solid var(--hero-line);box-shadow:0 30px 80px #00000066}
+.mock .chrome{display:flex;align-items:center;gap:8px;padding:11px 14px;background:#141833;border-bottom:1px solid var(--hero-line)}
+.mock .dots{display:flex;gap:6px}
+.mock .dots span{width:9px;height:9px;border-radius:50%;background:#3a3f63}
+.mock .addr{flex:1;background:#0b0d1c;border-radius:999px;padding:6px 12px;font-size:12px;color:var(--hero-muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock img{display:block;width:100%}
+.mock .cap{padding:12px 16px;font-size:12.5px;color:var(--hero-muted);border-top:1px solid var(--hero-line)}
+
+/* ── generic sections ──────────────────────────────────────────────── */
+section.page{padding:64px 0;border-top:1px solid var(--line)}
+section.page h2{font-size:29px;letter-spacing:-.02em;margin:0 0 10px}
+section.page .sub{color:var(--muted);margin:0 0 32px;max-width:64ch}
+.step-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:12px}
+.step .num{width:34px;height:34px;border-radius:10px;background:var(--tile);color:var(--accent);display:grid;place-items:center;font-weight:800;font-size:15px}
+.step h3{margin:0;font-size:17px;letter-spacing:-.01em}
+.step p{margin:0;color:var(--muted);font-size:14px}
+.step .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);margin-top:auto}
+.step .shot img{width:100%;height:auto;display:block;object-fit:contain}
+
+/* example cards */
+.examples-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.example{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s}
+.example.is-highlighted{box-shadow:0 0 0 3px var(--accent);transform:translateY(-2px)}
+.example .thumb{aspect-ratio:16/10;overflow:hidden;background:var(--tile)}
+.example .thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
+.example .body{padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.example .who{display:flex;align-items:center;gap:9px}
+.example .who img{width:22px;height:22px;border-radius:6px}
+.example .who span{font-weight:700;font-size:15px}
+.example p{margin:0;color:var(--muted);font-size:13.5px;flex:1}
+.example .go{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;margin-top:4px}
+.example .go:hover{text-decoration:underline}
+
+/* feature blocks ("what you get") */
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.feature{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px}
+.feature .icon{width:38px;height:38px;border-radius:11px;background:var(--tile);display:grid;place-items:center;color:var(--accent)}
+.feature .icon svg{width:20px;height:20px}
+.feature h3{margin:0;font-size:17px;letter-spacing:-.01em}
+.feature p{margin:0;color:var(--muted);font-size:14px}
+.feature .how{margin-top:auto;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+
+/* the demo visitor (identity) */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;max-width:520px}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--tile);color:#eef0fb;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0004}
+#flash[hidden]{display:none}
+
+/* self-scorecard band */
+.selfcheck{background:var(--tile);color:#eef0fb;border-radius:var(--radius-lg);padding:30px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.selfcheck p{margin:0;color:#b7bdde;font-size:14.5px;max-width:56ch}
+.selfcheck .btn{background:var(--accent);color:#1a1206}
+
+footer.site{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer.site a{color:var(--accent);text-decoration:none}
+footer.site a:hover{text-decoration:underline}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .steps,.examples-grid,.features{grid-template-columns:1fr}
+  nav.top{display:none}
+}
+@media (max-width:560px){
+  .hero{padding:56px 0 44px}
+  .scan-form{flex-direction:column;align-items:stretch;max-width:none;border-radius:22px;padding:14px}
+  .scan-form input{padding:8px 6px}
+  .scan-form button{width:100%;padding:14px 20px}
+  .try-examples{flex-direction:column;align-items:stretch}
+  .chip{justify-content:flex-start}
+  .selfcheck{flex-direction:column;align-items:stretch;text-align:left}
+  .selfcheck .btn{width:100%;text-align:center}
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 512" role="img" aria-label="Northline Outdoor">
+  <title>Northline Outdoor</title>
+  
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f5d3a"/>
+      <stop offset="1" stop-color="#1c3a25"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <!-- ridge line: reads as an N -->
+  <path d="M14 46 V22 L40 46 V18" fill="none" stroke="#f4efe3" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- snow cap on the far summit -->
+  <path d="M40 18 l7 8 h-7 z" fill="#f4efe3" opacity=".9"/>
+  <!-- north star -->
+  <circle cx="50.5" cy="14" r="3" fill="#e8b04b"/>
+
+  <text x="596" y="292" font-family="ui-serif, Georgia, 'Times New Roman', serif" font-size="150"
+        font-weight="600" letter-spacing="-4" fill="#f4efe3">Northline</text>
+  <text x="600" y="372" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="62" letter-spacing="6" fill="#1f4d2e">GEAR BUILT FOR THE LONG WAY ROUND.</text>
+</svg>

@@ -1,0 +1,6 @@
+{
+  "_comment": "The ONE field this page reads to know whether Bramble & Co.'s own chat channel is connected. null = not connected yet (the page shows the honest 'preview' state and the in-page simulator). Once the Teams channel lane connects an app for the demo-teams tenant, set 'deepLink' to the real chat deep link and redeploy — the 'Open in Teams' calls to action switch to it automatically, no other code change needed. Optional companions: 'tenantName' (the workspace the app was installed in) and 'botName' (how the app appears in the chat list).",
+  "deepLink": null,
+  "tenantName": null,
+  "botName": "Bram"
+}

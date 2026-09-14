@@ -1,0 +1,86 @@
+[
+  {
+    "id": "hero",
+    "alt": "A barista pulling a shot at the Northwind counter",
+    "width": 1667,
+    "height": 1111
+  },
+  {
+    "id": "story",
+    "alt": "Our drum roaster mid-batch",
+    "width": 1100,
+    "height": 733
+  },
+  {
+    "id": "grind",
+    "alt": "Grinding to order",
+    "width": 1100,
+    "height": 733
+  },
+  {
+    "id": "eth",
+    "alt": "Ethiopia Yirgacheffe, brewed as a pour-over",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "col",
+    "alt": "Colombia Huila beans",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "sum",
+    "alt": "Sumatra Mandheling, dark roasted",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "esp",
+    "alt": "Northwind Espresso, pulled as a double",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "dec",
+    "alt": "Midnight Decaf, late in the evening",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "smp",
+    "alt": "The Roaster's Sampler, four origins",
+    "width": 1140,
+    "height": 760
+  },
+  {
+    "id": "cat-espresso",
+    "alt": "For espresso and milk drinks",
+    "width": 984,
+    "height": 656
+  },
+  {
+    "id": "cat-filter",
+    "alt": "For filter and pour-over",
+    "width": 984,
+    "height": 656
+  },
+  {
+    "id": "cat-gift",
+    "alt": "Gifts and samplers",
+    "width": 984,
+    "height": 656
+  },
+  {
+    "id": "brew-press",
+    "alt": "Brewing in a French press",
+    "width": 820,
+    "height": 586
+  },
+  {
+    "id": "brew-aero",
+    "alt": "Brewing with an AeroPress",
+    "width": 820,
+    "height": 586
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "tenant_id": "57069ed8-c9a2-442f-abe6-4df48cd6eb73",
+  "embed_origins": ["https://whatsapp.demo.busymate.ai"],
+  "knowledge_sources": [
+    {
+      "key": "whatsapp:about-demo",
+      "label": "About this demo",
+      "kind": "fact",
+      "content": "This assistant runs on Marlow's Kitchen, a SAMPLE neighborhood bistro built to demonstrate 'your mate' — a Busymate AI assistant — on WhatsApp. No real bookings, payments or customer accounts exist here. The menu, hours, booking policy AND the two demo reservations below are fictional but LIVE demo data, served through this site's own connected MCP server, not just text in this knowledge base. Marlow's Kitchen's real WhatsApp number is not connected yet: on this page, the WhatsApp experience is shown as a clearly-labeled PREVIEW — the same live assistant, wrapped in a WhatsApp-style thread, on https://whatsapp.demo.busymate.ai. Never claim a live WhatsApp number exists; the preview is honest about that. Ask this assistant about the menu, opening hours, table availability, or (once signed in as the demo guest) a reservation, to see every capability working live — never say a lookup 'isn't possible here' before actually trying the tool; the connected tools genuinely work on this demo."
+    },
+    {
+      "key": "whatsapp:menu",
+      "label": "Marlow's Kitchen — menu",
+      "kind": "reference",
+      "content": "Marlow's Kitchen menu (all prices USD):\nStarters: Harvest Grain Bowl (vegan) $14 - roasted sweet potato, chickpea, avocado, citrus tahini. Charred Bread & Whipped Feta (vegetarian) $9. Soup of the Day $8, changes daily.\nMains: Braised Short Rib Tagliatelle $26. Roast Chicken, Salsa Verde $23 (gluten-free option). Wood-Fired Mushroom Risotto (vegetarian, gluten-free) $21. Marlow's Burger & Fries $19, a terrace favorite good for sharing.\nWeekend Brunch, Fri-Sun until 15:00: The Full Marlow (eggs, bacon, waffle, fruit) $18. Avocado on Sourdough (vegetarian) $13.\nTerrace & Bar: Smoked Old Fashioned $13. House Negroni $12. Seasonal Spritz $11 (changes with the season).\nDesserts: Salted Caramel Sundae $9. Basque Cheesecake $8.\nKids menu available on request; high chairs available. Dogs welcome on the terrace."
+    },
+    {
+      "key": "whatsapp:hours-and-booking",
+      "label": "Opening hours & booking policy",
+      "kind": "reference",
+      "content": "Opening hours: Monday closed. Tuesday-Thursday dinner only, 17:00-22:00. Friday-Saturday lunch 12:00-15:00 and dinner 17:00-23:00. Sunday brunch 11:00-15:00 and dinner 17:00-21:00.\nBooking policy: tables are held 15 minutes past the booked time. Parties of 1-8 can book online or on WhatsApp; parties of 9 or more should message to arrange the private-dining pack. 48 hours' notice is requested for a cancellation where possible. Address: 482 Elm Street, Riverton. Parking: street parking, plus a public lot two blocks north on Elm."
+    },
+    {
+      "key": "whatsapp:booking-tools-and-handoff",
+      "label": "Booking tools & human hand-off (this demo's connected tools)",
+      "kind": "howto",
+      "content": "This demo DOES support real, working table booking and reservation lookup - try it: ask 'do you have a table for 2 tonight at 7:30' (calls check_availability), or say 'I'd like to book a table' (calls open_booking_form, which opens a real inline form on the page - name, phone, party size, date, time, one submit button - instead of asking for those details one at a time in the chat; pass along only values the visitor has actually said, leaving the rest blank). Once the visitor submits that form it calls book_table itself and shows a real confirmation code such as MK-58232 right on the page. IMPORTANT: never call book_table directly unless the visitor has stated literally every field (date, time, party size, name, phone) themselves in the conversation, and never invent or default a value (e.g. name 'Guest' or phone '0') to fill a gap - open_booking_form exists exactly so a missing field is never guessed. For a signed-in demo guest, sign in as Riley Chen first (the button on the page), then ask 'what are my reservations' (calls get_my_reservations with that guest's own phone +1-555-0142) - the demo guest has an upcoming table for 2 on 2026-09-18 at 19:30 and a past table for 4 on 2026-08-02. Do not refuse or claim this is impossible - the tools are connected and return real results. A signed-out visitor asking about their own reservation should be told to sign in first, not told the feature doesn't exist. If something needs a person (a large private event, a complaint), offer to hand off to a human teammate - the conversation continues in the same thread, no restart."
+    }
+  ],
+  "confirm": true
+}

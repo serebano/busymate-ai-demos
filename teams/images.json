@@ -1,0 +1,62 @@
+{
+  "title": "Bramble & Co.",
+  "note": "Pinned Commons files — a live search would change the pictures under us. Workplaces and desks only: nobody in these photographs is presented as an employee, a partner or the demo customer.",
+  "images": [
+    {
+      "id": "hero",
+      "file": "File:Women walking into the office (Unsplash).jpg",
+      "alt": "Colleagues arriving on the office floor at the start of the day",
+      "width": 1600,
+      "aspect": 1.78
+    },
+    {
+      "id": "story",
+      "file": "File:Communal Coworking interior (Unsplash).jpg",
+      "alt": "The open floor where the Bristol teams sit",
+      "width": 1100,
+      "aspect": 1.5
+    },
+    {
+      "id": "floor",
+      "file": "File:Desks in an open office space (Unsplash).jpg",
+      "alt": "Desks on an anchor day, Tuesday morning",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "quiet-room",
+      "file": "File:Quiet meeting room (Unsplash).jpg",
+      "alt": "A quiet room, bookable for a benefits call",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "home-desk",
+      "file": "File:Home office (Unsplash).jpg",
+      "alt": "A home desk set up with the home-working allowance",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "clinic",
+      "file": "File:Conference room table (Unsplash).jpg",
+      "alt": "The Leeds room where the October benefits clinics run",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "breakout",
+      "file": "File:Plant in a coworking space (Unsplash).jpg",
+      "alt": "The breakout floor, kept for reading and thinking",
+      "width": 820,
+      "aspect": 1.4
+    },
+    {
+      "id": "learning",
+      "file": "File:Books, pencils, laptop, and iphone on a desk (Unsplash).jpg",
+      "alt": "Books bought from a learning-fund claim",
+      "width": 820,
+      "aspect": 1.4
+    }
+  ]
+}

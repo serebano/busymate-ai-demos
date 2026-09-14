@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Pixelforge Games">
+  <title>Pixelforge Games</title>
+  <!-- An invented mark for an invented indie studio: a forge spark struck out
+       of a pixel grid — four square "pixels" rising to the right, with an
+       ember square breaking free of the stack. Nothing here is any real
+       business's or platform's asset. -->
+  <defs>
+    <linearGradient id="pf-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b1f3b"/>
+      <stop offset="1" stop-color="#0d1024"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#pf-bg)"/>
+  <rect x="112" y="296" width="72" height="72" rx="14" fill="#f2f0ff"/>
+  <rect x="196" y="232" width="72" height="72" rx="14" fill="#f2f0ff" opacity=".82"/>
+  <rect x="280" y="168" width="72" height="72" rx="14" fill="#7c5cff"/>
+  <rect x="112" y="380" width="240" height="30" rx="15" fill="#f2f0ff" opacity=".34"/>
+  <rect x="356" y="104" width="52" height="52" rx="12" fill="#ff8a5c" transform="rotate(14 382 130)"/>
+</svg>
