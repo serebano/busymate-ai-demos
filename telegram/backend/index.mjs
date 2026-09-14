@@ -171,4 +171,7 @@ start({
   demoCustomer,
   tools,
   storeName: STORE_NAME,
+  // The tenant's hosted assistant origins a signed-in visitor may be sent BACK to after
+  // /api/identity/start (#2865): its <slug>.busymate.ai page and the platform apex.
+  hostedOrigins: ["https://demo-telegram.busymate.ai", "https://busymate.ai"],
 });

@@ -21,7 +21,7 @@
     "maxTokenAgeSeconds": 120,
     "delegatedAccess": false,
     "identityEndpointUrl": "https://whatsapp.demo.busymate.ai/api/identity/mint",
-    "loginUrl": "https://whatsapp.demo.busymate.ai/#identity",
+    "loginUrl": "https://whatsapp.demo.busymate.ai/api/identity/start",
     "accountUrl": "https://whatsapp.demo.busymate.ai/#identity",
     "enabled": true
   }
