@@ -13,7 +13,7 @@
 //     it. Every call through it is scoped to ONE customer id, and that id comes
 //     from the platform's signed actor token — never from a tool argument.
 //
-// The key pair lives on the box in /srv/demos/woo/data/.wc-api-key (0600) and
+// The key pair lives on the box in <demo-host>/woo/data/.wc-api-key (0600) and
 // reaches this process as WC_CONSUMER_KEY / WC_CONSUMER_SECRET. It is never in
 // this repo, never printed, and never returned to a caller.
 

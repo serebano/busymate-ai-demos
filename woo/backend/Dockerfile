@@ -3,7 +3,7 @@
 #   docker build -f sites/woo/backend/Dockerfile -t demo-woo-backend .
 #
 # See sites/woo/provision.sh for the run line (it injects the store's REST key
-# from /srv/demos/woo/data/.wc-api-key, which never enters this image).
+# from <demo-host>/woo/data/.wc-api-key, which never enters this image).
 FROM node:20-alpine
 WORKDIR /app
 COPY sites/_shared/backend/mcp-identity-server.mjs ./_shared/mcp-identity-server.mjs

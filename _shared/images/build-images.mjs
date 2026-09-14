@@ -32,7 +32,7 @@ mkdirSync(outDir, { recursive: true });
 mkdirSync(tmpDir, { recursive: true });
 
 const API = "https://commons.wikimedia.org/w/api.php";
-const UA = { "User-Agent": "busymate-ai-demo/1.0 (demo site image build)" };
+const UA = { "User-Agent": "busymate-ai/1.0 (demo site image build)" };
 
 const plain = (html) => String(html ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 

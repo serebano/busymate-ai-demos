@@ -1,55 +1,57 @@
 {
   "metadata": {
     "schema_version": "1.0.0",
-    "last_updated": "2026-09-14T00:00:00Z"
+    "last_updated": "2026-09-14"
   },
   "strict": true,
-  "resource_rules": [
-    {
-      "verb": "read_content",
-      "selector": "*",
-      "allowed": true
+  "tools": {
+    "opening_hours": {
+      "access": "public",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "mcp+webmcp"
     },
-    {
-      "verb": "read_metadata",
-      "selector": "*",
-      "allowed": true
+    "list_menu": {
+      "access": "public",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "mcp+webmcp"
     },
-    {
-      "verb": "follow_link",
-      "selector": "*",
-      "allowed": true
+    "search_menu": {
+      "access": "public",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "mcp+webmcp"
+    },
+    "check_availability": {
+      "access": "public",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "mcp+webmcp"
+    },
+    "book_table": {
+      "access": "public",
+      "readOnly": false,
+      "requiresConfirmation": true,
+      "transport": "mcp+webmcp"
+    },
+    "get_my_reservations": {
+      "access": "identified",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "mcp+webmcp"
+    },
+    "cancel_reservation": {
+      "access": "identified",
+      "readOnly": false,
+      "requiresConfirmation": true,
+      "transport": "mcp+webmcp"
+    },
+    "open_booking_form": {
+      "access": "public",
+      "readOnly": true,
+      "requiresConfirmation": false,
+      "transport": "webmcp"
     }
-  ],
-  "api": [
-    {
-      "type": "mcp",
-      "endpoint": "https://whatsapp.demo.busymate.ai/mcp",
-      "docs": "https://whatsapp.demo.busymate.ai/.well-known/mcp.json",
-      "description": "This site's MCP server — prefer calling its tools over simulating page interactions."
-    },
-    {
-      "type": "openapi",
-      "endpoint": "https://whatsapp.demo.busymate.ai/openapi.json",
-      "description": "The same tools, documented as a REST-style OpenAPI spec."
-    }
-  ],
-  "action_guidelines": [
-    {
-      "directive": "SHOULD",
-      "description": "Prefer this site's MCP/WebMCP tools over simulating clicks or form fills on the page."
-    },
-    {
-      "directive": "MUST NOT",
-      "description": "Treat any action on this demo as touching a real order, payment or person — this is a sandbox."
-    },
-    {
-      "directive": "MUST",
-      "description": "Confirm with the visitor before calling a mutating tool (book_table, cancel_reservation) — each one changes something."
-    },
-    {
-      "directive": "SHOULD",
-      "description": "Expect an identified-visitor tool (get_my_reservations, cancel_reservation) to require a signed launch proof and answer for that visitor alone."
-    }
-  ]
+  }
 }

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Stand the WooCommerce demo up on the demos droplet: swap, containers, vhost, TLS.
+# Stand the WooCommerce demo up on the demo host: swap, containers, vhost, TLS.
 # IDEMPOTENT — safe to re-run; it never touches an existing container or cert.
 # Run as root ON THE BOX:
 #
-#   REPO_DIR=/srv/demos/_repo bash /srv/demos/_repo/sites/woo/provision.sh
+#   REPO_DIR=<demo-host>/_repo bash <demo-host>/_repo/sites/woo/provision.sh
 #
-# Then seed the shop:  ROOT=/srv/demos/woo bash /srv/demos/_repo/sites/woo/seed/seed.sh
+# Then seed the shop:  ROOT=<demo-host>/woo bash <demo-host>/_repo/sites/woo/seed/seed.sh
 #
 # This demo is `type: "dynamic"`, so scripts/deploy.sh skips it entirely (it only
 # handles static docroots). That is deliberate: a deploy run must never rsync over
@@ -16,17 +16,17 @@ NAME=woo
 PORT=8106
 MCP_PORT=8107
 FQDN=woo.demo.busymate.ai
-ROOT=/srv/demos/$NAME
+ROOT=<demo-host>/$NAME
 DATA=$ROOT/data
 ACME=$ROOT/acme
 NET=demo-woo-net
-REPO_DIR="${REPO_DIR:-/srv/demos/_repo}"
+REPO_DIR="${REPO_DIR:-<demo-host>/_repo}"
 TPL="$REPO_DIR/infra/nginx"
 CERT_EMAIL="${CERT_EMAIL:-admin@busymate.ai}"
 CONF=/etc/nginx/sites-available/$FQDN.conf
 
 # --- 1. swap --------------------------------------------------------------
-# The droplet is 2 GB with no swap and ~1.4 GB free. MariaDB + PHP-FPM under
+# The demo host is 2 GB with no swap and ~1.4 GB free. MariaDB + PHP-FPM under
 # Apache will fit, but a plugin install or an image import can spike past it,
 # and the OOM killer takes the database first.
 if ! swapon --show | grep -q swapfile; then

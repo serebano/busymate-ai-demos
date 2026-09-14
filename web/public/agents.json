@@ -8,7 +8,8 @@
   "sources": [
     {
       "id": "mcp",
-      "path": "https://web.demo.busymate.ai/openapi.json"
+      "type": "openapi",
+      "url": "https://web.demo.busymate.ai/openapi.json"
     }
   ],
   "flows": [
@@ -16,136 +17,87 @@
       "id": "search_coffee",
       "title": "search coffee",
       "description": "Search Northwind Coffee's range by name, origin, roast, tasting note or use (espresso, filter, decaf, gift). Returns price, size and what is in stock.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "query",
-            "description": "What the customer is after, e.g. 'fruity filter coffee' or 'decaf'",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "decafOnly",
-            "description": "Limit the results to decaffeinated coffee",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "search_coffee",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true,
+      "x-access": "public"
     },
     {
       "id": "get_coffee",
       "title": "get coffee",
       "description": "Full detail for one of Northwind's coffees, by SKU or by name.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "sku",
-            "description": "The SKU or the product name",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "get_coffee",
+      "x-transport": "mcp",
+      "x-readOnly": true,
+      "x-access": "public"
     },
     {
       "id": "store_policy",
       "title": "store policy",
       "description": "Northwind's own wording for one of its policies: shipping, returns, subscription, brewing.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "policy",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "store_policy",
+      "x-transport": "mcp",
+      "x-readOnly": true,
+      "x-access": "public"
     },
     {
       "id": "contact_northwind",
       "title": "contact northwind",
       "description": "Leave a message for a person at Northwind — a question the assistant cannot answer, a problem with an order, or anything that needs a human. Collects a name, an email address and the message itself. This is NOT the tool for 'where is my order' — call get_order_status for that, even signed out (it is what shows the sign-in card). The email is the VISITOR'S OWN real address: it must come from something they typed in this conversation. Never invent one, and never fill it with a placeholder (example.com, test@…, noreply@…, user@…) just to satisfy this schema — if the visitor has not given an email, ask them for it (the form card does this) instead of calling this tool with a guess. The server refuses placeholder-looking addresses.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Who is writing — the visitor's own name, never invented",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "The visitor's own real email, exactly as they gave it — never a placeholder or invented address",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "message",
-            "description": "What they want to say",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "orderNumber",
-            "description": "The order this is about, if any",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "contact_northwind",
+      "x-transport": "mcp",
+      "x-readOnly": false,
+      "x-access": "public"
+    },
+    {
+      "id": "get_order_status",
+      "title": "get order status",
+      "description": "THE tool for any order or delivery question — 'where is my order', tracking, ETA. Call this FIRST for that ask, even when the visitor is signed out: a not-signed-in refusal is the expected, correct outcome and is what shows the sign-in card. Never substitute contact_northwind for this just because it is signed out. Once signed in, returns where one of the customer's orders is, with carrier, tracking number and expected delivery date. Answers only for the customer signed in on this page.",
+      "operations": [],
+      "x-mcpTool": "get_order_status",
+      "x-transport": "webmcp",
+      "x-readOnly": true,
+      "x-access": "identified"
+    },
+    {
+      "id": "start_return",
+      "title": "start return",
+      "description": "Open a return for one item on one of the signed-in customer's orders and report the refund and what happens next.",
+      "operations": [],
+      "x-mcpTool": "start_return",
+      "x-transport": "webmcp",
+      "x-readOnly": false,
+      "x-access": "identified"
+    },
+    {
+      "id": "add_to_cart",
+      "title": "add to cart",
+      "description": "Put a bag of one of Northwind's coffees in this visitor's cart, by SKU or by name.",
+      "operations": [],
+      "x-mcpTool": "add_to_cart",
+      "x-transport": "webmcp",
+      "x-readOnly": false
+    },
+    {
+      "id": "view_cart",
+      "title": "view cart",
+      "description": "What is in the cart right now, with the subtotal, the delivery charge and the total.",
+      "operations": [],
+      "x-mcpTool": "view_cart",
+      "x-transport": "webmcp",
+      "x-readOnly": true
     }
   ]
 }

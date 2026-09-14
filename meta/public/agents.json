@@ -8,7 +8,8 @@
   "sources": [
     {
       "id": "mcp",
-      "path": "https://meta.demo.busymate.ai/openapi.json"
+      "type": "openapi",
+      "url": "https://meta.demo.busymate.ai/openapi.json"
     }
   ],
   "flows": [
@@ -16,239 +17,89 @@
       "id": "list_collection",
       "title": "list collection",
       "description": "The whole Sol & Salt Swimwear collection — every swim and resort piece in stock, with its code, fabric, size range, colourways and price. Optionally narrowed to one category.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "category",
-            "description": "Narrow the list: 'swim' (suits, tops, bottoms, rash guard, board shorts), 'resort' (linen, kaftan, cover-ups) or 'all' (the default).",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "list_collection",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true
     },
     {
       "id": "search_products",
       "title": "search products",
       "description": "Search the Sol & Salt Swimwear collection by name, code, fabric, colourway or a word for what it is for ('laps', 'long swim', 'cover-up', 'UPF', 'high waist'). Returns the matching pieces in full.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "query",
-            "description": "A piece name, code, fabric, colourway or keyword, e.g. 'one-piece', 'linen', 'UPF' or 'SS-107'.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "search_products",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true
     },
     {
       "id": "size_guide",
       "title": "size guide",
       "description": "Sol & Salt Swimwear's size chart in centimetres and inches, and — when body measurements are given — the size this label would actually put someone in for a named piece, with the fit note that goes with it. Always call this before suggesting a size; never guess one.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "item",
-            "description": "The piece being sized, by name or code, e.g. 'Tidal Scoop-Back One-Piece' or 'SS-109'. Leave blank for the plain chart.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "bust_cm",
-            "description": "Bust or chest measurement in centimetres, if the customer has given one.",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "name": "waist_cm",
-            "description": "Natural waist measurement in centimetres, if the customer has given one.",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "name": "hip_cm",
-            "description": "Fullest hip measurement in centimetres, if the customer has given one.",
-            "required": false,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "size_guide",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true
     },
     {
       "id": "shipping_and_returns",
       "title": "shipping and returns",
       "description": "Sol & Salt Swimwear's delivery times, costs and duty handling, plus the returns and exchange policy — the window, what makes a piece returnable, and how a refund is paid back.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "destination",
-            "description": "Where the parcel is going: 'domestic' (within the United States), 'canada', 'europe', 'rest-of-world', or blank for everything.",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "shipping_and_returns",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true
     },
     {
       "id": "start_return",
       "title": "start return",
       "description": "Do NOT ask the customer for the order number, the item or the reason in the conversation — calling this tool with whatever is already known IS how the return card opens, and it is the only approved way to collect a missing one. Starts a return or exchange at Sol & Salt Swimwear and reports the return number, the window, and what happens to the refund. Never invent, guess or default an order number, an item or a reason.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "order_number",
-            "description": "The order the piece came in, e.g. 'SS-31082'. Leave blank if not yet known — the card asks for it.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "item",
-            "description": "Which piece is going back, by name or code.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "reason",
-            "description": "Why it is going back: 'too-small', 'too-large', 'not-as-pictured', 'faulty', 'changed-mind' or 'exchange-size'.",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "note",
-            "description": "Anything the returns desk should know — the size wanted in an exchange, or what went wrong.",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "start_return",
+      "x-transport": "mcp",
+      "x-readOnly": false
     },
     {
       "id": "get_my_orders",
       "title": "get my orders",
       "description": "Every order belonging to the signed-in customer at Sol & Salt Swimwear — what was in it, what it cost, where it is, and whether it can still be returned or cancelled. Requires an identified (signed-in) visitor: call it with that visitor's own email from context, never one typed mid-conversation by an unidentified visitor.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "email",
-            "description": "The signed-in visitor's own email address.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "get_my_orders",
+      "x-transport": "mcp+webmcp",
+      "x-readOnly": true,
+      "x-access": "identified"
     },
     {
       "id": "cancel_order",
       "title": "cancel order",
       "description": "Cancel a Sol & Salt Swimwear order that has NOT been dispatched yet, for the signed-in customer. Requires an identified (signed-in) visitor and their explicit confirmation first; an order already on its way has to be returned instead, not cancelled.",
-      "actions": [
-        {
-          "id": "call",
-          "sourceId": "mcp",
-          "operationId": "mcpJsonRpcCall"
-        }
+      "operations": [
+        "mcpJsonRpcCall"
       ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "order_number",
-            "description": "The order to cancel, e.g. 'SS-31460'.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "description": "The signed-in visitor's own email address, the one the order was placed under.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "success": {
-            "type": "object",
-            "description": "The JSON-RPC 2.0 tools/call result for this tool."
-          }
-        }
-      }
+      "x-mcpTool": "cancel_order",
+      "x-transport": "mcp",
+      "x-readOnly": false,
+      "x-access": "identified"
+    },
+    {
+      "id": "open_return_form",
+      "title": "open return form",
+      "description": "Open the return card on the page for the visitor to fill in and submit themselves — order number, which piece, reason, one button. Used instead of asking for those three things one at a time in the conversation.",
+      "operations": [],
+      "x-mcpTool": "open_return_form",
+      "x-transport": "webmcp",
+      "x-readOnly": true
     }
   ]
 }

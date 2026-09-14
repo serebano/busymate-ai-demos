@@ -3,9 +3,9 @@
 # IDEMPOTENT: re-running updates in place and never duplicates a product, page,
 # category, zone, customer, order or API key.
 #
-#   ROOT=/srv/demos/woo bash seed.sh
+#   ROOT=<demo-host>/woo bash seed.sh
 #
-# Runs on the demos droplet as root. Everything is driven through wp-cli inside
+# Runs on the demo host as root. Everything is driven through wp-cli inside
 # the `demo-woo` container (`docker exec`); the store's admin surface is closed
 # to the public, so this script is the only way the shop is ever administered.
 #
@@ -16,7 +16,7 @@
 set -eu
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="${ROOT:-/srv/demos/woo}"
+ROOT="${ROOT:-<demo-host>/woo}"
 CONTAINER="${CONTAINER:-demo-woo}"
 SITE_URL="${SITE_URL:-https://woo.demo.busymate.ai}"
 CAT="$HERE/catalog.json"; PAGES="$HERE/pages.json"; IMGDIR="$HERE/img"

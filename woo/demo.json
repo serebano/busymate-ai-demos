@@ -24,7 +24,7 @@
       "restart": "unless-stopped",
       "memory": "768m",
       "volumes": [
-        "/srv/demos/woo/data/wp:/var/www/html"
+        "<demo-host>/woo/data/wp:/var/www/html"
       ]
     },
     "db": {
@@ -40,14 +40,14 @@
         "--key-buffer-size=8M"
       ],
       "volumes": [
-        "/srv/demos/woo/data/db:/var/lib/mysql"
+        "<demo-host>/woo/data/db:/var/lib/mysql"
       ]
     },
     "vhost_templates": [
       "infra/nginx/wordpress-http.conf.template",
       "infra/nginx/wordpress-https.conf.template"
     ],
-    "acme_root": "/srv/demos/woo/acme",
+    "acme_root": "<demo-host>/woo/acme",
     "seed": "sites/woo/seed/seed.sh"
   }
 }

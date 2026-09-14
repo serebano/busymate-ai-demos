@@ -22,7 +22,9 @@ server, the form-card builder, the card and avatar UI, the brand and knowledge b
 | Microsoft Teams channel | [teams.demo.busymate.ai](https://teams.demo.busymate.ai) | [guide](https://busymate.ai/integrations/teams) | [`teams/`](https://github.com/serebano/busymate-ai-demos/tree/main/teams) |
 | Messenger & Instagram channels | [meta.demo.busymate.ai](https://meta.demo.busymate.ai) | [guide](https://busymate.ai/integrations/messenger) | [`meta/`](https://github.com/serebano/busymate-ai-demos/tree/main/meta) |
 
-Mirrored automatically from the private playground repo on every deploy; open issues on
-[busymate-devtools](https://github.com/serebano/busymate-devtools/issues). These are sandbox
-demos — no real orders, payments or customer data; every photograph is credited in its demo's
-`IMAGE-CREDITS.md` and no real company's assets or real person's likeness is used.
+This is the live source for every demo above, kept in sync automatically as the demos
+change. Browse the full set at [busymate.ai/integrations](https://busymate.ai/integrations),
+or open issues on [busymate-devtools](https://github.com/serebano/busymate-devtools/issues).
+These are sandbox demos — no real orders, payments or customer data; every photograph is
+credited in its demo's `IMAGE-CREDITS.md` and no real company's assets or real person's
+likeness is used.

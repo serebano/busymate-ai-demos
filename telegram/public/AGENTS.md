@@ -21,8 +21,8 @@ own MCP server as assistant tools — see the guides under "Learn more" in
 [llms.txt](https://telegram.demo.busymate.ai/llms.txt).
 
 ## Configuration
-This demo's own MCP server is configured at `https://telegram.demo.busymate.ai/mcp` (JSON-RPC 2.0, transport: streamable-http, no auth to connect). What this page will let an agent do — and what it MUST confirm with the
-visitor first — is declared in [agent-permissions.json](https://telegram.demo.busymate.ai/agent-permissions.json).
+This demo's own MCP server is configured at `https://telegram.demo.busymate.ai/mcp` (JSON-RPC 2.0, transport: streamable-http, no auth to connect). Per-tool access (public vs. identified-visitors-only, read-only vs.
+confirmation-required) is declared in [.well-known/agent-permissions.json](https://telegram.demo.busymate.ai/.well-known/agent-permissions.json) — treat a tool NOT listed there as denied.
 
 ## Usage & examples
 Call this site's MCP server at `https://telegram.demo.busymate.ai/mcp` (JSON-RPC 2.0, no credential needed to connect):
