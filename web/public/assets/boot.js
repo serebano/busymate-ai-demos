@@ -79,7 +79,16 @@ async function renderShopFurniture() {
   }
 }
 
-async function copyPrompt(text) {
+// #2662 follow-up — one tap opens the widget, fills the composer with the
+// exact prompt, and submits it (busymate.ai/embed/v1.js `ask()`). A cached
+// pre-#2662 embed script (no `ask`) degrades to the old copy-to-clipboard
+// behavior rather than doing nothing.
+async function tryPrompt(text) {
+  if (window.BusymateAI?.ask) {
+    window.BusymateAI.ask(text);
+    return;
+  }
+  window.BusymateAI?.open?.();
   try {
     await navigator.clipboard.writeText(text);
     flash("Prompt copied — paste it into the chat");
@@ -100,10 +109,7 @@ async function openHosted() {
 await expandIncludes();
 wireChrome();
 renderFeatures(document.getElementById("features"), {
-  onTry: async (feature) => {
-    await copyPrompt(feature.prompt);
-    window.BusymateAI?.open?.();
-  },
+  onTry: (feature) => tryPrompt(feature.prompt),
   onHosted: openHosted,
 });
 await renderShopFurniture();

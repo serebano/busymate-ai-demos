@@ -1,9 +1,11 @@
 /*
  * The capability blocks at the foot of the page.
  *
- * One entry per thing this demo actually does. `prompt` is copied to the
- * clipboard and the chat opens, so a visitor never has to retype it; `how` is
- * the exact instructions for doing the same on their own site.
+ * One entry per thing this demo actually does. #2662 follow-up — `prompt` is
+ * sent straight into the widget via `window.BusymateAI.ask()`: one tap opens
+ * the chat, fills the composer with the exact prompt, and submits it, so a
+ * visitor never retypes or pastes anything. `how` is the exact instructions
+ * for doing the same on their own site.
  */
 export const FEATURES = [
   {
@@ -67,7 +69,7 @@ export function renderFeatures(mount, { onTry, onHosted }) {
   mount.innerHTML = FEATURES.map((f, i) => {
     const tryRow = f.prompt
       ? `<div class="try"><span>Try it: “${esc(f.prompt)}”</span>
-           <button class="btn tiny" type="button" data-try="${i}">Copy &amp; open chat</button></div>`
+           <button class="btn tiny" type="button" data-try="${i}">Open in chat</button></div>`
       : "";
     const files = f.files
       ? `<div class="files">${f.files.map((p) => `<a href="${p}">${p}</a>`).join("")}</div>`

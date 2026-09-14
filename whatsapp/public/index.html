@@ -394,11 +394,11 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <p class="sub">Ask Marlow for a time and party size — it opens an inline form right in the chat for the details, one tap to submit, instead of asking for them one by one.</p>
       <div class="try-row">
         <span>Try it: "Do you have a table for 2 tonight at 7:30?"</span>
-        <button class="btn tiny" type="button" data-try-prompt="Do you have a table for 2 tonight at 7:30?">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="Do you have a table for 2 tonight at 7:30?">Open in chat</button>
       </div>
       <div class="try-row">
         <span>Try it: "I'd like to book a table" (Marlow opens the form)</span>
-        <button class="btn tiny" type="button" data-try-prompt="I'd like to book a table.">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="I'd like to book a table.">Open in chat</button>
       </div>
       <p class="sub" style="margin:14px 0 0"><button class="btn small" type="button" id="openBookingFormBtn">Open the booking form directly →</button></p>
     </div>
@@ -465,19 +465,19 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>The chat, from one script tag</h3>
         <p>The bubble in the corner (and the phone above) is the live product on a workspace of its own. One line of HTML put it there.</p>
-        <div class="try"><span>Try: "What's good for two people who don't eat meat?"</span><button class="btn tiny" data-try-prompt="What's good for two people who don't eat meat?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "What's good for two people who don't eat meat?"</span><button class="btn tiny" data-try-prompt="What's good for two people who don't eat meat?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>Grounded in Marlow's own words</h3>
         <p>The menu, hours and booking policy above were published to the workspace as text. Answers quote it and cite it; anything outside it gets an honest "I don't know".</p>
-        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>It can work the page</h3>
         <p>This site publishes its own actions — check a table, book one, search the menu. Ask for one and watch it happen without a form.</p>
-        <div class="try"><span>Try: "Is Saturday at 7 open for 6 people?"</span><button class="btn tiny" data-try-prompt="Is Saturday at 7 open for 6 people?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Is Saturday at 7 open for 6 people?"</span><button class="btn tiny" data-try-prompt="Is Saturday at 7 open for 6 people?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -489,13 +489,13 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>It knows who's asking</h3>
         <p>Sign in as the demo guest below and Marlow can pull up that guest's own reservations — through the page's own tools, for that guest and nobody else.</p>
-        <div class="try"><span>Try (signed in): "What are my reservations?"</span><button class="btn tiny" data-try-prompt="What are my reservations?">Copy &amp; open</button></div>
+        <div class="try"><span>Try (signed in): "What are my reservations?"</span><button class="btn tiny" data-try-prompt="What are my reservations?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>A person can take over</h3>
         <p>Ask for a person and the thread lands in the team inbox, mid-conversation — the same handoff works on WhatsApp once it's live, no restart, no ticket number.</p>
-        <div class="try"><span>Try: "Can I talk to someone about a private event?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a private event for 20 people?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Can I talk to someone about a private event?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a private event for 20 people?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -507,7 +507,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>Useful before anyone signs in</h3>
         <p>Signed out, the menu, hours and availability are still answerable — to a guest and to any agent. Only a guest's own reservations wait for a signed-in proof of who's asking.</p>
-        <div class="try"><span>Try: "What time do you open Friday?"</span><button class="btn tiny" data-try-prompt="What time do you open Friday?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "What time do you open Friday?"</span><button class="btn tiny" data-try-prompt="What time do you open Friday?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -691,12 +691,20 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-open-chat]").forEach(function (b) {
     b.addEventListener("click", function () { openChat(); });
   });
+  // #2662 follow-up — ONE tap opens the widget, fills the composer with the
+  // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
+  // call every demo uses); openChat() still brings the phone-frame widget on
+  // screen first. A cached pre-#2662 embed script (no `ask`) degrades to the
+  // old copy-to-clipboard behavior rather than doing nothing.
   document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
-    b.addEventListener("click", async function () {
+    b.addEventListener("click", function () {
       var text = b.getAttribute("data-try-prompt");
-      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
-      catch (e) { flash("Ask Marlow: " + text); }
       openChat();
+      if (window.BusymateAI && window.BusymateAI.ask) window.BusymateAI.ask(text);
+      else navigator.clipboard.writeText(text).then(
+        function () { flash("Copied — paste it into the chat"); },
+        function () { flash("Ask Marlow: " + text); },
+      );
     });
   });
 });

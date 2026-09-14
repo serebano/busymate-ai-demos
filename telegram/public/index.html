@@ -410,11 +410,11 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <p class="sub">Ask Watt for a device and a time — it opens an inline form right in the chat for the details, one tap to submit, instead of asking for them one by one. Ordering a gadget works the same way.</p>
       <div class="try-row">
         <span>Try it: "My phone screen is cracked, can I book a repair?"</span>
-        <button class="btn tiny" type="button" data-try-prompt="My phone screen is cracked, can I book a repair?">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="My phone screen is cracked, can I book a repair?">Open in chat</button>
       </div>
       <div class="try-row">
         <span>Try it: "I'll take a Voyager 20K Power Bank, ship it to Portugal."</span>
-        <button class="btn tiny" type="button" data-try-prompt="I'll take a Voyager 20K Power Bank, ship it to Portugal.">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="I'll take a Voyager 20K Power Bank, ship it to Portugal.">Open in chat</button>
       </div>
     </div>
     <div class="panel policy">
@@ -481,19 +481,19 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>The chat, from one script tag</h3>
         <p>The bubble in the corner (and the phone above) is the live product on a workspace of its own. One line of HTML put it there.</p>
-        <div class="try"><span>Try: "What's a good power bank for a weekend trip?"</span><button class="btn tiny" data-try-prompt="What's a good power bank for a weekend trip?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "What's a good power bank for a weekend trip?"</span><button class="btn tiny" data-try-prompt="What's a good power bank for a weekend trip?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>Grounded in Nomad Circuits' own words</h3>
         <p>The catalogue, hours and repair policy above were published to the workspace as text. Answers quote it and cite it; anything outside it gets an honest "I don't know".</p>
-        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Are you open Monday?"</span><button class="btn tiny" data-try-prompt="Are you open Monday?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>It can work the page</h3>
         <p>This site publishes its own actions — search the catalogue, book a repair, place an order. Ask for one and watch it happen without a form.</p>
-        <div class="try"><span>Try: "Do you have anything for translating on the go?"</span><button class="btn tiny" data-try-prompt="Do you have anything for translating on the go?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Do you have anything for translating on the go?"</span><button class="btn tiny" data-try-prompt="Do you have anything for translating on the go?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -505,13 +505,13 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>It knows who's asking</h3>
         <p>Sign in as the demo customer below and Watt can pull up that customer's own orders and repair tickets — through the page's own tools, for that customer and nobody else.</p>
-        <div class="try"><span>Try (signed in): "What's the status of my order?"</span><button class="btn tiny" data-try-prompt="What's the status of my order?">Copy &amp; open</button></div>
+        <div class="try"><span>Try (signed in): "What's the status of my order?"</span><button class="btn tiny" data-try-prompt="What's the status of my order?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>A person can take over</h3>
         <p>Ask for a person and the thread lands in the team inbox, mid-conversation — the same handoff works on Telegram once it's live, no restart, no ticket number.</p>
-        <div class="try"><span>Try: "Can I talk to someone about a bulk order?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a bulk order of 20 power banks?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Can I talk to someone about a bulk order?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a bulk order of 20 power banks?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -523,7 +523,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>Useful before anyone signs in</h3>
         <p>Signed out, the catalogue, hours and shipping policy are still answerable — to a visitor and to any agent. Only a customer's own orders and repairs wait for a signed-in proof of who's asking.</p>
-        <div class="try"><span>Try: "What time do you open Saturday?"</span><button class="btn tiny" data-try-prompt="What time do you open Saturday?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "What time do you open Saturday?"</span><button class="btn tiny" data-try-prompt="What time do you open Saturday?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -684,12 +684,20 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-open-chat]").forEach(function (b) {
     b.addEventListener("click", function () { openChat(); });
   });
+  // #2662 follow-up — ONE tap opens the widget, fills the composer with the
+  // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
+  // call every demo uses); openChat() still brings the phone-frame widget on
+  // screen first. A cached pre-#2662 embed script (no `ask`) degrades to the
+  // old copy-to-clipboard behavior rather than doing nothing.
   document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
-    b.addEventListener("click", async function () {
+    b.addEventListener("click", function () {
       var text = b.getAttribute("data-try-prompt");
-      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
-      catch (e) { flash("Ask Watt: " + text); }
       openChat();
+      if (window.BusymateAI && window.BusymateAI.ask) window.BusymateAI.ask(text);
+      else navigator.clipboard.writeText(text).then(
+        function () { flash("Copied — paste it into the chat"); },
+        function () { flash("Ask Watt: " + text); },
+      );
     });
   });
 });

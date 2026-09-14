@@ -373,11 +373,11 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <p class="sub">Tell Patch what's broken — it opens a short card right in the chat for the category, the urgency and where to send updates, one tap to submit, instead of asking for each detail in turn. Requesting a seat in Notion or GitHub works the same way, and the approver gets it in Slack.</p>
       <div class="try-row">
         <span>Try it: "My laptop keeps dropping off the office Wi-Fi, can you open a ticket?"</span>
-        <button class="btn tiny" type="button" data-try-prompt="My laptop keeps dropping off the office Wi-Fi, can you open a ticket?">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="My laptop keeps dropping off the office Wi-Fi, can you open a ticket?">Open in chat</button>
       </div>
       <div class="try-row">
         <span>Try it: "I need admin on Notion for the launch project."</span>
-        <button class="btn tiny" type="button" data-try-prompt="I need admin on Notion for the launch project.">Copy &amp; open chat</button>
+        <button class="btn tiny" type="button" data-try-prompt="I need admin on Notion for the launch project.">Open in chat</button>
       </div>
     </div>
     <div class="panel policy">
@@ -459,19 +459,19 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>The chat, from one script tag</h3>
         <p>The bubble in the corner and the Slack window above are one live product on a workspace of its own; a single line of HTML put it here.</p>
-        <div class="try"><span>Try: "What does the Team plan include?"</span><button class="btn tiny" data-try-prompt="What does the Team plan include?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "What does the Team plan include?"</span><button class="btn tiny" data-try-prompt="What does the Team plan include?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>Grounded in Patchwell's own pages</h3>
         <p>The catalogue, plans, hours and FAQ were published to the workspace as text. Answers quote them; anything outside gets an honest "I don't know".</p>
-        <div class="try"><span>Try: "Is there on-call at the weekend?"</span><button class="btn tiny" data-try-prompt="Is there on-call at the weekend?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Is there on-call at the weekend?"</span><button class="btn tiny" data-try-prompt="Is there on-call at the weekend?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>It can work the page</h3>
         <p>Eight actions are registered on this page over WebMCP — search the help articles, check status, open a ticket. Ask for one and watch it run without leaving the chat.</p>
-        <div class="try"><span>Try: "How do I reset MFA if I lost my phone?"</span><button class="btn tiny" data-try-prompt="How do I reset MFA if I lost my phone?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "How do I reset MFA if I lost my phone?"</span><button class="btn tiny" data-try-prompt="How do I reset MFA if I lost my phone?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -483,13 +483,13 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>It knows who's asking</h3>
         <p>Sign in as the demo customer below and Patch can pull up that customer's own tickets, access requests and plan — for her and nobody else.</p>
-        <div class="try"><span>Try (signed in): "Where's my Wi-Fi ticket at?"</span><button class="btn tiny" data-try-prompt="Where's my Wi-Fi ticket at?">Copy &amp; open</button></div>
+        <div class="try"><span>Try (signed in): "Where's my Wi-Fi ticket at?"</span><button class="btn tiny" data-try-prompt="Where's my Wi-Fi ticket at?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
       </div>
       <div class="card feature">
         <h3>An engineer can take over</h3>
         <p>Say "talk to a person" and the thread lands in the desk's inbox mid-conversation — the operator replies into the same thread, on the web and in Slack, no restart.</p>
-        <div class="try"><span>Try: "I think we've been phished — talk to a person"</span><button class="btn tiny" data-try-prompt="I think one of our accounts has been phished, I need to talk to a person.">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "I think we've been phished — talk to a person"</span><button class="btn tiny" data-try-prompt="I think one of our accounts has been phished, I need to talk to a person.">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -501,7 +501,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
       <div class="card feature">
         <h3>Useful before anyone signs in</h3>
         <p>Signed out, the catalogue, plans, hours, how-tos and status are still answerable — to a visitor and to any agent. Only a customer's own tickets wait for a signed-in proof of who's asking.</p>
-        <div class="try"><span>Try: "Is the VPN down right now?"</span><button class="btn tiny" data-try-prompt="Is the VPN down right now?">Copy &amp; open</button></div>
+        <div class="try"><span>Try: "Is the VPN down right now?"</span><button class="btn tiny" data-try-prompt="Is the VPN down right now?">Open in chat</button></div>
         <a class="how" href="https://busymate.ai/docs/guides/public-tools">How to add this to your site →</a>
       </div>
       <div class="card feature">
@@ -661,12 +661,20 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-open-chat]").forEach(function (b) {
     b.addEventListener("click", function () { openChat(); });
   });
+  // #2662 follow-up — ONE tap opens the widget, fills the composer with the
+  // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
+  // call every demo uses); openChat() still brings the phone-frame widget on
+  // screen first. A cached pre-#2662 embed script (no `ask`) degrades to the
+  // old copy-to-clipboard behavior rather than doing nothing.
   document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
-    b.addEventListener("click", async function () {
+    b.addEventListener("click", function () {
       var text = b.getAttribute("data-try-prompt");
-      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
-      catch (e) { flash("Ask Patch: " + text); }
       openChat();
+      if (window.BusymateAI && window.BusymateAI.ask) window.BusymateAI.ask(text);
+      else navigator.clipboard.writeText(text).then(
+        function () { flash("Copied — paste it into the chat"); },
+        function () { flash("Ask Patch: " + text); },
+      );
     });
   });
 });
