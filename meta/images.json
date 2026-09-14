@@ -1,0 +1,62 @@
+{
+  "title": "Sol & Salt Swimwear",
+  "note": "Pinned Wikimedia Commons files — a live search would change the pictures under us. Coast, water, workroom and object photography only: no photograph here stands in for a named customer, no face is used as a review, and no real label's product shot appears.",
+  "images": [
+    {
+      "id": "hero",
+      "file": "File:Large seashore on a hot summer day (Unsplash).jpg",
+      "alt": "An open seashore on a hot afternoon, the water Sol & Salt cuts for",
+      "width": 1800,
+      "aspect": 1.75
+    },
+    {
+      "id": "story",
+      "file": "File:Sunset sky water.jpg",
+      "alt": "The long evening swim the first Sol & Salt one-piece was made for",
+      "width": 1200,
+      "aspect": 1.5
+    },
+    {
+      "id": "sea",
+      "file": "File:Infinity pool by the sea (Unsplash).jpg",
+      "alt": "An ocean pool at the edge of open water, where a new knit starts its test",
+      "width": 860,
+      "aspect": 1
+    },
+    {
+      "id": "dune",
+      "file": "File:Sand beach view through grass (Unsplash).jpg",
+      "alt": "Dune grass over the cove the Sand colourway was matched to",
+      "width": 860,
+      "aspect": 1
+    },
+    {
+      "id": "pool",
+      "file": "File:Water flowing steadily into a vibrant blue swimming pool during a sunny day.jpg",
+      "alt": "Chlorinated water: every knit soaks for ninety hours here before it is signed off",
+      "width": 860,
+      "aspect": 1
+    },
+    {
+      "id": "goggles",
+      "file": "File:Pool Goggles (Unsplash).jpg",
+      "alt": "Goggles on the tiles at the end of a lap set",
+      "width": 860,
+      "aspect": 1
+    },
+    {
+      "id": "surf",
+      "file": "File:Abandoned surfboard (Unsplash).jpg",
+      "alt": "Board-short weather on an empty point break",
+      "width": 860,
+      "aspect": 1
+    },
+    {
+      "id": "atelier",
+      "file": "File:Threads for sewing in a workshop. (Unsplash).jpg",
+      "alt": "A basket of coral thread at the workroom bench where every sample is cut and sewn",
+      "width": 860,
+      "aspect": 1
+    }
+  ]
+}

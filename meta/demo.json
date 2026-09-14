@@ -1,0 +1,19 @@
+{
+  "name": "meta",
+  "subdomain": "meta",
+  "title": "Messenger & Instagram channels",
+  "tagline": "Sol & Salt Swimwear — one assistant answering Messenger and Instagram DMs: faithful previews of both threads, a grounded collection and size guide, an MCP server over orders and returns, WebMCP page actions, and identified-customer order lookup.",
+  "type": "static",
+  "assistant": "demo-meta",
+  "tenant_id": "2cc60a31-b39e-4933-8da6-4435af60d400",
+  "status": "live",
+  "order": 9,
+  "icon": "messenger",
+  "also": ["instagram"],
+  "backend_port": 8109,
+  "docs": "https://busymate.ai/integrations/messenger",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/meta",
+  "messenger_page_id": null,
+  "instagram_username": null,
+  "channel_note": "The real go-live hooks live in public/meta-config.json (the two fields the page actually reads at runtime): messengerPageId flips the CTA to https://m.me/<id> and instagramUsername to https://ig.me/m/<user>. The fields here are a documentation mirror only — set both together when the Meta lane connects a real Page and Instagram professional account to this tenant. 'also' lists the extra catalog row this one demo honestly covers."
+}

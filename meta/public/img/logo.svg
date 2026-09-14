@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 512" role="img" aria-label="Sol &amp; Salt Swimwear">
+  <title>Sol &amp; Salt Swimwear</title>
+  
+  <title>Sol &amp; Salt Swimwear</title>
+  <!-- An invented mark for an invented swim label: a low coral sun (sol) sitting
+       on two cream swell lines, with a single salt crystal above the horizon.
+       Drawn for this demo — nothing here is any real business's asset. -->
+  <defs>
+    <linearGradient id="ss-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c6e8c"/>
+      <stop offset="1" stop-color="#0d3b4c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#ss-bg)"/>
+  <circle cx="256" cy="248" r="86" fill="#ff6b57"/>
+  <path d="M104 330 q38 -30 76 0 t76 0 t76 0 t76 0" fill="none" stroke="#f4e9d8" stroke-width="30" stroke-linecap="round"/>
+  <path d="M104 396 q38 -30 76 0 t76 0 t76 0 t76 0" fill="none" stroke="#f4e9d8" stroke-width="30" stroke-linecap="round" opacity="0.55"/>
+  <path d="M256 96 l26 26 -26 26 -26 -26 z" fill="#f4e9d8"/>
+
+  <text x="596" y="292" font-family="ui-serif, Georgia, 'Times New Roman', serif" font-size="150"
+        font-weight="600" letter-spacing="-4" fill="#f4e9d8">Sol &amp; Salt</text>
+  <text x="600" y="372" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+        font-size="62" letter-spacing="6" fill="#ff6b57">SWIM AND RESORT WEAR, ANSWERED IN THE DMS.</text>
+</svg>

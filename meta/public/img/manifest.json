@@ -1,0 +1,50 @@
+[
+  {
+    "id": "hero",
+    "alt": "An open seashore on a hot afternoon, the water Sol & Salt cuts for",
+    "width": 1800,
+    "height": 1049
+  },
+  {
+    "id": "story",
+    "alt": "The long evening swim the first Sol & Salt one-piece was made for",
+    "width": 1200,
+    "height": 795
+  },
+  {
+    "id": "sea",
+    "alt": "An ocean pool at the edge of open water, where a new knit starts its test",
+    "width": 1290,
+    "height": 1290
+  },
+  {
+    "id": "dune",
+    "alt": "Dune grass over the cove the Sand colourway was matched to",
+    "width": 1290,
+    "height": 860
+  },
+  {
+    "id": "pool",
+    "alt": "Chlorinated water: every knit soaks for ninety hours here before it is signed off",
+    "width": 1290,
+    "height": 861
+  },
+  {
+    "id": "goggles",
+    "alt": "Goggles on the tiles at the end of a lap set",
+    "width": 1290,
+    "height": 860
+  },
+  {
+    "id": "surf",
+    "alt": "Board-short weather on an empty point break",
+    "width": 1290,
+    "height": 715
+  },
+  {
+    "id": "atelier",
+    "alt": "A basket of coral thread at the workroom bench where every sample is cut and sewn",
+    "width": 1290,
+    "height": 860
+  }
+]

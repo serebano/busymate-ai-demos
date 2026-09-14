@@ -1,0 +1,1213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sol &amp; Salt Swimwear — swim and resort wear, answered in Messenger and Instagram DMs</title>
+<meta name="description" content="Sol &amp; Salt Swimwear: the collection, sizing, shipping and returns answered live by Sol, its Busymate AI assistant — with faithful previews of the Messenger thread and the Instagram DM, before either channel is connected.">
+<link rel="canonical" href="https://meta.demo.busymate.ai/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json" title="Agent manifest">
+<link rel="alternate" type="text/markdown" href="/llms.txt.md" title="This site as Markdown">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="Sol &amp; Salt Swimwear — answered in the DMs">
+<meta property="og:description" content="A swim and resort label whose assistant already answers on the web — see faithful previews of the Messenger thread and the Instagram DM, before either channel goes live.">
+<meta property="og:image" content="https://meta.demo.busymate.ai/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Store","@id":"https://meta.demo.busymate.ai/#biz","name":"Sol & Salt Swimwear","url":"https://meta.demo.busymate.ai/","description":"A demonstration swim and resort-wear label used to show how Busymate AI answers Messenger and Instagram messages. No order is fulfilled and no payment is taken.","email":"hello@solandsalt.example","telephone":"+1-555-0140","priceRange":"$$"},
+ {"@type":"WebSite","@id":"https://meta.demo.busymate.ai/#site","url":"https://meta.demo.busymate.ai/","name":"Sol & Salt Swimwear","publisher":{"@id":"https://meta.demo.busymate.ai/#biz"}},
+ {"@type":"ItemList","name":"The Sol & Salt collection","itemListElement":[
+   {"@type":"Product","name":"Dune One-Piece","sku":"SS-101","material":"78% regenerated nylon, 22% elastane","offers":{"@type":"Offer","price":"128","priceCurrency":"USD"}},
+   {"@type":"Product","name":"Tidal Scoop-Back One-Piece","sku":"SS-102","material":"78% regenerated nylon, 22% elastane","offers":{"@type":"Offer","price":"132","priceCurrency":"USD"}},
+   {"@type":"Product","name":"Breakwater Rash Guard","sku":"SS-107","material":"82% recycled nylon, 18% elastane, UPF 50+","offers":{"@type":"Offer","price":"96","priceCurrency":"USD"}},
+   {"@type":"Product","name":"Palmetto Linen Camp Shirt","sku":"SS-110","material":"100% washed European linen","offers":{"@type":"Offer","price":"110","priceCurrency":"USD"}}
+ ]},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"How long do I have to send something back?","acceptedAnswer":{"@type":"Answer","text":"30 days from the day it was delivered, unworn, tags on, hygiene liner in place. Return shipping is free inside the United States."}},
+   {"@type":"Question","name":"I am between two sizes — which one?","acceptedAnswer":{"@type":"Answer","text":"On a swim knit, take the larger size; the knit relaxes in water. On linen, take the smaller. Ask Sol with your measurements and it names the size rather than guessing."}},
+   {"@type":"Question","name":"Will the colour hold up in a chlorinated pool?","acceptedAnswer":{"@type":"Answer","text":"Every knit soaks for ninety hours in chlorinated water before a colourway is signed off. Rinse cold after each swim and dry flat in the shade."}}
+ ]}
+]}
+</script>
+<style>
+:root{
+  --bg:#fffaf3; --ink:#1b2b32; --muted:#6b7f88; --card:#fffefb; --line:#ecdfcd;
+  --brand:#1c6e8c; --brand-ink:#fffaf3; --accent:#ff6b57; --ok:#1c6e8c;
+  --band-bg:#0c1a20; --band-ink:#f2e7d8; --band-muted:#9db0b9; --band-line:#1e333b;
+  --msn-1:#0a7cff; --msn-2:#0063d8; --msn-bg:#f2f4f7;
+  --ig-1:#f0a02e; --ig-2:#e0407a; --ig-3:#8a3bd1; --ig-bg:#ffffff;
+  --sand:#e6d2b5; --sea:#1c6e8c; --coral:#ff6b57; --blacksalt:#22282b; --shell:#f7f2ea;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f1d23; --ink:#f2e7d8; --muted:#9db0b9; --card:#16262d; --line:#22383f;
+         --brand:#4fa3c4; --brand-ink:#08161b; --accent:#ff8570; --ok:#4fa3c4;
+         --band-bg:#08151a; --band-line:#1b2f36; --msn-bg:#111b22; --ig-bg:#0f1a20; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:17px;margin-right:auto;font-family:Georgia,"Times New Roman",serif}
+.logo img{width:34px;height:34px;border-radius:10px}
+nav{display:flex;gap:18px}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brand-ink);border:0;border-radius:999px;padding:11px 19px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.tiny{padding:6px 11px;font-size:12px}
+.btn.coral{background:var(--accent);color:#2a1009}
+.dm-cta{background:linear-gradient(135deg,var(--msn-1),var(--ig-3));color:#fff;flex:0 0 auto}
+.dm-cta-icon{width:16px;height:16px;fill:currentColor;flex:0 0 auto}
+.id-chip{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+@media(min-width:900px){.id-chip{display:flex}}
+.id-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.id-chip.on .dot{background:var(--ok)}
+
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.01em;margin:14px 0 16px;font-weight:600}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:28px;letter-spacing:-.01em;margin:0 0 10px;font-weight:600}
+.sub{color:var(--muted);margin:0 0 26px;max-width:64ch}
+.lead{font-size:18px;color:var(--muted);max-width:44ch}
+.cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+
+.hero{position:relative;padding:0;min-height:min(70vh,620px);display:flex;align-items:center;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,26,33,.9) 0%,rgba(7,26,33,.72) 46%,rgba(7,26,33,.24) 80%);z-index:1}
+.hero-inner{position:relative;z-index:2;padding-top:92px;padding-bottom:64px;color:#fffaf3}
+.hero-inner .lead{color:#dbe8ec}
+.hero .btn.ghost{color:#fffaf3;border-color:#ffffff40}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.two-col figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.two-col figure img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.two-col figcaption{padding:12px 16px;font-size:13px;color:var(--muted)}
+.about-copy{align-self:center}
+
+.lookbook{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.lookbook figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.lookbook img{width:100%;aspect-ratio:1;object-fit:cover}
+.lookbook figcaption{padding:10px 12px;font-size:12.5px;color:var(--muted)}
+
+.pieces{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.piece{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:8px}
+.piece .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.piece h3{margin:0;font-size:16px;font-weight:600}
+.piece .price{font-weight:700;white-space:nowrap}
+.piece .sku{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--muted)}
+.piece p{margin:0;font-size:13.5px;color:var(--muted)}
+.piece .fabric{font-size:12.5px;color:var(--ink);opacity:.75}
+.piece .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px;font-size:12px;color:var(--muted)}
+.swatches{display:flex;gap:5px}
+.sw{width:15px;height:15px;border-radius:50%;border:1px solid #00000022;display:inline-block}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:999px;padding:2px 7px}
+
+table.sizes{width:100%;border-collapse:collapse;font-size:13.5px}
+table.sizes th,table.sizes td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.sizes th{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sizes-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:20px;align-items:start}
+.policy ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14px}
+.policy li{padding-bottom:9px;border-bottom:1px solid var(--line)}
+.policy li:last-child{border-bottom:0;padding-bottom:0}
+.policy li strong{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.try-row{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:12px;padding:13px 15px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:16px}
+.try-row span{font-size:14px}
+
+.ship-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+.ship-grid .card h3{margin:0 0 4px;font-size:15px}
+.ship-grid .card p{margin:0;font-size:13px;color:var(--muted)}
+.ship-grid .card .rate{font-weight:700;font-size:14px}
+
+/* ---- Messenger + Instagram preview band ---- */
+.dm-band{background:var(--band-bg);color:var(--band-ink);border-top:1px solid var(--band-line);padding:64px 0}
+.dm-band h2{color:var(--band-ink)}
+.dm-band .sub{color:var(--band-muted)}
+.dm-badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#eef4ff;background:linear-gradient(135deg,color-mix(in srgb,var(--msn-1) 55%,transparent),color-mix(in srgb,var(--ig-3) 55%,transparent));border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.dm-badge svg{width:13px;height:13px;fill:#fff}
+.switch{display:inline-flex;background:#ffffff12;border:1px solid var(--band-line);border-radius:999px;padding:4px;gap:4px;margin-bottom:22px}
+.switch button{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--band-muted);font:inherit;font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:999px;cursor:pointer}
+.switch button svg{width:15px;height:15px;fill:currentColor}
+.switch button[aria-pressed="true"]{background:var(--band-ink);color:#0c1a20}
+.dm-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start}
+.phones{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.phone{background:#07100f;border-radius:34px;padding:10px;box-shadow:0 26px 60px #0008;border:1px solid #ffffff14}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:5px 14px 3px;color:#fff;font-size:11px;font-weight:600;opacity:.8}
+.phone-screen{border-radius:24px;overflow:hidden;display:flex;flex-direction:column;height:520px}
+.frame-messenger .phone-screen{background:var(--msn-bg)}
+.frame-instagram .phone-screen{background:var(--ig-bg)}
+.ch-header{display:flex;align-items:center;gap:10px;padding:10px 12px;flex:0 0 auto}
+.ch-header .back{opacity:.7;font-size:18px}
+.ch-header .avatar{width:34px;height:34px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:#fff}
+.ch-header .avatar img{width:100%;height:100%;object-fit:cover}
+.ch-header .who{flex:1;min-width:0}
+.ch-header .who b{display:block;font-size:14px;font-weight:600}
+.ch-header .who span{display:block;font-size:11px;opacity:.75}
+.ch-header .icons{display:flex;gap:12px;font-size:14px;opacity:.6}
+.frame-messenger .ch-header{background:#fff;color:#0b1c2c;border-bottom:1px solid #e3e7ee}
+.frame-messenger .ch-header .who b{color:#0b1c2c}
+.frame-messenger .ch-header .icons{color:var(--msn-1);opacity:1}
+.frame-instagram .ch-header{background:linear-gradient(96deg,var(--ig-1),var(--ig-2) 52%,var(--ig-3));color:#fff}
+.frame-instagram .ch-header .avatar{padding:2px;background:linear-gradient(135deg,#fff,#ffffff88)}
+.screen-slot{flex:1;position:relative}
+.frame-messenger .screen-slot{background:var(--msn-bg)}
+.frame-instagram .screen-slot{background:var(--ig-bg)}
+.screen-slot .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7b8a95;font-size:12.5px;text-align:center;padding:0 22px;line-height:1.5}
+.composer{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:9px 12px;font-size:12.5px}
+.frame-messenger .composer{background:#fff;border-top:1px solid #e3e7ee;color:#8a94a6}
+.frame-instagram .composer{background:var(--ig-bg);border-top:1px solid #d9dde2;color:#8a94a6}
+.composer .field{flex:1;border-radius:999px;padding:8px 13px;background:#eef1f5;color:#8a94a6}
+.frame-instagram .composer .field{background:transparent;border:1px solid #c9ced6;border-radius:22px}
+.composer .send{font-weight:600}
+.frame-messenger .composer .send{color:var(--msn-1)}
+.frame-instagram .composer .send{color:#0a7cff}
+.frame{transition:opacity .18s ease}
+body[data-channel="messenger"] .frame-instagram,body[data-channel="instagram"] .frame-messenger{opacity:.55}
+body[data-channel="messenger"] .frame-instagram .composer,body[data-channel="instagram"] .frame-messenger .composer{filter:saturate(.4)}
+/* The REAL live embed widget, repositioned (never reparented — moving a
+   cross-origin iframe to a new DOM parent reloads it, which raced the identity
+   handshake and hung the panel) to sit exactly over whichever screen slot is
+   active. Position is set inline by JS; these rules only reshape its box. */
+[data-support-chat]>button{display:none !important}
+[data-support-chat]>div{position:static !important;inset:auto !important;width:100% !important;height:100% !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;background:transparent !important}
+[data-support-chat] iframe{width:100%;height:100%;border:0}
+.dm-copy p{color:var(--band-muted)}
+.dm-note{font-size:12.5px;color:var(--band-muted);margin-top:10px}
+.ch-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.live-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.live-steps .card{background:#ffffff08;border:1px solid var(--band-line);border-radius:var(--radius);padding:18px}
+.live-steps .num{width:24px;height:24px;border-radius:7px;background:#ffffff1c;color:#dbe8ec;display:grid;place-items:center;font-weight:700;font-size:12px;margin-bottom:10px}
+.live-steps h4{margin:0 0 4px;font-size:15px}
+.live-steps p{margin:0;font-size:13.5px;color:var(--band-muted)}
+.dm-band .howto-row{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+.dm-band .howto-row a{color:var(--accent);font-weight:600;text-decoration:none}
+.dm-band .howto-row a:hover{text-decoration:underline}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feature{display:flex;flex-direction:column;gap:9px}
+.feature h3{margin:0;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:13.5px}
+.feature .try{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px dashed color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.feature .files{display:flex;flex-wrap:wrap;gap:8px}
+.feature .files a{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);border-radius:8px;padding:5px 9px;text-decoration:none}
+.feature .how{margin-top:auto;padding-top:4px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.feature .how:hover{text-decoration:underline}
+.scorecard{margin-top:24px;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--card)}
+.scorecard p{margin:0;color:var(--muted);font-size:14px;max-width:56ch}
+
+.id-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.id-panel .customer{font-size:14px;color:var(--muted)}
+.demo-note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:12px}
+.tcard p{margin:0;font-size:14.5px}
+.tcard .who{display:flex;align-items:center;gap:10px}
+.avatar-chip{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex:0 0 auto}
+.tcard .who b{display:block;font-size:13.5px}
+.tcard .who span{display:block;font-size:12px;color:var(--muted)}
+
+.faq dt{font-weight:600;font-size:15px;margin:0 0 4px;font-family:Georgia,"Times New Roman",serif}
+.faq dd{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:72ch}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.contact-grid a{font-weight:600;color:var(--brand)}
+
+/* The return action card on the page (a real <dialog>) */
+dialog.return-modal{border:0;border-radius:var(--radius);padding:0;width:min(430px,92vw);background:var(--card);color:var(--ink);box-shadow:0 24px 60px #0005}
+dialog.return-modal::backdrop{background:#00000099}
+dialog.return-modal .head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+dialog.return-modal .head h3{margin:0;font-size:16px;font-family:Georgia,"Times New Roman",serif}
+dialog.return-modal .body{padding:18px 20px;display:grid;gap:12px}
+dialog.return-modal label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);font-weight:600}
+dialog.return-modal input,dialog.return-modal select,dialog.return-modal textarea{font:inherit;font-size:15px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+dialog.return-modal textarea{resize:vertical;font-weight:400}
+dialog.return-modal .foot{padding:16px 20px;border-top:1px solid var(--line)}
+dialog.return-modal .foot .btn{width:100%;justify-content:center}
+.return-result{font-size:13.5px;padding:10px 12px;border-radius:9px}
+.return-result.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.return-result.err{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+#flash{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:60;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px #0003}
+#flash[hidden]{display:none}
+body[data-signed-in="yes"] [data-when="signed-out"]{display:none}
+body[data-signed-in="no"] [data-when="signed-in"]{display:none}
+
+@media(max-width:980px){
+  .pieces,.lookbook{grid-template-columns:1fr 1fr}
+  .ship-grid{grid-template-columns:1fr 1fr}
+  .two-col,.sizes-grid,.dm-layout{grid-template-columns:1fr}
+  .features,.live-steps,.testimonials{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media(max-width:860px){
+  /* One phone at a time below tablet: the toggle swaps which frame is on
+     screen, so the live widget is never measured against a hidden box. */
+  .phones{grid-template-columns:1fr}
+  body[data-channel="messenger"] .frame-instagram{display:none}
+  body[data-channel="instagram"] .frame-messenger{display:none}
+  body[data-channel="messenger"] .frame-messenger,body[data-channel="instagram"] .frame-instagram{opacity:1}
+}
+@media(max-width:600px){
+  .pieces,.lookbook,.ship-grid,.features,.live-steps,.testimonials,.contact-grid{grid-template-columns:1fr}
+  .phone-screen{height:62vh}
+}
+
+/* ---- Mobile-first: compact header, no-overflow hero, full-width stacked CTAs ---- */
+@media(max-width:480px){
+  .wrap{padding:0 14px}
+  .bar{height:56px;gap:8px}
+  .logo{font-size:14px;gap:7px}
+  .logo img{width:24px;height:24px;border-radius:7px}
+  .id-chip{display:none}
+  .dm-cta{padding:9px;border-radius:50%;line-height:0}
+  .dm-cta-label{display:none}
+  .dm-cta-icon{width:18px;height:18px}
+  .hero{min-height:0}
+  .hero-inner{padding-top:36px;padding-bottom:40px}
+  h1{font-size:26px;line-height:1.12;margin:10px 0 12px}
+  .eyebrow{font-size:10.5px}
+  .lead{font-size:15px}
+  .cta{flex-direction:column;align-items:stretch;margin-top:20px}
+  .cta .btn{justify-content:center;width:100%}
+  h2{font-size:22px}
+  section{padding:38px 0}
+  .try-row{flex-direction:column;align-items:stretch}
+  .try-row .btn{width:100%;justify-content:center}
+  .switch{width:100%}
+  .switch button{flex:1;justify-content:center;padding:9px 10px}
+  .id-panel{flex-direction:column;align-items:stretch}
+  .id-panel > div:last-child{display:flex;gap:10px}
+  .id-panel .btn{flex:1}
+  .scorecard > div{display:flex;gap:10px;width:100%}
+  .scorecard .btn{flex:1;justify-content:center}
+  dialog.return-modal{width:94vw}
+}
+</style>
+</head>
+<body data-signed-in="no" data-channel="messenger">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><img src="/img/mark.png" alt="" aria-hidden="true">Sol &amp; Salt</div>
+    <nav>
+      <a href="#collection">Collection</a>
+      <a href="#sizes">Size guide</a>
+      <a href="#shipping">Shipping &amp; returns</a>
+      <a href="#channels">DM previews</a>
+      <a href="#agents">For agents</a>
+    </nav>
+    <span class="id-chip" id="idChip"><span class="dot"></span><span id="idChipText">Browsing as a guest</span></span>
+    <a class="btn dm-cta" id="dmHeaderCta" href="#channels" aria-label="Message Sol and Salt">
+      <svg class="dm-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.24 0 0 4.952 0 11.64c0 3.499 1.434 6.521 3.769 8.61a.96.96 0 0 1 .323.683l.065 2.135a.96.96 0 0 0 1.347.85l2.381-1.053a.96.96 0 0 1 .641-.046A13 13 0 0 0 12 23.28c6.76 0 12-4.952 12-11.64S18.76 0 12 0m6.806 7.44c.522-.03.971.567.63 1.094l-4.178 6.457a.707.707 0 0 1-.977.208l-3.87-2.504a.44.44 0 0 0-.49.007l-4.363 3.01c-.637.438-1.415-.317-.995-.966l4.179-6.457a.706.706 0 0 1 .977-.21l3.87 2.505c.15.097.344.094.491-.007l4.362-3.008a.7.7 0 0 1 .364-.13"/></svg>
+      <span class="dm-cta-label">Message us</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="/img/hero.webp" alt="An open seashore on a hot afternoon, the water Sol &amp; Salt cuts for" width="1800" height="1029">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Swim &amp; resort, made in one workroom</div>
+    <h1>Cut for long swims, not for one season.</h1>
+    <p class="lead">A small collection that survives chlorine, salt and a whole summer — with an assistant that knows every measurement, fabric weight and return window, live on the web today and shown here exactly as it will read inside a Messenger thread and an Instagram DM.</p>
+    <div class="cta">
+      <a class="btn" href="#collection">See the collection</a>
+      <button class="btn ghost" type="button" data-open-chat>Ask Sol about sizing</button>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="collection">
+  <div class="wrap">
+    <div class="eyebrow">In stock now</div>
+    <h2>The whole range, twelve pieces deep</h2>
+    <p class="sub">Two knits and one linen, nothing else. Sol answers from exactly this list — the same codes, prices, fabrics and size runs its MCP server serves — never a guess at what a swim label "probably" stocks.</p>
+
+    <div class="lookbook">
+      <figure><img src="/img/sea.webp" alt="An ocean pool at the edge of open water, where a new knit starts its test" width="860" height="860" loading="lazy"><figcaption>Ocean pool, sunrise — where a new knit starts its test</figcaption></figure>
+      <figure><img src="/img/dune.webp" alt="Dune grass over a cove, the Sand colourway matched to it" width="860" height="860" loading="lazy"><figcaption>Dune grass over the cove — the Sand colourway came from here</figcaption></figure>
+      <figure><img src="/img/pool.webp" alt="Chlorinated water: every knit soaks for ninety hours here before it is signed off" width="860" height="860" loading="lazy"><figcaption>Ninety hours in chlorine before a colourway is signed off</figcaption></figure>
+      <figure><img src="/img/surf.webp" alt="Board-short weather on an empty point break" width="860" height="860" loading="lazy"><figcaption>Board-short weather, the point break at low tide</figcaption></figure>
+    </div>
+
+    <div class="pieces">
+      <article class="piece">
+        <div class="top"><h3>Dune One-Piece</h3><span class="price">$128</span></div>
+        <span class="sku">SS-101 · swim</span>
+        <p>Square neck, high covered back, removable cups. Cut long in the body so it stays put on a dive.</p>
+        <p class="fabric">78% regenerated nylon, 22% elastane · 210 gsm</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--sea)" title="Sea"></i><i class="sw" style="background:var(--coral)" title="Coral"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Tidal Scoop-Back One-Piece</h3><span class="price">$132</span></div>
+        <span class="sku">SS-102 · swim</span>
+        <p>The swimmer's suit: deep scoop back, wide straps that do not slip, a leg line cut for distance.</p>
+        <p class="fabric">78% regenerated nylon, 22% elastane · 210 gsm</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--sea)" title="Sea"></i><i class="sw" style="background:var(--blacksalt)" title="Black Salt"></i><i class="sw" style="background:var(--coral)" title="Coral"></i></span><span class="tag">Best seller</span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Salt Flat Triangle Top</h3><span class="price">$62</span></div>
+        <span class="sku">SS-103 · swim</span>
+        <p>Sliders at both ends, so one size covers two cup shapes. Fully lined.</p>
+        <p class="fabric">78% regenerated nylon, 22% elastane · 210 gsm</p>
+        <div class="meta"><span>XS–XL</span><span class="swatches"><i class="sw" style="background:var(--coral)" title="Coral"></i><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--sea)" title="Sea"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Salt Flat Tie Bottom</h3><span class="price">$58</span></div>
+        <span class="sku">SS-104 · swim</span>
+        <p>Side ties, mid rise, moderate back coverage. Pairs with the Salt Flat top or the Reef bandeau.</p>
+        <p class="fabric">78% regenerated nylon, 22% elastane · 210 gsm</p>
+        <div class="meta"><span>XS–XL</span><span class="swatches"><i class="sw" style="background:var(--coral)" title="Coral"></i><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--sea)" title="Sea"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Reef Ribbed Bandeau</h3><span class="price">$68</span></div>
+        <span class="sku">SS-105 · swim</span>
+        <p>Silicone band inside the top edge, detachable straps in the box. The rib relaxes a centimetre wet.</p>
+        <p class="fabric">72% regenerated nylon, 28% elastane rib · 240 gsm</p>
+        <div class="meta"><span>XS–XL</span><span class="swatches"><i class="sw" style="background:var(--sea)" title="Sea"></i><i class="sw" style="background:var(--sand)" title="Sand"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Harbour High-Waist Bottom</h3><span class="price">$64</span></div>
+        <span class="sku">SS-106 · swim</span>
+        <p>Sits on the natural waist, full back coverage, a bonded edge that does not dig in.</p>
+        <p class="fabric">78% regenerated nylon, 22% elastane · 210 gsm</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--sea)" title="Sea"></i><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--coral)" title="Coral"></i><i class="sw" style="background:var(--blacksalt)" title="Black Salt"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Breakwater Rash Guard</h3><span class="price">$96</span></div>
+        <span class="sku">SS-107 · swim</span>
+        <p>Long sleeve, quarter zip, thumb loops. Blocks 98% of UV and keeps blocking it after a hundred washes.</p>
+        <p class="fabric">82% recycled nylon, 18% elastane jersey · flatlock seams</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--blacksalt)" title="Black Salt"></i><i class="sw" style="background:var(--sea)" title="Sea"></i></span><span class="tag">UPF 50+</span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Sunbreak Swim Short</h3><span class="price">$78</span></div>
+        <span class="sku">SS-108 · swim</span>
+        <p>Five-inch inseam, elastic waist, drawcord, and a zip pocket that actually drains.</p>
+        <p class="fabric">100% recycled polyester, 4-way stretch · mesh liner</p>
+        <div class="meta"><span>Waist 28–40</span><span class="swatches"><i class="sw" style="background:var(--sea)" title="Sea"></i><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--coral)" title="Coral"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Longshore Board Short</h3><span class="price">$88</span></div>
+        <span class="sku">SS-109 · swim</span>
+        <p>Seven-inch inseam, flat fly, welded back pocket, and no hook-and-loop anywhere near your skin.</p>
+        <p class="fabric">100% recycled polyester, 4-way stretch · mesh liner</p>
+        <div class="meta"><span>Waist 28–40</span><span class="swatches"><i class="sw" style="background:var(--blacksalt)" title="Black Salt"></i><i class="sw" style="background:var(--sea)" title="Sea"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Palmetto Linen Camp Shirt</h3><span class="price">$110</span></div>
+        <span class="sku">SS-110 · resort</span>
+        <p>A camp collar that goes straight over a wet suit without clinging. Unisex, corozo buttons.</p>
+        <p class="fabric">100% washed European linen · 165 gsm</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--shell)" title="Shell"></i><i class="sw" style="background:var(--sand)" title="Sand"></i><i class="sw" style="background:var(--sea)" title="Sea"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Verano Linen Short</h3><span class="price">$92</span></div>
+        <span class="sku">SS-111 · resort</span>
+        <p>Pull-on, deep pockets, cut to sit just above the knee. Unisex.</p>
+        <p class="fabric">100% washed European linen · 165 gsm</p>
+        <div class="meta"><span>XS–XXL</span><span class="swatches"><i class="sw" style="background:var(--shell)" title="Shell"></i><i class="sw" style="background:var(--sand)" title="Sand"></i></span></div>
+      </article>
+      <article class="piece">
+        <div class="top"><h3>Solstice Cotton Kaftan</h3><span class="price">$124</span></div>
+        <span class="sku">SS-112 · resort</span>
+        <p>Side slits, corded neck tie, double layer through the body. Packs to the size of a paperback.</p>
+        <p class="fabric">100% organic cotton gauze</p>
+        <div class="meta"><span>XS/S · M/L · XL/XXL</span><span class="swatches"><i class="sw" style="background:var(--shell)" title="Shell"></i><i class="sw" style="background:var(--coral)" title="Coral"></i></span></div>
+      </article>
+    </div>
+
+    <div class="try-row">
+      <span>Try it: "What do you have with UPF for a whole day on the water?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="What do you have with UPF for a whole day on the water?">Copy &amp; open chat</button>
+    </div>
+  </div>
+</section>
+
+<section id="sizes">
+  <div class="wrap">
+    <div class="eyebrow">Measurements, not vibes</div>
+    <h2>Nobody should have to order two sizes</h2>
+    <p class="sub">Give Sol a bust, waist or hip measurement and it names the size from this chart plus the fit note for that exact piece — a swim knit and a linen shirt do not round the same way.</p>
+    <div class="sizes-grid">
+      <div class="panel">
+        <div class="table-scroll">
+          <table class="sizes">
+            <thead><tr><th>Size</th><th>Bust (cm)</th><th>Waist (cm)</th><th>Hip (cm)</th><th>US</th><th>UK</th><th>EU</th></tr></thead>
+            <tbody>
+              <tr><td><strong>XS</strong></td><td>78–82</td><td>60–64</td><td>86–90</td><td>0–2</td><td>4–6</td><td>32–34</td></tr>
+              <tr><td><strong>S</strong></td><td>83–87</td><td>65–69</td><td>91–95</td><td>4–6</td><td>8–10</td><td>36–38</td></tr>
+              <tr><td><strong>M</strong></td><td>88–93</td><td>70–75</td><td>96–101</td><td>8–10</td><td>12–14</td><td>40–42</td></tr>
+              <tr><td><strong>L</strong></td><td>94–100</td><td>76–82</td><td>102–108</td><td>12–14</td><td>16–18</td><td>44–46</td></tr>
+              <tr><td><strong>XL</strong></td><td>101–108</td><td>83–90</td><td>109–116</td><td>16–18</td><td>20–22</td><td>48–50</td></tr>
+              <tr><td><strong>XXL</strong></td><td>109–116</td><td>91–98</td><td>117–124</td><td>20–22</td><td>24–26</td><td>52–54</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sub" style="margin:14px 0 0;font-size:13.5px">Swim shorts run on waist measurement instead: 28 (71–74 cm), 30 (75–79), 32 (80–84), 34 (85–89), 36 (90–94), 38 (95–99), 40 (100–104).</p>
+      </div>
+      <div>
+        <div class="panel policy">
+          <h3 style="margin-top:0;font-size:16px">How to measure</h3>
+          <ul>
+            <li><strong>Bust</strong>Over bare skin, at the fullest point, tape snug but not pulled.</li>
+            <li><strong>Waist</strong>The narrowest part, usually just above the navel.</li>
+            <li><strong>Hip</strong>The fullest part, feet together.</li>
+            <li><strong>Between sizes</strong>On a swim knit take the larger; it relaxes in water. On linen take the smaller.</li>
+          </ul>
+        </div>
+        <figure style="margin:16px 0 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card)">
+          <img src="/img/goggles.webp" alt="Goggles on the tiles at the end of a lap set" width="860" height="860" loading="lazy">
+          <figcaption style="padding:11px 14px;font-size:12.5px;color:var(--muted)">Sized on swimmers, at the end of a lap set — not on a fit model standing still</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="try-row">
+      <span>Try it: "I'm 90 bust, 72 waist, 99 hip — what size Tidal?"</span>
+      <button class="btn tiny" type="button" data-try-prompt="I'm 90 bust, 72 waist, 99 hip — what size Tidal Scoop-Back One-Piece?">Copy &amp; open chat</button>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap two-col">
+    <div class="about-copy">
+      <div class="eyebrow">Camber Bay, since 2018</div>
+      <h2>It started because nothing survived a season</h2>
+      <p class="sub" style="margin-bottom:14px">Two open-water swimmers kept wearing suits out in a single summer — bagged at the seat, faded at the straps, gone by September. So they went looking for a knit that would not: a 210 gsm regenerated nylon with enough elastane to hold its shape through chlorine, salt and sun cream, knitted by a family mill and cut in one small workroom.</p>
+      <p class="sub" style="margin-bottom:14px">Every colourway soaks for ninety hours in chlorinated water before it is signed off. Anything that shifts goes back to the mill. That is the whole quality process, and it is why the range is twelve pieces and not two hundred.</p>
+      <ul style="margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px;color:var(--muted)">
+        <li><strong style="color:var(--ink)">Knits</strong> — regenerated nylon, spun from reclaimed fishing net and fabric waste</li>
+        <li><strong style="color:var(--ink)">Linen</strong> — washed European flax, 165 gsm, softer every wash</li>
+        <li><strong style="color:var(--ink)">Repairs</strong> — a seam that fails inside 12 months is fixed or replaced</li>
+      </ul>
+    </div>
+    <figure>
+      <img src="/img/story.webp" alt="The long evening swim the first Sol &amp; Salt one-piece was made for" width="1200" height="800" loading="lazy">
+      <figcaption>The evening swim the first one-piece was cut for</figcaption>
+    </figure>
+  </div>
+  <div class="wrap two-col" style="margin-top:20px">
+    <figure>
+      <img src="/img/atelier.webp" alt="A basket of coral thread at the workroom bench where every sample is cut and sewn" width="860" height="860" loading="lazy">
+      <figcaption>One workroom, one bench, every sample</figcaption>
+    </figure>
+    <div class="about-copy">
+      <div class="eyebrow">How it is made</div>
+      <h2>Small runs, mended not replaced</h2>
+      <p class="sub" style="margin-bottom:14px">Pieces are cut in runs of a few hundred, not tens of thousands, so a fit note from a customer in March changes the pattern by June. Nothing is made to be thrown away after a season: send a failed seam back inside twelve months and it comes home mended, or replaced if it cannot be.</p>
+      <p class="sub" style="margin:0">Offcuts go to the same mill that knits the nylon. Packaging is paper, printed with the return instructions, because a second bag should never be needed to send something back.</p>
+    </div>
+  </div>
+</section>
+
+<section id="shipping">
+  <div class="wrap">
+    <div class="eyebrow">Getting it to you, and back</div>
+    <h2>Free over $95, thirty days to change your mind</h2>
+    <p class="sub">Orders placed before 14:00 leave the workroom the same business day. Duty is settled at checkout everywhere except the rest-of-world rate, so a parcel is never held hostage at a door.</p>
+    <div class="ship-grid">
+      <div class="card"><h3>United States</h3><p class="rate">Free over $95, else $7</p><p>2–4 business days. Tax already included.</p></div>
+      <div class="card"><h3>Canada</h3><p class="rate">$14 flat</p><p>5–8 business days. Duty settled at checkout.</p></div>
+      <div class="card"><h3>Europe</h3><p class="rate">$18 flat</p><p>5–9 business days. VAT and duty at checkout.</p></div>
+      <div class="card"><h3>Rest of the world</h3><p class="rate">$24 flat</p><p>8–14 business days. Duty payable on delivery.</p></div>
+    </div>
+    <div class="sizes-grid">
+      <div class="panel policy">
+        <h3 style="margin-top:0;font-size:16px">Returns and exchanges</h3>
+        <ul>
+          <li><strong>Window</strong>30 days from the day it was delivered.</li>
+          <li><strong>Condition</strong>Unworn, tags on, hygiene liner still in place on any bottom or one-piece.</li>
+          <li><strong>Cost</strong>Free return label in the United States; $9 comes off the refund elsewhere. Exchanges ship free, everywhere.</li>
+          <li><strong>Refund</strong>Back to the original payment method within 5 business days of the parcel reaching the workroom.</li>
+          <li><strong>Faults</strong>A fabric or stitching fault is covered for 12 months, whatever the window says.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3 style="margin-top:0;font-size:16px">Sending something back</h3>
+        <p class="sub" style="margin-bottom:14px">Ask Sol to start a return and a card opens right in the chat — order number, which piece, why — one button, no email thread. The same card is on this page if you would rather use it here.</p>
+        <button class="btn small" type="button" id="openReturnFormBtn">Open the return card →</button>
+        <div class="try-row" style="margin-top:16px">
+          <span>Try it: "I need to return something"</span>
+          <button class="btn tiny" type="button" data-try-prompt="I need to return something.">Copy &amp; open chat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="channels" class="dm-band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--accent)">Two inboxes, one assistant</div>
+    <h2>See both threads before either handle exists</h2>
+    <p class="sub">Sol &amp; Salt's Meta accounts are still being connected. What is below is not a mock-up and not a recording: it is the exact live assistant from this page, dressed the way the conversation will read in each inbox. Switch the channel and the same live thread moves across.</p>
+
+    <div class="switch" role="group" aria-label="Choose a channel preview">
+      <button type="button" data-channel-btn="messenger" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.24 0 0 4.952 0 11.64c0 3.499 1.434 6.521 3.769 8.61a.96.96 0 0 1 .323.683l.065 2.135a.96.96 0 0 0 1.347.85l2.381-1.053a.96.96 0 0 1 .641-.046A13 13 0 0 0 12 23.28c6.76 0 12-4.952 12-11.64S18.76 0 12 0m6.806 7.44c.522-.03.971.567.63 1.094l-4.178 6.457a.707.707 0 0 1-.977.208l-3.87-2.504a.44.44 0 0 0-.49.007l-4.363 3.01c-.637.438-1.415-.317-.995-.966l4.179-6.457a.706.706 0 0 1 .977-.21l3.87 2.505c.15.097.344.094.491-.007l4.362-3.008a.7.7 0 0 1 .364-.13"/></svg>
+        Messenger
+      </button>
+      <button type="button" data-channel-btn="instagram" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.9599-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.8487-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.1565 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+        Instagram
+      </button>
+    </div>
+
+    <div class="dm-layout">
+      <div class="phones">
+        <div class="phone frame frame-messenger">
+          <div class="phone-status"><span>9:41</span><span>WiFi 100%</span></div>
+          <div class="phone-screen">
+            <div class="ch-header">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="avatar"><img src="/img/mark.png" alt="" aria-hidden="true"></span>
+              <div class="who"><b>Sol &amp; Salt Swimwear</b><span id="msnSubtitle">Typically replies instantly</span></div>
+              <span class="icons" aria-hidden="true">☏ ⓘ</span>
+            </div>
+            <div class="screen-slot" id="messengerScreen">
+              <div class="placeholder" data-placeholder="messenger">Loading the live thread…</div>
+            </div>
+            <div class="composer" aria-hidden="true"><span class="field">Aa</span><span class="send">Send</span></div>
+          </div>
+        </div>
+        <div class="phone frame frame-instagram">
+          <div class="phone-status"><span>9:41</span><span>WiFi 100%</span></div>
+          <div class="phone-screen">
+            <div class="ch-header">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="avatar"><img src="/img/mark.png" alt="" aria-hidden="true"></span>
+              <div class="who"><b>solandsalt</b><span id="igSubtitle">Usually responds within minutes</span></div>
+              <span class="icons" aria-hidden="true">☏ ⌄</span>
+            </div>
+            <div class="screen-slot" id="instagramScreen">
+              <div class="placeholder" data-placeholder="instagram">Loading the live thread…</div>
+            </div>
+            <div class="composer" aria-hidden="true"><span class="field">Message…</span><span class="send">Send</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="dm-copy">
+        <div class="dm-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.24 0 0 4.952 0 11.64c0 3.499 1.434 6.521 3.769 8.61a.96.96 0 0 1 .323.683l.065 2.135a.96.96 0 0 0 1.347.85l2.381-1.053a.96.96 0 0 1 .641-.046A13 13 0 0 0 12 23.28c6.76 0 12-4.952 12-11.64S18.76 0 12 0m6.806 7.44c.522-.03.971.567.63 1.094l-4.178 6.457a.707.707 0 0 1-.977.208l-3.87-2.504a.44.44 0 0 0-.49.007l-4.363 3.01c-.637.438-1.415-.317-.995-.966l4.179-6.457a.706.706 0 0 1 .977-.21l3.87 2.505c.15.097.344.094.491-.007l4.362-3.008a.7.7 0 0 1 .364-.13"/></svg>
+          <span id="previewBadgeText">Preview — real assistant, no live Page yet</span>
+        </div>
+        <p>This IS Sol: the same brain, the same twelve pieces, the same size chart and the same returns desk as the bubble in the corner. Only the wrapper changes once the Page and the professional account are connected. Ask it for a size, or start a return right in the thread.</p>
+        <p class="dm-note" id="previewNote">Neither handle exists yet, so the buttons below scroll here instead of opening an app. The moment the channel lane sets a Page id or a username, they become real links — no rebuild of this page.</p>
+        <div class="ch-links">
+          <a class="btn small" id="messengerCta" href="#channels">Open in Messenger</a>
+          <a class="btn small ghost" id="instagramCta" href="#channels" style="color:var(--band-ink);border-color:var(--band-line)">Open in Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:56px">What changes when the accounts are connected</h2>
+    <p class="sub">The same brain, knowledge and tools as above — reached the way Meta's platform actually delivers a message.</p>
+    <div class="live-steps">
+      <div class="card"><div class="num">1</div><h4>Someone messages first</h4><p>A "Send message" button on the Page, a story reply, or a DM on a post. The customer always opens the conversation — a business cannot start one out of nowhere on either surface.</p></div>
+      <div class="card"><div class="num">2</div><h4>One webhook, two inboxes</h4><p>Messenger and Instagram messages arrive on the same Meta webhook, are normalised into the same conversation shape as this web chat, and Sol answers from the same collection, size chart and returns policy.</p></div>
+      <div class="card"><div class="num">3</div><h4>The 24-hour window</h4><p>Sol can reply freely for 24 hours after the last customer message; after that only an approved message tag reopens the thread. Standard Meta messaging rules, identical on both channels.</p></div>
+    </div>
+    <div class="howto-row">
+      <a href="https://busymate.ai/integrations/messenger">Current status of the Messenger channel →</a>
+      <a href="https://busymate.ai/integrations/instagram">Current status of the Instagram channel →</a>
+      <a href="https://busymate.ai/docs/guides/human-handoff-setup">How a person takes over a DM →</a>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="eyebrow">Under the hood</div>
+    <h2>Everything above, and why it works</h2>
+    <p class="sub">Nine things this page actually does, each with the exact doc for adding the same thing to your own site.</p>
+    <div class="features">
+      <div class="card feature">
+        <h3>The chat, from one script tag</h3>
+        <p>The bubble in the corner — and the thread inside both phones above — is the live product on a workspace of its own. One line of HTML put it there.</p>
+        <div class="try"><span>Try: "What's the difference between the Dune and the Tidal?"</span><button class="btn tiny" data-try-prompt="What's the difference between the Dune and the Tidal?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/getting-started">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Grounded in Sol &amp; Salt's own words</h3>
+        <p>The collection, the size chart and the returns policy above were published to the workspace as text. Answers quote them; anything outside them gets an honest "I don't know".</p>
+        <div class="try"><span>Try: "Does the rash guard lose its UPF in the wash?"</span><button class="btn tiny" data-try-prompt="Does the rash guard lose its UPF in the wash?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/knowledge">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It can work the page</h3>
+        <p>This site publishes its own actions — read the collection, search it, size a piece, quote the policy, open the return card. Ask for one and watch it happen without a form to hunt for.</p>
+        <div class="try"><span>Try: "Show me everything in Coral under $70"</span><button class="btn tiny" data-try-prompt="Show me everything in Coral under $70.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/page-tools">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It reaches the systems behind the page</h3>
+        <p>Sol &amp; Salt runs a small MCP server of its own, connected to the workspace. The collection, the size logic and the order book come from there over HTTPS — the same answer whether or not this tab is open.</p>
+        <div class="files"><a href="/agents.json">/agents.json</a><a href="/llms.txt">/llms.txt</a></div>
+        <a class="how" href="https://busymate.ai/docs/guides/connect-mcp-server">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It knows who's asking</h3>
+        <p>Sign in as the demo customer below and Sol can pull up that customer's own orders, and cancel one that has not shipped — for her and nobody else.</p>
+        <div class="try"><span>Try (signed in): "Where is my order?"</span><button class="btn tiny" data-try-prompt="Where is my order?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/identified-visitors">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>It asks with a card, not a paragraph</h3>
+        <p>A return needs three things. Instead of asking for them one at a time, Sol opens a card inside the message — order number, piece, reason — and submits it in one tap.</p>
+        <div class="try"><span>Try: "The one-piece is too small"</span><button class="btn tiny" data-try-prompt="The one-piece is too small.">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/form-cards">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>A person can take over</h3>
+        <p>Ask for a person and the thread lands in the team inbox mid-conversation — the same hand-off works in a Messenger or Instagram thread once they are connected, no restart, no ticket number.</p>
+        <div class="try"><span>Try: "Can I talk to someone about a wholesale order?"</span><button class="btn tiny" data-try-prompt="Can I talk to someone about a wholesale order?">Copy &amp; open</button></div>
+        <a class="how" href="https://busymate.ai/docs/guides/human-handoff-setup">How to add this to your site →</a>
+      </div>
+      <div class="card feature">
+        <h3>Readable without a browser</h3>
+        <p>An agent that never renders this page can still work with it: a plain-text brief, a tool manifest, a machine-readable catalogue of the page's own actions.</p>
+        <div class="files"><a href="/llms.txt">/llms.txt</a><a href="/llms-full.txt">/llms-full.txt</a><a href="/webmcp-catalog.json">/webmcp-catalog.json</a><a href="/sitemap.xml">/sitemap.xml</a></div>
+        <a class="how" href="https://busymate.ai/articles/is-your-website-agent-ready-checklist">The six layers, checked →</a>
+      </div>
+      <div class="card feature">
+        <h3>Honest about what isn't live yet</h3>
+        <p>The two threads above are labelled for exactly what they are — a real assistant in a faithful wrapper, with no invented Page and no invented handle. Nothing here claims a channel that does not exist.</p>
+        <div class="files"><a href="https://busymate.ai/integrations/messenger">/integrations/messenger</a><a href="https://busymate.ai/integrations/instagram">/integrations/instagram</a></div>
+        <a class="how" href="https://busymate.ai/integrations/messenger">See every channel's real status →</a>
+      </div>
+    </div>
+    <div class="scorecard">
+      <p>Two checkers grade any address, this page included: one scores how ready a site is for AI agents, the other lists the tools a page publishes.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://busymate.ai/try/meta.demo.busymate.ai">Score this page</a>
+        <a class="btn tiny" href="https://busymate.ai/webmcp/inspect?url=https%3A%2F%2Fmeta.demo.busymate.ai%2F">Inspect its tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <div class="eyebrow">Try it as a customer</div>
+    <h2>Sign in and Sol already has your orders</h2>
+    <p class="sub">A throwaway demo customer is provided — no password, no real person.</p>
+    <div class="panel id-panel">
+      <div>
+        <div class="customer" id="idPanelText">Signed out — Sol only sees what any visitor can see.</div>
+        <p class="demo-note">Demo customer: <strong>Amara Okafor</strong>, <code>amara@example.com</code> — three orders, including <code>SS-31082</code> (delivered, still inside its return window) and <code>SS-31460</code> (not dispatched yet, so it can still be cancelled). A throwaway public demo identity, not a real person.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" id="idSignInBtn" type="button">Sign in as the demo customer</button>
+        <button class="btn ghost" id="idSignOutBtn" type="button" hidden>Sign out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <div class="eyebrow">From the first season</div>
+    <h2>What people say after a summer in it</h2>
+    <div class="testimonials">
+      <div class="card tcard">
+        <p>"Third season in the same Tidal and it still holds its shape. I asked for a size in the DMs and got the actual measurements back, not a shrug."</p>
+        <div class="who"><span class="avatar-chip" style="background:#1c6e8c">NR</span><div><b>Noor R.</b><span>Open-water swimmer</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"Ordered the wrong size on a Friday, started the exchange from a chat window on the Saturday, new one arrived before the trip."</p>
+        <div class="who"><span class="avatar-chip" style="background:#ff6b57">TA</span><div><b>Tomas A.</b><span>Second order</span></div></div>
+      </div>
+      <div class="card tcard">
+        <p>"The linen shirt goes over a wet suit without turning transparent, which sounds small until you've owned one that doesn't."</p>
+        <div class="who"><span class="avatar-chip" style="background:#6b7f88">JE</span><div><b>Jules E.</b><span>Resort range</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Asked in the DMs, most days</div>
+    <h2>The five that come up first</h2>
+    <dl class="faq">
+      <dt>How long do I have to send something back?</dt>
+      <dd>Thirty days from delivery, unworn, tags on, hygiene liner in place. Free label inside the United States; $9 comes off the refund elsewhere.</dd>
+      <dt>I'm between two sizes — which one?</dt>
+      <dd>On a swim knit take the larger, because the knit relaxes in water; on linen take the smaller. Give Sol your measurements and it will name the size instead of guessing.</dd>
+      <dt>Will the colour survive a chlorinated pool?</dt>
+      <dd>Every colourway soaks ninety hours in chlorinated water before it is signed off. Rinse cold after a swim and dry flat in the shade and it will outlast the season.</dd>
+      <dt>Can I cancel an order I just placed?</dt>
+      <dd>Yes, while it is still being picked. Once it has left the workroom it has to come back as a return instead — Sol can tell you which state an order is in.</dd>
+      <dt>Do you do wholesale or team orders?</dt>
+      <dd>For a club or a shop, ask for a person in the chat and someone from the workroom picks the same conversation up.</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow">A person, if you would rather</div>
+    <h2>Reach the workroom directly</h2>
+    <div class="contact-grid">
+      <div class="panel">
+        <p class="sub" style="margin-bottom:10px">Email the returns and sizing desk — answered within one business day.</p>
+        <a href="mailto:hello@solandsalt.example">hello@solandsalt.example</a>
+      </div>
+      <div class="panel">
+        <p class="sub" style="margin-bottom:10px">Or call during workroom hours, 09:00–17:00 Pacific, Monday to Friday.</p>
+        <a href="tel:+15550140">+1 555 0140</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- The return action card on the page. Sol (in chat, via the open_return_form
+     WebMCP tool below) and the "Open the return card" button both open this
+     SAME dialog — one inline form, one submit button, instead of the assistant
+     asking for order number / piece / reason one at a time. Submits straight to
+     this site's own /mcp start_return tool. -->
+<dialog id="returnModal" class="return-modal">
+  <form id="returnForm">
+    <div class="head"><h3>Start a return</h3><button class="btn ghost small" type="button" id="returnClose">Close</button></div>
+    <div class="body">
+      <label>Order number<input required name="order_number" type="text" placeholder="SS-31082"></label>
+      <label>Which piece<input required name="item" type="text" placeholder="Tidal Scoop-Back One-Piece"></label>
+      <label>Reason
+        <select required name="reason">
+          <option value="too-small">Too small</option>
+          <option value="too-large">Too large</option>
+          <option value="exchange-size">Right piece, wrong size — exchange</option>
+          <option value="not-as-pictured">Not what I expected</option>
+          <option value="faulty">Something is wrong with it</option>
+          <option value="changed-mind">Changed my mind</option>
+        </select>
+      </label>
+      <label>Anything else <span class="muted" style="font-weight:400">(optional)</span><textarea name="note" rows="2" placeholder="Happy to swap it for a size up in Sea."></textarea></label>
+      <div id="returnResult" class="return-result" hidden></div>
+    </div>
+    <div class="foot"><button class="btn" type="submit" id="returnSubmit">Start the return</button></div>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    Sol &amp; Salt Swimwear is a demonstration shop. No parcel moves, no card is charged, and the customer behind the sign-in button is not a real person.<br>
+    <p><strong>Talk to a person.</strong> Email <a href="mailto:hello@solandsalt.example">hello@solandsalt.example</a>, call <a href="tel:+15550140">+1 555 0140</a>, or ask the assistant for a human and a colleague joins the same conversation.</p>
+    Powered by <a href="https://busymate.ai">Busymate AI</a> · <a href="https://demo.busymate.ai">More demos</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agents.json">agents.json</a>
+  </div>
+</footer>
+
+<div id="flash" role="status" hidden></div>
+
+<script>
+// ── Identity: define getIdentity BEFORE the embed script loads (per
+// https://busymate.ai/docs/guides/identified-visitors). A signed-in customer
+// mints a fresh 120s launch proof from THIS site's own /api/identity/mint;
+// signed-out returns null. Nothing persisted here.
+function solNonce() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode.apply(null, bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+async function solSession() {
+  try { return (await fetch("/api/identity/session")).json(); } catch (e) { return { signedIn: false }; }
+}
+window.BusymateAI = window.BusymateAI || {};
+window.BusymateAI.getIdentity = async function () {
+  var s = await solSession();
+  if (!s.signedIn) return null;
+  var res = await fetch("/api/identity/mint", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nonce: solNonce() }),
+  });
+  if (!res.ok) return null;
+  var out = await res.json();
+  return { token: out.token, nonce: out.nonce };
+};
+
+async function solRenderIdentity() {
+  var s = await solSession();
+  var chip = document.getElementById("idChip"), chipText = document.getElementById("idChipText");
+  var panelText = document.getElementById("idPanelText");
+  var inBtn = document.getElementById("idSignInBtn"), outBtn = document.getElementById("idSignOutBtn");
+  document.body.setAttribute("data-signed-in", s.signedIn ? "yes" : "no");
+  if (s.signedIn) {
+    chip.classList.add("on"); chipText.textContent = "Signed in as " + s.customer.name;
+    panelText.textContent = "Signed in as " + s.customer.name + " — Sol now answers about this customer's own orders and returns.";
+    inBtn.hidden = true; outBtn.hidden = false;
+  } else {
+    chip.classList.remove("on"); chipText.textContent = "Browsing as a guest";
+    panelText.textContent = "Signed out — Sol only sees what any visitor can see.";
+    inBtn.hidden = false; outBtn.hidden = true;
+  }
+}
+function flash(msg) {
+  var el = document.getElementById("flash");
+  el.textContent = msg; el.hidden = false;
+  clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 2600);
+}
+document.addEventListener("DOMContentLoaded", function () {
+  solRenderIdentity();
+  document.getElementById("idSignInBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/login", { method: "POST" });
+    await solRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed in as Amara Okafor");
+  });
+  document.getElementById("idSignOutBtn").addEventListener("click", async function () {
+    await fetch("/api/identity/logout", { method: "POST" });
+    await solRenderIdentity();
+    if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
+    flash("Signed out");
+  });
+  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
+    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
+  });
+  document.querySelectorAll("[data-try-prompt]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var text = b.getAttribute("data-try-prompt");
+      try { await navigator.clipboard.writeText(text); flash("Copied — paste it into the chat"); }
+      catch (e) { flash("Ask Sol: " + text); }
+      if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
+    });
+  });
+});
+</script>
+
+<!-- Busymate AI web chat widget (live). data-assistant = the demo tenant slug.
+     Also repositioned, unstyled-inside, over whichever phone frame is active. -->
+<script src="https://busymate.ai/embed/v1.js"
+        data-assistant="demo-meta"
+        data-label="Chat with us"
+        data-aria-label="Open the Sol and Salt chat"
+        data-title="Sol &amp; Salt Swimwear"
+        async></script>
+
+<script>
+// ── The two channel previews: ONE live widget, repositioned on top of whichever
+// phone frame's screen area is active, and kept open. This is the real product —
+// cross-origin iframe content is untouched, only the outer wrapper's position is
+// restyled from our own page. Deliberately NEVER reparented (moving a cross-
+// origin iframe to a new DOM parent makes the browser reload it, which raced the
+// postMessage identity handshake and hung the panel on a blank screen — found
+// live on the WhatsApp demo, 2026-09-11): the widget layer stays a child of
+// <body>, exactly where the embed script put it, and only its computed
+// position/size follow the ACTIVE slot's own box on scroll, resize and switch.
+(function () {
+  var SLOTS = { messenger: "messengerScreen", instagram: "instagramScreen" };
+  var LABELS = { messenger: "Messenger", instagram: "Instagram" };
+  var active = "messenger";
+  var tries = 0;
+  var wired = false;
+  var mounted = false;
+
+  function follow() {
+    var slot = document.getElementById(SLOTS[active]);
+    var layer = document.querySelector("[data-support-chat]");
+    if (!slot || !layer) return;
+    var r = slot.getBoundingClientRect();
+    // A frame hidden at phone widths measures 0x0 — leave the layer where it is
+    // rather than collapsing the live chat into nothing.
+    if (r.width < 2 || r.height < 2) return;
+    layer.style.position = "absolute";
+    layer.style.right = "auto";
+    layer.style.bottom = "auto";
+    layer.style.left = window.scrollX + r.left + "px";
+    layer.style.top = window.scrollY + r.top + "px";
+    layer.style.width = r.width + "px";
+    layer.style.height = r.height + "px";
+  }
+
+  function paintPlaceholders() {
+    Object.keys(SLOTS).forEach(function (key) {
+      var ph = document.querySelector('[data-placeholder="' + key + '"]');
+      if (!ph) return;
+      ph.textContent = key === active
+        ? "Loading the live thread…"
+        : "Tap " + LABELS[key] + " above to move the live thread into this frame.";
+    });
+  }
+
+  function setChannel(next) {
+    if (!SLOTS[next]) return;
+    active = next;
+    document.body.setAttribute("data-channel", next);
+    document.querySelectorAll("[data-channel-btn]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-channel-btn") === next));
+    });
+    paintPlaceholders();
+    // The layout has to settle before the new slot's box is worth measuring.
+    requestAnimationFrame(function () { follow(); setTimeout(follow, 180); });
+  }
+  window.__solSetChannel = setChannel;
+
+  function mount() {
+    tries++;
+    var slot = document.getElementById(SLOTS[active]);
+    var layer = document.querySelector("[data-support-chat]");
+    if (slot && layer && window.BusymateAI && window.BusymateAI.open) {
+      mounted = true;
+      paintPlaceholders();
+      follow();
+      if (!wired) {
+        wired = true;
+        window.addEventListener("resize", follow);
+        window.addEventListener("scroll", follow, { passive: true });
+      }
+      window.BusymateAI.open();
+      return;
+    }
+    if (tries < 100) setTimeout(mount, 100);
+  }
+
+  document.querySelectorAll("[data-channel-btn]").forEach(function (b) {
+    b.addEventListener("click", function () { setChannel(b.getAttribute("data-channel-btn")); });
+  });
+  paintPlaceholders();
+  mount();
+})();
+
+// ── The go-live hooks: two fields in /meta-config.json. null (today) = the
+// honest preview state; once the channel lane connects a real Page or a real
+// Instagram professional account, the matching CTA becomes a genuine
+// https://m.me/<page-id> or https://ig.me/m/<username> link automatically.
+(function () {
+  fetch("/meta-config.json").then(function (r) { return r.json(); }).then(function (cfg) {
+    var page = cfg && cfg.messengerPageId;
+    var user = cfg && cfg.instagramUsername;
+    var messengerCta = document.getElementById("messengerCta");
+    var instagramCta = document.getElementById("instagramCta");
+    var header = document.getElementById("dmHeaderCta");
+    var badge = document.getElementById("previewBadgeText");
+    var note = document.getElementById("previewNote");
+    var live = [];
+    function activate(el, url) {
+      el.href = url; el.target = "_blank"; el.rel = "noopener noreferrer";
+    }
+    if (page) {
+      activate(messengerCta, "https://m.me/" + page);
+      activate(header, "https://m.me/" + page);
+      document.getElementById("msnSubtitle").textContent = "Active now";
+      live.push("Messenger");
+    }
+    if (user) {
+      activate(instagramCta, "https://ig.me/m/" + user);
+      if (!page) activate(header, "https://ig.me/m/" + user);
+      document.getElementById("igSubtitle").textContent = "Active now";
+      document.querySelector(".frame-instagram .who b").textContent = user;
+      live.push("Instagram");
+    }
+    if (live.length) {
+      badge.textContent = live.length === 2
+        ? "Live on Messenger and Instagram"
+        : "Live on " + live[0] + " — the other is still a preview";
+      note.textContent = live.length === 2
+        ? "Both buttons open a real conversation with Sol & Salt."
+        : live[0] + " opens a real conversation; the other button scrolls here until that account is connected.";
+    }
+  }).catch(function () {});
+})();
+</script>
+
+<script>
+// ── The return action card on the page: ONE inline form + ONE submit button,
+// opened by the assistant (via the open_return_form WebMCP tool below) or by
+// the "Open the return card" button — never a prose back-and-forth for order
+// number / piece / reason. Submits straight to this site's own /mcp.
+(function () {
+  var modal = document.getElementById("returnModal");
+  var form = document.getElementById("returnForm");
+  var result = document.getElementById("returnResult");
+  var submitBtn = document.getElementById("returnSubmit");
+
+  async function callMcp(name, args) {
+    var res = await fetch("/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: name, arguments: args || {} } }),
+    });
+    var body = await res.json();
+    var text = body && body.result && body.result.content && body.result.content[0] && body.result.content[0].text;
+    return text ? JSON.parse(text) : { error: "mcp_call_failed" };
+  }
+  window.__solCallMcp = callMcp;
+
+  function showResult(kind, text) {
+    result.hidden = false;
+    result.className = "return-result " + kind;
+    result.textContent = text;
+  }
+
+  function friendlyError(out) {
+    if (out.detail) return out.detail;
+    if (out.error === "no_such_order") return "No order with that number on this account.";
+    if (out.error === "window_closed") return "That order is past its 30-day return window.";
+    return "Something went wrong — please try again.";
+  }
+
+  window.__openReturnForm = function (prefill) {
+    prefill = prefill || {};
+    result.hidden = true;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Start the return";
+    form.reset();
+    form.querySelectorAll("input,select,textarea").forEach(function (el) { el.disabled = false; });
+    if (prefill.order_number) form.order_number.value = prefill.order_number;
+    if (prefill.item) form.item.value = prefill.item;
+    if (prefill.reason) form.reason.value = prefill.reason;
+    if (prefill.note) form.note.value = prefill.note;
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    return { opened: true, note: "A return card is now open on the page for the visitor to fill in and submit." };
+  };
+
+  document.getElementById("returnClose").addEventListener("click", function () { modal.close(); });
+  document.getElementById("openReturnFormBtn")?.addEventListener("click", function () { window.__openReturnForm({}); });
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    submitBtn.disabled = true;
+    var payload = {
+      order_number: form.order_number.value,
+      item: form.item.value,
+      reason: form.reason.value,
+    };
+    if (form.note.value) payload.note = form.note.value;
+    try {
+      var out = await callMcp("start_return", payload);
+      if (out && out.return_number) {
+        showResult("ok", "Return " + out.return_number + " started for " + out.item + ". " + out.next_step);
+        form.querySelectorAll("input,select,textarea").forEach(function (el) { el.disabled = true; });
+        submitBtn.textContent = "Return started";
+      } else {
+        showResult("err", friendlyError(out || {}));
+        submitBtn.disabled = false;
+      }
+    } catch (e) {
+      showResult("err", "Could not reach the returns desk — please try again.");
+      submitBtn.disabled = false;
+    }
+  });
+})();
+
+// ── WebMCP page tools: one registerPageTools() call. Every tool calls this
+// site's own /mcp so the tool logic has exactly one source of truth (the
+// backend in sites/meta/backend/). https://busymate.ai/docs/guides/page-tools
+(function () {
+  function callMcp(name, args) { return window.__solCallMcp(name, args); }
+  var tools = [
+    {
+      name: "list_collection",
+      description: "The whole Sol & Salt Swimwear collection — every swim and resort piece in stock, with its code, fabric, size range, colourways and price. Optionally narrowed to one category.",
+      inputSchema: {
+        type: "object",
+        properties: { category: { type: "string", description: "Narrow the list: 'swim', 'resort' or 'all' (the default)." } },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("list_collection", args || {}); },
+    },
+    {
+      name: "search_products",
+      description: "Search the Sol & Salt Swimwear collection by name, code, fabric, colourway or a word for what it is for ('laps', 'cover-up', 'UPF', 'high waist').",
+      inputSchema: {
+        type: "object",
+        properties: { query: { type: "string", description: "A piece name, code, fabric, colourway or keyword, e.g. 'one-piece', 'linen' or 'SS-107'." } },
+        required: ["query"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("search_products", args); },
+    },
+    {
+      name: "size_guide",
+      description: "Sol & Salt Swimwear's size chart in centimetres and inches, and — when body measurements are given — the size this label would actually put someone in for a named piece, with its fit note. Call this before suggesting a size; never guess one.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          item: { type: "string", description: "The piece being sized, by name or code, e.g. 'Tidal Scoop-Back One-Piece' or 'SS-109'. Leave blank for the plain chart." },
+          bust_cm: { type: "number", description: "Bust or chest measurement in centimetres, if the customer has given one." },
+          waist_cm: { type: "number", description: "Natural waist measurement in centimetres, if the customer has given one." },
+          hip_cm: { type: "number", description: "Fullest hip measurement in centimetres, if the customer has given one." },
+        },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("size_guide", args || {}); },
+    },
+    {
+      name: "shipping_and_returns",
+      description: "Sol & Salt Swimwear's delivery times, costs and duty handling, plus the returns and exchange policy — the window, what makes a piece returnable, and how a refund is paid back.",
+      inputSchema: {
+        type: "object",
+        properties: { destination: { type: "string", description: "Where the parcel is going: 'domestic', 'canada', 'europe', 'rest-of-world', or blank for everything." } },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("shipping_and_returns", args || {}); },
+    },
+    {
+      name: "get_my_orders",
+      description: "Every order belonging to the signed-in customer at Sol & Salt Swimwear — what was in it, where it is, and whether it can still be returned or cancelled. Requires an identified (signed-in) visitor; call it with that visitor's own email.",
+      inputSchema: {
+        type: "object",
+        properties: { email: { type: "string", description: "The signed-in visitor's own email address." } },
+        required: ["email"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return callMcp("get_my_orders", args); },
+    },
+    {
+      name: "open_return_form",
+      description: "Open the return card on the page for the visitor to fill in and submit themselves — order number, which piece, reason, one button. Use it instead of asking for those three things one at a time in the conversation; pass anything already known (an order number from earlier in the chat, the piece being discussed) as prefill so only what is missing is left to type.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          order_number: { type: "string", description: "An order number to prefill, if already known, e.g. 'SS-31082'." },
+          item: { type: "string", description: "The piece to prefill, if already known." },
+          reason: { type: "string", description: "A reason to prefill, if already known: 'too-small', 'too-large', 'exchange-size', 'not-as-pictured', 'faulty' or 'changed-mind'." },
+          note: { type: "string", description: "A note to prefill, if the visitor has already said what they want to happen." },
+        },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (args) { return window.__openReturnForm(args || {}); },
+    },
+  ];
+
+  function whenReady(cb, triesLeft) {
+    if (window.BusymateAI && window.BusymateAI.registerPageTools) return cb();
+    if (!triesLeft) return;
+    setTimeout(function () { whenReady(cb, triesLeft - 1); }, 100);
+  }
+  whenReady(function () {
+    window.BusymateAI.registerPageTools(tools).catch(function (e) {
+      console.error("registerPageTools failed:", e && e.message);
+    });
+  }, 100);
+})();
+</script>
+</body>
+</html>

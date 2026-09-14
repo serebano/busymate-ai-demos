@@ -1,0 +1,5 @@
+{
+  "_comment": "The TWO fields this page reads to know whether either Meta channel is live. Both null = neither is connected yet (the page shows the honest 'preview' state and the in-page simulators for both threads). Set 'messengerPageId' to the connected Facebook Page's id and the 'Open in Messenger' CTA switches automatically to a real https://m.me/<page-id> link; set 'instagramUsername' to the connected Instagram professional account's username and the Instagram CTA becomes a real https://ig.me/m/<username> link. Either can flip on its own — the badge and the note say which one is live — and no other code change is needed. Keep sites/meta/demo.json's documentation mirror (messenger_page_id / instagram_username) in step.",
+  "messengerPageId": null,
+  "instagramUsername": null
+}
