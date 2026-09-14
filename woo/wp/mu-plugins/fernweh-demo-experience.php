@@ -414,7 +414,7 @@ function fernweh_render_capabilities() {
 	echo '<h3>What the operator sees</h3>';
 	echo '<p>Every conversation on this shop lands in the workspace Inbox: the full transcript, the tool calls and their answers, and — once a visitor has used the sign-in card — which customer account they are. An operator can reply in the same thread, and the visitor sees it in the same chat window they were already using. Asking for a person is what queues it.</p>';
 	echo '<p class="fernweh-demo__contact">Prefer email? <a href="mailto:' . esc_attr( FERNWEH_CONTACT_EMAIL ) . '">' . esc_html( FERNWEH_CONTACT_EMAIL ) . '</a> — a demonstration address on this store\'s own domain, so there is no real person\'s inbox in the story.</p>';
-	echo '<p class="fernweh-demo__agents">Reading this as an agent? <a href="/llms.txt">/llms.txt</a> · <a href="/llms-full.txt">/llms-full.txt</a> · <a href="/.well-known/agents.json">/agents.json</a> · <a href="/webmcp-catalog.json">/webmcp-catalog.json</a> · <a href="/sitemap.xml">/sitemap.xml</a> · <a href="/mcp">/mcp</a></p>';
+	echo '<p class="fernweh-demo__agents">Reading this as an agent? <a href="/llms.txt">/llms.txt</a> · <a href="/llms-full.txt">/llms-full.txt</a> · <a href="/.well-known/agents.json">/agents.json</a> · <a href="/webmcp-catalog.json">/webmcp-catalog.json</a> · <a href="/sitemap.xml">/sitemap.xml</a> · <a href="/mcp">/mcp</a> · <a href="/img/CREDITS.md">Photography credits</a></p>';
 	echo '</div>';
 	echo '</div></section>';
 }

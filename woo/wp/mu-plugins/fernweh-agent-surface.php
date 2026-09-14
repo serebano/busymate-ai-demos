@@ -60,6 +60,8 @@ function fernweh_static_routes() {
 		// the widget's avatar is this file, so a 404 here is a generic-looking
 		// assistant on a branded store.
 		'/img/mark.png'             => array( 'img/mark.png', 'image/png' ),
+		// Every product photograph's author + licence (owner rule: real, credited imagery).
+		'/img/CREDITS.md'           => array( 'img/CREDITS.md', 'text/markdown; charset=utf-8' ),
 		'/img/logo.svg'             => array( 'img/logo.svg', 'image/svg+xml' ),
 		'/img/og.png'               => array( 'img/og.png', 'image/png' ),
 		'/apple-touch-icon.png'     => array( 'apple-touch-icon.png', 'image/png' ),
