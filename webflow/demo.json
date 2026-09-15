@@ -1,0 +1,39 @@
+{
+  "$comment": "type:\"dynamic\" — the real site is hosted on Webflow's own infrastructure (Starter/free plan, aldercroft-studio.webflow.io), not rendered by our nginx like the 'static' demos, and not a self-hosted CMS container like ghost/woo/wordpress. This backend is ONLY the MCP+identity server (sites/_shared/backend/mcp-identity-server.mjs) plus the six-layer agent-ready files, served here because Webflow's Starter plan cannot host a custom static file at a path it doesn't already own. `tenant_id` is REAL (created via the platform's onboarding wizard, Provision step). `connector_id`/`identity_provider_id` are null: the wizard's Apply-branding step failed (`set_tenant_branding refused: native_action_unavailable`) and blocked the downstream domain/admin/publish steps, so this tenant is provisioned but not yet published — see sites/webflow/README.md 'Status'. status stays \"beta\" until that's resolved and the connector/provider rows exist for real. See sites/webflow/README.md.",
+  "name": "webflow",
+  "subdomain": "webflow",
+  "title": "Webflow site",
+  "tagline": "Aldercroft Studio — an architecture and design studio on a real Webflow site, with a genuinely live assistant: grounded chat over the studio's own published content, an MCP server, and a native Designer Extension delivery path (build+stage only).",
+  "type": "dynamic",
+  "assistant": "aldercroft-studio",
+  "tenant_id": "183c2577-ea0d-4938-8d05-b58bf6d6c79b",
+  "connector_id": null,
+  "identity_provider_id": null,
+  "status": "beta",
+  "order": 12,
+  "icon": "webflow",
+  "docs": "https://busymate.ai/docs/guides/webflow",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/webflow",
+  "backend_port": 8118,
+  "site_origin": "https://aldercroft-studio.webflow.io",
+  "container": {
+    "backend": {
+      "name": "demo-webflow-backend",
+      "network": "demo-webflow-net",
+      "publish": "127.0.0.1:8118:8118",
+      "memory": "128m",
+      "env": {
+        "PORT": "8118",
+        "ISSUER": "https://webflow.demo.busymate.ai",
+        "WEBFLOW_SITE_ORIGIN": "https://aldercroft-studio.webflow.io",
+        "TENANT_SLUG": "aldercroft-studio"
+      }
+    },
+    "vhost_templates": [
+      "infra/nginx/webflow-http.conf.template",
+      "infra/nginx/webflow-https.conf.template"
+    ],
+    "acme_root": "<demo-host>/webflow/acme",
+    "note": "No app/db services (unlike ghost/woo/wordpress) — the CMS is Webflow's own hosting, not ours. The vhost only needs to proxy /mcp, /api/identity/*, /llms.txt, /AGENTS.md, /sitemap.md, /index.md, /agents.json, /.well-known/agents.json, /structured-data.json to the backend container."
+  }
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="./styles.css" rel="stylesheet" />
+  </head>
+
+  <body style="background:#fff;color:#111;margin:0">
+    <div id="panel">
+      <p id="boot-fallback" style="margin:0 0 8px;font:12px sans-serif;color:#0a7a2f">
+        Panel HTML loaded — if you see only this line, the script below never
+        ran or never reached the "ready" log.
+      </p>
+      <h1>Busymate assistant</h1>
+      <p>
+        Select a container on the canvas (or leave it on the page root), then
+        insert the assistant. This drops a real element into your page — it
+        is not the Site Settings custom-code feature.
+      </p>
+
+      <label for="tenant-slug">Tenant</label>
+      <input id="tenant-slug" type="text" spellcheck="false" />
+
+      <button id="insert-embed" type="button">Insert assistant embed</button>
+
+      <div id="status" data-kind="idle"></div>
+    </div>
+
+    <script src="index.js" type="module" defer></script>
+  </body>
+</html>

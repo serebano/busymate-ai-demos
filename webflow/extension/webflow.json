@@ -1,0 +1,6 @@
+{
+  "name": "busymate-demo-connector",
+  "publicDir": "public",
+  "size": "default",
+  "apiVersion": "2"
+}
