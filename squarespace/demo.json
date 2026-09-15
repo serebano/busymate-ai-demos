@@ -1,0 +1,25 @@
+{
+  "$comment": "STATUS: real Squarespace free-trial site built via Blueprint AI (5 pages: Homepage, About, Services, Appointments, Contact), Site Availability = Password Protected (Public requires a paid upgrade on trial — see README.md). Backend connector code committed (sites/squarespace/backend/) reading the LIVE published site over HTTPS (HTML text extraction, NOT `?format=json` — see README.md 'What we learned'). NOT YET deployed to the demo demo host / NOT YET provisioned as a busymate.ai tenant — see README.md 'Continuing this lane'. status stays 'building' until deployed + grounded chat is proven live.",
+  "name": "squarespace",
+  "subdomain": "squarespace",
+  "title": "Squarespace site",
+  "tagline": "Quiet Pines Yoga — a real Squarespace free-trial site (Blueprint AI), with a grounded assistant in progress.",
+  "$comment2": "type:\"dynamic\" (like woo/wordpress/ghost/bigcommerce): the real demo IS the owner's live Squarespace trial site — squarespace.demo.busymate.ai is this backend serving /mcp, the six agent-ready files and a status page directly (Node, no separate public/ docroot beyond the WebMCP script). scripts/deploy.sh therefore skips the site itself; see sites/wordpress or sites/bigcommerce for the same shape.",
+  "type": "dynamic",
+  "assistant": "demo-squarespace",
+  "status": "building",
+  "order": 14,
+  "icon": "squarespace",
+  "docs": "https://busymate.ai/docs/guides/squarespace",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/squarespace",
+  "backend_port": 8111,
+  "site": {
+    "site_identifier": "bat-vanilla-s2x4",
+    "storefront": "https://bat-vanilla-s2x4.squarespace.com",
+    "availability": "password_protected",
+    "brand": "Quiet Pines Yoga",
+    "template_path": "Blueprint AI (Professional palette + font pairing)",
+    "pages": ["Home", "About", "Services", "Appointments", "Contact"],
+    "vault_secrets": ["SQUARESPACE_DEMO_SITE_PASSWORD"]
+  }
+}
