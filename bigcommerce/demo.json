@@ -1,0 +1,21 @@
+{
+  "$comment": "STATUS: catalog build-out is LIVE on the owner's real BigCommerce trial store (store hash wflwr11fds, trial ends ~2026-09-30). Backend connector, native app, tenant provisioning and the storefront-facing chat widget are NOT built yet (see README.md \"What's live / what isn't\"). status stays \"building\" until the chat widget answers a real order on the storefront — do not flip to \"live\" before that proof exists.",
+  "name": "bigcommerce",
+  "subdomain": "bigcommerce",
+  "title": "BigCommerce store",
+  "tagline": "Copperfield Kitchen Co. — a real BigCommerce trial store with a live catalogue, real orders, and (in progress) a grounded assistant.",
+  "type": "external",
+  "assistant": "copperfield",
+  "status": "building",
+  "icon": "bigcommerce",
+  "docs": "https://busymate.ai/docs/guides/bigcommerce",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/sites/bigcommerce",
+  "store": {
+    "store_hash": "wflwr11fds",
+    "control_panel": "https://store-wflwr11fds.mybigcommerce.com/manage/dashboard",
+    "storefront": "https://12zero784.mybigcommerce.com",
+    "api_base": "https://api.bigcommerce.com/stores/wflwr11fds/v3/",
+    "api_account_name": "copperfield-demo-connector",
+    "vault_secrets": ["BIGCOMMERCE_DEMO_CLIENT_ID", "BIGCOMMERCE_DEMO_CLIENT_SECRET", "BIGCOMMERCE_DEMO_ACCESS_TOKEN"]
+  }
+}

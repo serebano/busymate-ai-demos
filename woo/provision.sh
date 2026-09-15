@@ -112,6 +112,8 @@ if ! docker inspect demo-woo >/dev/null 2>&1; then
     -e WORDPRESS_TABLE_PREFIX=wp_ \
     -e WORDPRESS_CONFIG_EXTRA="$WP_EXTRA" \
     -v "$DATA/wp:/var/www/html" \
+    -v "$REPO_DIR/sites/_shared/php/opcache-demo.ini:/usr/local/etc/php/conf.d/zz-opcache-demo.ini:ro" \
+    -v "$REPO_DIR/sites/_shared/apache/mpm-demo.conf:/etc/apache2/conf-enabled/zz-mpm-demo.conf:ro" \
     --memory 768m \
     wordpress:php8.3-apache >/dev/null
 fi

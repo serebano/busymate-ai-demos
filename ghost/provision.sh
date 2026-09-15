@@ -60,7 +60,9 @@ if ! docker inspect demo-ghost-db >/dev/null 2>&1; then
     -v "$DATA/db:/var/lib/mysql" \
     --memory 256m \
     mysql:8 \
-    --innodb-buffer-pool-size=48M --performance-schema=OFF --max-connections=30 >/dev/null
+    --innodb-buffer-pool-size=48M --performance-schema=OFF --max-connections=30 \
+    --innodb-log-buffer-size=4M --table-open-cache=200 --table-definition-cache=200 \
+    --tmp-table-size=8M --max-heap-table-size=8M >/dev/null
 fi
 
 if ! docker inspect demo-ghost >/dev/null 2>&1; then
