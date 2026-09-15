@@ -1,0 +1,39 @@
+{
+  "$comment": "type:\"dynamic\" — the real site is hosted on Wix's own infrastructure (free plan, mrserebano.wixsite.com/wren-and-oat), not rendered by our nginx like the 'static' demos, and not a self-hosted CMS container like ghost/woo/wordpress. This backend is ONLY the MCP+identity server (sites/_shared/backend/mcp-identity-server.mjs) plus the six-layer agent-ready files, served here because Wix's free plan cannot host a custom static file at a path it doesn't already own. Wix's dev.wix.com App Market surface, 503-gated for the account through late 2026-09, came back reachable this pass ONLY under a Wix Studio account switch (manage.wix.com/studio/custom-apps) — see sites/wix/README.md 'Native path' for what that unlocked and what stayed out of scope (build+stage only, no submission). `tenant_id`/`connector_id`/`identity_provider_id` are non-secret ids the box references once the tenant is provisioned. status stays \"beta\" until the embed is confirmed rendering live and the connector/provider rows exist for real. See sites/wix/README.md.",
+  "name": "wix",
+  "subdomain": "wix",
+  "title": "Wix site",
+  "tagline": "Wren & Oat Bakery — an artisan bakery on a real Wix site, with a genuinely live assistant: grounded chat over the bakery's own published content, an MCP server, and an HTML-embed delivery path on the free plan.",
+  "type": "dynamic",
+  "assistant": "wren-and-oat",
+  "tenant_id": "fd09cfb7-1058-42c5-8614-7bd181d66967",
+  "connector_id": "f77f6b17-f057-4d8f-a3ad-0ee1c70c58c9",
+  "identity_provider_id": "62b7bba0-c248-4461-b1a6-f5a417610b46",
+  "status": "beta",
+  "order": 13,
+  "icon": "wix",
+  "docs": "https://busymate.ai/docs/guides/wix",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/wix",
+  "backend_port": 8119,
+  "site_origin": "https://mrserebano.wixsite.com/wren-and-oat",
+  "container": {
+    "backend": {
+      "name": "demo-wix-backend",
+      "network": "demo-wix-net",
+      "publish": "127.0.0.1:8119:8119",
+      "memory": "128m",
+      "env": {
+        "PORT": "8119",
+        "ISSUER": "https://wix.demo.busymate.ai",
+        "WIX_SITE_ORIGIN": "https://mrserebano.wixsite.com/wren-and-oat",
+        "TENANT_SLUG": "wren-and-oat"
+      }
+    },
+    "vhost_templates": [
+      "infra/nginx/wix-http.conf.template",
+      "infra/nginx/wix-https.conf.template"
+    ],
+    "acme_root": "<demo-host>/wix/acme",
+    "note": "No app/db services (unlike ghost/woo/wordpress) — the CMS is Wix's own hosting, not ours. The vhost only needs to proxy /mcp, /api/identity/*, /llms.txt, /AGENTS.md, /sitemap.md, /index.md, /agents.json, /.well-known/agents.json, /structured-data.json to the backend container."
+  }
+}

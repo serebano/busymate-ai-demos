@@ -25,6 +25,7 @@ server, the form-card builder, the card and avatar UI, the brand and knowledge b
 | Ghost site | [ghost.demo.busymate.ai](https://ghost.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/ghost) | [`ghost/`](https://github.com/serebano/busymate-ai-demos/tree/main/ghost) |
 | Webflow site | coming soon | [guide](https://busymate.ai/docs/guides/webflow) | [`webflow/`](https://github.com/serebano/busymate-ai-demos/tree/main/webflow) |
 | BigCommerce store | coming soon | [guide](https://busymate.ai/docs/guides/bigcommerce) | [`bigcommerce/`](https://github.com/serebano/busymate-ai-demos/tree/main/bigcommerce) |
+| Wix site | coming soon | [guide](https://busymate.ai/docs/guides/wix) | [`wix/`](https://github.com/serebano/busymate-ai-demos/tree/main/wix) |
 
 This is the live source for every demo above, kept in sync automatically as the demos
 change. Browse the full set at [busymate.ai/integrations](https://busymate.ai/integrations),

@@ -36,44 +36,70 @@ unused.
   about a real order" against** once the chat is wired up.
 
 Store display name is still the BigCommerce-assigned placeholder (`12Zero784@`) and the
-storefront theme/logo/colours are still default — branding pass not done yet.
+storefront theme/logo/colours are still default — branding pass not done yet. **The
+storefront itself is BigCommerce "prelaunch"** (shows a Coming Soon / guest-access-code
+gate to every visitor) — a control-panel-only Launch step, not API-reachable
+(`PUT /v2/store` is 405; no maintenance/coming-soon endpoint exists on v2 or v3).
 
-## What is NOT built yet — the real remaining work
+## What's built and wired (phases 2-6 of the brief)
 
-1. **Storefront embed** (Storefront → Script Manager, our loader + tenant id) — not
-   inserted yet.
-2. **Native BigCommerce app** — no app created yet at `devtools.bigcommerce.com`. Needs:
-   OAuth single-click install, Scripts API (install loader on install), Widgets API (a
-   "Chat with your mate" widget in Page Builder), hosted on the demo demo host backend.
-3. **Backend connector container** — no `sites/bigcommerce/backend/*` exists yet. Copy the
-   shape of `sites/woo/backend/{index,routes,tools,woo}.mjs` +
-   `sites/_shared/backend/mcp-identity-server.mjs`, swapping WooCommerce's REST reader for
-   BigCommerce's Admin API v3 (products/orders, already proven reachable above) +
-   Storefront GraphQL (cart/customer). Needs a `container` block in `demo.json` (ports,
-   nginx vhost, `<demo-host>/bigcommerce/...`) once written, and a demo host deploy.
-4. **WebMCP page tools** (`document.modelContext`: add-to-cart, view order, track order) —
-   not registered anywhere yet; depends on #1/#3.
-5. **Identified sign-in** — BigCommerce Customer Login API / current-customer JWT → our
-   ES256 launch JWT (the Larkspur recipe) — not wired.
-6. **Six-layer agent-ready files** served by the backend proxy (`sites/_shared/gen-agent-
-   files.mjs`, `gen-protocol-files.mjs`, etc., same as `sites/woo/public/*`) — not
-   generated yet; depends on #3.
-7. **Tenant on busymate.ai** (owner MCP runner: create tenant, identity provider,
-   `test_tenant_identity_provider`, publish knowledge, probe connector) — not created yet.
-8. **Devtools side** (`ai` component): `bigcommerce` row in `demos.ts` DEMOS_FALLBACK +
-   live manifest, `registryCatalog.ts` row, `content/docs/guides/bigcommerce.md` +
-   `GUIDE_PAGES`, i18n seed, real BigCommerce brand mark — none of this landed yet.
-9. **Proof screenshot** — the assistant answering about order #101 on the live storefront,
-   widget open, shopper identified — blocked on #1-#5.
+- **Backend connector** `sites/bigcommerce/backend/{bigcommerce,tools,index,wellKnown}.mjs`
+  — self-hosted MCP + identity server (shared `mcp-identity-server.mjs`, shape of
+  `sites/shopify/backend`), live on the demo host as `demo-bigcommerce-backend`
+  (127.0.0.1:8110), fronted by `bigcommerce.demo.busymate.ai` (real TLS cert). Reads
+  products/categories/orders LIVE from the Admin API — nothing hardcoded. Serves the
+  six agent-ready files + `/api/bmai/status` + a same-origin `/preview` page itself
+  (the real storefront can serve none of these while prelaunch).
+- **Universal embed + WebMCP tools** — both installed as real BigCommerce Script Manager
+  entries (Content Scripts API) on the live store: the `busymate.ai/embed/v1.js` loader
+  and `sites/bigcommerce/public/webmcp-tools.js` (view_cart/add_to_cart against BC's own
+  Storefront Cart API, track_order against this backend's `/mcp`). Installed, unverifiable
+  live on the real storefront until prelaunch lifts — verified instead on `/preview`
+  (identical wiring).
+- **Tenant on busymate.ai** — `demo-bigcommerce` (`a0910f44-1cc6-4b6f-8ead-303ebf188778`),
+  provisioned + published (revision 5) via the owner MCP runner: a real MCP connector
+  (`f04a79ca-8dc5-48b0-82da-09095c3dac4f`, delegation_mode `signed_actor_token`, all 5
+  tools mapped), a real identity provider (`05b66868-…`, `test_tenant_identity_provider`
+  **passed 6/6**, including the `identified-launch` preflight scenario), and 2 knowledge
+  sources (the live catalogue + delivery/policy text). `set_tenant_branding` is refused
+  live (`native_action_unavailable`) so branding rides in `publish_tenant_runtime`'s
+  `config.brand` instead (confirmed rendering correctly on the hosted chat).
+- **Grounded chat proven live**: `demo-bigcommerce.busymate.ai/chat` answers real
+  catalogue questions correctly (e.g. "Cast Iron Skillet 12-Inch (SKU CKC-CIS-12) is
+  $68.00" — matches the live store exactly).
+
+## The one thing NOT proven — identified order lookup
+
+On `/preview` (signed in as the demo customer, real embed widget, real form card): asking
+about order 101 correctly triggers `get_order_status`'s form card, correctly collects the
+order number + email, then the assistant reports **"I'm unable to look up order details
+from this chat — that requires your Copperfield Kitchen Co. account to be passed through
+to support."** — the tool call reaches the connector and is refused for lack of a verified
+signed-in actor. Root cause: **`set_connector_actor_verifier` (the tool that registers this
+connector's HS256 secret with the platform) returns `native_action_unavailable` on the
+live busymate.ai/mcp right now** — same failure shape as `set_tenant_branding` and
+`get_tenant_config`, apparently a live bug in a class of "native" platform actions
+(possibly related to the unmerged `fix/console-native-branding-unavailable`, #3014, but
+broader than that branch's title). This backend's own env already holds a self-generated
+matching secret (`BMAI_SUPPORT_ACTOR_SECRET`/`_TENANT_ID`/`_CONNECTOR_ID`, `/api/bmai/status`
+reports `actorVerifier:true`) — the platform side of the handshake is what's missing.
+**Retry `set_connector_actor_verifier` once that platform-side bug is fixed** — no
+devtools-side change is needed, only a re-run of that one tool call.
 
 ## Continuing this lane
 
 - Store credentials: read them from the Vault via the devtools MCP tools in code that
   runs server-side only (never re-print the values; they are write-only once stored).
+  **Exact commands, ports and box paths live in the devtools private ops runbook
+  `demos-hosting` — this file is the design, not the transcript** (same convention as
+  `sites/woo/README.md`).
 - `seed/catalog-defs.py` is a record of the 12 live products, not yet an idempotent
   upserter — add SKU-based upsert before re-running it against a second store.
-- Shipping method + tax rate + store display name + theme branding are the fastest next
-  UI-only steps (control panel, `bmc` on the `bmai-owner` browser, tab session
-  `91FB5B5D202DC79DD6BDBAF4E6EC05E3`).
-- The backend connector (#3) is the critical path for everything after it (#4-#9) — start
-  there next.
+- Shipping method + tax rate + store display name + theme branding + the storefront Launch
+  step are all UI-only on the BigCommerce control panel — needs a real login session (this
+  lane's saved `bmai-owner` browser session was lost mid-lane; no password available).
+- Native BigCommerce app (dev portal, OAuth single-click install) — also blocked on a
+  BigCommerce login (devtools.bigcommerce.com), not attempted.
+- Once `set_connector_actor_verifier` works platform-side: re-run it, then re-verify
+  order lookup on `/preview`, then move the exact same proof to the real storefront once
+  it's launched.
