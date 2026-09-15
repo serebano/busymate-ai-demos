@@ -1,9 +1,0 @@
-/*
- * Busymate AI trigger block — minimal styling only (#2968). Colour, shape and
- * everything the visitor experiences ONCE THE PANEL OPENS is owned by
- * embed/v1.js, served remotely; this button is content the theme already
- * styles as a button, nudged just enough to read as one everywhere.
- */
-.bmai-assistant-trigger {
-	cursor: pointer;
-}

@@ -58,7 +58,7 @@
         <p class="lead">Six coffees from six farms, roasted in 5kg batches and shipped the same afternoon. Free delivery over $40, and a subscription that pauses when you do.</p>
         <div class="cta">
           <a class="btn" href="#coffee">Shop the range</a>
-          <button class="btn ghost" type="button" data-open-chat>Ask about a coffee</button>
+          <button class="btn ghost" type="button" data-open-chat="What would you recommend if I like a chocolatey espresso?">Ask about a coffee</button>
         </div>
         <dl class="hero-facts">
           <div><dt>Roasted</dt><dd>to order</dd></div>
@@ -82,7 +82,7 @@
         <h2>This week on the roaster</h2>
         <p class="sub">Whole bean, or ground for your method at checkout. Everything below is in stock and carries its roast date on the bag.</p>
       </div>
-      <button class="btn ghost small" type="button" data-open-chat>Not sure? Ask</button>
+      <button class="btn ghost small" type="button" data-open-chat="Which coffee should I start with?">Not sure? Ask</button>
     </div>
     <div class="grid" id="catalog">
 <article class="card product" data-sku="NW-ETH-250">
@@ -223,7 +223,7 @@
         <h2>Never run out. Save 15%.</h2>
         <p class="sub" style="margin:0">Your beans every 2, 4 or 6 weeks, delivered free. Pause, skip, swap or cancel before the next roast date — no minimum, no notice, no fee.</p>
       </div>
-      <button class="btn" type="button" data-open-chat>Ask about plans</button>
+      <button class="btn" type="button" data-open-chat="How does the coffee subscription work?">Ask about plans</button>
     </div>
   </section>
 
@@ -329,7 +329,7 @@
 <dialog id="cart">
   <div class="head"><h3>Your cart</h3><button class="btn ghost small" type="button" id="cart-close">Close</button></div>
   <div class="body"><ul id="cart-lines"></ul></div>
-  <div class="foot"><span id="cart-total" class="muted"></span><button class="btn small" type="button" data-open-chat>Ask about an order</button></div>
+  <div class="foot"><span id="cart-total" class="muted"></span><button class="btn small" type="button" data-open-chat="Where is my order?">Ask about an order</button></div>
 </dialog>
 
 <div id="flash" role="status" hidden></div>
@@ -341,6 +341,7 @@
         data-aria-label="Open the Northwind Coffee assistant"
         data-title="Northwind Coffee"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 <script type="module" src="/assets/boot.js"></script>
 </body>
 </html>

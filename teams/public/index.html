@@ -310,7 +310,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
     <p class="lead">Bram answers leave, benefits, pay dates and handbook questions for 300 people — live on this page today, and shown here exactly as it will look in the chat pane beside the work once the app is connected.</p>
     <div class="cta">
       <a class="btn" href="#leave">Book time off</a>
-      <button class="btn ghost" type="button" data-open-chat>Ask about a benefit</button>
+      <button class="btn ghost" type="button" data-open-chat="What health benefits am I eligible for?">Ask about a benefit</button>
     </div>
   </div>
 </section>
@@ -754,9 +754,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
     flash("Signed out");
   });
-  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
-    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
-  });
+  // [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
+  // each carries its prompt as the attribute value and auto-submits it via
+  // BusymateAI.ask() (no open-only wiring — the #2953 regression).
   // #2662 follow-up — ONE tap opens the widget, fills the composer with the
   // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
   // call every demo uses). A cached pre-#2662 embed script (no `ask`)
@@ -783,6 +783,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data-aria-label="Open the Bramble &amp; Co. people desk chat"
         data-title="Bramble &amp; Co. people desk"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 
 <script>
 // ── The chat pane: the SAME live widget, repositioned on top of the window's

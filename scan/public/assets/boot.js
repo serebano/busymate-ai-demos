@@ -25,11 +25,9 @@ function wireChips() {
   });
 }
 
-function wireOpenChat() {
-  document.querySelectorAll("[data-open-chat]").forEach((b) =>
-    b.addEventListener("click", () => window.BusymateAI?.open?.()),
-  );
-}
+// [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
+// each carries its prompt as the attribute value and auto-submits it via
+// BusymateAI.ask() (no open-only wiring here — the #2953 regression).
 
 function wireAccount() {
   document.querySelectorAll("#signin-btn,[data-signin]").forEach((b) => b.addEventListener("click", signIn));
@@ -38,7 +36,6 @@ function wireAccount() {
 
 wireForm();
 wireChips();
-wireOpenChat();
 wireAccount();
 await refreshAccount();
 const pageTools = await registerPageTools();

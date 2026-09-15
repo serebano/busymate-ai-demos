@@ -158,7 +158,10 @@
     $("#qvPrice").innerHTML = money(p.price) + (p.compareAt ? "<s>" + money(p.compareAt) + "</s>" : "");
     $("#qvDesc").textContent = p.description;
     $("#qvSpecs").innerHTML = p.specs.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "<li>Weight " + esc(p.weight) + "</li>";
-    $("#qvAsk").onclick = function (e) { e.preventDefault(); if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); };
+    // The quick-view "Ask the assistant about this" carries a product-specific
+    // prompt; the shared /_shared/ui/open-chat.js opens the widget and submits
+    // it via BusymateAI.ask() (never open-only — the #2953 regression).
+    $("#qvAsk").setAttribute("data-open-chat", "Tell me about the " + p.title + " — is it in stock, and how does it fit?");
     renderQvOptions(p);
     d.showModal();
   }
@@ -218,7 +221,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     renderAll(); renderCart(); renderIdentity();
     document.body.addEventListener("click", function (e) {
-      var t = e.target.closest("[data-add],[data-qv],[data-filter],[data-open-cart],[data-close-cart],[data-signin],[data-signout],[data-ask],[data-q],[data-rm]");
+      var t = e.target.closest("[data-add],[data-qv],[data-filter],[data-open-cart],[data-close-cart],[data-signin],[data-signout],[data-q],[data-rm]");
       if (!t) return;
       if (t.dataset.add) { addToCart(t.dataset.add, 1); }
       else if (t.dataset.qv) { openQuickView(t.dataset.qv); }
@@ -227,7 +230,6 @@
       else if (t.hasAttribute("data-close-cart")) closeDrawer();
       else if (t.hasAttribute("data-signin")) signIn();
       else if (t.hasAttribute("data-signout")) signOut();
-      else if (t.hasAttribute("data-ask")) { e.preventDefault(); if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); }
       else if (t.dataset.q) { var c = getCart(), i = Number(t.dataset.i); c[i].qty = Math.max(0, c[i].qty + Number(t.dataset.q)); if (!c[i].qty) c.splice(i, 1); setCart(c); }
       else if (t.dataset.rm) { var c2 = getCart(); c2.splice(Number(t.dataset.rm), 1); setCart(c2); }
     });

@@ -292,7 +292,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
     <h1>The engineer who's already in your #it-help channel.</h1>
     <p class="lead">Patch opens tickets, grants access, walks people through a VPN or an MFA reset and reports live status — in the thread, not a portal. What's on this page is the same assistant your team would @-mention in Slack.</p>
     <div class="cta">
-      <button class="btn" type="button" data-open-chat>Ask Patch something</button>
+      <button class="btn" type="button" data-open-chat="How do I reset my password?">Ask Patch something</button>
       <a class="btn ghost" href="#plans">See the plans</a>
     </div>
   </div>
@@ -646,9 +646,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (slot) { var r = slot.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) slot.scrollIntoView({ block: "center" }); }
     if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
   }
-  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
-    b.addEventListener("click", function () { openChat(); });
-  });
+  // [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
+  // each carries its prompt as the attribute value and auto-submits it via
+  // BusymateAI.ask() (no open-only wiring — the #2953 regression).
   // #2662 follow-up — ONE tap opens the widget, fills the composer with the
   // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
   // call every demo uses); openChat() still brings the phone-frame widget on
@@ -676,6 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data-aria-label="Open Patchwell chat"
         data-title="Patchwell"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 
 <script>
 // ── The Slack view: the SAME live widget, repositioned on top of the Slack

@@ -270,7 +270,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
     <p class="lead">Marlow answers menu, hours and booking questions the moment someone reaches out — live on the web tonight, and shown here exactly as it will look once Marlow's Kitchen's WhatsApp number goes live.</p>
     <div class="cta">
       <a class="btn" href="#book">Book a table</a>
-      <button class="btn ghost" type="button" data-open-chat>Ask Marlow something</button>
+      <button class="btn ghost" type="button" data-open-chat="What's on the menu tonight?">Ask Marlow something</button>
     </div>
   </div>
 </section>
@@ -674,9 +674,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (slot) { var r = slot.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) slot.scrollIntoView({ block: "center" }); }
     if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open();
   }
-  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
-    b.addEventListener("click", function () { openChat(); });
-  });
+  // [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
+  // each carries its prompt as the attribute value and auto-submits it via
+  // BusymateAI.ask() (no open-only wiring — the #2953 regression).
   // #2662 follow-up — ONE tap opens the widget, fills the composer with the
   // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
   // call every demo uses); openChat() still brings the phone-frame widget on
@@ -704,6 +704,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data-aria-label="Open Marlow's Kitchen chat"
         data-title="Marlow's Kitchen"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 
 <script>
 // ── WhatsApp preview: the SAME live widget, repositioned on top of the

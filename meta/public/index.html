@@ -316,7 +316,7 @@ body[data-signed-in="no"] [data-when="signed-in"]{display:none}
     <p class="lead">A small collection that survives chlorine, salt and a whole summer — with an assistant that knows every measurement, fabric weight and return window, live on the web today and shown here exactly as it will read inside a Messenger thread and an Instagram DM.</p>
     <div class="cta">
       <a class="btn" href="#collection">See the collection</a>
-      <button class="btn ghost" type="button" data-open-chat>Ask Sol about sizing</button>
+      <button class="btn ghost" type="button" data-open-chat="What size should I order?">Ask Sol about sizing</button>
     </div>
   </div>
 </section>
@@ -867,9 +867,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.BusymateAI && window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
     flash("Signed out");
   });
-  document.querySelectorAll("[data-open-chat]").forEach(function (b) {
-    b.addEventListener("click", function () { if (window.BusymateAI && window.BusymateAI.open) window.BusymateAI.open(); });
-  });
+  // [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
+  // each carries its prompt as the attribute value and auto-submits it via
+  // BusymateAI.ask() (no open-only wiring — the #2953 regression).
   // #2662 follow-up — ONE tap opens the widget, fills the composer with the
   // exact prompt, and submits it (the same busymate.ai/embed/v1.js `ask()`
   // call every demo uses). A cached pre-#2662 embed script (no `ask`)
@@ -896,6 +896,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data-aria-label="Open the Sol and Salt chat"
         data-title="Sol &amp; Salt Swimwear"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 
 <script>
 // ── The two channel previews: ONE live widget, repositioned on top of whichever

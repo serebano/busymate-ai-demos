@@ -70,7 +70,7 @@
       <p class="lead">Tents, packs, shells and boots we field-test for a year before they get a price tag — then back for life.</p>
       <div class="cta">
         <a class="btn light" href="#shop">Shop the collection</a>
-        <button class="btn ghost" type="button" data-ask>Ask about sizing</button>
+        <button class="btn ghost" type="button" data-open-chat="How do I choose the right pack size?">Ask about sizing</button>
       </div>
     </div>
     <a class="credit" href="/img/CREDITS.md">Photo credits</a>
@@ -130,7 +130,7 @@
   </section>
 
   <section id="help" class="wrap" style="padding-top:0">
-    <div class="sec-head"><div><span class="eyebrow">Help &amp; policies</span><h2>Shipping, returns and the questions we get most</h2></div><button class="btn small" type="button" data-ask>Ask the assistant instead</button></div>
+    <div class="sec-head"><div><span class="eyebrow">Help &amp; policies</span><h2>Shipping, returns and the questions we get most</h2></div><button class="btn small" type="button" data-open-chat="What is your return and warranty policy?">Ask the assistant instead</button></div>
     <div class="help">
       <div class="panel"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Shipping</h3><ul id="shipList"></ul></div>
       <div class="panel"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/></svg>Returns &amp; warranty</h3><ul id="retList"></ul></div>
@@ -138,7 +138,7 @@
       <div class="panel contact" id="contact"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>Get in touch</h3>
         <dl><dt>Email</dt><dd><a href="mailto:hello@northline.example">hello@northline.example</a></dd><dt>Phone</dt><dd><a href="tel:+13605550142">+1 (360) 555-0142</a></dd><dt>Hours</dt><dd>Mon–Fri 8am–6pm PT · Sat 9am–3pm PT</dd><dt>Workshop</dt><dd>Bellingham, Washington</dd></dl>
         <p style="margin:0 0 14px;color:var(--muted);font-size:14px">Fastest is the chat bubble: the assistant answers instantly, and when it can't, it hands you to Luis on the care team — same window, no starting over.</p>
-        <button class="btn" type="button" data-ask>Start a conversation</button>
+        <button class="btn" type="button" data-open-chat="What do you sell?">Start a conversation</button>
       </div>
     </div>
   </section>
@@ -188,7 +188,7 @@
         <p style="margin:0;max-width:34ch">Field-tested in fourteen countries, repaired in one workshop in Bellingham.</p>
       </div>
       <div><h4>Shop</h4><ul><li><a href="#shop" data-filter="shelter">Shelter</a></li><li><a href="#shop" data-filter="packs">Packs</a></li><li><a href="#shop" data-filter="apparel">Apparel</a></li><li><a href="#shop" data-filter="footwear">Footwear</a></li><li><a href="#shop" data-filter="kitchen">Camp kitchen</a></li></ul></div>
-      <div><h4>Support</h4><ul><li><a href="#help">Shipping</a></li><li><a href="#help">Returns &amp; warranty</a></li><li><a href="#contact">Contact</a></li><li><a href="mailto:hello@northline.example">hello@northline.example</a></li><li><a href="tel:+13605550142">+1 (360) 555-0142</a></li><li><a href="#" data-ask>Chat with us</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="#help">Shipping</a></li><li><a href="#help">Returns &amp; warranty</a></li><li><a href="#contact">Contact</a></li><li><a href="mailto:hello@northline.example">hello@northline.example</a></li><li><a href="tel:+13605550142">+1 (360) 555-0142</a></li><li><a href="#" data-open-chat="What do you sell, and what does shipping cost?">Chat with us</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="#story">Our story</a></li><li><a href="#team">The crew</a></li><li><a href="/img/CREDITS.md">Photo credits</a></li><li><a href="/llms.txt">For agents</a></li></ul></div>
     </div>
     <div class="legal">
@@ -224,7 +224,7 @@
       <p class="desc" id="qvDesc"></p>
       <div id="qvOpts"></div>
       <ul class="specs" id="qvSpecs"></ul>
-      <div class="buy"><button class="btn" type="button" id="qvAdd">Add to cart</button><a class="ask" href="#" id="qvAsk">Ask the assistant about this →</a></div>
+      <div class="buy"><button class="btn" type="button" id="qvAdd">Add to cart</button><a class="ask" href="#" id="qvAsk" data-open-chat="Tell me about this product — is it in stock, and how does it fit?">Ask the assistant about this →</a></div>
     </div>
   </div>
 </dialog>
@@ -241,5 +241,6 @@
         data-aria-label="Open Northline Outdoor support chat"
         data-title="Northline Outdoor"
         async></script>
+<script defer src="/_shared/ui/open-chat.js"></script>
 </body>
 </html>

@@ -28,6 +28,3 @@ or open issues on [busymate-devtools](https://github.com/serebano/busymate-devto
 These are sandbox demos — no real orders, payments or customer data; every photograph is
 credited in its demo's `IMAGE-CREDITS.md` and no real company's assets or real person's
 likeness is used.
-
-Not a demo, but real, installable software: [`wordpress-plugin/`](wordpress-plugin/) is the
-public source of the **Busymate AI** WordPress plugin (GPL-2.0-or-later).
