@@ -122,29 +122,49 @@ Env file `<demo-host>/squarespace/env` (0600, on the box, not in this repo):
 `SQSP_SITE_ORIGIN`, `SQSP_SESSION_COOKIE` (Vault `SQUARESPACE_DEMO_SESSION_COOKIE`),
 `SQSP_DEMO_ORIGIN`, `TENANT_SLUG`, `DEMO_CUSTOMER_EMAIL`.
 
-## Tenant on busymate.ai — NOT YET provisioned (deliberately)
+## Tenant on busymate.ai — PROVISIONED + PUBLISHED, grounded chat proven live
 
-The backend is real and live, so provisioning is now honest to do — but this lane stopped
-short of it: the shared `bmai-owner` browser (used for every owner-scoped busymate.ai
-operation) had another lane's tab open on `/console/platform/tenants` at the same time, and
-the "Owner reach gotcha" in `notes/runbooks/demos-hosting.md` documents a real way a
-tenant-provisioning call can flip the OWNER's default-tenant membership and break a
-DIFFERENT lane's concurrent publish. Provisioning needs the exact sequence from that
-runbook (`provision_tenant` → `upsert_tenant_connector { endpoint: "https://squarespace.demo.busymate.ai/mcp", ... }`
-→ `upsert_tenant_identity_provider` → `test_tenant_identity_provider` → ONE
-`publish_tenant_runtime` carrying the FULL config, never a partial), done carefully and not
-interleaved with another lane's owner-session work. Real, precisely-named next step — not
-skipped for lack of trying.
+Provisioned via the **value-blind owner MCP runner** (Recipe A — service-role magiclink →
+`/auth/v1/verify` → `POST https://busymate.ai/mcp/first-party-token`, no bmc browser
+touched, so it never interleaved with the other lane holding `bmai-owner` on
+`/console/platform/tenants`):
+
+- `provision_tenant { slug:"demo-squarespace", name:"Quiet Pines Yoga" }` →
+  tenant `fdb9c7d5-9958-42db-871c-1fe2099f15ca`.
+- `upsert_tenant_connector { endpoint:"https://squarespace.demo.busymate.ai/mcp", tool_access:
+  {get_page:"public",search_site:"public",list_booking_options:"public"} }` → connector
+  `d2e5b5d6-4966-49cd-852c-7c872378bec0` (live-probed: 3 tools). `book_a_session` is drafted
+  in the backend but not yet in `tool_access` — registering it 400'd `undiscovered tool`
+  because it needs an actor-verifier secret installed first (same class of gap
+  `sites/bigcommerce/README.md` hit with `set_connector_actor_verifier`); tracked as
+  follow-up, not faked.
+- `upsert_tenant_identity_provider` → provider `c113e162-5780-41ea-96b2-9c01f700180b`.
+  `test_tenant_identity_provider` **passed config + JWKS + launch-refusal** (publication
+  was `false` only because nothing had been published yet — expected pre-publish).
+- **Working publish order** (the #3029/#3014 native-action fixes are on branches, not live):
+  `publish_tenant_runtime` with ONLY `launch_origins` first (revision 1, 6/6 preflight) — a
+  minimal valid config so the connector/identity rows attach cleanly — THEN a second
+  `publish_tenant_runtime` carrying the FULL `config` (brand/access/channels/integrations/
+  identity/support, the identity provider object re-sent WITH its `id` so the merge keeps it
+  instead of reading as a removal) + 5 inline `knowledge_sources` (the studio's real page
+  text, 1,915 chars total) → **revision 3, 9/9 preflight, all green** (including
+  `identified-launch` and `knowledge-citations`).
+- **Verified live**: `https://demo-squarespace.busymate.ai/chat` renders branded ("Hi, I'm
+  Quiet Pines Yoga"); asked *"How much is a Vinyasa Flow class?"* → the assistant called
+  `list_booking_options` and answered **"A Vinyasa Flow Class is $18.00 at Quiet Pines
+  Yoga."** — matching the real live Services page exactly. Screenshot via bmc `dashverify`
+  (DevTools MCP `browser_*`, never `bmai-owner`), cropped to 2000×1406.
 
 ## Continuing this lane
 
-1. Provision the busymate.ai tenant + MCP connector + identity provider against the NOW-LIVE
-   `https://squarespace.demo.busymate.ai` (see "Tenant on busymate.ai" above for the exact
-   sequence and the concurrency caution).
+1. Install an actor-verifier secret on the backend + register it with the connector so
+   `book_a_session` (delegated) is discoverable and can be added to `tool_access`.
 2. Crack the Squarespace anonymous password-gate wire format (or accept the
    contributor-session-cookie approach as the shipped shape, documented above) — and set a
    reminder to rotate `SQUARESPACE_DEMO_SESSION_COOKIE` when it expires.
 3. Drop the Code Block with `public/webmcp-tools.js` + the `busymate.ai/embed/v1.js` loader
-   on the Home page; verify it actually renders once Site Availability allows it.
-4. Register the `developers.squarespace.com` OAuth Extension (build+stage only).
-5. Real screenshot: the assistant answering grounded on the live site (widget open), once #1 lands.
+   on the Home page; verify it actually renders once Site Availability allows it (still
+   paywalled on trial — see "Universal embed" above; an owner-level product decision,
+   surfaced, not resolved this lane).
+4. Register the `developers.squarespace.com` OAuth Extension (build+stage only) — skipped
+   this lane per explicit scope.

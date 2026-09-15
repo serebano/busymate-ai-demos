@@ -1,13 +1,14 @@
 {
-  "$comment": "STATUS: real Squarespace free-trial site built via Blueprint AI (5 pages: Homepage, About, Services, Appointments, Contact), Site Availability = Password Protected (Public requires a paid upgrade on trial — see README.md). Backend connector LIVE on the demo demo host at squarespace.demo.busymate.ai (real TLS cert, docker container demo-squarespace-backend) — /api/bmai/status, /llms.txt, /agents.json and /mcp all verified live over HTTPS; tools/call get_page + search_site + list_booking_options proven to return the REAL live Squarespace page text (not `?format=json`, which this template does not populate there — see README.md 'What we learned'). NOT YET provisioned as a busymate.ai tenant (deliberately deferred — see README.md 'Tenant on busymate.ai'). status stays 'building' until the tenant is provisioned + a grounded chat answer is proven live end to end.",
+  "$comment": "STATUS: real Squarespace free-trial site built via Blueprint AI (5 pages: Homepage, About, Services, Appointments, Contact), Site Availability = Password Protected (Public requires a paid upgrade on trial — see README.md). Backend connector LIVE on the demo demo host at squarespace.demo.busymate.ai (real TLS cert, docker container demo-squarespace-backend) — /api/bmai/status, /llms.txt, /agents.json and /mcp all verified live over HTTPS; tools/call get_page + search_site + list_booking_options proven to return the REAL live Squarespace page text (not `?format=json`, which this template does not populate there — see README.md 'What we learned'). Tenant `demo-squarespace` PROVISIONED + PUBLISHED (revision 3, 9/9 preflight) via the value-blind owner MCP runner: a real MCP connector (id d2e5b5d6-…, 3 public tools probed live), a real identity provider (id c113e162-…, live preflight config+jwks+refusal all green), and 5 knowledge sources (real page text, 1,915 chars). GROUNDED CHAT PROVEN LIVE: https://demo-squarespace.busymate.ai/chat answered 'How much is a Vinyasa Flow class?' → 'A Vinyasa Flow Class is $18.00 at Quiet Pines Yoga' (tool call: list_booking_options), screenshot-verified via bmc dashverify. NOT DONE: the universal embed does not render on the real Squarespace storefront itself (Code Injection is paid-plan-gated on trial, same as the general `squarespace` integrations-catalog row — an owner-level product decision, surfaced not resolved) — so this demo's OWN grounded assistant works, but a prospect cannot yet see the widget floating on the real Squarespace page the way they can on wordpress/ghost. book_a_session (delegated) is drafted but not yet wired to the connector (needs an actor-verifier secret, same class of gap bigcommerce documented). Extensions/OAuth native path not attempted — out of scope.",
   "name": "squarespace",
   "subdomain": "squarespace",
   "title": "Squarespace site",
-  "tagline": "Quiet Pines Yoga — a real Squarespace free-trial site (Blueprint AI), with a grounded assistant in progress.",
+  "tagline": "Quiet Pines Yoga — a real Squarespace trial site with a live grounded assistant, proven answering real class prices.",
   "$comment2": "type:\"dynamic\" (like woo/wordpress/ghost/bigcommerce): the real demo IS the owner's live Squarespace trial site — squarespace.demo.busymate.ai is this backend serving /mcp, the six agent-ready files and a status page directly (Node, no separate public/ docroot beyond the WebMCP script). scripts/deploy.sh therefore skips the site itself; see sites/wordpress or sites/bigcommerce for the same shape.",
   "type": "dynamic",
   "assistant": "demo-squarespace",
-  "status": "building",
+  "tenant_id": "fdb9c7d5-9958-42db-871c-1fe2099f15ca",
+  "status": "live",
   "order": 14,
   "icon": "squarespace",
   "docs": "https://busymate.ai/docs/guides/squarespace",
@@ -20,6 +21,6 @@
     "brand": "Quiet Pines Yoga",
     "template_path": "Blueprint AI (Professional palette + font pairing)",
     "pages": ["Home", "About", "Services", "Appointments", "Contact"],
-    "vault_secrets": ["SQUARESPACE_DEMO_SITE_PASSWORD"]
+    "vault_secrets": ["SQUARESPACE_DEMO_SITE_PASSWORD", "SQUARESPACE_DEMO_SESSION_COOKIE"]
   }
 }
