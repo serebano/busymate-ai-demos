@@ -155,6 +155,50 @@ touched, so it never interleaved with the other lane holding `bmai-owner` on
   Yoga."** — matching the real live Services page exactly. Screenshot via bmc `dashverify`
   (DevTools MCP `browser_*`, never `bmai-owner`), cropped to 2000×1406.
 
+### The #2866 embed-origins audit — two real bugs found and fixed
+
+The ai 719 deploy's embed-origins audit flagged `demo-squarespace`: the served
+`frame-ancestors` on `/support/demo-squarespace?channel=embed` was `'self'` only, missing
+both declared origins, on the apex (`busymate.ai`) AND the tenant subdomain
+(`demo-squarespace.busymate.ai`). Root-caused to TWO separate real bugs, not a config
+mistake surfaced-and-dropped:
+
+1. **The identity provider object this lane published was missing `label`** — a REQUIRED
+   field (`visitorIdentityProviderSchema` in `v2/packages/tenancy/src/support.ts`, no
+   `.default()`) that `upsert_tenant_identity_provider`'s own MCP schema doesn't require but
+   `publish_tenant_runtime`'s strict `config.identity.providers[]` twin does. A strict-schema
+   miss that isn't `unrecognized_keys` fails the WHOLE runtime parse closed (null runtime →
+   `frame-ancestors 'self'`) — silently, no thrown exception, nothing in the app logs, because
+   `supportRuntimeForSlug` treats a clean `{ok:false}` parse result as "not found", not an
+   error. Fixed by re-sending the SAME provider object with `label` added — revision 8, and
+   `/api/support-frame-policy?slug=demo-squarespace` flipped from `{"embed":false,...}` to
+   `{"embed":true,"embedOrigins":[...]}` on the very next projection-worker tick.
+2. **`tenant_support_runtime` (the table `publish_tenant_runtime` writes a revision into) had
+   NO trigger calling `pg_notify('v2_tenants', ...)`** — only `tenants`/`tenant_domains` did
+   (`0002_tenancy.sql`). So even a CORRECTLY-published config's cache-invalidation signal
+   never reached the process-wide `TenantStore` the web app's `/support/<slug>` embed route
+   reads (`lib/tenancy.ts`, "zero polling... live on the next request, no restart" — a promise
+   this table never kept). Confirmed live: the projection worker's own log showed
+   `claimed=3 applied=3 failed=0` for an EARLIER (still-broken, missing-`label`) publish, and
+   a full `systemctl restart busymate-v2-web` (a fresh process, no cache to invalidate) STILL
+   served the stale header — proving this was never a caching lag, only revealed once bug #1
+   was fixed and the SAME staleness would have recurred on every future publish. Fixed with a
+   new migration mirroring the existing pattern exactly:
+   `v2/db/migrations/20260915184000_tenant_support_runtime_bump.sql` (`CREATE TRIGGER
+   tenant_support_runtime_bump AFTER INSERT OR UPDATE OR DELETE ON tenant_support_runtime FOR
+   EACH STATEMENT EXECUTE FUNCTION tenancy_bump()`), applied live + recorded in the `_v2_migrations`
+   ledger so the next real deploy doesn't re-run or flag drift on it.
+
+**Verified fixed**, both audited hosts, not from inside the box:
+```
+$ curl https://busymate.ai/support/demo-squarespace?channel=embed -I | grep content-security-policy
+content-security-policy: frame-ancestors 'self' https://demo-squarespace.busymate.ai https://squarespace.demo.busymate.ai
+$ curl https://demo-squarespace.busymate.ai/support/demo-squarespace?channel=embed -I | grep content-security-policy
+content-security-policy: frame-ancestors 'self' https://demo-squarespace.busymate.ai https://squarespace.demo.busymate.ai
+```
+(`deploy/v2/verify-embed-origins.mjs` itself isn't deployed to the app box — only the app
+release is — so this is the same two-host check the script runs, by hand.)
+
 ## Continuing this lane
 
 1. Install an actor-verifier secret on the backend + register it with the connector so
