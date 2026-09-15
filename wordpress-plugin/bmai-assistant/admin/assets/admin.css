@@ -1,0 +1,12 @@
+/*
+ * Busymate AI settings screen — layout only, no colour opinions of its own;
+ * every visual choice here is a spacing nicety on top of core admin styles,
+ * never a re-skin of them.
+ */
+.bmai-settings .bmai-status-table {
+	max-width: 640px;
+	margin-bottom: 1em;
+}
+.bmai-settings .bmai-manual-setup {
+	margin-top: 0.5em;
+}
