@@ -1,7 +1,7 @@
 ---
 title: "Northwind Coffee Co."
 description: "A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Northwind Coffee Co.

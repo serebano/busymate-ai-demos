@@ -1,4 +1,171 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Beacon",
+    "description": "A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://scan.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "scan_site",
+      "title": "scan site",
+      "description": "Open the real Busymate AI quick start for a website address, at busymate.ai/try/<host> — the same one-click scan and grounded assistant preview this page demonstrates.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "url",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "list_examples",
+      "title": "list examples",
+      "description": "List the three pre-scanned example sites this demo links to, with their live busymate.ai/try/<host> result URL.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "show_example",
+      "title": "show example",
+      "description": "Detail on one of the three pre-scanned example sites (its label and live quick-start result URL).",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "site",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_readiness",
+      "title": "get readiness",
+      "description": "Score ANY website's AI-readiness live — the same six-layer checker (llms.txt, agents.json, MCP, WebMCP, structured data, robots/sitemap) the quick start runs, so an agent can grade a site without leaving this conversation.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "url",
+            "description": "A website address, with or without https://, e.g. 'acme.com' or 'https://acme.com'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "my_recent_scans",
+      "title": "my recent scans",
+      "description": "The signed-in demo visitor's own scan history from this session — which hosts they have already looked up with get_readiness or scan_site. Answers only for the customer signed in on this page.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://scan.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://scan.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://scan.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://scan.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://scan.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://scan.demo.busymate.ai/"
+  },
   "name": "Beacon",
   "url": "https://scan.demo.busymate.ai",
   "description": "A demo of the Busymate AI site-scan quick start: paste any public website address and see the grounded assistant preview and AI-readiness scorecard it produces in one click, with no sign-up and no card. Beacon's own MCP server can score any host live, and a provided demo visitor can sign in to see their scan history for this session.",

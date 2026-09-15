@@ -1,7 +1,7 @@
 ---
 title: "Northline Outdoor"
 description: "Northline Outdoor — a sample Shopify storefront (20 products: tents, packs, shells, boots, camp kitchen, sleep + light; lifetime warranty, free US shipping over $75) demonstrating the Busymate AI Shopify app: grounded product/policy chat, an MCP server over the store's own data, WebMCP in-page cart actions, and identified-visitor order lookup."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Northline Outdoor

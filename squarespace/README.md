@@ -55,8 +55,8 @@ Tracking issue: `serebano/busymate-devtools#3038`. Site: the owner's real Square
    access" shape `sites/bigcommerce/README.md` used for its prelaunch storefront. This cookie
    is a browser session (`member-session` + `crumb` + `SS_MID` + `SS_SESSION_ID`) that expires
    / rotates — re-mint it from the `bmai-owner` bmc browser's cookies for
-   `bat-vanilla-s2x4.squarespace.com` and rotate the Vault secret + the box's
-   `<demo-host>/squarespace/env` when `get_page`/`search_site` start failing. Cracking the real
+   `bat-vanilla-s2x4.squarespace.com` and rotate the Vault secret + the demo host's env file
+   (see the operator runbook demos-hosting) when `get_page`/`search_site` start failing. Cracking the real
    anonymous password-gate handshake (so the backend needs no owner session at all) is left
    as follow-up work — noted, not faked.
 4. **The Services page's real URL slug is `/services-store`, not `/services`** — Squarespace
@@ -90,7 +90,7 @@ Not attempted this lane (time). `developers.squarespace.com` is Squarespace's de
 portal for registering an OAuth "Extension" app (`Busymate Demo Connector`, build+stage
 only per the brief — no Extensions marketplace submission). Tracked as follow-up.
 
-## Backend connector — LIVE on the demo demo host
+## Backend connector — LIVE on the demo host
 
 `sites/squarespace/backend/{squarespace,tools,index,wellKnown}.mjs` — self-hosted MCP +
 identity server (shared `mcp-identity-server.mjs`, shape of `sites/bigcommerce/backend`).
@@ -118,7 +118,7 @@ That is the studio's REAL, live, currently-published class list and prices, read
 the real Squarespace site through this backend's MCP server — the core "grounded on the
 Squarespace site" claim is proven end to end at the transport/tool layer.
 
-Env file `<demo-host>/squarespace/env` (0600, on the box, not in this repo):
+The env file on the demo host (0600, not in this repo — see the operator runbook demos-hosting):
 `SQSP_SITE_ORIGIN`, `SQSP_SESSION_COOKIE` (Vault `SQUARESPACE_DEMO_SESSION_COOKIE`),
 `SQSP_DEMO_ORIGIN`, `TENANT_SLUG`, `DEMO_CUSTOMER_EMAIL`.
 

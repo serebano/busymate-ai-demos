@@ -1,4 +1,230 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Fernweh Supply Co.",
+    "description": "A working demonstration WooCommerce store: a live Busymate AI assistant grounded in this shop's own catalogue and policy pages, six of the page's own actions published over WebMCP, an MCP server over the shop's real product and order data, a provided demo customer with five orders for testing the identified experience, and hand-off to a person.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://woo.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "search_products",
+      "title": "search products",
+      "description": "Search the Fernweh Supply Co. range — packs and bags, merino layers, bottles and flasks, notebooks and paper — by words, category, price ceiling or availability, and return each match with its SKU, price, whether it is in stock and a link to its page. Reads the shop's own public catalogue, so it needs no sign-in.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "What the shopper is after, e.g. 'waxed canvas pack' or 'merino socks'",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "description": "Narrow to one category: packs-and-bags, merino-layers, bottles-and-flasks, notebooks-and-paper",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "inStockOnly",
+            "description": "Leave out anything that is out of stock",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "maxPrice",
+            "description": "Highest price to include, in euros",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_product",
+      "title": "get product",
+      "description": "Everything the shop publishes about one product — full description, materials, weight, dimensions, price, whether it is in stock, and the link — found by SKU or by name.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "The SKU (e.g. FW-PK-W28) or the product's name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_delivery_and_returns",
+      "title": "get delivery and returns",
+      "description": "What delivery costs and how long it takes to each of the four zones the shop ships to, the free-delivery thresholds, and where the full shipping and returns policies are.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "list_my_orders",
+      "title": "list my orders",
+      "description": "Every order on the signed-in customer's account — number, status, what was in it and the total. Answers only for the customer the caller's signed proof identifies; it cannot be pointed at anybody else.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_order_status",
+      "title": "get order status",
+      "description": "Where one of the signed-in customer's orders has got to, what it contains and what the status actually means. With no order number it answers about the most recent one. Call this the moment an order is asked about — never ask for the order number in prose first: call it with whatever you already have and the action card in the chat collects the rest as a field the customer fills in.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "description": "The order number as it appears on the account, e.g. 52",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "start_return",
+      "title": "start return",
+      "description": "Open a return for one item on one of the signed-in customer's orders. Writes the return reference onto the real order as a customer-visible note and reports it back. Only a paid or completed order can be returned. Call this as soon as a return is mentioned — never ask for the order number, the item or the reason in prose first: call it with whatever you already have and the action card in the chat collects the rest as fields the customer fills in and submits.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "description": "The order the item came in",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "item",
+            "description": "The SKU or name of the item going back",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "Why it is going back, in the customer's own words",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://woo.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://woo.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://woo.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://woo.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://woo.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://woo.demo.busymate.ai/"
+  },
   "name": "Fernweh Supply Co.",
   "url": "https://woo.demo.busymate.ai",
   "description": "A working demonstration WooCommerce store: a live Busymate AI assistant grounded in this shop's own catalogue and policy pages, six of the page's own actions published over WebMCP, an MCP server over the shop's real product and order data, a provided demo customer with five orders for testing the identified experience, and hand-off to a person.",

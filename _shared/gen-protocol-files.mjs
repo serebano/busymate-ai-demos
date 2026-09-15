@@ -2,14 +2,15 @@
 // sites/_shared/gen-protocol-files.mjs
 //
 // The protocol-discovery layer every demo serves at /openapi.json and under
-// /.well-known/: a REAL OpenAPI document, an MCP Server Card (SEP-2127), an
-// agents.json v0.1.0 "tool actions" manifest (agentsjson.org — a DIFFERENT
-// shape than the bespoke discovery card gen-agent-files.mjs writes at the
-// bare /agents.json path: that collision is why this one lives only under
-// /.well-known/), agent-permissions.json, and the RFC 9727 api-catalog —
-// every one of them derived from the SAME resolved tool table
-// gen-agent-files.mjs uses (`resolveTools`), so none of this can advertise a
-// tool the live MCP server does not actually serve (#2905).
+// /.well-known/: a REAL OpenAPI document, an MCP Server Card (SEP-2127),
+// agent-permissions.json, and the RFC 9727 api-catalog — every one of them
+// derived from the SAME resolved tool table gen-agent-files.mjs uses
+// (`resolveTools`), so none of this can advertise a tool the live MCP server
+// does not actually serve (#2905). The agents.json v0.1.0 "tool actions"
+// manifest (agentsjson.org) is now MERGED into gen-agent-files.mjs's own
+// output — ONE document, byte-identical at `/agents.json` and
+// `/.well-known/agents.json` (#3023 §4, 2026-09-15) — so it is built there
+// (`buildAgentsJsonV01`), not here.
 //
 // A protocol this repo does NOT implement (A2A, UCP, OAuth AS/PRM metadata,
 // the web-bot-auth key directory, Agent Skills discovery, ACP) is never
@@ -126,54 +127,19 @@ export function generate(config) {
     fs.writeFileSync(path.join(wellKnown, "mcp.json"), `${JSON.stringify(mcpCard, null, 2)}\n`);
   }
 
-  // ---- C6: /agents.json (BARE path — verified 2026-09-14 against a live
-  // agent-ready.dev rescan; the original ticket assumed .well-known/, but
-  // the real checker's `details.url` is the bare path) — the REAL
-  // agents.json v0.1.0 schema (wild-card-ai/agents-json, fetched verbatim
-  // via `gh api repos/wild-card-ai/agents-json/contents/…schema.json` —
-  // never guessed): top-level agentsJson/info/sources[]/flows[]. Every
-  // `sources[]` entry needs {id, path} (path = a URL to an OpenAPI 3+
-  // spec — our real openapi.json). Every `flows[]` entry needs
-  // {id, title, description, actions[], fields}: one `actions[]` entry per
-  // flow ({id, sourceId, operationId} — operationId is the ONE real
-  // operation openapi.json documents, since our whole surface is one
-  // JSON-RPC endpoint), and `fields.parameters[]` derived from the tool's
-  // OWN inputSchema properties (never invented) plus `fields.responses.success`.
-  // A WebMCP-only tool (no MCP backend) has no OpenAPI source to point at,
-  // so it gets no flow here — it is not a fabricated API action.
-  // Busymate's OWN bespoke discovery card (name/url/tools/identity/
-  // human-hand-off — no external scanner checks it) lives at
-  // `.well-known/agents.json` instead — see gen-agent-files.mjs.
-  const jsonSchemaTypeOf = (prop) => (prop && typeof prop === "object" ? prop.type : undefined);
-  const agentsJsonV01 = {
-    agentsJson: "0.1.0",
-    info: { title: config.name, description: config.description, version: "1.0.0" },
-    sources: hasMcp ? [{ id: "mcp", path: `${config.siteUrl}/openapi.json` }] : [],
-    flows: Object.entries(allTools)
-      .filter(([, t]) => t.transport !== "webmcp")
-      .map(([n, t]) => {
-        const props = (t.inputSchema && t.inputSchema.properties) || {};
-        const required = new Set((t.inputSchema && t.inputSchema.required) || []);
-        return {
-          id: n,
-          title: n.replace(/_/g, " "),
-          description: t.description,
-          actions: [{ id: "call", sourceId: "mcp", operationId: "mcpJsonRpcCall" }],
-          fields: {
-            parameters: Object.entries(props).map(([pname, pdef]) => ({
-              name: pname,
-              ...(pdef && pdef.description ? { description: pdef.description } : {}),
-              required: required.has(pname),
-              ...(jsonSchemaTypeOf(pdef) ? { type: jsonSchemaTypeOf(pdef) } : {}),
-            })),
-            responses: {
-              success: { type: "object", description: "The JSON-RPC 2.0 tools/call result for this tool." },
-            },
-          },
-        };
-      }),
-  };
-  fs.writeFileSync(path.join(config.outDir, "agents.json"), `${JSON.stringify(agentsJsonV01, null, 2)}\n`);
+  // ---- C6: agents.json v0.1.0 fields — MOVED to gen-agent-files.mjs
+  // (`buildAgentsJsonV01`), which runs BEFORE this script (build-demo.sh) and
+  // now writes ONE merged document — the agentsjson.org v0.1.0 tool-actions
+  // manifest (agentsJson/info/sources[]/flows[]) MERGED with the OWNER-SPEC
+  // v1 fields and Busymate's own bespoke card — byte-identical at BOTH
+  // `/agents.json` and `/.well-known/agents.json` (#3023 §4 boss decision,
+  // superseding this repo's split AGENTS-JSON-DECISION.md, 2026-09-15: same
+  // mechanism busymate.dev shipped in #3032). This script must NOT write
+  // `agents.json` again — doing so would silently clobber that merged
+  // document with the v0.1.0-only shape and undo the byte-identical twin.
+  // The bare path still verifies fine against a live agent-ready.dev rescan
+  // (#2905/C6): the v0.1.0 keys are still there, just alongside more, not
+  // fewer, facts.
 
   // ---- C7: agent-permissions.json — the REAL las-wg/agent-permissions.json
   // v1.0.0 schema (fetched verbatim via `gh api

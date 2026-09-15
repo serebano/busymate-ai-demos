@@ -169,5 +169,195 @@
         }
       }
     }
-  ]
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://shopify.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://shopify.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://shopify.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://shopify.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://shopify.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://shopify.demo.busymate.ai/"
+  },
+  "name": "Northline Outdoor",
+  "url": "https://shopify.demo.busymate.ai",
+  "description": "Northline Outdoor — a sample Shopify storefront (20 products: tents, packs, shells, boots, camp kitchen, sleep + light; lifetime warranty, free US shipping over $75) demonstrating the Busymate AI Shopify app: grounded product/policy chat, an MCP server over the store's own data, WebMCP in-page cart actions, and identified-visitor order lookup.",
+  "mcp": {
+    "url": "https://shopify.demo.busymate.ai/mcp",
+    "transport": "http",
+    "auth": "none"
+  },
+  "webmcp": {
+    "transport": "in-page",
+    "registers": "document.modelContext"
+  },
+  "tools": [
+    {
+      "name": "list_products",
+      "description": "List every product Northline Outdoor sells, with price and stock.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "search_products",
+      "description": "Search Northline Outdoor's catalog by name or keyword.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A product name or keyword to search for, e.g. 'rain jacket'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "get_product",
+      "description": "Get one product's full detail by SKU.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The product's SKU code, as shown on its product card."
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "get_order_status",
+      "description": "Look up an order's status and tracking by order number + the email on the order. Call it as soon as a shopper asks about an order — even before they give the number: the call shows an order-lookup card in the chat where they type it. Requires an identified (signed-in) visitor on a real store.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order number, as printed on the receipt or confirmation email, e.g. '#1042'."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address the order was placed under."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "identified",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "start_return",
+      "description": "Start a return for an item on an order. Call it as soon as a shopper wants to return something — the call shows a return card in the chat where they pick the order, the item and the reason. Requires an identified (signed-in) visitor on a real store; this demo does not actually process anything.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order number the item was purchased on, e.g. '#1042'."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address the order was placed under."
+          },
+          "sku": {
+            "type": "string",
+            "description": "The SKU of the item on that order to return."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the item is being returned, in the customer's own words."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "identified",
+      "transport": "mcp+webmcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "add_to_cart",
+      "description": "Add a product (by SKU, optionally a specific variant) to this visitor's cart on this page. The cart badge and drawer update immediately.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "The product's SKU code, as shown on its product card (e.g. TRAIL-SHELL)."
+          },
+          "qty": {
+            "type": "number",
+            "description": "How many to add. Defaults to 1."
+          },
+          "variant": {
+            "type": "string",
+            "description": "Optional variant label like 'Moss / M' or 'Slate'. Defaults to the first in-stock variant."
+          }
+        },
+        "required": [
+          "sku"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "public",
+      "transport": "webmcp"
+    },
+    {
+      "name": "view_cart",
+      "description": "Show what's currently in this visitor's cart with line totals, subtotal, shipping and total.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "webmcp"
+    }
+  ],
+  "identity": {
+    "supported": true,
+    "docs": "https://busymate.ai/docs/guides/identified-visitors"
+  },
+  "humanHandoff": true
 }

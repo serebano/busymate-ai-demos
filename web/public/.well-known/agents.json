@@ -1,4 +1,181 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Northwind Coffee Co.",
+    "description": "A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://web.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "search_coffee",
+      "title": "search coffee",
+      "description": "Search Northwind Coffee's range by name, origin, roast, tasting note or use (espresso, filter, decaf, gift). Returns price, size and what is in stock.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "What the customer is after, e.g. 'fruity filter coffee' or 'decaf'",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "decafOnly",
+            "description": "Limit the results to decaffeinated coffee",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_coffee",
+      "title": "get coffee",
+      "description": "Full detail for one of Northwind's coffees, by SKU or by name.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "The SKU or the product name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "store_policy",
+      "title": "store policy",
+      "description": "Northwind's own wording for one of its policies: shipping, returns, subscription, brewing.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "policy",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "contact_northwind",
+      "title": "contact northwind",
+      "description": "Leave a message for a person at Northwind — a question the assistant cannot answer, a problem with an order, or anything that needs a human. Collects a name, an email address and the message itself. This is NOT the tool for 'where is my order' — call get_order_status for that, even signed out (it is what shows the sign-in card). The email is the VISITOR'S OWN real address: it must come from something they typed in this conversation. Never invent one, and never fill it with a placeholder (example.com, test@…, noreply@…, user@…) just to satisfy this schema — if the visitor has not given an email, ask them for it (the form card does this) instead of calling this tool with a guess. The server refuses placeholder-looking addresses.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Who is writing — the visitor's own name, never invented",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The visitor's own real email, exactly as they gave it — never a placeholder or invented address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "description": "What they want to say",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "orderNumber",
+            "description": "The order this is about, if any",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://web.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://web.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://web.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://web.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://web.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://web.demo.busymate.ai/"
+  },
   "name": "Northwind Coffee Co.",
   "url": "https://web.demo.busymate.ai",
   "description": "A working demonstration coffee store: a live Busymate AI assistant grounded in its own catalogue and policies, five of the page's own actions published over WebMCP, an MCP server holding the catalogue and order book, a provided demo customer for testing the identified experience, and a hand-off to a person.",

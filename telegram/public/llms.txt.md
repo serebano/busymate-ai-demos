@@ -1,7 +1,7 @@
 ---
 title: "Nomad Circuits"
 description: "A travel-tech and gadget-repair shop demo showing 'your mate' on Telegram: a live preview of the Telegram conversation, grounded chat, an MCP server over the shop's own catalogue/hours/repair data, WebMCP in-page shop actions, and identified-customer order/repair lookup."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Nomad Circuits

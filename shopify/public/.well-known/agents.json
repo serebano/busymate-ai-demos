@@ -1,4 +1,203 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Northline Outdoor",
+    "description": "Northline Outdoor — a sample Shopify storefront (20 products: tents, packs, shells, boots, camp kitchen, sleep + light; lifetime warranty, free US shipping over $75) demonstrating the Busymate AI Shopify app: grounded product/policy chat, an MCP server over the store's own data, WebMCP in-page cart actions, and identified-visitor order lookup.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://shopify.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "list_products",
+      "title": "list products",
+      "description": "List every product Northline Outdoor sells, with price and stock.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "search_products",
+      "title": "search products",
+      "description": "Search Northline Outdoor's catalog by name or keyword.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A product name or keyword to search for, e.g. 'rain jacket'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_product",
+      "title": "get product",
+      "description": "Get one product's full detail by SKU.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "The product's SKU code, as shown on its product card.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_order_status",
+      "title": "get order status",
+      "description": "Look up an order's status and tracking by order number + the email on the order. Call it as soon as a shopper asks about an order — even before they give the number: the call shows an order-lookup card in the chat where they type it. Requires an identified (signed-in) visitor on a real store.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "order_number",
+            "description": "The order number, as printed on the receipt or confirmation email, e.g. '#1042'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email address the order was placed under.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "start_return",
+      "title": "start return",
+      "description": "Start a return for an item on an order. Call it as soon as a shopper wants to return something — the call shows a return card in the chat where they pick the order, the item and the reason. Requires an identified (signed-in) visitor on a real store; this demo does not actually process anything.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "order_number",
+            "description": "The order number the item was purchased on, e.g. '#1042'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The email address the order was placed under.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "The SKU of the item on that order to return.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "Why the item is being returned, in the customer's own words.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://shopify.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://shopify.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://shopify.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://shopify.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://shopify.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://shopify.demo.busymate.ai/"
+  },
   "name": "Northline Outdoor",
   "url": "https://shopify.demo.busymate.ai",
   "description": "Northline Outdoor — a sample Shopify storefront (20 products: tents, packs, shells, boots, camp kitchen, sleep + light; lifetime warranty, free US shipping over $75) demonstrating the Busymate AI Shopify app: grounded product/policy chat, an MCP server over the store's own data, WebMCP in-page cart actions, and identified-visitor order lookup.",

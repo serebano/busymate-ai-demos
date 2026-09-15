@@ -1,7 +1,7 @@
 ---
 title: "Pixelforge Games"
 description: "An indie game studio demo showing 'your mate' as a player-support desk in a Discord #support channel: a live preview of the channel conversation, grounded chat over three games and their public patch notes, an MCP server the studio owns, WebMCP page actions, a bug-report action card, and identified-player library and refund lookups."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Pixelforge Games

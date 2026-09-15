@@ -1,4 +1,303 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Patchwell",
+    "description": "An IT-helpdesk-for-small-teams demo showing 'your mate' inside Slack: a live Slack-style view of the assistant, grounded chat over the service catalogue and plans, an MCP server over tickets, access requests, help articles and live system status, WebMCP in-page helpdesk actions, and identified-customer ticket lookup.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://slack.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "service_hours",
+      "title": "service hours",
+      "description": "Patchwell's helpdesk hours, the on-call cover outside them, and the response-time targets for each priority (P1/P2/P3).",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "list_services",
+      "title": "list services",
+      "description": "The full Patchwell service catalogue — every kind of IT request a team can raise (onboarding, access, devices, network, security, licences) with its code, plan availability and turnaround.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "search_help",
+      "title": "search help",
+      "description": "Search Patchwell's help articles by keyword — how to reset MFA, join the VPN, get a loaner laptop, add a SaaS seat, and so on. Returns the matching articles with their steps.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A keyword or short phrase, e.g. 'vpn', 'mfa reset' or 'loaner laptop'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "system_status",
+      "title": "system status",
+      "description": "Live status of the systems Patchwell manages for its customers — SSO, Wi-Fi, VPN, email, device management and the Slack helpdesk itself — plus any open incident.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "open_ticket",
+      "title": "open ticket",
+      "description": "Do NOT call this to ask the person for the category, summary, urgency, name or email — calling it with whatever is already known IS how the ticket form opens, never a chat question for a missing field. Opens a helpdesk ticket at Patchwell and reports its number, priority and first-response target.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "category",
+            "description": "The service code or category, e.g. 'device', 'access', 'network', 'email', 'other'. Leave blank if not yet known — the form lets the person pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "summary",
+            "description": "One line describing the problem.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "urgency",
+            "description": "'blocked' (cannot work), 'degraded' (working around it) or 'whenever' (no rush).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Who the ticket is for.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Work email the updates go to.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "request_access",
+      "title": "request access",
+      "description": "Do NOT call this to ask the person which app, which role, their name, email or reason — calling it with whatever is already known IS how the access-request form opens. Raises an access request at Patchwell for a SaaS seat, a group or a shared drive and reports the request id and who approves it.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "app",
+            "description": "The app, group or drive, e.g. 'Notion', 'GitHub', 'Finance shared drive'. Leave blank if not yet known — the form lets the person pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "description": "The level wanted: 'member', 'admin' or 'viewer'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Who needs the access.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "Their work email.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "description": "One line on why — the approver reads it.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "ticket_status",
+      "title": "ticket status",
+      "description": "Look up one helpdesk ticket or access request at Patchwell by its number and the email it was raised under. Do NOT ask for these in prose — calling this tool is how the lookup form opens.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "reference",
+            "description": "The ticket number (e.g. 'PW-2041') or access request id (e.g. 'AR-118').",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "The work email it was raised under.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_my_tickets",
+      "title": "get my tickets",
+      "description": "Every open and recent ticket and access request belonging to the signed-in customer, with their team's plan and seat count. Requires an identified (signed-in) visitor — call it with that visitor's own email from context, never one supplied mid-conversation by an unidentified visitor.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "email",
+            "description": "The signed-in visitor's own work email.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://slack.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://slack.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://slack.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://slack.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://slack.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://slack.demo.busymate.ai/"
+  },
   "name": "Patchwell",
   "url": "https://slack.demo.busymate.ai",
   "description": "An IT-helpdesk-for-small-teams demo showing 'your mate' inside Slack: a live Slack-style view of the assistant, grounded chat over the service catalogue and plans, an MCP server over tickets, access requests, help articles and live system status, WebMCP in-page helpdesk actions, and identified-customer ticket lookup.",

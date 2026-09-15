@@ -250,5 +250,240 @@
         }
       }
     }
-  ]
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://meta.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://meta.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://meta.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://meta.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://meta.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://meta.demo.busymate.ai/"
+  },
+  "name": "Sol & Salt Swimwear",
+  "url": "https://meta.demo.busymate.ai",
+  "description": "A swim and resort-wear demo showing one assistant answering both Meta inboxes: faithful previews of a Messenger thread and an Instagram DM around the live assistant, grounded chat over the collection, size chart and policy, an MCP server over the catalogue, sizing, orders and returns, WebMCP in-page actions, and identified-customer order lookup.",
+  "mcp": {
+    "url": "https://meta.demo.busymate.ai/mcp",
+    "transport": "http",
+    "auth": "none"
+  },
+  "webmcp": {
+    "transport": "in-page",
+    "registers": "document.modelContext"
+  },
+  "tools": [
+    {
+      "name": "list_collection",
+      "description": "The whole Sol & Salt Swimwear collection — every swim and resort piece in stock, with its code, fabric, size range, colourways and price. Optionally narrowed to one category.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Narrow the list: 'swim' (suits, tops, bottoms, rash guard, board shorts), 'resort' (linen, kaftan, cover-ups) or 'all' (the default)."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "search_products",
+      "description": "Search the Sol & Salt Swimwear collection by name, code, fabric, colourway or a word for what it is for ('laps', 'long swim', 'cover-up', 'UPF', 'high waist'). Returns the matching pieces in full.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A piece name, code, fabric, colourway or keyword, e.g. 'one-piece', 'linen', 'UPF' or 'SS-107'."
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "size_guide",
+      "description": "Sol & Salt Swimwear's size chart in centimetres and inches, and — when body measurements are given — the size this label would actually put someone in for a named piece, with the fit note that goes with it. Always call this before suggesting a size; never guess one.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string",
+            "description": "The piece being sized, by name or code, e.g. 'Tidal Scoop-Back One-Piece' or 'SS-109'. Leave blank for the plain chart."
+          },
+          "bust_cm": {
+            "type": "number",
+            "description": "Bust or chest measurement in centimetres, if the customer has given one."
+          },
+          "waist_cm": {
+            "type": "number",
+            "description": "Natural waist measurement in centimetres, if the customer has given one."
+          },
+          "hip_cm": {
+            "type": "number",
+            "description": "Fullest hip measurement in centimetres, if the customer has given one."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "shipping_and_returns",
+      "description": "Sol & Salt Swimwear's delivery times, costs and duty handling, plus the returns and exchange policy — the window, what makes a piece returnable, and how a refund is paid back.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string",
+            "description": "Where the parcel is going: 'domestic' (within the United States), 'canada', 'europe', 'rest-of-world', or blank for everything."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "start_return",
+      "description": "Do NOT ask the customer for the order number, the item or the reason in the conversation — calling this tool with whatever is already known IS how the return card opens, and it is the only approved way to collect a missing one. Starts a return or exchange at Sol & Salt Swimwear and reports the return number, the window, and what happens to the refund. Never invent, guess or default an order number, an item or a reason.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order the piece came in, e.g. 'SS-31082'. Leave blank if not yet known — the card asks for it."
+          },
+          "item": {
+            "type": "string",
+            "description": "Which piece is going back, by name or code."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why it is going back: 'too-small', 'too-large', 'not-as-pictured', 'faulty', 'changed-mind' or 'exchange-size'."
+          },
+          "note": {
+            "type": "string",
+            "description": "Anything the returns desk should know — the size wanted in an exchange, or what went wrong."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "public",
+      "transport": "mcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "get_my_orders",
+      "description": "Every order belonging to the signed-in customer at Sol & Salt Swimwear — what was in it, what it cost, where it is, and whether it can still be returned or cancelled. Requires an identified (signed-in) visitor: call it with that visitor's own email from context, never one typed mid-conversation by an unidentified visitor.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The signed-in visitor's own email address."
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "identified",
+      "transport": "mcp+webmcp"
+    },
+    {
+      "name": "cancel_order",
+      "description": "Cancel a Sol & Salt Swimwear order that has NOT been dispatched yet, for the signed-in customer. Requires an identified (signed-in) visitor and their explicit confirmation first; an order already on its way has to be returned instead, not cancelled.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "The order to cancel, e.g. 'SS-31460'."
+          },
+          "email": {
+            "type": "string",
+            "description": "The signed-in visitor's own email address, the one the order was placed under."
+          }
+        },
+        "required": [
+          "order_number",
+          "email"
+        ],
+        "additionalProperties": false
+      },
+      "readOnlyHint": false,
+      "access": "identified",
+      "transport": "mcp",
+      "confirmationRequired": true
+    },
+    {
+      "name": "open_return_form",
+      "description": "Open the return card on the page for the visitor to fill in and submit themselves — order number, which piece, reason, one button. Used instead of asking for those three things one at a time in the conversation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_number": {
+            "type": "string",
+            "description": "An order number to prefill, if already known, e.g. 'SS-31082'."
+          },
+          "item": {
+            "type": "string",
+            "description": "The piece to prefill, if already known."
+          },
+          "reason": {
+            "type": "string",
+            "description": "A reason to prefill, if already known: 'too-small', 'too-large', 'exchange-size', 'not-as-pictured', 'faulty' or 'changed-mind'."
+          },
+          "note": {
+            "type": "string",
+            "description": "A note to prefill, if the visitor has already said what they want to happen."
+          }
+        },
+        "additionalProperties": false
+      },
+      "readOnlyHint": true,
+      "access": "public",
+      "transport": "webmcp"
+    }
+  ],
+  "identity": {
+    "supported": true,
+    "docs": "https://busymate.ai/docs/guides/identified-visitors"
+  },
+  "humanHandoff": true
 }

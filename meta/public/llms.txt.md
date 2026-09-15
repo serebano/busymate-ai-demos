@@ -1,7 +1,7 @@
 ---
 title: "Sol & Salt Swimwear"
 description: "A swim and resort-wear demo showing one assistant answering both Meta inboxes: faithful previews of a Messenger thread and an Instagram DM around the live assistant, grounded chat over the collection, size chart and policy, an MCP server over the catalogue, sizing, orders and returns, WebMCP in-page actions, and identified-customer order lookup."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Sol & Salt Swimwear

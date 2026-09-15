@@ -1,7 +1,7 @@
 ---
 title: "Fernweh Supply Co."
 description: "A working demonstration WooCommerce store: a live Busymate AI assistant grounded in this shop's own catalogue and policy pages, six of the page's own actions published over WebMCP, an MCP server over the shop's real product and order data, a provided demo customer with five orders for testing the identified experience, and hand-off to a person."
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 ---
 
 # Fernweh Supply Co.

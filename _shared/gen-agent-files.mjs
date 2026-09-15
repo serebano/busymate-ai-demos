@@ -52,6 +52,10 @@ import { toolsFor } from "./backend/tool-schema.mjs";
  * @property {string} [knowledgeFile] where a knowledge-only demo's llms-full.txt is built from
  *   (default: `sites/<name>/knowledge.json`, next to `outDir`); ignored when
  *   gen-content-pages.mjs already wrote public/llms-full.txt from content/*.md.
+ * @property {string} [contactEmail] a human contact address (no `mailto:` prefix) for the
+ *   OWNER-SPEC v1 `contact.human` field (#3023 §4). Omit and, when `humanHandoff` is not
+ *   `false`, `contact.human` points at the site root instead (the embedded assistant IS the
+ *   hand-off path) — never fabricated.
  */
 
 /**
@@ -94,6 +98,88 @@ export function resolveTools(config) {
     ...Object.fromEntries(Object.entries(webOnly).map(([n, t]) => [n, { ...t, transport: "webmcp" }])),
   };
   return { hasMcp, allTools };
+}
+
+/**
+ * The REAL agentsjson.org v0.1.0 "tool actions" manifest
+ * (wild-card-ai/agents-json, schema fetched verbatim — never guessed):
+ * `{agentsJson, info, sources[], flows[]}`. Moved here (was duplicated in
+ * gen-protocol-files.mjs) so the ONE merged document `generate()` below
+ * writes to both `/agents.json` and `/.well-known/agents.json` (#3023 §4
+ * boss decision, superseding this repo's own AGENTS-JSON-DECISION.md split)
+ * and gen-protocol-files.mjs's OpenAPI/MCP-card generation both read the
+ * SAME v0.1.0 fields from one place — never a second hand-rolled copy that
+ * could drift.
+ * @param {AgentFilesConfig} config
+ * @param {Record<string, {description:string, inputSchema:object, transport?:string}>} allTools
+ * @param {boolean} hasMcp
+ */
+export function buildAgentsJsonV01(config, allTools, hasMcp) {
+  const jsonSchemaTypeOf = (prop) => (prop && typeof prop === "object" ? prop.type : undefined);
+  return {
+    agentsJson: "0.1.0",
+    info: { title: config.name, description: config.description, version: "1.0.0" },
+    sources: hasMcp ? [{ id: "mcp", path: `${config.siteUrl}/openapi.json` }] : [],
+    flows: Object.entries(allTools)
+      .filter(([, t]) => t.transport !== "webmcp")
+      .map(([n, t]) => {
+        const props = (t.inputSchema && t.inputSchema.properties) || {};
+        const required = new Set((t.inputSchema && t.inputSchema.required) || []);
+        return {
+          id: n,
+          title: n.replace(/_/g, " "),
+          description: t.description,
+          actions: [{ id: "call", sourceId: "mcp", operationId: "mcpJsonRpcCall" }],
+          fields: {
+            parameters: Object.entries(props).map(([pname, pdef]) => ({
+              name: pname,
+              ...(pdef && pdef.description ? { description: pdef.description } : {}),
+              required: required.has(pname),
+              ...(jsonSchemaTypeOf(pdef) ? { type: jsonSchemaTypeOf(pdef) } : {}),
+            })),
+            responses: {
+              success: { type: "object", description: "The JSON-RPC 2.0 tools/call result for this tool." },
+            },
+          },
+        };
+      }),
+  };
+}
+
+/**
+ * The OWNER-SPEC v1 fields (#3023 §4) — `version`/`content`/`interfaces`/
+ * `authentication`/`contact` — read off the SAME facts `llms.txt` and the
+ * bespoke card below already publish, never re-typed. Mirrors the shape
+ * `v2/apps/web/lib/site/agentsJsonV1.ts` and
+ * `web/_shared/lib/agent-ready/agentsJson.ts` derive in the devtools repo
+ * (#3032) — this generator cannot import those (separate repo/package), so
+ * it re-derives the SAME shape from its own facts rather than duplicating a
+ * second, divergent one.
+ * @param {AgentFilesConfig} config
+ * @param {boolean} hasMcp
+ * @param {boolean} hasLlmsFull
+ */
+export function buildAgentsJsonV1Fields(config, hasMcp, hasLlmsFull) {
+  const interfaces = [];
+  if (hasMcp) interfaces.push({ type: "mcp", url: config.mcpUrl, transport: "streamable-http" });
+  interfaces.push({ type: "webmcp", url: `${config.siteUrl}/webmcp-catalog.json`, transport: "in-page" });
+  const humanOn = config.humanHandoff !== false;
+  return {
+    version: "1.0",
+    content: {
+      llms: `${config.siteUrl}/llms.txt`,
+      llmsFull: hasLlmsFull ? `${config.siteUrl}/llms-full.txt` : null,
+      sitemap: `${config.siteUrl}/sitemap.xml`,
+      markdown: { contentNegotiation: true, fallbackSuffix: ".md" },
+    },
+    interfaces,
+    // These demos' own MCP servers need no credential to connect (per llms.txt's
+    // "Act on it" section) — never a fabricated OAuth endpoint.
+    authentication: { oauth: null },
+    contact: {
+      human: config.contactEmail ? `mailto:${config.contactEmail}` : humanOn ? `${config.siteUrl}/` : null,
+    },
+  };
 }
 
 /** @param {AgentFilesConfig} config */
@@ -215,7 +301,21 @@ last_updated: ${today}
 
 `;
 
+  // #3023 §4 (boss decision, 2026-09-15) — ONE merged document, byte-identical
+  // at `/agents.json` and `/.well-known/agents.json`, exactly the mechanism
+  // busymate.dev shipped in #3032: the OWNER v1 shape is canonical, with every
+  // legacy key this repo already published (the agentsjson.org v0.1.0
+  // tool-actions manifest, this generator's own bespoke card) MERGED alongside,
+  // never dropped and never split across the two paths. Supersedes this
+  // lane's own AGENTS-JSON-DECISION.md, which chose the split before the boss
+  // decision landed. check-agent-files.sh's per-path shape assertions (both
+  // documents being jq subset checks, not exclusivity checks) still pass
+  // unchanged — see its updated comments.
+  const agentsJsonV01 = buildAgentsJsonV01(config, allTools, hasMcp);
+  const agentsJsonV1Fields = buildAgentsJsonV1Fields(config, hasMcp, hasLlmsFull);
   const agentsJson = {
+    ...agentsJsonV01,
+    ...agentsJsonV1Fields,
     name: config.name,
     url: config.siteUrl,
     description: config.description,
@@ -289,17 +389,15 @@ ${config.humanHandoff !== false ? "Ask the assistant for a person and a human jo
   fs.writeFileSync(path.join(config.outDir, "AGENTS.md"), agentsMd);
   const agentsJsonText = JSON.stringify(agentsJson, null, 2) + "\n";
   fs.mkdirSync(path.join(config.outDir, ".well-known"), { recursive: true });
-  // NOTE (#2905/C6, corrected against a live agent-ready.dev rescan on
-  // 2026-09-14): the "agents.json v0.1.0" wildcard/tool-actions checker
-  // reads the BARE `/agents.json` path, not `.well-known/agents.json` — the
-  // opposite of what the original ticket assumed. This bespoke discovery
-  // card (name/url/description/mcp/webmcp/tools/identity/humanHandoff) —
-  // Busymate's own convention, not checked by any known external scanner —
-  // therefore moves to `.well-known/agents.json`; sites/_shared/
-  // gen-protocol-files.mjs now writes the REAL agentsJson v0.1.0 document to
-  // the bare path.
+  // #3023 §4 — BYTE-IDENTICAL twins: the external agents.json v0.1.0 checker
+  // still reads the BARE path first (#2905/C6, verified against a live
+  // agent-ready.dev rescan 2026-09-14) and a scanner that tries the
+  // well-known convention first (per the standard's own probe order) still
+  // finds the SAME v0.1.0 keys there too — because both paths now serve the
+  // one merged document, neither path can be "the wrong one" again.
+  // gen-protocol-files.mjs (runs after this) must NOT also write agents.json.
+  fs.writeFileSync(path.join(config.outDir, "agents.json"), agentsJsonText);
   fs.writeFileSync(path.join(config.outDir, ".well-known", "agents.json"), agentsJsonText);
-  // with the actual agents.json v0.1.0 tool-actions schema (#2905/C6).
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

@@ -1,4 +1,262 @@
 {
+  "agentsJson": "0.1.0",
+  "info": {
+    "title": "Bramble & Co.",
+    "description": "An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.",
+    "version": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "mcp",
+      "path": "https://teams.demo.busymate.ai/openapi.json"
+    }
+  ],
+  "flows": [
+    {
+      "id": "list_benefit_plans",
+      "title": "list benefit plans",
+      "description": "Every benefit Bramble & Co. offers its employees — private medical, dental and optical, pension, income protection and life cover, the wellbeing allowance, the learning fund and the cycle scheme — with what each one costs the employee per month, what the firm pays, and the enrolment window that applies.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "category",
+            "description": "Narrow the list to one area: 'health', 'pension', 'protection', 'wellbeing', 'learning' or 'travel'. Leave blank for every plan.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_payroll_calendar",
+      "title": "get payroll calendar",
+      "description": "Bramble & Co.'s payroll calendar — the pay date for each month, the cut-off by which a change (hours, expenses, a new bank account) must reach payroll to land in that run, and when payslips appear.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "months",
+            "description": "How many upcoming months to return, 1 to 12. Defaults to 6.",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "search_policies",
+      "title": "search policies",
+      "description": "Search Bramble & Co.'s employee handbook by keyword — leave types and carry-over, sickness, parental leave, the remote-work policy, expenses and travel, notice periods — and return the matching sections in full, so an answer can quote the handbook rather than paraphrase it.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "query",
+            "description": "A keyword or short phrase, e.g. 'carry over', 'working abroad', 'mileage' or 'parental leave'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "request_leave",
+      "title": "request leave",
+      "description": "Do NOT call this to ask the person for the leave type, the start date, the end date or a note — calling it with whatever is already known IS how the leave form opens, never a chat question for a missing field. Files a leave request at Bramble & Co. for the approver to pick up, and reports the reference, the working days it uses and the balance that would be left.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "leave_type",
+            "description": "'annual', 'sick', 'parental', 'compassionate', 'study', 'volunteering' or 'unpaid'. Leave blank if not yet known — the form lets the person pick.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "start_date",
+            "description": "First day away, as YYYY-MM-DD.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "description": "Last day away, as YYYY-MM-DD — the same as the start date for a single day.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "description": "Anything the approver should know: cover arranged, a client deadline, a reason for short notice.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "employee_id",
+            "description": "The employee id the request is filed under, e.g. 'E-20417'. The signed-in employee's own.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "get_my_leave_balance",
+      "title": "get my leave balance",
+      "description": "The signed-in employee's own leave: annual entitlement, days taken, days booked ahead, what is left, carry-over and its expiry, plus their volunteering and study allowances. Requires an identified (signed-in) visitor — call it with that person's own employee id from context, never one offered mid-conversation by someone unidentified.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "employee_id",
+            "description": "The signed-in employee's own id, e.g. 'E-20417'.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    },
+    {
+      "id": "update_bank_details_request",
+      "title": "update bank details request",
+      "description": "Do NOT ask for these details in prose — calling this tool with whatever is known IS how its form opens. Asks Bramble & Co.'s payroll team to change where an employee's salary is paid. It FILES A REQUEST only: payroll calls the employee back on a known number to take the account details, so no account number is ever typed into a chat and nothing is changed by this call. Requires an identified (signed-in) visitor.",
+      "actions": [
+        {
+          "id": "call",
+          "sourceId": "mcp",
+          "operationId": "mcpJsonRpcCall"
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "employee_id",
+            "description": "The signed-in employee's own id, e.g. 'E-20417'.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bank_name",
+            "description": "The bank the salary should move to, e.g. 'Thornbury Building Society'. No account or sort code — payroll takes those on the call.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "account_holder",
+            "description": "The name the new account is held in, if it differs from the employee's own.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "effective_month",
+            "description": "The month it should apply from, as YYYY-MM.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "callback_time",
+            "description": "When payroll should call to verify: 'morning', 'afternoon' or a short phrase.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "description": "The JSON-RPC 2.0 tools/call result for this tool."
+          }
+        }
+      }
+    }
+  ],
+  "version": "1.0",
+  "content": {
+    "llms": "https://teams.demo.busymate.ai/llms.txt",
+    "llmsFull": "https://teams.demo.busymate.ai/llms-full.txt",
+    "sitemap": "https://teams.demo.busymate.ai/sitemap.xml",
+    "markdown": {
+      "contentNegotiation": true,
+      "fallbackSuffix": ".md"
+    }
+  },
+  "interfaces": [
+    {
+      "type": "mcp",
+      "url": "https://teams.demo.busymate.ai/mcp",
+      "transport": "streamable-http"
+    },
+    {
+      "type": "webmcp",
+      "url": "https://teams.demo.busymate.ai/webmcp-catalog.json",
+      "transport": "in-page"
+    }
+  ],
+  "authentication": {
+    "oauth": null
+  },
+  "contact": {
+    "human": "https://teams.demo.busymate.ai/"
+  },
   "name": "Bramble & Co.",
   "url": "https://teams.demo.busymate.ai",
   "description": "An HR-and-benefits-desk demo showing 'your mate' in a Microsoft Teams-style chat pane: grounded answers from a 300-person firm's own handbook, an MCP server over the benefit plans and their employee contributions, the payroll calendar and the leave book, WebMCP in-page actions, an inline leave form, and identified-employee leave balances.",
