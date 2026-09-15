@@ -50,11 +50,23 @@ Tracking issue: `serebano/busymate-devtools#3038`. Site: the owner's real Square
    gate page (`.../` → 401, HTML title `… — Secure`) has no visible `<form action>` or CSRF
    field in the raw HTML; the password submit is wired up by a bundled JS file this lane did
    not reverse-engineer in the time available. `squarespace.mjs` reads the site instead using
-   the **owner's own contributor session cookie** (refreshed into the Vault as
-   `SQSP_SESSION_COOKIE`), the same "verify via the owner's own access" shape
-   `sites/bigcommerce/README.md` used for its prelaunch storefront. Cracking the real
+   the **owner's own contributor session cookie** (Vault `SQUARESPACE_DEMO_SESSION_COOKIE`,
+   env `SQSP_SESSION_COOKIE` on the deployed container), the same "verify via the owner's own
+   access" shape `sites/bigcommerce/README.md` used for its prelaunch storefront. This cookie
+   is a browser session (`member-session` + `crumb` + `SS_MID` + `SS_SESSION_ID`) that expires
+   / rotates — re-mint it from the `bmai-owner` bmc browser's cookies for
+   `bat-vanilla-s2x4.squarespace.com` and rotate the Vault secret + the box's
+   `<demo-host>/squarespace/env` when `get_page`/`search_site` start failing. Cracking the real
    anonymous password-gate handshake (so the backend needs no owner session at all) is left
    as follow-up work — noted, not faked.
+4. **The Services page's real URL slug is `/services-store`, not `/services`** — Squarespace
+   auto-slugged it (verified against the live nav); `squarespace.mjs`'s `PAGES` table uses the
+   real slug.
+5. **The Appointments page's session list is a client-rendered scheduling widget** — it never
+   appears in the plain-HTML fetch this backend does (verified: the page's live text is only
+   the "Book a Studio Session" intro paragraph). `list_booking_options` reads the studio's real
+   class/price list off the Services page instead ("Foundations Yoga Class … $25.00" etc.,
+   real live text) and says so in its own tool result.
 
 ## Universal embed — the honest plan/mechanism matrix
 
@@ -78,38 +90,61 @@ Not attempted this lane (time). `developers.squarespace.com` is Squarespace's de
 portal for registering an OAuth "Extension" app (`Busymate Demo Connector`, build+stage
 only per the brief — no Extensions marketplace submission). Tracked as follow-up.
 
-## Backend connector (built, not yet deployed)
+## Backend connector — LIVE on the demo demo host
 
 `sites/squarespace/backend/{squarespace,tools,index,wellKnown}.mjs` — self-hosted MCP +
 identity server (shared `mcp-identity-server.mjs`, shape of `sites/bigcommerce/backend`).
-Reads the live site (see "What we learned" #2/#3 above) — nothing hardcoded. Tools:
-`get_page`, `search_site`, `list_booking_options` (public), `book_a_session` (delegated,
-identified visitors only). Serves the six agent-ready files + `/api/bmai/status` + a
-same-origin `/preview` page itself.
+Reads the live site (see "What we learned" above) — nothing hardcoded. Tools: `get_page`,
+`search_site`, `list_booking_options` (public), `book_a_session` (delegated, identified
+visitors only). Serves the six agent-ready files + `/api/bmai/status` + a same-origin
+`/preview` page itself.
 
-**Not yet deployed to the demo demo host** — this lane wrote and committed the code but did
-not SSH to the box to build the image, mint the ES256 keypair, or front it with
-`squarespace.demo.busymate.ai` (real TLS). Continuing this lane: follow the exact deploy
-shape in `sites/bigcommerce/README.md` ("Continuing this lane" — Vault-sourced env,
-`docker build`/`run`, DNS + reverse-proxy for the new subdomain, port 8111 to avoid the
-bigcommerce backend's 8110).
+**Deployed and verified live** at `https://squarespace.demo.busymate.ai` (real TLS cert via
+`certbot certonly --webroot`, container `demo-squarespace-backend`, `--memory 128m`, port
+8111). Verified externally, over HTTPS, not from inside the box:
 
-## Tenant on busymate.ai — NOT provisioned
+```
+$ curl https://squarespace.demo.busymate.ai/api/bmai/status
+{"identity":true,"actorVerifier":false,"launchTtlSec":120,"tools":[],...,"siteAvailability":"password_protected"}
 
-Deliberately not started: provisioning a tenant + MCP connector that points at a backend
-origin (`squarespace.demo.busymate.ai`) that doesn't exist yet would create a broken,
-misleading tenant. Do this AFTER the backend above is deployed and its `/mcp` + `/.well-known/
-jwks.json` answer for real, following the BigCommerce/Webflow/Wix lanes' TENANT notes
-(publish-first-with-minimal-config, then set config, then re-publish) if the same
-`native_action_unavailable` platform bugs are still live.
+$ curl -X POST https://squarespace.demo.busymate.ai/mcp -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
+    "params":{"name":"get_page","arguments":{"title":"Services"}}}'
+{"result":{"content":[{"type":"text","text":"{\"title\":\"Services\",\"path\":\"/services-store\",
+  \"text\":\"A Comprehensive Pathway to Sustainable Well-Being ... Foundations Yoga Class ... $25.00
+  Vinyasa Flow Class ... $18.00 Power Yoga Class ... $25.00 Balance Yoga Class ... $25.00 ...\"}"}]}}
+```
+
+That is the studio's REAL, live, currently-published class list and prices, read fresh off
+the real Squarespace site through this backend's MCP server — the core "grounded on the
+Squarespace site" claim is proven end to end at the transport/tool layer.
+
+Env file `<demo-host>/squarespace/env` (0600, on the box, not in this repo):
+`SQSP_SITE_ORIGIN`, `SQSP_SESSION_COOKIE` (Vault `SQUARESPACE_DEMO_SESSION_COOKIE`),
+`SQSP_DEMO_ORIGIN`, `TENANT_SLUG`, `DEMO_CUSTOMER_EMAIL`.
+
+## Tenant on busymate.ai — NOT YET provisioned (deliberately)
+
+The backend is real and live, so provisioning is now honest to do — but this lane stopped
+short of it: the shared `bmai-owner` browser (used for every owner-scoped busymate.ai
+operation) had another lane's tab open on `/console/platform/tenants` at the same time, and
+the "Owner reach gotcha" in `notes/runbooks/demos-hosting.md` documents a real way a
+tenant-provisioning call can flip the OWNER's default-tenant membership and break a
+DIFFERENT lane's concurrent publish. Provisioning needs the exact sequence from that
+runbook (`provision_tenant` → `upsert_tenant_connector { endpoint: "https://squarespace.demo.busymate.ai/mcp", ... }`
+→ `upsert_tenant_identity_provider` → `test_tenant_identity_provider` → ONE
+`publish_tenant_runtime` carrying the FULL config, never a partial), done carefully and not
+interleaved with another lane's owner-session work. Real, precisely-named next step — not
+skipped for lack of trying.
 
 ## Continuing this lane
 
-1. Deploy the backend (above), get `squarespace.demo.busymate.ai` answering.
+1. Provision the busymate.ai tenant + MCP connector + identity provider against the NOW-LIVE
+   `https://squarespace.demo.busymate.ai` (see "Tenant on busymate.ai" above for the exact
+   sequence and the concurrency caution).
 2. Crack the Squarespace anonymous password-gate wire format (or accept the
-   contributor-session-cookie approach as the shipped shape, documented above).
+   contributor-session-cookie approach as the shipped shape, documented above) — and set a
+   reminder to rotate `SQUARESPACE_DEMO_SESSION_COOKIE` when it expires.
 3. Drop the Code Block with `public/webmcp-tools.js` + the `busymate.ai/embed/v1.js` loader
    on the Home page; verify it actually renders once Site Availability allows it.
 4. Register the `developers.squarespace.com` OAuth Extension (build+stage only).
-5. Provision the busymate.ai tenant + connector once #1 is real.
-6. Real screenshot: the assistant answering grounded on the live site (widget open).
+5. Real screenshot: the assistant answering grounded on the live site (widget open), once #1 lands.

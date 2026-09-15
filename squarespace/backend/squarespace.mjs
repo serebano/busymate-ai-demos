@@ -44,7 +44,9 @@ export const apiReady = Boolean(SITE_ORIGIN);
 const PAGES = [
   { slug: "", title: "Home" },
   { slug: "about", title: "About" },
-  { slug: "services", title: "Services" },
+  // Squarespace auto-slugged this one "services-store" (not "services") when
+  // the page was created — read live off the real nav, never assumed.
+  { slug: "services-store", title: "Services" },
   { slug: "appointments", title: "Appointments" },
   { slug: "contact", title: "Contact" },
 ];
@@ -115,17 +117,27 @@ export async function searchSite(query) {
   return { count: matches.length, matches };
 }
 
-// Booking options are read straight off the live Appointments page copy
-// ("Book a Studio Session" — Free Consultation / Basic Service / Advanced
-// Service), parsed loosely rather than hardcoded, so a real edit in the
-// Squarespace editor is what an assistant answer reflects.
+// Booking options are read straight off the live Services page copy — the
+// Appointments page itself only shows a "Book a Studio Session" intro; the
+// actual session list is a client-side-rendered scheduling widget this
+// server-side fetch cannot see (a real, tested finding: the widget's markup
+// never appears in the plain HTML response — see README.md). The Services
+// page's class list ("Foundations Yoga Class ... $25.00", etc.) is real,
+// static, server-rendered text, so that is the honest source for "what can
+// I book" until the scheduling widget's own API is wired in.
 export async function bookingOptions() {
-  const text = await livePage("appointments");
+  const text = await livePage("services-store");
   const rows = [];
-  const re = /(Free Consultation|Basic Service|Advanced Service)\b[^A-Z]*?(\d+\s*(?:minutes|hour|hours))?[^$]*(\$\d+(?:\.\d{2})?)?/gi;
+  // "<Name> Class <description ending in a period> $<price>"
+  const re = /([A-Z][A-Za-z ]{2,40}?Class)\b(.*?)\$(\d+(?:\.\d{2})?)/g;
   let m;
   while ((m = re.exec(text))) {
-    rows.push({ name: m[1], duration: m[2] ?? null, price: m[3] ?? (m[1] === "Free Consultation" ? "$0.00" : null) });
+    rows.push({ name: m[1].trim(), duration: null, price: `$${m[3]}` });
   }
-  return { count: rows.length, options: rows.length ? rows : [{ name: "See the live Appointments page", duration: null, price: null }], sourcePath: "/appointments" };
+  return {
+    count: rows.length,
+    options: rows.length ? rows : [{ name: "See the live Services page", duration: null, price: null }],
+    sourcePath: "/services-store",
+    note: "The Appointments page's own time-slot picker is a client-rendered widget this reader cannot see; these are the studio's published class/price list instead.",
+  };
 }

@@ -46,8 +46,8 @@ export const TOOL_SCHEMA = {
 
   list_booking_options: {
     description:
-      "The studio session options currently listed on the live Appointments page — name, "
-      + "duration and price, read fresh off the studio's own booking list.",
+      "The studio's class options currently listed on the live site — name and price, read "
+      + "fresh off the studio's own published Services page.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
     readOnlyHint: true,
     accessHint: "public",

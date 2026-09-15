@@ -5,7 +5,7 @@
  *              agents.json + its .well-known twin, webmcp-catalog.json, robots.txt, sitemap.xml),
  *              the Markdown twin of every policy page, and the page-tool bundle — all from
  *              WordPress itself.
- * Version:     1.1.0
+ * Version:     1.2.0
  * Author:      Busymate AI demo playground
  *
  * WHY THIS IS A PLUGIN AND NOT A DOCROOT.
@@ -356,3 +356,277 @@ function fernweh_open_graph() {
 	}
 }
 add_action( 'wp_head', 'fernweh_open_graph', 3 );
+
+/**
+ * ── Canonical + same-URL Markdown negotiation ───────────────────────────
+ * Busymate Agent-Ready Web Standard v1 (owner spec 2026-09-15,
+ * scratchpad/agent-ready-standard/OWNER-SPEC.md, busymate-devtools#3027 —
+ * found auditing #3022's WordPress-plugin lane against this store).
+ *
+ * WHY THIS SHOP'S FRONT PAGE HAD NO `<link rel="canonical">`. WordPress
+ * core's own `rel_canonical()` (wp-includes/link-template.php) only ever
+ * fires for `is_singular()` — true for the four policy pages below, which is
+ * why those already had one, but never true for the shop front page:
+ * WooCommerce swaps its query to a product-archive query (`is_shop()`), and
+ * an archive is not singular. Same root cause the wordpress.demo plugin
+ * (busymate-devtools#3022, v2/integrations/wordpress/bmai-assistant/includes/
+ * class-bmai-discovery.php) never had to solve — every one of ITS pages is
+ * singular, so it could just leave canonical to core.
+ *
+ * WHY MARKDOWN NEGOTIATES ON THE SAME URL. Owner-HARD (spec §2): "i dont
+ * want different urls — just make it correct so any LLM client sees what
+ * LLMs need and humans what humans need." `/index.md`, `/shipping.md`, etc.
+ * (fernweh_static_routes(), above) stay as unadvertised convenience
+ * fallbacks; `GET /` (or `/shipping/`, `/returns/`, `/privacy/`, `/terms/`)
+ * with `Accept: text/markdown` now answers the SAME twin at the SAME URL,
+ * with `Vary: Accept` and real YAML frontmatter — the shape
+ * `class-bmai-markdown.php` already ships for wordpress.demo.
+ */
+
+/**
+ * An RFC 7231 §5.3.2 quality-value lookup: the highest `q` `$type` is listed
+ * at in `$accept`, matching the exact type, its family wildcard, and the
+ * universal wildcard media range.
+ *
+ * @param string $accept Raw `Accept` header value.
+ * @param string $type   e.g. 'text/markdown'.
+ * @return float|null
+ */
+function fernweh_best_quality( $accept, $type ) {
+	list( $family ) = explode( '/', $type );
+	$best = null;
+	foreach ( explode( ',', $accept ) as $range ) {
+		$parts = explode( ';', trim( $range ) );
+		$media = trim( $parts[0] );
+		if ( $media !== $type && $media !== $family . '/*' && '*/*' !== $media ) {
+			continue;
+		}
+		$q = 1.0;
+		for ( $i = 1; $i < count( $parts ); $i++ ) {
+			if ( 1 === preg_match( '/^\s*q=([0-9.]+)\s*$/i', $parts[ $i ], $m ) ) {
+				$q = (float) $m[1];
+			}
+		}
+		if ( null === $best || $q > $best ) {
+			$best = $q;
+		}
+	}
+	return $best;
+}
+
+/**
+ * Does this request's `Accept` header explicitly outrank `text/markdown`
+ * over `text/html`? No header at all (a browser navigation, most crawlers)
+ * answers false — Markdown is opt-IN, never a surprise default. A tie
+ * (e.g. a bare wildcard Accept header) also stays HTML, the safer default for the
+ * far more common caller.
+ *
+ * @return bool
+ */
+function fernweh_prefers_markdown() {
+	$accept = isset( $_SERVER['HTTP_ACCEPT'] ) ? (string) wp_unslash( $_SERVER['HTTP_ACCEPT'] ) : '';
+	if ( '' === trim( $accept ) ) {
+		return false;
+	}
+	$q_md = fernweh_best_quality( $accept, 'text/markdown' );
+	if ( null === $q_md ) {
+		return false;
+	}
+	$q_html = fernweh_best_quality( $accept, 'text/html' );
+	return null === $q_html ? true : $q_md > $q_html;
+}
+
+/**
+ * The canonical URL for the CURRENT request — ONLY for the pages core's own
+ * `rel_canonical()` never covers (anything not `is_singular()`). Never
+ * called for a singular page; core already has that one right.
+ *
+ * @return string '' when this is a page canonical should not be asserted for.
+ */
+function fernweh_canonical_url() {
+	if ( is_front_page() || ( function_exists( 'is_shop' ) && is_shop() ) ) {
+		return home_url( '/' );
+	}
+	if ( function_exists( 'is_product_category' ) && ( is_product_category() || is_product_tag() ) ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term ) {
+			$link = get_term_link( $term );
+			if ( ! is_wp_error( $link ) ) {
+				return $link;
+			}
+		}
+	}
+	if ( is_404() || is_search() ) {
+		return '';
+	}
+	return home_url( add_query_arg( array() ) );
+}
+
+/**
+ * Emits `<link rel="canonical">` for the pages core leaves uncovered (see
+ * fernweh_canonical_url()). A no-op on every singular page — core's own
+ * `rel_canonical()` already printed one there, and a page must never carry
+ * two.
+ *
+ * @return void
+ */
+function fernweh_canonical_link() {
+	if ( is_admin() || is_singular() ) {
+		return;
+	}
+	$url = fernweh_canonical_url();
+	if ( '' === $url ) {
+		return;
+	}
+	printf( '<link rel="canonical" href="%s">' . "\n", esc_url( $url ) );
+}
+add_action( 'wp_head', 'fernweh_canonical_link', 0 );
+
+/**
+ * The markdown twin for the CURRENT request, when one exists. `null` on any
+ * page this store has no twin for — the caller then leaves the normal
+ * WordPress/WooCommerce render untouched.
+ *
+ * @return array{file:string,canonical:string,title:string,description:string,updated:string}|null
+ */
+function fernweh_markdown_twin() {
+	if ( is_front_page() || ( function_exists( 'is_shop' ) && is_shop() ) ) {
+		$modified = get_lastpostmodified( 'gmt' );
+		return array(
+			'file'        => 'index.md',
+			'canonical'   => home_url( '/' ),
+			'title'       => 'Fernweh Supply Co.',
+			'description' => 'Small-batch gear for the long way round.',
+			'updated'     => $modified ? mysql2date( 'c', $modified, false ) : gmdate( 'c' ),
+		);
+	}
+	if ( is_page() ) {
+		$post = get_queried_object();
+		if ( $post instanceof WP_Post && in_array( $post->post_name, array( 'shipping', 'returns', 'privacy', 'terms' ), true ) ) {
+			return array(
+				'file'        => $post->post_name . '.md',
+				'canonical'   => get_permalink( $post ),
+				'title'       => wp_strip_all_tags( get_the_title( $post ) ),
+				'description' => wp_strip_all_tags( get_the_excerpt( $post ) ),
+				'updated'     => get_the_modified_date( 'c', $post ),
+			);
+		}
+	}
+	return null;
+}
+
+/**
+ * A double-quoted YAML scalar — simplest safe quoting for a string that can
+ * contain a colon, a hash or a quote.
+ *
+ * @param string $value Raw value.
+ * @return string
+ */
+function fernweh_yaml_scalar( $value ) {
+	return '"' . str_replace( array( '\\', '"' ), array( '\\\\', '\\"' ), (string) $value ) . '"';
+}
+
+/**
+ * Adds `$value` to the response's `Vary` header WITHOUT discarding anything
+ * already there — a bare `header('Vary: Accept')` would silently drop e.g.
+ * `Vary: Accept-Encoding` a compression module already set.
+ *
+ * @param string $value e.g. 'Accept'.
+ * @return void
+ */
+function fernweh_add_vary( $value ) {
+	$existing = array();
+	foreach ( headers_list() as $line ) {
+		if ( 0 === stripos( $line, 'Vary:' ) ) {
+			foreach ( explode( ',', substr( $line, 5 ) ) as $part ) {
+				$part = trim( $part );
+				if ( '' !== $part ) {
+					$existing[] = $part;
+				}
+			}
+		}
+	}
+	if ( ! in_array( $value, $existing, true ) ) {
+		$existing[] = $value;
+	}
+	header( 'Vary: ' . implode( ', ', $existing ) );
+}
+
+/**
+ * Emits one markdown twin, frontmatter first, and stops.
+ *
+ * @param array $twin See fernweh_markdown_twin().
+ * @return void Always exits.
+ */
+function fernweh_send_markdown_twin( $twin ) {
+	$full = FERNWEH_DATA_DIR . '/' . $twin['file'];
+	if ( ! is_readable( $full ) ) {
+		status_header( 404 );
+		header( 'Content-Type: application/json; charset=utf-8' );
+		fernweh_add_vary( 'Accept' );
+		echo wp_json_encode( array( 'error' => 'agent_file_missing', 'path' => $twin['file'] ) );
+		exit;
+	}
+	$lines   = array( '---' );
+	$lines[] = 'title: ' . fernweh_yaml_scalar( $twin['title'] );
+	if ( '' !== $twin['description'] ) {
+		$lines[] = 'description: ' . fernweh_yaml_scalar( $twin['description'] );
+	}
+	$lines[]     = 'canonical: ' . fernweh_yaml_scalar( $twin['canonical'] );
+	$lines[]     = 'updated: ' . fernweh_yaml_scalar( $twin['updated'] );
+	$lines[]     = 'language: ' . fernweh_yaml_scalar( get_bloginfo( 'language' ) );
+	$lines[]     = '---';
+	$frontmatter = implode( "\n", $lines ) . "\n\n";
+
+	status_header( 200 );
+	header( 'Content-Type: text/markdown; charset=utf-8' );
+	header( 'Cache-Control: public, max-age=300' );
+	header( 'Access-Control-Allow-Origin: *' );
+	header( 'X-Content-Type-Options: nosniff' );
+	fernweh_add_vary( 'Accept' );
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.Security.EscapeOutput.OutputNotEscaped -- a local generated file, pre-rendered markdown, not a remote fetch or HTML.
+	echo $frontmatter . file_get_contents( $full );
+	exit;
+}
+
+/**
+ * Same-URL Markdown content negotiation (owner spec §2). A no-op on every
+ * request that does not explicitly outrank markdown over html, and on any
+ * page this store has no twin for.
+ *
+ * @return void
+ */
+function fernweh_maybe_negotiate_markdown() {
+	if ( is_admin() || ! fernweh_prefers_markdown() ) {
+		return;
+	}
+	$twin = fernweh_markdown_twin();
+	if ( null === $twin ) {
+		return;
+	}
+	fernweh_send_markdown_twin( $twin );
+}
+add_action( 'template_redirect', 'fernweh_maybe_negotiate_markdown', 1 );
+
+/**
+ * HTTP `Link:` discovery headers (owner spec §3) on every front-end
+ * response — lets a reader tell "the file happens to exist" apart from
+ * "the site intentionally exposes it to agents". The HTML-head twin of
+ * these already existed (fernweh_head_links(), above); this is the header
+ * a client that never parses HTML also gets.
+ *
+ * @return void
+ */
+function fernweh_discovery_headers() {
+	if ( is_admin() ) {
+		return;
+	}
+	header( 'Link: <' . FERNWEH_ORIGIN . '/llms.txt>; rel="describedby"; type="text/plain"', false );
+	header( 'Link: <' . FERNWEH_ORIGIN . '/.well-known/agents.json>; rel="alternate"; type="application/json"; title="Agent card"', false );
+	$twin = fernweh_markdown_twin();
+	if ( null !== $twin ) {
+		header( 'Link: <' . $twin['canonical'] . '>; rel="alternate"; type="text/markdown"', false );
+		fernweh_add_vary( 'Accept' );
+	}
+}
+add_action( 'send_headers', 'fernweh_discovery_headers' );
