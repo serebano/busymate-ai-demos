@@ -160,7 +160,7 @@
     $("#qvSpecs").innerHTML = p.specs.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "<li>Weight " + esc(p.weight) + "</li>";
     // The quick-view "Ask the assistant about this" carries a product-specific
     // prompt; the shared /_shared/ui/open-chat.js opens the widget and submits
-    // it via BusymateAI.ask() (never open-only — the #2953 regression).
+    // it via BusymateAI.ask() (never open-only — the #2973 regression).
     $("#qvAsk").setAttribute("data-open-chat", "Tell me about the " + p.title + " — is it in stock, and how does it fit?");
     renderQvOptions(p);
     d.showModal();

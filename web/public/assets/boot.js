@@ -26,7 +26,7 @@ function wireChrome() {
   document.getElementById("cart-close")?.addEventListener("click", () => dialog?.close());
   // [data-open-chat] CTAs are wired by the shared /_shared/ui/open-chat.js:
   // each carries its prompt as the attribute value and auto-submits it via
-  // BusymateAI.ask() (no open-only wiring here — that was the #2953 regression).
+  // BusymateAI.ask() (no open-only wiring here — that was the #2973 regression).
   document.querySelectorAll("#signin-btn,[data-signin]").forEach((b) => b.addEventListener("click", signIn));
   document.querySelectorAll("#signout-btn,[data-signout]").forEach((b) => b.addEventListener("click", signOut));
   document.querySelectorAll("[data-add-hero]").forEach((b) =>

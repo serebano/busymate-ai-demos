@@ -22,6 +22,7 @@ server, the form-card builder, the card and avatar UI, the brand and knowledge b
 | Microsoft Teams channel | [teams.demo.busymate.ai](https://teams.demo.busymate.ai) | [guide](https://busymate.ai/integrations/teams) | [`teams/`](https://github.com/serebano/busymate-ai-demos/tree/main/teams) |
 | Messenger & Instagram channels | [meta.demo.busymate.ai](https://meta.demo.busymate.ai) | [guide](https://busymate.ai/integrations/messenger) | [`meta/`](https://github.com/serebano/busymate-ai-demos/tree/main/meta) |
 | WordPress site | [wordpress.demo.busymate.ai](https://wordpress.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/wordpress) | [`wordpress/`](https://github.com/serebano/busymate-ai-demos/tree/main/wordpress) |
+| Ghost site | [ghost.demo.busymate.ai](https://ghost.demo.busymate.ai) | [guide](https://busymate.ai/docs/guides/ghost) | [`ghost/`](https://github.com/serebano/busymate-ai-demos/tree/main/ghost) |
 
 This is the live source for every demo above, kept in sync automatically as the demos
 change. Browse the full set at [busymate.ai/integrations](https://busymate.ai/integrations),

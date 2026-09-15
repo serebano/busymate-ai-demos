@@ -1,5 +1,5 @@
 /*
- * Canonical "open the chat" CTA — shared by every demo (busymate-devtools#2953).
+ * Canonical "open the chat" CTA — shared by every demo (busymate-devtools#2973).
  *
  * A `[data-open-chat]` control opens the live widget and, when its attribute
  * VALUE is a non-empty prompt, submits that prompt IMMEDIATELY through the live
@@ -10,7 +10,7 @@
  *
  * ONE delegated, idempotent document listener wires every current and future
  * control, so a demo needs only the markup + this one script tag — no per-demo
- * open() wiring (that open-only shape is exactly the #2953 regression: the chat
+ * open() wiring (that open-only shape is exactly the #2973 regression: the chat
  * opened and nothing was sent). Brings an on-page phone-frame embed into view
  * first (the channel demos). A cached pre-#2662 embed (no `ask`) degrades to
  * open()+clipboard rather than doing nothing.

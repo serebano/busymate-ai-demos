@@ -1,0 +1,65 @@
+{
+  "$comment": "type:\"dynamic\" — a real Ghost CMS install (The Meridian Line, an independent magazine about makers, small manufacturing and local economies), distinct from wordpress (Larkspur Studio, a services business) and woo (commerce). scripts/deploy.sh only handles type:\"static\" demos, so it neither rsyncs nor re-renders this vhost; the landing index and demos.json DO include it (they read every demo.json). Ghost has no plugin runtime like WordPress, so the integration is our universal embed via Ghost's Code Injection (site header) + a themed inline placement, not a generated plugin. `backend_port` is the Ghost container; `mcp_port` is this demo's OWN MCP + identity-provider server (sites/_shared/backend/mcp-identity-server.mjs, same reusable server 'scan'/'web'/etc. use), which nginx routes /mcp and /api/identity/* to. `tenant_id`/`connector_id`/`identity_provider_id` are non-secret ids the box references. See sites/ghost/README.md.",
+  "name": "ghost",
+  "subdomain": "ghost",
+  "title": "Ghost site",
+  "tagline": "The Meridian Line — a branded Ghost publication with a native Members sign-in and a genuinely live assistant: grounded chat, WebMCP page actions, its own MCP server.",
+  "type": "dynamic",
+  "assistant": "meridian",
+  "tenant_id": "d16242b5-e313-436f-9451-ec8099630f4c",
+  "connector_id": "cfd35d9c-9915-4960-bb9d-e2c35d7f6287",
+  "identity_provider_id": "33b37e8a-9cf9-4154-9b82-cea0c59f420a",
+  "status": "live",
+  "order": 11,
+  "icon": "ghost",
+  "docs": "https://busymate.ai/docs/guides/ghost",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/ghost",
+  "backend_port": 8116,
+  "mcp_port": 8117,
+  "container": {
+    "app": {
+      "name": "demo-ghost",
+      "image": "ghost:5-alpine",
+      "publish": "127.0.0.1:8116:2368",
+      "network": "demo-ghost-net",
+      "restart": "unless-stopped",
+      "memory": "384m",
+      "volumes": [
+        "<demo-host>/ghost/data/content:/var/lib/ghost/content"
+      ],
+      "env_note": "security__staffDeviceVerification=false — no SMTP relay on this box; see provision.sh comment."
+    },
+    "db": {
+      "name": "demo-ghost-db",
+      "image": "mysql:8",
+      "network": "demo-ghost-net",
+      "restart": "unless-stopped",
+      "memory": "256m",
+      "args": [
+        "--innodb-buffer-pool-size=48M",
+        "--performance-schema=OFF",
+        "--max-connections=30"
+      ],
+      "volumes": [
+        "<demo-host>/ghost/data/db:/var/lib/mysql"
+      ]
+    },
+    "backend": {
+      "name": "demo-ghost-backend",
+      "network": "demo-ghost-net",
+      "publish": "127.0.0.1:8117:8117",
+      "memory": "128m",
+      "env": {
+        "PORT": "8117",
+        "ISSUER": "https://ghost.demo.busymate.ai",
+        "GHOST_CONTENT_API": "http://demo-ghost:2368"
+      }
+    },
+    "vhost_templates": [
+      "infra/nginx/ghost-http.conf.template",
+      "infra/nginx/ghost-https.conf.template"
+    ],
+    "acme_root": "<demo-host>/ghost/acme",
+    "seed": "sites/ghost/seed (images + credits; content authored via the Ghost Admin API, see README)"
+  }
+}
