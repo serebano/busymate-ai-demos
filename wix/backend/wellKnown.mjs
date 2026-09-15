@@ -19,6 +19,30 @@ function text(res, body, contentType = "text/plain; charset=utf-8") {
   res.writeHead(200, { "Content-Type": contentType, "Cache-Control": "no-store" }).end(body);
 }
 
+// A Wix Custom Element (a real, un-sandboxed customElements.define() tag Wix
+// renders directly in the page — unlike an Embed HTML element, which is a
+// lazy-loaded iframe that never fired its own load on the free plan; see
+// sites/wix/README.md). This is the ONE file it loads: it defines the tag
+// and, on connect, injects the same loader script every other demo uses.
+function customElementJs() {
+  return `class BusymateWidget extends HTMLElement {
+  connectedCallback() {
+    if (window.__busymateLoaded) return;
+    window.__busymateLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://busymate.ai/embed/v1.js';
+    s.async = true;
+    s.setAttribute('data-assistant', '${TENANT_SLUG}');
+    s.setAttribute('data-label', 'Ask us');
+    document.head.appendChild(s);
+  }
+}
+if (!customElements.get('busymate-widget')) {
+  customElements.define('busymate-widget', BusymateWidget);
+}
+`;
+}
+
 function llmsTxt() {
   return `# Wren & Oat Bakery
 
@@ -128,6 +152,9 @@ function structuredData() {
 export async function serveWellKnown(req, res, url) {
   if (req.method !== "GET") return false;
   switch (url.pathname) {
+    case "/custom-element.js":
+      text(res, customElementJs(), "application/javascript; charset=utf-8");
+      return true;
     case "/llms.txt":
       text(res, llmsTxt());
       return true;
