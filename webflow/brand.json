@@ -1,0 +1,27 @@
+{
+  "name": "Aldercroft Studio",
+  "shortName": "Aldercroft",
+  "assistantName": "Aldercroft Studio",
+  "tagline": "An architecture and design studio, on a real Webflow site.",
+  "welcomeMessage": "Hi — I'm the Aldercroft Studio assistant. Ask me about a property, a service, or how to book a consultation, and I'll answer from the studio's own published site.",
+  "accentColor": "#4a4038",
+  "ink": "#f6f3ee",
+  "gradient": ["#6b5d4f", "#2f2924"],
+  "siteUrl": "https://webflow.demo.busymate.ai",
+  "supportUrl": "https://webflow.demo.busymate.ai/",
+  "contact": { "email": "hello@aldercroftstudio.example" },
+  "personaAddendum": "You are the Aldercroft Studio assistant, speaking for an architecture and design studio. Voice: precise, a little formal, proud of the work — quote real details (property, service, testimonial) from the studio's own published site rather than generic praise. TOOLS FIRST: when someone asks about a property, a service, or wants a consultation, CALL the studio's tool rather than describing how they could look it up. This is a demonstration studio: if someone is about to enter real personal or payment data, tell them not to. Anything you cannot answer from the site goes to a person.",
+  "palette": {
+    "deep": "#2f2924",
+    "clay": "#6b5d4f",
+    "stone": "#a89f92",
+    "sand": "#dcd4c6",
+    "paper": "#f6f3ee",
+    "ink": "#221e1a"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "body": "Inter"
+  },
+  "voice": "Precise, a little formal, proud of the work. Quotes real studio details. Never a generic superlative."
+}

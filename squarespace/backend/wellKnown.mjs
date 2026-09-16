@@ -14,7 +14,10 @@ import { allPages, apiReady } from "./squarespace.mjs";
 // index.mjs already uses for "./_shared/mcp-identity-server.mjs". These
 // backend .mjs files are never run directly from the repo tree, only inside
 // the image the Dockerfile assembles.
-import { buildStaticAgentFiles, serveStaticAgentFiles } from "./_shared/agent-ready-static.mjs";
+import {
+  buildStaticAgentFiles, serveStaticAgentFiles,
+  renderLandingHome, renderLandingMarkdown, serveLandingHome,
+} from "./_shared/agent-ready-static.mjs";
 import agentFilesConfig from "./agent-files.config.mjs";
 
 // The static six-layer set (busymate-devtools#3054, #3064): agents.json
@@ -202,32 +205,27 @@ async function structuredData() {
   );
 }
 
-// This backend's own homepage — served at BOTH "/" and "/preview". The real
-// trial site is Password Protected right now (needs the site's own
+// This backend's own homepage — served at "/", "/preview" and "/index.md"
+// (busymate-devtools#3070; #3064 originally added it at "/"/"/preview" only).
+// The real trial site is Password Protected right now (needs the site's own
 // password, or a paid upgrade to go Public), so identity, the widget AND
-// the discovery links this repo's own check-agent-files.sh looks for
-// (busymate-devtools#3064: squarespace.demo.busymate.ai answered 404 at "/"
-// because no route here ever served one) are all proven HERE, on this
-// backend's own origin — same embed tag, same window.BusymateAI.getIdentity
-// wiring (defined BEFORE the embed script per the identified-visitors doc),
-// and a REAL WebMCP registration of get_page (not just described in
-// webmcp-catalog.json — genuinely registered in this page).
-function homePage() {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Quiet Pines Yoga — preview</title>
-<link rel="webmcp-catalog" href="/webmcp-catalog.json">
-<link rel="alternate" type="application/json" href="/.well-known/agents.json">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ExerciseGym","name":"Quiet Pines Yoga","url":"${SITE_ORIGIN}","description":"A boutique yoga studio demo — a Busymate AI integration example, not a real business."}
-</script>
-</head>
-<body style="font-family:system-ui;max-width:640px;margin:40px auto;padding:0 16px">
-<h1>Quiet Pines Yoga (preview)</h1>
-<p>Same-origin proof page: the real site is Password Protected right now
-(Public needs a paid Squarespace plan). This page carries the identical
-embed + identity wiring the real Code Block / Embed Block tag uses.</p>
-<p id="status">not signed in</p>
+// the discovery evidence this repo's own check-agent-files.sh looks for
+// live — <html lang>, canonical, JSON-LD, a contact line, Markdown
+// negotiation (R2/R6/R7/R10) — are all proven HERE, on this backend's own
+// origin, via the ONE shared homepage builder ghost/webflow/wix/bigcommerce
+// share (#3053/#3054 precedent: never a second hand-typed copy) — same
+// embed tag, same window.BusymateAI.getIdentity wiring (defined BEFORE the
+// embed script per the identified-visitors doc), and a REAL WebMCP
+// registration of get_page (not just described in webmcp-catalog.json —
+// genuinely registered in this page).
+const BRAND = {
+  name: "Quiet Pines Yoga",
+  tagline: "A boutique yoga studio demo — a Busymate AI integration example, not a real business.",
+  siteUrl: BACKEND_ORIGIN,
+  contact: { email: "hello@quietpinesyoga.example" },
+};
+const EMBED_BODY = `<p id="status">not signed in</p>
 <button id="signin">Sign in as Sasha Moreau (demo visitor)</button>
-<p style="font-size:13px;opacity:.75">Editorial contact: <a href="mailto:hello@quietpinesyoga.example">hello@quietpinesyoga.example</a></p>
 <script>
   window.BusymateAI = window.BusymateAI || {};
   window.BusymateAI.getIdentity = async function () {
@@ -261,9 +259,10 @@ embed + identity wiring the real Code Block / Embed Block tag uses.</p>
     });
   })();
 </script>
-<script src="https://busymate.ai/embed/v1.js" data-assistant="demo-squarespace" data-label="Chat with us" async></script>
-</body></html>`;
-}
+<script src="https://busymate.ai/embed/v1.js" data-assistant="demo-squarespace" data-label="Chat with us" async></script>`;
+const homeHtml = renderLandingHome({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "Squarespace (Password Protected on trial)", bodyHtml: EMBED_BODY });
+const homeMd = renderLandingMarkdown({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "Squarespace" });
+const serveHome = serveLandingHome({ html: homeHtml, markdown: homeMd });
 
 /** The `routes` hook the shared identity server calls before its own 404. */
 export async function serveWellKnown(req, res, url) {
@@ -271,13 +270,11 @@ export async function serveWellKnown(req, res, url) {
     await serveStatus(req, res);
     return true;
   }
-  // "/" and "/preview" are the SAME homepage (busymate-devtools#3064: this
-  // backend IS the whole demo — squarespace.demo.busymate.ai/ answering 404
-  // is not an honest state for a manifest row marked "live").
-  if ((url.pathname === "/preview" || url.pathname === "/") && req.method === "GET") {
-    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" }).end(homePage());
-    return true;
-  }
+  // "/", "/preview" and "/index.md" are the SAME homepage (busymate-devtools
+  // #3064: this backend IS the whole demo — squarespace.demo.busymate.ai/
+  // answering 404 is not an honest state for a manifest row marked "live";
+  // #3070: the same page now also negotiates Markdown on this exact URL).
+  if (await serveHome(req, res, url)) return true;
   if (req.method !== "GET") return false;
   switch (url.pathname) {
     case "/llms.txt":

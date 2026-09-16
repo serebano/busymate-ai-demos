@@ -12,6 +12,12 @@ COPY sites/_shared/ui/form-card.mjs ./ui/form-card.mjs
 # the wholesale copy above already placed.
 COPY sites/_shared/gen-agent-files.mjs ./gen-agent-files.mjs
 COPY sites/_shared/backend/tool-schema.mjs ./backend/tool-schema.mjs
+# busymate-devtools#3070: the shared homepage builder's own transitive
+# module-level imports (loaded even though this demo calls only its
+# landing-page exports) — agent-ready-static.mjs itself is already in the
+# wholesale ./_shared/ copy above.
+COPY sites/_shared/gen-protocol-files.mjs sites/_shared/gen-robots-sitemap.mjs sites/_shared/webmcp-catalog.mjs ./
+COPY sites/bigcommerce/brand.json ./brand.json
 COPY sites/bigcommerce/backend/index.mjs ./index.mjs
 COPY sites/bigcommerce/backend/tools.mjs ./tools.mjs
 COPY sites/bigcommerce/backend/bigcommerce.mjs ./bigcommerce.mjs

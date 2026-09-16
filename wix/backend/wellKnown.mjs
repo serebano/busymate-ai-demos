@@ -14,12 +14,20 @@ import { FACTS } from "./wixContent.mjs";
 // (never the real repo tree — same convention index.mjs already uses for
 // "./_shared/mcp-identity-server.mjs").
 import { buildAgentsJson } from "./gen-agent-files.mjs";
+import { buildRobotsTxt, buildSitemapXml } from "./gen-robots-sitemap.mjs";
+import { renderLandingHome, renderLandingMarkdown, serveLandingHome } from "./_shared/agent-ready-static.mjs";
 import { TOOL_TABLE } from "./tools.mjs";
+import fs from "node:fs";
 
 const BACKEND_ORIGIN = process.env.ISSUER || "https://wix.demo.busymate.ai";
 const SITE_ORIGIN = process.env.WIX_SITE_ORIGIN || "https://mrserebano.wixsite.com/wren-and-oat";
 const TENANT_SLUG = process.env.TENANT_SLUG || "wren-and-oat";
 const DOCS = "https://busymate.ai/docs/guides";
+const brand = JSON.parse(fs.readFileSync(new URL("./brand.json", import.meta.url), "utf8"));
+const BRAND = { ...brand, siteUrl: BACKEND_ORIGIN };
+const homeHtml = renderLandingHome({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "Wix (free plan)" });
+const homeMd = renderLandingMarkdown({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "Wix" });
+const serveHome = serveLandingHome({ html: homeHtml, markdown: homeMd });
 
 function text(res, body, contentType = "text/plain; charset=utf-8") {
   res.writeHead(200, { "Content-Type": contentType, "Cache-Control": "no-store" }).end(body);
@@ -115,10 +123,6 @@ async function sitemapMd() {
   return `# Sitemap\n\n- [Home](${SITE_ORIGIN}/)\n- [Menu](${SITE_ORIGIN}/menu)\n- [Online Orders](${SITE_ORIGIN}/online-orders)\n- [About](${SITE_ORIGIN}/about)\n- [Contact](${SITE_ORIGIN}/contact)\n`;
 }
 
-async function indexMd() {
-  return `# ${FACTS.name}\n\n${FACTS.tagline}\n\n${FACTS.story}\n\n## Hours\n\n${FACTS.hours.map((h) => `- ${h.day}: ${h.hours}`).join("\n")}\n\n## Menu\n\n${FACTS.menu.map((s) => `### ${s.category}\n${s.items.map((i) => `- ${i}`).join("\n")}`).join("\n\n")}\n\nReal site: ${SITE_ORIGIN}\n`;
-}
-
 // busymate-devtools#3054: the merged v1 + agentsjson.org v0.1.0 + bespoke
 // card shape — imported from the SAME generator every other demo's
 // build-demo.sh calls, never a second hand-rolled copy of the shape (this
@@ -157,6 +161,11 @@ function structuredData() {
 
 /** The `routes` hook the shared identity server calls before its own 404. */
 export async function serveWellKnown(req, res, url) {
+  // "/", "/preview" and "/index.md" are this backend's OWN same-origin
+  // preview page (busymate-devtools#3070) — <html lang>, canonical, JSON-LD
+  // identity, a contact line, and the SAME-URL Markdown negotiation the
+  // check-agent-files.sh live check evidences directly against "/".
+  if (await serveHome(req, res, url)) return true;
   if (req.method !== "GET") return false;
   switch (url.pathname) {
     case "/custom-element.js":
@@ -171,15 +180,24 @@ export async function serveWellKnown(req, res, url) {
     case "/sitemap.md":
       text(res, await sitemapMd(), "text/markdown; charset=utf-8");
       return true;
-    case "/index.md":
-      text(res, await indexMd(), "text/markdown; charset=utf-8");
-      return true;
+    // "/index.md" is now served by serveHome() above (same content as "/").
     case "/agents.json":
     case "/.well-known/agents.json":
       text(res, agentsJson(), "application/json; charset=utf-8");
       return true;
     case "/structured-data.json":
       text(res, structuredData(), "application/ld+json; charset=utf-8");
+      return true;
+    case "/sitemap.xml":
+      // R3 — real <loc> entries: the backend's own routes + the real,
+      // externally-hosted site (never a placeholder loc).
+      text(res, buildSitemapXml([
+        { loc: `${BACKEND_ORIGIN}/`, priority: 1.0 },
+        { loc: SITE_ORIGIN, priority: 1.0 },
+      ]), "application/xml; charset=utf-8");
+      return true;
+    case "/robots.txt":
+      text(res, buildRobotsTxt(BACKEND_ORIGIN));
       return true;
     default:
       return false;

@@ -11,13 +11,18 @@ import { catalogue, categories, apiReady } from "./bigcommerce.mjs";
 // (never the real repo tree — same convention index.mjs already uses for
 // "./_shared/mcp-identity-server.mjs").
 import { buildAgentsJson } from "./gen-agent-files.mjs";
+import { buildRobotsTxt, buildSitemapXml } from "./gen-robots-sitemap.mjs";
+import { renderLandingHome, renderLandingMarkdown, serveLandingHome } from "./_shared/agent-ready-static.mjs";
 import { TOOL_SCHEMA } from "./tools.mjs";
+import fs from "node:fs";
 
 const BACKEND_ORIGIN = process.env.BC_DEMO_ORIGIN || "https://bigcommerce.demo.busymate.ai";
 const SITE_ORIGIN = process.env.BC_SITE_ORIGIN || "https://12zero784.mybigcommerce.com";
 const TENANT_SLUG = process.env.TENANT_SLUG || "demo-bigcommerce";
 const DOCS = "https://busymate.ai/docs/guides";
 const JWKS_URL = `${BACKEND_ORIGIN}/.well-known/jwks.json`;
+const brand = JSON.parse(fs.readFileSync(new URL("./brand.json", import.meta.url), "utf8"));
+const BRAND = { ...brand, siteUrl: BACKEND_ORIGIN };
 const DELEGATED_TOOLS = ["list_my_orders", "get_order_status"];
 
 const actorVerifierConfigured = () => Boolean(
@@ -198,20 +203,17 @@ async function structuredData() {
   );
 }
 
-// A minimal, same-origin verification page: the real storefront is
-// BigCommerce "prelaunch" right now (Coming Soon gate, control-panel-only to
-// lift), so identity + the widget are proven HERE, on this backend's own
-// origin, exactly the shape the real Script Manager embed will use once the
-// store launches — same embed tag, same window.BusymateAI.getIdentity wiring,
-// defined BEFORE the embed script per the identified-visitors doc.
-function previewPage() {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Copperfield Kitchen Co. — preview</title></head>
-<body style="font-family:system-ui;max-width:640px;margin:40px auto;padding:0 16px">
-<h1>Copperfield Kitchen Co. (preview)</h1>
-<p>Same-origin proof page: the real storefront is BigCommerce "prelaunch" right now
-(needs the control-panel Launch step). This page carries the identical embed +
-identity wiring the real Storefront Script Manager tag uses.</p>
-<p id="status">not signed in</p>
+// This backend's own same-origin homepage, served at "/", "/preview" and
+// "/index.md" (busymate-devtools#3070 — a 302 to the real BigCommerce
+// storefront left "/" with no body to evidence lang/canonical/JSON-LD/
+// contact against). The real storefront is BigCommerce "prelaunch" right
+// now (Coming Soon gate, control-panel-only to lift), so identity + the
+// widget are proven HERE, exactly the shape the real Script Manager embed
+// will use once the store launches — same embed tag, same
+// window.BusymateAI.getIdentity wiring, defined BEFORE the embed script per
+// the identified-visitors doc. Built from the ONE shared homepage builder
+// ghost/squarespace/webflow/wix share (#3053/#3054 precedent).
+const EMBED_BODY = `<p id="status">not signed in</p>
 <button id="signin">Sign in as Daniel Weber (demo customer)</button>
 <script>
   window.BusymateAI = window.BusymateAI || {};
@@ -226,9 +228,10 @@ identity wiring the real Storefront Script Manager tag uses.</p>
     if (window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
   });
 </script>
-<script src="https://busymate.ai/embed/v1.js" data-assistant="demo-bigcommerce" data-label="Chat with us" async></script>
-</body></html>`;
-}
+<script src="https://busymate.ai/embed/v1.js" data-assistant="demo-bigcommerce" data-label="Chat with us" async></script>`;
+const homeHtml = renderLandingHome({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "BigCommerce (prelaunch)", bodyHtml: EMBED_BODY });
+const homeMd = renderLandingMarkdown({ brand: BRAND, realSiteUrl: SITE_ORIGIN, realSiteLabel: "BigCommerce" });
+const serveHome = serveLandingHome({ html: homeHtml, markdown: homeMd });
 
 /** The `routes` hook the shared identity server calls before its own 404. */
 export async function serveWellKnown(req, res, url) {
@@ -236,10 +239,7 @@ export async function serveWellKnown(req, res, url) {
     await serveStatus(req, res);
     return true;
   }
-  if (url.pathname === "/preview" && req.method === "GET") {
-    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" }).end(previewPage());
-    return true;
-  }
+  if (await serveHome(req, res, url)) return true;
   if (req.method !== "GET") return false;
   switch (url.pathname) {
     case "/llms.txt":
@@ -257,6 +257,17 @@ export async function serveWellKnown(req, res, url) {
       return true;
     case "/structured-data.json":
       text(res, await structuredData(), "application/ld+json; charset=utf-8");
+      return true;
+    case "/sitemap.xml":
+      // R3 — real <loc> entries: the backend's own routes + the real,
+      // externally-hosted storefront (never a placeholder loc).
+      text(res, buildSitemapXml([
+        { loc: `${BACKEND_ORIGIN}/`, priority: 1.0 },
+        { loc: SITE_ORIGIN, priority: 1.0 },
+      ]), "application/xml; charset=utf-8");
+      return true;
+    case "/robots.txt":
+      text(res, buildRobotsTxt(BACKEND_ORIGIN));
       return true;
     default:
       return false;

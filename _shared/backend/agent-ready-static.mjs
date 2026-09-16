@@ -106,3 +106,116 @@ export function serveStaticAgentFiles(files) {
     return true;
   };
 }
+
+// ---------------------------------------------------------------------------
+// The homepage half (busymate-devtools#3070): a dynamic backend whose real
+// site is externally hosted or gated (ghost/squarespace/webflow/wix/
+// bigcommerce) still needs ITS OWN "/" to carry the v1-REQUIRED evidence a
+// live scan checks directly against the page — <html lang>, a canonical
+// Link, JSON-LD Organization+WebSite identity, and a human contact line
+// (R6/R7/R10) — plus the SAME-URL Markdown negotiation and Link discovery
+// headers a static demo's nginx vhost proves for it (R2/R5). A 302 to the
+// real external site answers none of that (no body to evidence anything
+// against), so every one of these backends serves a genuine same-origin
+// preview page instead — the real site stays one link away, never hidden.
+// ONE shared builder so five demos don't hand-roll five near-identical pages
+// (#3053, #3054 precedent: never a second hand-typed copy of a shared shape).
+
+/**
+ * Organization + WebSite JSON-LD (R7), built from the demo's own brand.json
+ * shape (name/tagline/siteUrl + an optional contact) — never invented copy.
+ * @param {{name:string, tagline?:string, siteUrl:string, contact?:{email?:string, tel?:string}}} brand
+ */
+export function buildIdentityJsonLd(brand) {
+  const orgId = `${brand.siteUrl}/#org`;
+  const org = {
+    "@type": "Organization",
+    "@id": orgId,
+    name: brand.name,
+    url: brand.siteUrl,
+    ...(brand.contact?.email ? { email: brand.contact.email } : {}),
+    ...(brand.contact?.tel ? { telephone: brand.contact.tel } : {}),
+  };
+  const site = {
+    "@type": "WebSite",
+    "@id": `${brand.siteUrl}/#website`,
+    url: brand.siteUrl,
+    name: brand.name,
+    ...(brand.tagline ? { description: brand.tagline } : {}),
+    publisher: { "@id": orgId },
+  };
+  return { "@context": "https://schema.org", "@graph": [org, site] };
+}
+
+function contactLine(contact) {
+  if (!contact) return "";
+  const parts = [];
+  if (contact.email) parts.push(`<a href="mailto:${contact.email}">${contact.email}</a>`);
+  if (contact.tel) parts.push(`<a href="tel:${contact.tel}">${contact.tel}</a>`);
+  return parts.join(" · ");
+}
+
+/**
+ * Renders this backend's own same-origin homepage (R6/R7/R10) — `<html
+ * lang>`, `<link rel="canonical">` back to ITSELF (this page is the real
+ * page for this origin; the external site is a different origin, linked
+ * from the body, never claimed as this page's own canonical), the identity
+ * JSON-LD, and a human contact line.
+ * @param {object} opts
+ * @param {{name:string, tagline?:string, siteUrl:string, contact?:{email?:string, tel?:string}}} opts.brand
+ * @param {string} opts.realSiteUrl the externally-hosted/gated real site
+ * @param {string} [opts.realSiteLabel] e.g. "Webflow", "Wix", "BigCommerce"
+ * @param {string} [opts.lang]
+ * @param {string} [opts.bodyHtml] extra body markup (a sign-in button, an embed) — appended as-is
+ */
+export function renderLandingHome(opts) {
+  const { brand, realSiteUrl, realSiteLabel = "the platform's own hosting", lang = "en", bodyHtml = "" } = opts;
+  const jsonLd = buildIdentityJsonLd(brand);
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>${brand.name} — preview</title>
+<link rel="canonical" href="${brand.siteUrl}/">
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json">
+<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+</head>
+<body style="font-family:system-ui;max-width:640px;margin:40px auto;padding:0 16px">
+<h1>${brand.name} (preview)</h1>
+<p>${brand.tagline ? `${brand.tagline} ` : ""}Same-origin proof page: the real site runs on ${realSiteLabel} (<a href="${realSiteUrl}">${realSiteUrl}</a>) and cannot serve a custom file or header at a path it doesn't already own, so this backend's own origin carries the six-layer agent-ready set, the identity provider and the embed proof instead.</p>
+${bodyHtml}
+<p style="font-size:13px;opacity:.75">Contact: ${contactLine(brand.contact) || "see llms.txt"}</p>
+</body></html>`;
+}
+
+/** The same page's content as a Markdown twin — the SAME URL negotiates to this (R2), never a parallel /md URL. */
+export function renderLandingMarkdown(opts) {
+  const { brand, realSiteUrl, realSiteLabel = "the platform's own hosting" } = opts;
+  const contact = brand.contact?.email ?? brand.contact?.tel ?? "see llms.txt";
+  return `# ${brand.name}
+
+${brand.tagline ? `${brand.tagline}\n\n` : ""}Real site: ${realSiteUrl} (hosted on ${realSiteLabel})
+
+Contact: ${contact}
+`;
+}
+
+/**
+ * The `routes` hook that serves "/" (and "/preview", the same content, for
+ * whatever already links there) with SAME-URL Markdown negotiation
+ * (`Accept: text/markdown` rewrites the representation, never a parallel
+ * URL — R2) and belt-and-suspenders Link discovery headers (R5) in case a
+ * front proxy in front of this backend doesn't already add them.
+ * @param {{html:string, markdown:string}} pages
+ */
+export function serveLandingHome(pages) {
+  return async function routes(req, res, url) {
+    if (req.method !== "GET") return false;
+    if (url.pathname !== "/" && url.pathname !== "/preview" && url.pathname !== "/index.md") return false;
+    const wantsMarkdown = url.pathname === "/index.md" || /text\/markdown/i.test(req.headers.accept || "");
+    const body = wantsMarkdown ? pages.markdown : pages.html;
+    res.writeHead(200, {
+      "Content-Type": wantsMarkdown ? "text/markdown; charset=utf-8" : "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+      Link: '</llms.txt>; rel="describedby", </agents.json>; rel="alternate"; type="application/json"',
+    }).end(body);
+    return true;
+  };
+}
