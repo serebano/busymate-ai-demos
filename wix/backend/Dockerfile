@@ -5,6 +5,9 @@ WORKDIR /app
 COPY sites/_shared/backend/mcp-identity-server.mjs ./_shared/mcp-identity-server.mjs
 COPY sites/_shared/backend/tool-schema.mjs ./_shared/tool-schema.mjs
 COPY sites/_shared/backend/actor.mjs ./_shared/actor.mjs
+# busymate-devtools#3054: the shared agents.json merge — never a copy.
+COPY sites/_shared/gen-agent-files.mjs ./gen-agent-files.mjs
+COPY sites/_shared/backend/tool-schema.mjs ./backend/tool-schema.mjs
 COPY sites/wix/backend/index.mjs ./index.mjs
 COPY sites/wix/backend/tools.mjs ./tools.mjs
 COPY sites/wix/backend/store.mjs ./store.mjs

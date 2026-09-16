@@ -7,10 +7,16 @@
 // wellKnown.mjs. The content is generated from the SAME live catalogue read
 // the MCP tools use (bigcommerce.mjs) — never a second hand-typed copy.
 import { catalogue, categories, apiReady } from "./bigcommerce.mjs";
+// Relative to the FLATTENED Docker image layout this Dockerfile assembles
+// (never the real repo tree — same convention index.mjs already uses for
+// "./_shared/mcp-identity-server.mjs").
+import { buildAgentsJson } from "./gen-agent-files.mjs";
+import { TOOL_SCHEMA } from "./tools.mjs";
 
 const BACKEND_ORIGIN = process.env.BC_DEMO_ORIGIN || "https://bigcommerce.demo.busymate.ai";
 const SITE_ORIGIN = process.env.BC_SITE_ORIGIN || "https://12zero784.mybigcommerce.com";
 const TENANT_SLUG = process.env.TENANT_SLUG || "demo-bigcommerce";
+const DOCS = "https://busymate.ai/docs/guides";
 const JWKS_URL = `${BACKEND_ORIGIN}/.well-known/jwks.json`;
 const DELEGATED_TOOLS = ["list_my_orders", "get_order_status"];
 
@@ -150,24 +156,25 @@ async function sitemapMd() {
   return lines.join("\n") + "\n";
 }
 
+// busymate-devtools#3054: the merged v1 + agentsjson.org v0.1.0 + bespoke
+// card shape — imported from the SAME generator every other demo's
+// build-demo.sh calls, never a second hand-rolled copy of the shape (this
+// function used to be exactly that: a THIRD, ad-hoc agents.json shape).
 function agentsJson() {
-  return JSON.stringify(
-    {
-      "$schema": "https://agentsjson.org/v0.1.0/schema.json",
-      name: "Copperfield Kitchen Co.",
-      url: SITE_ORIGIN,
-      description: "A kitchenware retailer demo on a real BigCommerce store, a Busymate AI integration example.",
-      mcp_endpoint: `${BACKEND_ORIGIN}/mcp`,
-      identity: {
-        provider: `${BACKEND_ORIGIN}/api/identity/start`,
-        note: "One provided demo customer (Daniel Weber) is signed in; BigCommerce's real Customer Login API integration is tracked separately.",
-      },
-      tools: ["search_products", "get_product", "get_delivery_and_returns", "list_my_orders", "get_order_status"],
-      human_handoff: true,
-    },
-    null,
-    2
-  );
+  const doc = buildAgentsJson({
+    siteUrl: BACKEND_ORIGIN,
+    name: "Copperfield Kitchen Co.",
+    description: "A kitchenware retailer demo on a real BigCommerce store: a live Busymate AI assistant grounded in the store's own catalogue, an MCP server over its live products and orders, a provided demo customer for testing the identified experience, and a request-a-human hand-off.",
+    mcpUrl: `${BACKEND_ORIGIN}/mcp`,
+    pages: [{ title: "Copperfield Kitchen Co.", url: `${SITE_ORIGIN}/`, note: "The store's real, live BigCommerce storefront" }],
+    docs: [
+      { title: "Connect your MCP server as assistant tools", url: `${DOCS}/connect-mcp-server` },
+      { title: "Recognise signed-in customers", url: `${DOCS}/identified-visitors` },
+    ],
+    identityDocsUrl: `${DOCS}/identified-visitors`,
+    mcpTools: TOOL_SCHEMA,
+  }, { hasLlmsFull: false });
+  return JSON.stringify(doc, null, 2);
 }
 
 async function structuredData() {

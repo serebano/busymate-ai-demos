@@ -343,7 +343,20 @@ export function start(config) {
   }
 
   const server = http.createServer(async (req, res) => {
-    const url = new URL(req.url, `http://localhost`);
+    // A malformed request-target (a bare "//" is the one a curl loop building
+    // "<origin>/" + "/" produces, but any client can send one) makes `new
+    // URL()` THROW — outside any try/catch this took the whole process down
+    // (every route on every demo using this shared server, one bad request
+    // away from a full restart) rather than answering the one request with
+    // an honest 400. Found live on squarespace.demo.busymate.ai while
+    // verifying #3054/#3064.
+    let url;
+    try {
+      url = new URL(req.url, `http://localhost`);
+    } catch {
+      res.writeHead(400, { "Content-Type": "text/plain" }).end("bad request\n");
+      return;
+    }
     res.setHeader("Cache-Control", "no-store");
 
     try {

@@ -13,10 +13,16 @@
 // Single responsibility: HTTP responses for these paths. No MCP/identity
 // logic here — this is exactly the `routes` hook the shared server calls.
 import { fetchAllSections } from "./webflowContent.mjs";
+// Relative to the FLATTENED Docker image layout this Dockerfile assembles
+// (never the real repo tree — same convention index.mjs already uses for
+// "./_shared/mcp-identity-server.mjs").
+import { buildAgentsJson } from "./gen-agent-files.mjs";
+import { TOOL_TABLE } from "./tools.mjs";
 
 const BACKEND_ORIGIN = process.env.ISSUER || "https://webflow.demo.busymate.ai";
 const SITE_ORIGIN = process.env.WEBFLOW_SITE_ORIGIN || "https://aldercroft-studio.webflow.io";
 const TENANT_SLUG = process.env.TENANT_SLUG || "aldercroft-studio";
+const DOCS = "https://busymate.ai/docs/guides";
 
 function text(res, body, contentType = "text/plain; charset=utf-8") {
   res.writeHead(200, { "Content-Type": contentType, "Cache-Control": "no-store" }).end(body);
@@ -125,24 +131,25 @@ async function indexMd() {
   return lines.join("\n");
 }
 
+// busymate-devtools#3054: the merged v1 + agentsjson.org v0.1.0 + bespoke
+// card shape — imported from the SAME generator every other demo's
+// build-demo.sh calls, never a second hand-rolled copy of the shape (this
+// function used to be exactly that: a THIRD, ad-hoc agents.json shape).
 function agentsJson() {
-  return JSON.stringify(
-    {
-      "$schema": "https://agentsjson.org/v0.1.0/schema.json",
-      name: "Aldercroft Studio",
-      url: SITE_ORIGIN,
-      description: "An architecture and design studio demo, a Busymate AI integration example.",
-      mcp_endpoint: `${BACKEND_ORIGIN}/mcp`,
-      identity: {
-        provider: `${BACKEND_ORIGIN}/api/identity/start`,
-        note: "Webflow Memberships is a paid-plan feature; this demo signs in one provided client instead.",
-      },
-      tools: ["list_services", "list_properties", "search_content", "get_studio_info", "request_consultation", "who_is_signed_in"],
-      human_handoff: true,
-    },
-    null,
-    2
-  );
+  const doc = buildAgentsJson({
+    siteUrl: BACKEND_ORIGIN,
+    name: "Aldercroft Studio",
+    description: "An architecture and design studio demo: a live Busymate AI assistant grounded in the studio's own published Webflow site, an MCP server over its services and properties, a provided demo client for testing the identified experience, and a request-a-consultation hand-off.",
+    mcpUrl: `${BACKEND_ORIGIN}/mcp`,
+    pages: [{ title: "Aldercroft Studio", url: `${SITE_ORIGIN}/`, note: "The studio's real, published Webflow site" }],
+    docs: [
+      { title: "Connect your MCP server as assistant tools", url: `${DOCS}/connect-mcp-server` },
+      { title: "Recognise signed-in clients", url: `${DOCS}/identified-visitors` },
+    ],
+    identityDocsUrl: `${DOCS}/identified-visitors`,
+    mcpTools: TOOL_TABLE,
+  }, { hasLlmsFull: false });
+  return JSON.stringify(doc, null, 2);
 }
 
 function structuredData() {

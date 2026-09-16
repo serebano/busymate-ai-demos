@@ -6,6 +6,12 @@ FROM node:20-alpine
 WORKDIR /app
 COPY sites/_shared/backend/ ./_shared/
 COPY sites/_shared/ui/form-card.mjs ./ui/form-card.mjs
+# busymate-devtools#3054: the shared agents.json merge — never a copy.
+# gen-agent-files.mjs's own relative import ("./backend/tool-schema.mjs")
+# is mirrored at ./backend/ alongside the flattened ./_shared/tool-schema.mjs
+# the wholesale copy above already placed.
+COPY sites/_shared/gen-agent-files.mjs ./gen-agent-files.mjs
+COPY sites/_shared/backend/tool-schema.mjs ./backend/tool-schema.mjs
 COPY sites/bigcommerce/backend/index.mjs ./index.mjs
 COPY sites/bigcommerce/backend/tools.mjs ./tools.mjs
 COPY sites/bigcommerce/backend/bigcommerce.mjs ./bigcommerce.mjs

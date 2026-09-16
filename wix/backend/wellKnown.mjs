@@ -10,10 +10,16 @@
 // Single responsibility: HTTP responses for these paths. No MCP/identity
 // logic here — this is exactly the `routes` hook the shared server calls.
 import { FACTS } from "./wixContent.mjs";
+// Relative to the FLATTENED Docker image layout this Dockerfile assembles
+// (never the real repo tree — same convention index.mjs already uses for
+// "./_shared/mcp-identity-server.mjs").
+import { buildAgentsJson } from "./gen-agent-files.mjs";
+import { TOOL_TABLE } from "./tools.mjs";
 
 const BACKEND_ORIGIN = process.env.ISSUER || "https://wix.demo.busymate.ai";
 const SITE_ORIGIN = process.env.WIX_SITE_ORIGIN || "https://mrserebano.wixsite.com/wren-and-oat";
 const TENANT_SLUG = process.env.TENANT_SLUG || "wren-and-oat";
+const DOCS = "https://busymate.ai/docs/guides";
 
 function text(res, body, contentType = "text/plain; charset=utf-8") {
   res.writeHead(200, { "Content-Type": contentType, "Cache-Control": "no-store" }).end(body);
@@ -113,24 +119,25 @@ async function indexMd() {
   return `# ${FACTS.name}\n\n${FACTS.tagline}\n\n${FACTS.story}\n\n## Hours\n\n${FACTS.hours.map((h) => `- ${h.day}: ${h.hours}`).join("\n")}\n\n## Menu\n\n${FACTS.menu.map((s) => `### ${s.category}\n${s.items.map((i) => `- ${i}`).join("\n")}`).join("\n\n")}\n\nReal site: ${SITE_ORIGIN}\n`;
 }
 
+// busymate-devtools#3054: the merged v1 + agentsjson.org v0.1.0 + bespoke
+// card shape — imported from the SAME generator every other demo's
+// build-demo.sh calls, never a second hand-rolled copy of the shape (this
+// function used to be exactly that: a THIRD, ad-hoc agents.json shape).
 function agentsJson() {
-  return JSON.stringify(
-    {
-      "$schema": "https://agentsjson.org/v0.1.0/schema.json",
-      name: FACTS.name,
-      url: SITE_ORIGIN,
-      description: "A bakery demo, a Busymate AI integration example.",
-      mcp_endpoint: `${BACKEND_ORIGIN}/mcp`,
-      identity: {
-        provider: `${BACKEND_ORIGIN}/api/identity/start`,
-        note: "Wix Members Area isn't reachable from a plain server-side backend; this demo signs in one provided customer instead.",
-      },
-      tools: ["list_menu", "get_hours", "get_story", "search_menu", "site_status", "place_order", "who_is_signed_in"],
-      human_handoff: true,
-    },
-    null,
-    2,
-  );
+  const doc = buildAgentsJson({
+    siteUrl: BACKEND_ORIGIN,
+    name: FACTS.name,
+    description: "A bakery demo: a live Busymate AI assistant grounded in the bakery's own menu, hours, and story, an MCP server, a provided demo customer for testing the identified experience, and a place-an-order hand-off.",
+    mcpUrl: `${BACKEND_ORIGIN}/mcp`,
+    pages: [{ title: FACTS.name, url: `${SITE_ORIGIN}/`, note: "The bakery's real, published Wix site" }],
+    docs: [
+      { title: "Connect your MCP server as assistant tools", url: `${DOCS}/connect-mcp-server` },
+      { title: "Recognise signed-in customers", url: `${DOCS}/identified-visitors` },
+    ],
+    identityDocsUrl: `${DOCS}/identified-visitors`,
+    mcpTools: TOOL_TABLE,
+  }, { hasLlmsFull: false });
+  return JSON.stringify(doc, null, 2);
 }
 
 function structuredData() {
