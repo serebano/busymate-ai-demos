@@ -8,6 +8,35 @@
 // wellKnown.mjs. The content is generated from the SAME live page read the
 // MCP tools use (squarespace.mjs) — never a second hand-typed copy.
 import { allPages, apiReady } from "./squarespace.mjs";
+// Relative to the FLATTENED Docker image layout (this file lands at
+// /app/wellKnown.mjs; the Dockerfile places gen-agent-files.mjs and
+// agent-files.config.mjs alongside it at /app/) — same convention
+// index.mjs already uses for "./_shared/mcp-identity-server.mjs". These
+// backend .mjs files are never run directly from the repo tree, only inside
+// the image the Dockerfile assembles.
+import { buildStaticAgentFiles, serveStaticAgentFiles } from "./_shared/agent-ready-static.mjs";
+import agentFilesConfig from "./agent-files.config.mjs";
+
+// The static six-layer set (busymate-devtools#3054, #3064): agents.json
+// (the merged v1 + agentsjson.org v0.1.0 + bespoke card shape — this demo's
+// OWN agents.json used to be the "third, ad-hoc shape" #3054 named),
+// openapi.json, agent-permissions.json (+ twin), .well-known/mcp.json,
+// .well-known/api-catalog, webmcp-catalog.json, robots.txt, sitemap.xml —
+// none of it depends on a live request, so it is built ONCE at cold start by
+// the SAME generators every static demo's build-demo.sh calls — never a
+// second hand-rolled copy. get_page is the one tool this demo's OWN preview
+// page genuinely registers over WebMCP (see homePage() below); honestly the
+// only entry in webmcp-catalog.json.
+const STATIC_FILES = buildStaticAgentFiles(agentFilesConfig, {
+  webmcpTools: [{
+    name: "get_page",
+    title: "Read a Quiet Pines Yoga page",
+    description: "Read one live page of the Quiet Pines Yoga site (Home/About/Services/Appointments/Contact).",
+    inputSchema: { type: "object", properties: { title: { type: "string" } }, required: ["title"], additionalProperties: false },
+    annotations: { readOnlyHint: true },
+  }],
+});
+const serveStatic = serveStaticAgentFiles(STATIC_FILES);
 
 const BACKEND_ORIGIN = process.env.SQSP_DEMO_ORIGIN || "https://squarespace.demo.busymate.ai";
 const SITE_ORIGIN = process.env.SQSP_SITE_ORIGIN || "https://bat-vanilla-s2x4.squarespace.com";
@@ -148,29 +177,9 @@ Ask the assistant for a person and a human joins the same conversation from the 
 
 async function sitemapMd() {
   const { pages } = await allPages().catch(() => ({ pages: [] }));
-  const lines = [`# Sitemap — Quiet Pines Yoga`, "", `Site (${SITE_ORIGIN}), pages:`, ""];
-  for (const p of pages) lines.push(`- ${p.title} (${p.path})`);
+  const lines = [`# Sitemap — Quiet Pines Yoga`, "", `Site: [${SITE_ORIGIN}](${SITE_ORIGIN}/)`, "", `## Pages`, ""];
+  for (const p of pages) lines.push(`- [${p.title}](${SITE_ORIGIN}${p.path})`);
   return lines.join("\n") + "\n";
-}
-
-function agentsJson() {
-  return JSON.stringify(
-    {
-      "$schema": "https://agentsjson.org/v0.1.0/schema.json",
-      name: "Quiet Pines Yoga",
-      url: SITE_ORIGIN,
-      description: "A boutique yoga studio demo on a real Squarespace trial site, a Busymate AI integration example.",
-      mcp_endpoint: `${BACKEND_ORIGIN}/mcp`,
-      identity: {
-        provider: `${BACKEND_ORIGIN}/api/identity/start`,
-        note: "One provided demo visitor (Sasha Moreau) is signed in; Squarespace's real Member Areas integration is tracked separately.",
-      },
-      tools: ["get_page", "search_site", "list_booking_options", "book_a_session"],
-      human_handoff: true,
-    },
-    null,
-    2
-  );
 }
 
 async function structuredData() {
@@ -193,15 +202,24 @@ async function structuredData() {
   );
 }
 
-// A minimal, same-origin verification page: the real trial site is
-// Password Protected right now (needs the site's own password, or a paid
-// upgrade to go Public), so identity + the widget are proven HERE, on this
-// backend's own origin, exactly the shape the real Code Block / Embed Block
-// will use once the site goes public — same embed tag, same
-// window.BusymateAI.getIdentity wiring, defined BEFORE the embed script per
-// the identified-visitors doc.
-function previewPage() {
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Quiet Pines Yoga — preview</title></head>
+// This backend's own homepage — served at BOTH "/" and "/preview". The real
+// trial site is Password Protected right now (needs the site's own
+// password, or a paid upgrade to go Public), so identity, the widget AND
+// the discovery links this repo's own check-agent-files.sh looks for
+// (busymate-devtools#3064: squarespace.demo.busymate.ai answered 404 at "/"
+// because no route here ever served one) are all proven HERE, on this
+// backend's own origin — same embed tag, same window.BusymateAI.getIdentity
+// wiring (defined BEFORE the embed script per the identified-visitors doc),
+// and a REAL WebMCP registration of get_page (not just described in
+// webmcp-catalog.json — genuinely registered in this page).
+function homePage() {
+  return `<!doctype html><html><head><meta charset="utf-8"><title>Quiet Pines Yoga — preview</title>
+<link rel="webmcp-catalog" href="/webmcp-catalog.json">
+<link rel="alternate" type="application/json" href="/.well-known/agents.json">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ExerciseGym","name":"Quiet Pines Yoga","url":"${SITE_ORIGIN}","description":"A boutique yoga studio demo — a Busymate AI integration example, not a real business."}
+</script>
+</head>
 <body style="font-family:system-ui;max-width:640px;margin:40px auto;padding:0 16px">
 <h1>Quiet Pines Yoga (preview)</h1>
 <p>Same-origin proof page: the real site is Password Protected right now
@@ -209,6 +227,7 @@ function previewPage() {
 embed + identity wiring the real Code Block / Embed Block tag uses.</p>
 <p id="status">not signed in</p>
 <button id="signin">Sign in as Sasha Moreau (demo visitor)</button>
+<p style="font-size:13px;opacity:.75">Editorial contact: <a href="mailto:hello@quietpinesyoga.example">hello@quietpinesyoga.example</a></p>
 <script>
   window.BusymateAI = window.BusymateAI || {};
   window.BusymateAI.getIdentity = async function () {
@@ -221,6 +240,26 @@ embed + identity wiring the real Code Block / Embed Block tag uses.</p>
     document.getElementById("status").textContent = "signed in — ask the chat to book a session";
     if (window.BusymateAI.refreshIdentity) window.BusymateAI.refreshIdentity();
   });
+  (function () {
+    function waitForSdk(t) { var s = Date.now(); return new Promise(function (res) { (function poll() {
+      if (window.BusymateAI && typeof window.BusymateAI.registerPageTools === "function") { res(true); return; }
+      if (Date.now() - s > (t || 15000)) { res(false); return; } setTimeout(poll, 150);
+    })(); }); }
+    waitForSdk().then(function (ok) { if (!ok) return;
+      window.BusymateAI.registerPageTools([{
+        name: "get_page", title: "Read a Quiet Pines Yoga page",
+        description: "Read one live page of the Quiet Pines Yoga site (Home/About/Services/Appointments/Contact).",
+        inputSchema: { type: "object", properties: { title: { type: "string" } }, required: ["title"], additionalProperties: false },
+        annotations: { readOnlyHint: true },
+        execute: function (args) {
+          return fetch("/mcp", { method: "POST", headers: { "content-type": "application/json" },
+            body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: "get_page", arguments: args || {} } }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) { return JSON.parse(d.result.content[0].text); });
+        },
+      }]);
+    });
+  })();
 </script>
 <script src="https://busymate.ai/embed/v1.js" data-assistant="demo-squarespace" data-label="Chat with us" async></script>
 </body></html>`;
@@ -232,8 +271,11 @@ export async function serveWellKnown(req, res, url) {
     await serveStatus(req, res);
     return true;
   }
-  if (url.pathname === "/preview" && req.method === "GET") {
-    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" }).end(previewPage());
+  // "/" and "/preview" are the SAME homepage (busymate-devtools#3064: this
+  // backend IS the whole demo — squarespace.demo.busymate.ai/ answering 404
+  // is not an honest state for a manifest row marked "live").
+  if ((url.pathname === "/preview" || url.pathname === "/") && req.method === "GET") {
+    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" }).end(homePage());
     return true;
   }
   if (req.method !== "GET") return false;
@@ -247,14 +289,14 @@ export async function serveWellKnown(req, res, url) {
     case "/sitemap.md":
       text(res, await sitemapMd());
       return true;
-    case "/agents.json":
-    case "/.well-known/agents.json":
-      text(res, agentsJson(), "application/json; charset=utf-8");
-      return true;
     case "/structured-data.json":
       text(res, await structuredData(), "application/ld+json; charset=utf-8");
       return true;
     default:
-      return false;
+      // The static six-layer set built at cold start (see STATIC_FILES
+      // above): agents.json (+ .well-known twin), openapi.json,
+      // agent-permissions.json (+ twin), .well-known/mcp.json,
+      // .well-known/api-catalog, webmcp-catalog.json, robots.txt, sitemap.xml.
+      return serveStatic(req, res, url);
   }
 }

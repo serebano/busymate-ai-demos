@@ -1,0 +1,34 @@
+{
+  "knowledge_sources": [
+    {
+      "key": "ghost:about",
+      "label": "About The Meridian Line",
+      "kind": "reference",
+      "content": "The Meridian Line is an independent, reader-supported magazine reporting from workshops, small factories and apprenticeships — makers, small manufacturing and local economies. It is an INVENTED publication used to demonstrate Busymate AI on a real Ghost CMS install: no real subscription is taken and no real payment moves. Website: https://ghost.demo.busymate.ai/. The magazine runs Ghost's own bundled Casper theme and Ghost's native Members/Portal for reader accounts."
+    },
+    {
+      "key": "ghost:articles-pointer",
+      "label": "Where the articles come from",
+      "kind": "fact",
+      "content": "The Meridian Line's articles are NOT in this text: they are read live from the magazine's own Ghost Content API. When a reader asks what has been published recently or wants to search for a topic, CALL a tool (list_articles or search_content) — never answer from memory, and never invent an article title or excerpt this text does not contain."
+    },
+    {
+      "key": "ghost:membership",
+      "label": "Reader membership",
+      "kind": "howto",
+      "content": "One free-tier demo member is provided — Nadia Ferro (nadia@ghost.demo.busymate.ai) — a real Ghost Member created via the Admin API, not a mock object. Signing in takes one click from inside the chat and needs no password; it returns the reader to the same conversation, now able to ask who_is_signed_in. Most questions (recent articles, search, contact details, subscribing to the newsletter) need no sign-in at all."
+    },
+    {
+      "key": "ghost:newsletter",
+      "label": "The newsletter",
+      "kind": "howto",
+      "content": "The Meridian Line publishes a free weekly newsletter, every Thursday. Call subscribe_newsletter as soon as a visitor says they want to sign up, even before every detail is confirmed — it only needs an email address. This demo never actually emails a real subscriber; it records the intent."
+    },
+    {
+      "key": "ghost:what-this-demo-shows",
+      "label": "What this demonstration shows",
+      "kind": "reference",
+      "content": "This magazine is the Ghost demo on the Busymate AI playground. It demonstrates, and can be asked about: answers grounded in the magazine's own published articles; one of the page's own actions (list_articles) published over WebMCP; the magazine's own MCP server at https://ghost.demo.busymate.ai/mcp with public read tools and one that answers only for a signed-in member; the identity handoff, signed by the magazine's own key; and hand-off to a person, which queues the conversation to the team Inbox."
+    }
+  ]
+}

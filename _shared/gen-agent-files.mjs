@@ -182,6 +182,49 @@ export function buildAgentsJsonV1Fields(config, hasMcp, hasLlmsFull) {
   };
 }
 
+/**
+ * The FULL merged `/agents.json` object (#3023 §4, 2026-09-15) — the OWNER-SPEC
+ * v1 shape, the agentsjson.org v0.1.0 tool-actions manifest and this repo's own
+ * bespoke card, all in one document. Pulled out of `generate()` so a demo whose
+ * agent-ready surface is served DYNAMICALLY from its own backend (ghost,
+ * squarespace, webflow, wix, bigcommerce — none of them a rsynced docroot) can
+ * import and call this SAME function directly — never a second hand-rolled
+ * merge, never a copy of this shape (#3054).
+ * @param {AgentFilesConfig} config
+ * @param {{hasLlmsFull?: boolean}} [opts] pass `hasLlmsFull:false` when this
+ *   demo genuinely has no llms-full.txt; defaults to true (most callers of this
+ *   function serve one, even a dynamically-built one that never touches disk).
+ */
+export function buildAgentsJson(config, opts = {}) {
+  const hasLlmsFull = opts.hasLlmsFull !== false;
+  const { hasMcp, allTools } = resolveTools(config);
+  const agentsJsonV01 = buildAgentsJsonV01(config, allTools, hasMcp);
+  const agentsJsonV1Fields = buildAgentsJsonV1Fields(config, hasMcp, hasLlmsFull);
+  return {
+    ...agentsJsonV01,
+    ...agentsJsonV1Fields,
+    name: config.name,
+    url: config.siteUrl,
+    description: config.description,
+    mcp: hasMcp ? { url: config.mcpUrl, transport: "http", auth: "none" } : null,
+    webmcp: { transport: "in-page", registers: "document.modelContext" },
+    tools: Object.entries(allTools).map(([name, t]) => ({
+      name,
+      description: t.description,
+      inputSchema: t.inputSchema,
+      readOnlyHint: !!t.readOnlyHint,
+      access: t.accessHint || "public",
+      transport: t.transport,
+      ...(t.confirmHint ? { confirmationRequired: true } : {}),
+    })),
+    identity: {
+      supported: Boolean(config.identityDocsUrl),
+      ...(config.identityDocsUrl ? { docs: config.identityDocsUrl } : {}),
+    },
+    humanHandoff: config.humanHandoff !== false,
+  };
+}
+
 /** @param {AgentFilesConfig} config */
 export function generate(config) {
   // llms-full.txt: gen-content-pages.mjs writes it for a demo with content/*.md
@@ -311,31 +354,7 @@ last_updated: ${today}
   // decision landed. check-agent-files.sh's per-path shape assertions (both
   // documents being jq subset checks, not exclusivity checks) still pass
   // unchanged — see its updated comments.
-  const agentsJsonV01 = buildAgentsJsonV01(config, allTools, hasMcp);
-  const agentsJsonV1Fields = buildAgentsJsonV1Fields(config, hasMcp, hasLlmsFull);
-  const agentsJson = {
-    ...agentsJsonV01,
-    ...agentsJsonV1Fields,
-    name: config.name,
-    url: config.siteUrl,
-    description: config.description,
-    mcp: hasMcp ? { url: config.mcpUrl, transport: "http", auth: "none" } : null,
-    webmcp: { transport: "in-page", registers: "document.modelContext" },
-    tools: Object.entries(allTools).map(([name, t]) => ({
-      name,
-      description: t.description,
-      inputSchema: t.inputSchema,
-      readOnlyHint: !!t.readOnlyHint,
-      access: t.accessHint || "public",
-      transport: t.transport,
-      ...(t.confirmHint ? { confirmationRequired: true } : {}),
-    })),
-    identity: {
-      supported: Boolean(config.identityDocsUrl),
-      ...(config.identityDocsUrl ? { docs: config.identityDocsUrl } : {}),
-    },
-    humanHandoff: config.humanHandoff !== false,
-  };
+  const agentsJson = buildAgentsJson(config, { hasLlmsFull });
 
   // AGENTS.md (S12/S13): the agents.md convention's contextual guide for a
   // coding/AI agent — free-form Markdown, any headings (agents.md has no

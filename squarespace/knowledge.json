@@ -1,0 +1,28 @@
+{
+  "knowledge_sources": [
+    {
+      "key": "sqsp:about",
+      "label": "About Quiet Pines Yoga",
+      "kind": "reference",
+      "content": "Quiet Pines Yoga is a boutique yoga studio demo on a real Squarespace trial site: a live Busymate AI assistant grounded in the studio's own published pages, an MCP server over its live site content, and a request-a-human hand-off. It is an INVENTED business used to demonstrate Busymate AI on a real Squarespace install: no real class is booked and no real payment moves. The real site is Password Protected while on the Squarespace free trial (Public availability needs a paid plan)."
+    },
+    {
+      "key": "sqsp:pages-pointer",
+      "label": "Where the studio's pages come from",
+      "kind": "fact",
+      "content": "Quiet Pines Yoga's page text (Home, About, Services, Appointments, Contact) is NOT in this text: it is read live off the real Squarespace pages. When a visitor asks about class prices, schedule or the studio itself, CALL a tool (get_page or search_site) — never answer from memory, and never quote a number this text does not contain."
+    },
+    {
+      "key": "sqsp:identity",
+      "label": "Signing in",
+      "kind": "howto",
+      "content": "One provided demo visitor, Sasha Moreau, is signed in through this demo's own identity provider — Squarespace's real Member Areas is a native-site integration tracked separately. Most questions (class options, prices, hours, contact) need no sign-in; booking a session is identified-visitors only."
+    },
+    {
+      "key": "sqsp:what-this-demo-shows",
+      "label": "What this demonstration shows",
+      "kind": "reference",
+      "content": "This studio is the Squarespace demo on the Busymate AI playground. It demonstrates, and can be asked about: answers grounded in the studio's own real, live Squarespace pages; the studio's own MCP server with public read tools and one identified-visitor booking tool; the identity handoff, signed by this demo's own key; and hand-off to a person, which queues the conversation to the team Inbox."
+    }
+  ]
+}

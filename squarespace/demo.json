@@ -14,6 +14,12 @@
   "docs": "https://busymate.ai/docs/guides/squarespace",
   "code": "https://github.com/serebano/busymate-ai-demos/tree/main/squarespace",
   "backend_port": 8111,
+  "container": {
+    "backend": { "name": "demo-squarespace-backend", "publish": "127.0.0.1:8111:8111" },
+    "vhost_templates": ["infra/nginx/squarespace-http.conf.template", "infra/nginx/squarespace-https.conf.template"],
+    "acme_root": "<demo-host>/squarespace/public",
+    "note": "No app/db services — the CMS is Squarespace's own hosting, not ours; this backend IS the whole demo (busymate-devtools#3064). Recreate the vhost with: sed -e s/__FQDN__/squarespace.demo.busymate.ai/g -e s/__PORT__/8111/g -e s#__ACME_ROOT__#<demo-host>/squarespace/public#g infra/nginx/squarespace-https.conf.template"
+  },
   "site": {
     "site_identifier": "bat-vanilla-s2x4",
     "storefront": "https://bat-vanilla-s2x4.squarespace.com",
