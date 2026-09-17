@@ -1,0 +1,16 @@
+{
+  "name": "email",
+  "subdomain": "email",
+  "title": "Email channel",
+  "tagline": "Harbor & Vale Travel — a small travel agency whose support is email-first: an inbox-style preview of your mate answering a booking enquiry by mail, threaded, with a calendar invite for the consultation call, an MCP server over the itineraries, WebMCP booking actions, identified-traveller booking lookup, and the Inbox copilot (summarize, draft, send) as the operator's view.",
+  "type": "static",
+  "assistant": "demo-email",
+  "tenant_id": null,
+  "status": "coming-soon",
+  "order": 17,
+  "icon": "email",
+  "docs": "https://busymate.ai/docs/guides/email",
+  "code": "https://github.com/serebano/busymate-ai-demos/tree/main/email",
+  "backend_port": 8117,
+  "mailbox_note": "The real go-live hook is the tenant's connected mailbox (Console → Email → Connect a mailbox, busymate-devtools#3198): once the demo tenant's own inbox is connected and a real inbound mail is answered threaded, set tenant_id, flip status to live here AND in busymate-devtools v2/apps/web/lib/site/demos.ts in the same change. Until then the page is a scaffold — a faithful inbox-style preview with no live loop behind it."
+}

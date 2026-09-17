@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harbor &amp; Vale Travel — small-group journeys, planned by mail</title>
+  <meta name="description" content="An email-channel demo: a booking enquiry arrives in the agency's own mailbox, your mate replies in the same thread and sends a calendar invitation for the consultation call. Coming soon." />
+  <meta name="robots" content="noindex" />
+  <style>
+    :root { --navy:#12303a; --navy-deep:#0a1c22; --teal:#2f7f8a; --teal-deep:#1f5f68; --sand:#e8dcc4; --cream:#f4f1ea; --ink:#1c2427; --muted:#5b6b70; --line:#d9d2c3; }
+    * { box-sizing: border-box; }
+    body { margin:0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); background:var(--cream); }
+    header { background: linear-gradient(160deg, var(--navy), var(--navy-deep)); color:var(--cream); padding: 48px 24px 56px; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    h1 { font-family: Georgia, serif; font-weight: 500; font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; opacity: .8; }
+    .lede { max-width: 640px; opacity: .9; }
+    .pill { display:inline-block; border:1px solid rgba(244,241,234,.5); border-radius: 999px; padding: 2px 10px; font-size: 12px; margin-top: 16px; }
+    main { padding: 32px 0 64px; }
+    .inbox { background:#fff; border:1px solid var(--line); border-radius: 12px; overflow:hidden; margin: 24px 0; }
+    .inbox-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding: 12px 16px; border-bottom:1px solid var(--line); background: #faf8f3; font-size: 14px; }
+    .mail { padding: 16px; border-bottom:1px solid var(--line); }
+    .mail:last-child { border-bottom: 0; }
+    .from { font-weight: 600; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .body { margin-top: 8px; white-space: pre-line; }
+    .chip { display:inline-block; font-size: 12px; border-radius: 6px; padding: 1px 8px; background: #e6f2f1; color: var(--teal-deep); margin-top: 8px; }
+    .attach { display:inline-flex; gap:8px; align-items:center; border:1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; margin-top: 10px; background:#faf8f3; }
+    details { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    .copilot { display:flex; flex-wrap:wrap; gap:8px; padding: 12px 16px; background:#faf8f3; border-top:1px solid var(--line); }
+    .copilot span { border:1px solid var(--line); background:#fff; border-radius: 8px; padding: 4px 10px; font-size: 13px; }
+    h2 { font-family: Georgia, serif; font-weight: 500; font-size: 24px; margin: 32px 0 8px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius: 12px; padding: 16px; }
+    .card h3 { margin: 0 0 6px; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    footer { color: var(--muted); font-size: 13px; padding: 24px 0; border-top:1px solid var(--line); }
+    a { color: var(--teal-deep); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Harbor &amp; Vale Travel</div>
+      <h1>Small-group journeys, planned by mail.</h1>
+      <p class="lede">Write to us the way you always have. Marin — our mate — reads every mail, answers in the same thread, and books your consultation call with a calendar invitation. A person is one reply away.</p>
+      <span class="pill">Demo scaffold · coming soon · no real bookings</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h2>What a customer sees</h2>
+    <p class="meta">A booking enquiry to the agency's own mailbox, answered threaded from that mailbox.</p>
+
+    <section class="inbox" aria-label="Inbox-style preview">
+      <div class="inbox-head"><span>Re: Portugal in late September — two travellers</span><span class="meta">Inbox · 2 messages</span></div>
+
+      <article class="mail">
+        <div class="from">Ana Ribeiro <span class="meta">&lt;ana@example.com&gt;</span></div>
+        <div class="meta">to hello@harborandvale.example · Tue 09:12</div>
+        <div class="body">Hello,
+
+We're two people looking at Portugal in late September. Is the Douro &amp; Coast journey still available, and what would the next step be?
+
+Thanks,
+Ana</div>
+      </article>
+
+      <article class="mail">
+        <div class="from">Marin, Harbor &amp; Vale Travel <span class="meta">&lt;hello@harborandvale.example&gt;</span></div>
+        <div class="meta">to ana@example.com · Tue 09:14</div>
+        <div class="body">Hello Ana,
+
+Yes — Douro &amp; Coast departs on 22 September with four of ten seats open, nine days from Porto, from €2,140 per person with breakfasts, the listed activities and a local guide included (flights not included).
+
+The next step is a short consultation call. Would Thursday at 11:00 Lisbon time suit you both? I've attached an invitation you can accept from your calendar; reply with another time if that one doesn't work.
+
+Warmly,
+Marin</div>
+        <div class="attach">📅 consultation-call.ics · text/calendar</div>
+        <span class="chip">Sent · threaded</span>
+        <details><summary>Show earlier messages</summary>Earlier messages are shown above as their own entries; the quoted copy is not stored.</details>
+      </article>
+
+      <div class="copilot" aria-label="The operator's copilot row in the Inbox">
+        <span>AI draft</span><span>Summarize</span><span>Translate</span><span>Forward</span><span>Invite</span><span>Send</span>
+      </div>
+    </section>
+
+    <h2>What the demo shows</h2>
+    <div class="grid">
+      <div class="card"><h3>Your own mailbox, threaded</h3><p>The agency connects the inbox customers already write to through a hosted sign-in. Replies go out from that address with the standard mail headers, so every answer lands in the same thread.</p></div>
+      <div class="card"><h3>A calendar invitation, by mail</h3><p>When a call is the right next step, the assistant proposes one slot and sends a standard calendar invitation the traveller accepts from their own calendar.</p></div>
+      <div class="card"><h3>The operator's copilot</h3><p>In the Inbox the same thread carries AI draft, Summarize, Translate, Forward, Invite and Send. Drafts are never sent without a confirmation.</p></div>
+      <div class="card"><h3>Grounded, with tools</h3><p>An MCP server over the itineraries and bookings, WebMCP booking actions on this page, and a signed-in traveller's own booking lookup — the same on the widget and by mail.</p></div>
+    </div>
+
+    <h2>Status</h2>
+    <p>This page is the scaffold of the email-channel demo. The live loop needs the demo tenant's own mailbox connected in the Console; it flips to live in the change that proves a real inbound mail answered threaded. Read the guide: <a href="https://busymate.ai/docs/guides/email">busymate.ai/docs/guides/email</a>.</p>
+  </main>
+
+  <footer class="wrap">Harbor &amp; Vale Travel is a demonstration agency built for Busymate AI. No real bookings, payments or travellers. <a href="https://busymate.ai/integrations/email">The email integration</a> · <a href="https://github.com/serebano/busymate-ai-demos/tree/main/email">Source</a></footer>
+</body>
+</html>

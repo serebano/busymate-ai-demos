@@ -1,0 +1,16 @@
+{
+  "extraOrigins": ["https://demo.busymate.ai"],
+  "connectorIds": [],
+  "suggestions": [
+    { "label": "Plan a journey", "prompt": "We're two people looking at Portugal in late September — what do you have?" },
+    { "label": "Book a call", "prompt": "Can we set up a consultation call next week? Send me an invite." },
+    { "label": "My booking", "prompt": "What's the balance due on my booking and when?" },
+    { "label": "Change a date", "prompt": "Can I move our departure to the October date instead?" },
+    { "label": "Talk to a person", "prompt": "Can I talk to a person about a visa question?" }
+  ],
+  "identityProvider": null,
+  "connectedMailbox": {
+    "note": "Set from Console → Email → Connect a mailbox for the demo tenant (busymate-devtools#3198). No secret lives here: the sign-in is hosted and the tenant row stores only the account id and the address.",
+    "address": null
+  }
+}

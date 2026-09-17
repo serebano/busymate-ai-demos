@@ -1,0 +1,26 @@
+{
+  "tenant_id": null,
+  "embed_origins": [
+    "https://email.demo.busymate.ai"
+  ],
+  "knowledge_sources": [
+    {
+      "key": "email:about-demo",
+      "label": "About this demo",
+      "kind": "fact",
+      "content": "This assistant runs on Harbor & Vale Travel, a SAMPLE small-group travel agency built to demonstrate 'your mate' — a Busymate AI assistant — on the EMAIL channel. No real bookings, payments or travellers exist here. The itineraries, departure dates, prices and the demo bookings are fictional but LIVE demo data served through this site's own connected MCP server. Harbor & Vale answers customers by email: a mail to the agency's connected mailbox becomes a conversation, the assistant replies in the same thread from that mailbox, and a teammate can take over from the Inbox. The same assistant answers on the website widget with the same tools."
+    },
+    {
+      "key": "email:how-we-work",
+      "label": "How Harbor & Vale works",
+      "kind": "fact",
+      "content": "Harbor & Vale plans small-group journeys of eight to twelve travellers with one guide. Enquiries arrive by email; the agency replies within the hour during office hours (Monday to Friday, 09:00–18:00 Lisbon time). A booking starts with a short consultation call — the assistant proposes a slot and sends a calendar invitation by mail — followed by a written proposal and a deposit of 20% to hold the seats. Balance is due 60 days before departure. Every journey includes accommodation, breakfasts, listed activities and a local guide; international flights are not included. Travel insurance is required and can be arranged on request."
+    },
+    {
+      "key": "email:policies",
+      "label": "Changes and cancellations",
+      "kind": "fact",
+      "content": "Changes to a booking are free up to 60 days before departure and subject to availability after that. Cancellation more than 60 days before departure refunds everything but the deposit; between 60 and 30 days, 50% of the journey price; under 30 days, no refund — travel insurance covers the usual reasons. A journey with fewer than six travellers 45 days before departure may be rescheduled; travellers are offered another date or a full refund. Dietary requirements and mobility needs are collected at the consultation call and confirmed in writing."
+    }
+  ]
+}
